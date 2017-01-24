@@ -1,0 +1,27 @@
+/*body {
+	width: 800px;
+	margin: 50px auto;
+}*/
+
+/*img {
+	width: 100%;
+}*/
+/*.image-container {
+	padding: 100px;
+	background-color: cyan;
+}*/
+
+.cuadradoFoto {
+	cursor: pointer;
+	overflow: hidden;
+	border: 6px solid #89C4F4;
+	-webkit-box-shadow: 0 0 50px rgba(0,0,0,.4);
+}
+
+/*figure img {
+	-webkit-transition: all 1.5s;
+}
+
+figure:hover img {
+	-webkit-transform: scale(1.3);
+}*/
