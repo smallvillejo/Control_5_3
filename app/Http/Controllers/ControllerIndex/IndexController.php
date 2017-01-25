@@ -77,14 +77,28 @@ class IndexController extends Controller{
 		->Where('id_comercio',$id_comercio)
 		->sum('valor_gasto');
 
-		// $TotalVentaProducto=number_format($TotalVentaProducto); 
-		// $TotalVentaAlimento=number_format($TotalVentaAlimento);
-		// $TotalVentaMinutos=number_format($TotalVentaMinutos);
-		// $TotalVentaInternet=number_format($TotalVentaInternet); 
-		// $TotalVentaRecarga=number_format($TotalVentaRecarga); 
-		// $TotalCompra=number_format($TotalCompra);
-		// $TotalGasto=number_format($TotalGasto);
 
+		if($TotalVentaProducto==null){
+			$TotalVentaProducto=0;
+		}
+		if($TotalVentaAlimento==null){
+			$TotalVentaAlimento=0;
+		}
+		if($TotalVentaMinutos==null){
+			$TotalVentaMinutos=0;
+		}
+		if($TotalVentaInternet==null){
+			$TotalVentaInternet=0;
+		}
+		if($TotalVentaRecarga==null){
+			$TotalVentaRecarga=0;
+		}
+		if($TotalCompra==null){
+			$TotalCompra=0;
+		}
+		if($TotalGasto==null){
+			$TotalGasto=0;
+		}		
 
 		
 		return view('Index/GraficaEstadisticas.Grafica_Estadistica_Index')
