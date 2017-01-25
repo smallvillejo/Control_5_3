@@ -33,7 +33,10 @@
             },
             series: [{
                 name: 'Venta Minutos',
-                data: []
+                      
+                data:[ "@foreach ($TotalVentaMinutos as $value){{$value->total_minutos_venta}}@endforeach"
+                
+                ]
             // }, 
             // {
             //     name: 'Venta Internet',

@@ -33,7 +33,10 @@
             },
             series: [{
                 name: 'Venta Minutos',
-                data: []
+                      
+                data:[ "<?php foreach($TotalVentaMinutos as $value): ?><?php echo e($value->total_minutos_venta); ?><?php endforeach; ?>"
+                
+                ]
             // }, 
             // {
             //     name: 'Venta Internet',

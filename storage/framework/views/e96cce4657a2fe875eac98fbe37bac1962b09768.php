@@ -61,7 +61,7 @@ Menú Principal
 	</div>	
 </div>	
 <div class="row">			
-	<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+	<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6">
 		<div class="panel panel-primary">
 			<div class="panel-heading"><h4><strong>Balance General</strong></h4></div>
 			<div class="panel-body">
@@ -71,7 +71,7 @@ Menú Principal
 						<div class="col-sm-4">					
 							<strong>
 								<font size ="3", color ="#f72900" face="Tahoma">
-									$ <label>2,000</label>
+									$ <label id="TotalVentaMinutos"></label>
 								</font>
 							</strong>			
 						</div>
@@ -82,7 +82,7 @@ Menú Principal
 							<div class="col-sm-4">					
 								<strong>
 									<font size ="3", color ="#f72900" face="Tahoma">
-										$ <label>2,000</label>
+										$ <label id="TotalVentaInternet"></label>
 									</font>
 								</strong>			
 							</div>
@@ -93,7 +93,7 @@ Menú Principal
 								<div class="col-sm-4">					
 									<strong>
 										<font size ="3", color ="#f72900" face="Tahoma">
-											$ <label>2,000</label>
+											$ <label id="TotalVentaRecargas"></label>
 										</font>
 									</strong>			
 								</div>
@@ -104,7 +104,7 @@ Menú Principal
 									<div class="col-sm-4">					
 										<strong>
 											<font size ="3", color ="#f72900" face="Tahoma">
-												$ <label>2,000</label>
+												$ <label id="TotalCompras"></label>
 											</font>
 										</strong>			
 									</div>
@@ -115,7 +115,7 @@ Menú Principal
 										<div class="col-sm-4">					
 											<strong>
 												<font size ="3", color ="#f72900" face="Tahoma">
-													$ <label>2,000</label>									
+													$ <label id="TotalGastos"></label>									
 												</font>
 											</strong>	
 											<br>
@@ -129,7 +129,7 @@ Menú Principal
 											<div class="col-sm-4">					
 												<strong>
 													<font size ="3", color ="#f72900" face="Tahoma">
-														$ <label>2,000</label>
+														$ <label id="TotalGanancia"></label>
 													</font>
 												</strong>			
 											</div>
@@ -138,7 +138,7 @@ Menú Principal
 								</div>
 							</div>
 
-							<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 col-md-offset">
+							<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6 col-md-offset">
 								<div class="panel panel-primary">
 									<div class="panel-heading"><h4><strong>Estadisticas Ganancia - <label id="label_fecha"></label></strong></h4></div>
 									<div class="panel-body">
@@ -155,8 +155,7 @@ Menú Principal
 						<script type="text/javascript">
 
 
-							$(function() {
-								Cargar_Grafica();
+							$(function() {								
 
 								moment.locale('es');
 
@@ -184,17 +183,23 @@ Menú Principal
 
 								cb(start, end);	
 
-								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'))
-
+								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+								Cargar_Grafica(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
 							});	
 
 
 
-							function Cargar_Grafica(){
+							function Cargar_Grafica($Fecha_Inicial, $Fecha_Final){
+								var Fecha_Inicial=$Fecha_Inicial;
+								var Fecha_Final=$Fecha_Final;
 								$.ajax({
 									url   : "<?= URL::to('cargar_grafica_estadistica') ?>",
 									type  : "GET",
-									async : false,									
+									async : false,	
+									data: {
+										'Fecha_Inicial' :Fecha_Inicial, 
+										'Fecha_Final' 	:Fecha_Final									
+									},								
 									success:function(data){
 										$('#grafica_estadistica').empty().html(data);	
 									}
@@ -219,41 +224,69 @@ Menú Principal
 										$('#TotalAlimento').empty().html('$ '+data.TotalVentaAlimento);
 										$('#CantidadVendidaProductos').empty().html(data.TotalProductos);
 										$('#CantidadVendidaAlimentos').empty().html(data.TotalAlimentos);
+										$('#TotalVentaMinutos').empty().html(data.TotalVentaMinutos);
+										$('#TotalVentaRecargas').empty().html(data.TotalVentaRecarga);
+										$('#TotalVentaInternet').empty().html(data.TotalVentaInternet);
+										$('#TotalCompras').empty().html(data.TotalCompra);
+										$('#TotalGastos').empty().html(data.TotalGasto);
+										$('#TotalGanancia').empty().html(data.TotalGanancia);					
 										
+
 									}
 								});	
 							}
 
-
 							function Calendario1(){		
 								var Hoy=[moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-								console.log('Seleciono Hoy: ' +Hoy);
+
+								$('#label_fecha').text([moment().format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
+
+								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+								
 							}
 
 							function Calendario2(){
 								var Ayer=[moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD')];
 
 								$('#label_fecha').text([moment().subtract(1, 'days').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'days').format('MMMM D, YYYY')]);
+
+								Consultar_X_Fecha(moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD'));
 							}
 
 							function Calendario3(){
 								var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-								console.log('Seleciono Ultimos 7 Dias: '+Ultimos7Dias);
+
+								$('#label_fecha').text([moment().subtract(6, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
+								
+								Consultar_X_Fecha(moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
 							}
 
 							function Calendario4(){
 								var Ultimos30Dias=[moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-								console.log('Seleciono Ultimos 30 Dias: '+Ultimos30Dias);
+
+								$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
+								
+								Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+								
 							}
 
 							function Calendario5(){
 								var MesActual=[moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD')];
-								console.log('Seleciono Mes Actual: '+MesActual);
+								
+
+								$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().endOf('month').format('MMMM D, YYYY')]);
+								
+								Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
+
 							}
 
 							function Calendario6(){
 								var MesAnterior=[moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')];
-								console.log('Seleciono Mes Anterior: '+MesAnterior);
+
+
+								$('#label_fecha').text([moment().subtract(1, 'month').startOf('month').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'month').endOf('month').format('MMMM D, YYYY')]);
+								
+								Consultar_X_Fecha(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
 							}
 
 
@@ -267,22 +300,24 @@ Menú Principal
 								var Fecha_Inicial = moment($('#daterangepicker_start').val()).format('YYYY-MM-DD');
 								var Fecha_Final = moment($('#daterangepicker_end').val()).format('YYYY-MM-DD');
 
-								var Hoy=[moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+								Consultar_X_Fecha(Fecha_Inicial,Fecha_Final);
 
-								var Ayer=[moment().subtract(1, 'days').format('YYYY-MM-DD').format('YYYY-MM-DD'), moment().subtract(1, 'days')];
+								// var Hoy=[moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
 
-								var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+								// var Ayer=[moment().subtract(1, 'days').format('YYYY-MM-DD').format('YYYY-MM-DD'), moment().subtract(1, 'days')];
 
-								var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-								var Ultimos30Dias=[moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-								var MesActual=[moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD')];
-								var MesAnterior=[moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')];
+								// var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+
+								// var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+								// var Ultimos30Dias=[moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+								// var MesActual=[moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD')];
+								// var MesAnterior=[moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')];
 
 
-								alert('Ultimos 7 Dias '+Ultimos7Dias);
-								alert('Ultimos 30 Dias '+Ultimos30Dias);
-								alert('Mes Actual '+MesActual);
-								alert('Mes Anterior '+MesAnterior);
+								// alert('Ultimos 7 Dias '+Ultimos7Dias);
+								// alert('Ultimos 30 Dias '+Ultimos30Dias);
+								// alert('Mes Actual '+MesActual);
+								// alert('Mes Anterior '+MesAnterior);
 
 
 							}
