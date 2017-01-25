@@ -594,6 +594,7 @@ public function Cargar_nombres_productos(){
 
 
 public function Cargar_detalles_Productos_Venta(){
+
   $id=Input::get('id_producto');
 
   $resultados =Producto::where('id',$id)->get();

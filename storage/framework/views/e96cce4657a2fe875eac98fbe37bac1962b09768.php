@@ -20,8 +20,7 @@ Menú Principal
 		</div>
 	</div>
 </div> 
-
-
+<center><div id="content" class="cargando"></div></center>
 <div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="dashboard-stat blue-madison">
@@ -30,7 +29,7 @@ Menú Principal
 			</div>
 			<div class="details">
 				<div class="number" id="TotalProducto">
-					
+
 				</div>
 				<div class="desc">
 					Total Ventas Productos
@@ -146,13 +145,21 @@ Menú Principal
 									</div>
 								</div>	
 							</div>
-						</div>
+						</div>						
 						<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>"> 	
+
+						<style type="text/css">
+							div.cargando:before {
+								content:url(global/images/cargando.gif);
+							}
+						</style>
 
 						<script src="https://code.highcharts.com/highcharts.js"></script>
 						<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 						<script type="text/javascript">
+
+
 
 
 							$(function() {								
@@ -183,8 +190,7 @@ Menú Principal
 
 								cb(start, end);	
 
-								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-								Cargar_Grafica(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));								
 							});	
 
 
@@ -210,6 +216,7 @@ Menú Principal
 								var _token=$('#_token').val();
 								var Fecha_Inicial=$Fecha_Inicial;
 								var Fecha_Final=$Fecha_Final;
+
 								$.ajax({
 									url   : "<?= URL::to('consultar_x_Fecha') ?>",
 									type  : "POST",
@@ -218,7 +225,15 @@ Menú Principal
 										'Fecha_Inicial' :Fecha_Inicial, 
 										'Fecha_Final' 	:Fecha_Final,
 										'_token' 		:_token
-									},							
+									},
+
+									beforeSend: function(){
+										$('#content').show();
+									},
+
+									complete: function(){
+										$('#content').hide();
+									},
 									success:function(data){										
 										$('#TotalProducto').empty().html('$ '+data.TotalVentaProducto);	
 										$('#TotalAlimento').empty().html('$ '+data.TotalVentaAlimento);
@@ -229,11 +244,14 @@ Menú Principal
 										$('#TotalVentaInternet').empty().html(data.TotalVentaInternet);
 										$('#TotalCompras').empty().html(data.TotalCompra);
 										$('#TotalGastos').empty().html(data.TotalGasto);
-										$('#TotalGanancia').empty().html(data.TotalGanancia);					
-										
+										$('#TotalGanancia').empty().html(data.TotalGanancia);
+										console.clear();					
+
 
 									}
 								});	
+
+								Cargar_Grafica(Fecha_Inicial, Fecha_Final);
 							}
 
 							function Calendario1(){		
@@ -242,7 +260,7 @@ Menú Principal
 								$('#label_fecha').text([moment().format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
 
 								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-								
+
 							}
 
 							function Calendario2(){
@@ -257,7 +275,7 @@ Menú Principal
 								var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
 
 								$('#label_fecha').text([moment().subtract(6, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
-								
+
 								Consultar_X_Fecha(moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
 							}
 
@@ -265,17 +283,17 @@ Menú Principal
 								var Ultimos30Dias=[moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
 
 								$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
-								
+
 								Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-								
+
 							}
 
 							function Calendario5(){
 								var MesActual=[moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD')];
-								
+
 
 								$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().endOf('month').format('MMMM D, YYYY')]);
-								
+
 								Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
 
 							}
@@ -285,12 +303,9 @@ Menú Principal
 
 
 								$('#label_fecha').text([moment().subtract(1, 'month').startOf('month').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'month').endOf('month').format('MMMM D, YYYY')]);
-								
+
 								Consultar_X_Fecha(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
 							}
-
-
-
 
 
 
@@ -301,6 +316,8 @@ Menú Principal
 								var Fecha_Final = moment($('#daterangepicker_end').val()).format('YYYY-MM-DD');
 
 								Consultar_X_Fecha(Fecha_Inicial,Fecha_Final);
+
+								$('#label_fecha').text([moment($('#daterangepicker_start').val()).format('MMMM D, YYYY') + ' - ' + moment($('#daterangepicker_end').val()).format('MMMM D, YYYY')]);
 
 								// var Hoy=[moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
 

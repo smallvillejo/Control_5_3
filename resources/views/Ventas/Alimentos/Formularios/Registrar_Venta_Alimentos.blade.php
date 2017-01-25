@@ -12,7 +12,7 @@
 						<div class="form-group">
 							<label><b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Seleccione un Alimento:</font></strong></b></label>
 							<div class="input-icon right">
-								<select class="form-control selectpicker" data-live-search="true" id="id_alimento" onchange="seleccion_alimentos()" >
+								<select class="form-control selectpicker AlimentosCombobox" data-live-search="true" id="id_alimento" onchange="seleccion_alimentos()" >
 									<option></option>
 								</select>
 							</div>
@@ -109,10 +109,19 @@
 									$.each(re, function(key,value) {
 										$el.append($("<option></option>")
 											.attr("value", key).text(value));
+									});							
+
+									var options = $('.AlimentosCombobox option');
+									var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+									arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+									options.each(function(i, o) {
+										o.value = arr[i].v;
+										$(o).text(arr[i].t);
 									});
 								}
 							});
 						}
+
 						function seleccion_alimentos(){	
 							var $NoDisponible= 'global/images/AlimentoNoDisponible.png';
 							var id_alimento  = document.getElementById('id_alimento').value;
@@ -128,12 +137,13 @@
 								success:function(re){									
 									$('#stock_alimento').text(re.stock);
 									$('#valor_venta_alimento').text(re.valor_venta_alimento);
+									console.log(re.ruta_imagen_alimento);
 									if(re.ruta_imagen_alimento=="No Disponible"){
 										$("#imagen_destino_alimentos").attr("src",$NoDisponible);
 									}else{
 										$("#imagen_destino_alimentos").attr("src",re.ruta_imagen_alimento);
 									}									
-									
+
 								}
 							});
 						}
@@ -309,7 +319,7 @@
 							window.clearTimeout(Tiempo_Inactividad);
 							Tiempo_Inactividad2=setTimeout('document.location.href = "{{ route('Index')}}"',80000);
 						}
-						
+
 
 						$('#boton_registrar_venta_producto').click(function(){
 							$('#Cargar_Formulario_Venta_Productos').show(1000);

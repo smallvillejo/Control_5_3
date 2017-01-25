@@ -593,9 +593,11 @@ class AlimentosController extends Controller{
       $valor_venta_alimento=$resultado->valor_venta_alimento;
       $ruta_imagen_alimento=$resultado->ruta_imagen_alimento;
     }
-    if($ruta_imagen_alimento=="null"){
+
+    if($ruta_imagen_alimento==null){
       $ruta_imagen_alimento="No Disponible";
     }
+
     return Response::json(['stock'=>$stock,'valor_venta_alimento'=>$valor_venta_alimento,'ruta_imagen_alimento'=>$ruta_imagen_alimento]);
   }
   public function RegistrarVentaAlimentos(){

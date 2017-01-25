@@ -5,14 +5,14 @@
 			<div class="panel panel-info" style="margin: 20 auto;width:100% ">
 				<div class="panel-heading">Datos de la Venta</div>
 				<div class="panel-body">
-					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">				
+					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">			
 						<input type="hidden" name="comercio_id" id="comercio_id" value="{{Auth::user()->id_comercio}}" class="form-control">
 						<input type="hidden" name="Fecha_Actual" id="Fecha_Actual" value="{{$today = Carbon::today()->toDateString()}}" class="form-control">
 						<input type="hidden" name="Hora_Venta" id="Hora_Venta" value="{{Carbon::now()}}" class="form-control">
 						<div class="form-group">
 							<label><b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Seleccione un Producto</font></strong></b></label>
 							<div class="input-icon right">
-								<select class="form-control selectpicker" data-live-search="true" id="id_producto" onchange="seleccion_productos()" >
+								<select class="form-control selectpicker ProductosCombobox" data-live-search="true" id="id_producto" onchange="seleccion_productos()" >
 									<option></option>
 								</select>
 							</div>
@@ -109,7 +109,7 @@
 									.attr("value", key).text(value));
 							});							
 
-							var options = $('.selectpicker option');
+							var options = $('.ProductosCombobox option');
 							var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
 							arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
 							options.each(function(i, o) {

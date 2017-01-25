@@ -45,14 +45,56 @@ class IndexController extends Controller{
 		$Fecha_Final=Input::get('Fecha_Final');
 
 
+		$TotalVentaProducto=VentaProducto::whereBetween('fecha_producto_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_producto_venta');
+
+
+		$TotalVentaAlimento=VentaAlimento::whereBetween('fecha_alimento_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_alimento_venta');	
+
+
 		$TotalVentaMinutos=DetallePlanMinutos::whereBetween('fecha_registro', array($Fecha_Inicial, $Fecha_Final))
 		->Where('id_comercio',$id_comercio)
-		// ->sum('total_minutos_venta');	
-		->get();
+		->sum('total_minutos_venta');		 
 
-		 // $TotalVentaMinutos=number_format($TotalVentaMinutos);
+		$TotalVentaInternet=VentaInternet::whereBetween('fecha_internet_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('venta_total_dia');
+
+		$TotalVentaRecarga=VentaRecarga::whereBetween('fecha_venta_recarga', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_venta_recarga');
+
+
+		$TotalCompra=Compra::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_total_compra');
+
+
+		$TotalGasto=Gasto::whereBetween('fecha_gasto', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_gasto');
+
+		// $TotalVentaProducto=number_format($TotalVentaProducto); 
+		// $TotalVentaAlimento=number_format($TotalVentaAlimento);
+		// $TotalVentaMinutos=number_format($TotalVentaMinutos);
+		// $TotalVentaInternet=number_format($TotalVentaInternet); 
+		// $TotalVentaRecarga=number_format($TotalVentaRecarga); 
+		// $TotalCompra=number_format($TotalCompra);
+		// $TotalGasto=number_format($TotalGasto);
+
+
+		
 		return view('Index/GraficaEstadisticas.Grafica_Estadistica_Index')
-		->with('TotalVentaMinutos',$TotalVentaMinutos);
+		->with('TotalVentaProducto',$TotalVentaProducto)
+		->with('TotalVentaAlimento',$TotalVentaAlimento)
+		->with('TotalVentaMinutos',$TotalVentaMinutos)
+		->with('TotalVentaInternet',$TotalVentaInternet)
+		->with('TotalVentaRecarga',$TotalVentaRecarga)
+		->with('TotalCompra',$TotalCompra)
+		->with('TotalGasto',$TotalGasto);
 	}
 
 	public function Consultar_Ventas_X_Fecha(){
@@ -64,7 +106,7 @@ class IndexController extends Controller{
 		$TotalVentaProducto=VentaProducto::whereBetween('fecha_producto_venta', array($Fecha_Inicial, $Fecha_Final))
 		->Where('id_comercio',$id_comercio)
 		->sum('total_producto_venta');
-		
+
 
 		$TotalVentaAlimento=VentaAlimento::whereBetween('fecha_alimento_venta', array($Fecha_Inicial, $Fecha_Final))
 		->Where('id_comercio',$id_comercio)
@@ -116,7 +158,7 @@ class IndexController extends Controller{
 		$TotalCompra=number_format($TotalCompra);
 		$TotalGasto=number_format($TotalGasto);
 		$TotalGanancia=number_format($TotalGanancia);
-		
+
 
 
 

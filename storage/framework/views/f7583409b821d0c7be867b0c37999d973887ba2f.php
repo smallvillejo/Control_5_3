@@ -12,7 +12,7 @@
 						<div class="form-group">
 							<label><b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Seleccione un Producto</font></strong></b></label>
 							<div class="input-icon right">
-								<select class="form-control selectpicker" data-live-search="true" id="id_producto" onchange="seleccion_productos()" >
+								<select class="form-control selectpicker ProductosCombobox" data-live-search="true" id="id_producto" onchange="seleccion_productos()" >
 									<option></option>
 								</select>
 							</div>
@@ -109,7 +109,7 @@
 									.attr("value", key).text(value));
 							});							
 
-							var options = $('.selectpicker option');
+							var options = $('.ProductosCombobox option');
 							var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
 							arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
 							options.each(function(i, o) {
