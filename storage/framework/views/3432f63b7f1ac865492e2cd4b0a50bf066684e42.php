@@ -4,8 +4,9 @@ Registrar Venta
 <?php $__env->startSection('content'); ?>
 <div class="panel panel-default">
 	<div class="panel-heading"><b><strong><font size ="3", color="#1074ff" face="Arial Black">Últimas Ventas - Alimentos</font></strong></b></div>
-	
-	<div class="col-md-3 col-xs-12">
+	<div class="panel-body">
+
+	<!-- <div class="col-md-3 col-xs-12">
 		<div id="id_div_venta_alimento_cuadro" style="display: none">
 			<div class="panel-body">
 				<div class="panel panel-default" >
@@ -16,10 +17,10 @@ Registrar Venta
 				</div>
 			</div>
 		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div id="id_div_venta_alimento" style="display: none">
+	</div> -->
+	
+	<!-- <div class="row"> -->
+		<!-- <div id="id_div_venta_alimento" style="display: none">
 			<div class="col-xs-2 col-sm-1">
 				<label>Buscar Alimento:</label>
 			</div>
@@ -30,10 +31,10 @@ Registrar Venta
 		<div class="col-xs-1 col-sm-2">
 			<button type="button" class="btn btn-danger" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
 		</div>
-	</div>
-	<div class="col-xs-12 col-sm-8 ">
-		<div id="Tabla_Venta_Alimentos_X_Fecha"></div>
-	</div>
+	</div> -->
+	
+	<div id="Tabla_Venta_Alimentos_X_Fecha"></div>
+	
 </div>
 </div>
 <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" id="_token">

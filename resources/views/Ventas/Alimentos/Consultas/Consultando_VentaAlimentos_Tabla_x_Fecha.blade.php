@@ -29,7 +29,7 @@
 			<table class="table table-bordered table-striped table-condensed flip-content">
 				<thead class="flip-content">
 					<tr>
-						<th width="40%">Nombre Alimento</th>
+						<th width="40%">Nombre Alimentoss</th>
 						<th width="5%">Cantidad</th>
 						<th width="10%">Precio Alimento</th>
 						<th class="column-title">Valor Total</th>

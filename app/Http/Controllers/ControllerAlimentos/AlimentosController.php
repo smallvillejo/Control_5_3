@@ -530,6 +530,8 @@ class AlimentosController extends Controller{
     ->paginate(10);
     return view('Ventas/Alimentos/Consultas/Consultando_VentaAlimentos_Tabla_x_Fecha')->with('VentaAlimento',$VentaAlimento);
   }
+
+  // Carga las ultimas Ventas de alimentos en Ventas_Alimentos_X_Fecha#
   public function Tabla_Venta_Alimentos_X_Fecha(){
     $fecha= Carbon::today()->toDateString();
     $id_comercio=Auth::user()->id_comercio;
@@ -539,8 +541,9 @@ class AlimentosController extends Controller{
     ->where('id_comercio',$id_comercio)
     ->orderBy('id','desc')
     ->paginate(10);
-    return view('Ventas/Alimentos/Tablas.VentaAlimentos_Tabla_x_Fecha')->with('VentaAlimento',$VentaAlimento);
+    return view('Ventas/Alimentos/Tablas.Ultimas_Ventas_Alimentos_Tabla_x_Fecha')->with('VentaAlimento',$VentaAlimento);
   }
+   // Carga el valor de lasultimas Ventas de alimentos en Ventas_Alimentos_X_Fecha#
   public function Cuadrado_Venta_Alimentos_X_Fecha(){
     $fecha= Carbon::today()->toDateString();
     $id_comercio=Auth::user()->id_comercio;
@@ -702,28 +705,7 @@ class AlimentosController extends Controller{
     ->with('VentaAlimento',$VentaAlimento)
     ->with('TotalVendido',$TotalVendido);
   }
-//   public function IndexVentaProducto()  {
-//    $id_comercio=Auth::user()->id_comercio;
-//    $fecha= Carbon::today()->toDateString();
-//    $VentaProducto =VentaProducto::where('fecha_producto_venta',$fecha)
-//    ->where('id_comercio',$id_comercio)
-//    ->sum('total_producto_venta');
-//    $Cantidad_Productos_Venta =VentaProducto::where('fecha_producto_venta',$fecha)
-//    ->where('id_comercio',$id_comercio)
-//    ->count('id');
-//    $VentaProducto=number_format($VentaProducto);
-//    $nombre_productos= Producto::orderBy('nombre_producto','asc')
-//    ->where('id_comercio',$id_comercio)
-//    ->get();
-//    $nombre_producto=[];
-//    $nombre_producto[0] = "";
-//    foreach ($nombre_productos  as $resultados) {
-//     $nombre_producto[$resultados->id] = $resultados->nombre_producto;
-//   }
-//   return view('Productos.VentaProductos')->with('VentaProducto',$VentaProducto)
-//   ->with('Cantidad_Productos_Venta',$Cantidad_Productos_Venta)
-//   ->with('nombre_producto',$nombre_producto);
-// }
+
   public function ListarDataProductos()   {
     $id_comercio=Auth::user()->id_comercio;
     $id=Input::get('id');
