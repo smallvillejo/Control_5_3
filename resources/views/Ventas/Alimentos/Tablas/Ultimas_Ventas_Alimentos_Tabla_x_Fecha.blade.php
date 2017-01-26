@@ -3,27 +3,23 @@
 	<img src="global/images/Error_No_Foundd.png" alt="logo" class="img-thumbnail img-responsive" >
 	<script type="text/javascript">
 	// $('.panelsito_ventas_alimentos').hide();
-	$('#id_div_venta_alimento').hide();
-	$('#id_div_venta_alimento_cuadro').hide();
+	$('#id_div_venta_alimento').hide();	
+	$('#idBuscarAlimento').hide();
 </script>
 </div>
 @else
 <script type="text/javascript">
 	// $('.panelsito_ventas_alimentos').hide();
 	$('#id_div_venta_alimento').show();
-	$('#id_div_venta_alimento_cuadro').show();
+	$('#idBuscarAlimento').show();
 </script>
 <img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
 <center>{{$VentaAlimento->links()}}</center>
 @foreach ($VentaAlimento as $value)
-
-
-
-
 <div class="col-xs-12 col-sm-12 col col-md-6 col-lg-3">
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<span class="badge btn-md btn-success" title="{{strtoupper($nombre_alimento=$value->Alimento->nombre_alimento)}}">
+			<span class="badge btn-md btn-danger" title="{{strtoupper($nombre_alimento=$value->Alimento->nombre_alimento)}}">
 				<b><strong> <font size ="1">{{strtoupper($nombre_alimento=$value->Alimento->nombre_alimento)}}
 				</font></strong></b></span>
 			</div>
@@ -85,7 +81,7 @@
 					</tbody>
 				</div>
 			</table>				
-			<div class="panel-footer"><strong>Hora Venta:</strong> {{Carbon::parse($value->hora_venta_alimento)->diffForHumans()}}
+			<div class="panel-footer"><strong><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> {{Carbon::parse($value->hora_venta_alimento)->diffForHumans()}}
 				<div class="btn-group pull-right">				
 					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Editar" id="{{$value->id}}" class="Editar_Venta" data-backdrop="static" data-keyboard="false" title="Editar" Alimento_Venta="{{$value->Alimento->nombre_alimento}}" id_venta="{{$value->id}}" canti_vendido="{{$value->cantidad_alimento_venta}}" id_alimento_venta="{{$value->alimento_id}}">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-pencil-square fa-2x"></span></font></strong>
 					</a>						
@@ -475,6 +471,7 @@
 
 						if(variable=="La venta fue editada exitosamente."){
 							Listar_Venta_Alimentos();
+							refresPagina();
 						}
 
 					});

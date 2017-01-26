@@ -145,7 +145,7 @@ info2.slideDown();
       type:'get',
       url:'<?php echo e(url('Notificaciones_PocoStock')); ?>',
       success: function(data){
-        $('#pulsate-regular').pulsate("destroy");
+        // $('#pulsate-regular').pulsate("destroy");
         if(data.NumeroNotificacion>0){
           $('#ID_notifica').show();         
         }else{

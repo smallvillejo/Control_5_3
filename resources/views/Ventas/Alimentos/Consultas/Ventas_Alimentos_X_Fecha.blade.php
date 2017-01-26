@@ -6,14 +6,21 @@
 
 <div class="panel panel-primary">
 	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Alimentos</font></strong></b>
-		<div class="btn-group pull-right">
-			
+		<div class="btn-group pull-right">			
 			<h4>Total Vendido:<label id="TotalVendido"></label></h4>
 		</div>
+		<div id="idBuscarAlimento">
+			<br>Buscar Alimento:<select class="selectpicker" data-live-search="true" id="alimento_id_venta_consulta" onchange="Seleccion_Busqueda()" >
+			<option></option>
+		</select>
+		<button type="button" class="btn btn-danger" id="btnBuscarAlimento" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
 	</div>
-	<div class="panel-body">
-		<div id="Tabla_Venta_Alimentos_X_Fecha"></div>
+</div>
+<div class="panel-body">		
+	<div class="col-xs-1 col-sm-2">
 	</div>
+	<div id="Tabla_Venta_Alimentos_X_Fecha"></div>
+</div>
 </div>
 
 
@@ -90,7 +97,9 @@
 			},
 			success:function(resultado){
 				$('#Tabla_Venta_Alimentos_X_Fecha').empty().html(resultado);
+				$('#btnBuscarAlimento').show();
 			}
+
 		});
 	}
 	function  Listar_Venta_Alimentos(){
@@ -105,7 +114,7 @@
 			success: function(data){
 				$('#Tabla_Venta_Alimentos_X_Fecha').empty().html(data);
 				Notificaciones_PocoStock();
-				subir();
+				subir();				
 			}
 		});
 	}
@@ -157,6 +166,7 @@ function refresPagina(){
 	// $('#FechaFinal *').prop('disabled',false);
 	Listar_Venta_Alimentos();
 	$('#alimento_id_venta_consulta').val('').selectpicker('refresh');
+	$('#btnBuscarAlimento').hide();
 }
 // ---------------------------------------------------------------------------------------------------
 // function BuscarXFecha(){
