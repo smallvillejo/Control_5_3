@@ -20,138 +20,142 @@ Menú Principal
 		</div>
 	</div>
 </div> 
-<center><div id="content" class="cargando"></div></center>
-<div class="row">
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		<div class="dashboard-stat blue-madison">
-			<div class="visual">
-				<i class="fa fa-archive" aria-hidden="true"></i>
-			</div>
-			<div class="details">
-				<div class="number" id="TotalProducto">
+<!-- <center><div id="content" class="cargando"> -->
+<center><div id="loadinfo" style="display: none" class="cargando"></div></center>
+<div id="content" style="display: none">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="dashboard-stat blue-madison">
+				<div class="visual">
+					<i class="fa fa-archive" aria-hidden="true"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="TotalProducto">
 
-				</div>
-				<div class="desc">
-					Total Ventas Productos
-				</div>
-			</div>
-			<a class="more" href="javascript:;">
-				Cantidad Vendida: <label id="CantidadVendidaProductos"></label>
-			</a>
-		</div>
-	</div>
-
-	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		<div class="dashboard-stat red-intense">
-			<div class="visual">
-				<i class="fa fa-cutlery"></i>
-			</div>
-			<div class="details">
-				<div class="number" id="TotalAlimento">					
-				</div>
-				<div class="desc">
-					Total Ventas Alimentos
-				</div>
-			</div>
-			<a class="more" href="javascript:;">
-				Cantidad Vendida: <label id="CantidadVendidaAlimentos"></label>
-			</a>
-		</div>
-	</div>	
-</div>	
-<div class="row">			
-	<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6">
-		<div class="panel panel-primary">
-			<div class="panel-heading"><h4><strong>Balance General</strong></h4></div>
-			<div class="panel-body">
-				<div class="form-group">
-					<label class="col-sm-8 control-label"><i class="fa fa-mobile" title="Titulo" aria-hidden="true"></i>
-						<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Minutos:</font></strong></label>
-						<div class="col-sm-4">					
-							<strong>
-								<font size ="3", color ="#f72900" face="Tahoma">
-									$ <label id="TotalVentaMinutos"></label>
-								</font>
-							</strong>			
-						</div>
 					</div>
+					<div class="desc">
+						Total Ventas Productos
+					</div>
+				</div>
+				<a class="more" href="javascript:;">
+					Cantidad Vendida: <label id="CantidadVendidaProductos"></label>
+				</a>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="dashboard-stat red-intense">
+				<div class="visual">
+					<i class="fa fa-cutlery"></i>
+				</div>
+				<div class="details">
+					<div class="number" id="TotalAlimento">					
+					</div>
+					<div class="desc">
+						Total Ventas Alimentos
+					</div>
+				</div>
+				<a class="more" href="javascript:;">
+					Cantidad Vendida: <label id="CantidadVendidaAlimentos"></label>
+				</a>
+			</div>
+		</div>	
+	</div>	
+	<div class="row">			
+		<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading"><h4><strong>Balance General</strong></h4></div>
+				<div class="panel-body">
 					<div class="form-group">
-						<label class="col-sm-8 control-label"><i class="fa fa-desktop" aria-hidden="true"></i>
-							<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Internet:</font></strong></label>
+						<label class="col-sm-8 control-label"><i class="fa fa-mobile" title="Titulo" aria-hidden="true"></i>
+							<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Minutos:</font></strong></label>
 							<div class="col-sm-4">					
 								<strong>
 									<font size ="3", color ="#f72900" face="Tahoma">
-										$ <label id="TotalVentaInternet"></label>
+										$ <label id="TotalVentaMinutos"></label>
 									</font>
 								</strong>			
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-8 control-label"><i class="fa fa-usd" title="Titulo" aria-hidden="true"></i>
-								<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Recargas:</font></strong></label>
+							<label class="col-sm-8 control-label"><i class="fa fa-desktop" aria-hidden="true"></i>
+								<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Internet:</font></strong></label>
 								<div class="col-sm-4">					
 									<strong>
 										<font size ="3", color ="#f72900" face="Tahoma">
-											$ <label id="TotalVentaRecargas"></label>
+											$ <label id="TotalVentaInternet"></label>
 										</font>
 									</strong>			
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-8 control-label"><i class="fa fa-shopping-cart" title="Titulo" aria-hidden="true"></i>
-									<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Compras:</font></strong></label>
+								<label class="col-sm-8 control-label"><i class="fa fa-usd" title="Titulo" aria-hidden="true"></i>
+									<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Recargas:</font></strong></label>
 									<div class="col-sm-4">					
 										<strong>
 											<font size ="3", color ="#f72900" face="Tahoma">
-												$ <label id="TotalCompras"></label>
+												$ <label id="TotalVentaRecargas"></label>
 											</font>
 										</strong>			
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-8 control-label"><i class="fa fa-hand-o-right" aria-hidden="true"></i>
-										<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Gastos & Inversión:</font></strong></label>
+									<label class="col-sm-8 control-label"><i class="fa fa-shopping-cart" title="Titulo" aria-hidden="true"></i>
+										<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Compras:</font></strong></label>
 										<div class="col-sm-4">					
 											<strong>
 												<font size ="3", color ="#f72900" face="Tahoma">
-													$ <label id="TotalGastos"></label>									
+													$ <label id="TotalCompras"></label>
 												</font>
-											</strong>	
-											<br>
-											<br>						
+											</strong>			
 										</div>
-
 									</div>
 									<div class="form-group">
-										<label class="col-sm-8 control-label"><i class="fa fa-money" aria-hidden="true"></i>
-											<strong> <font size ="2", color ="#151aaf" face="Tahoma">TOTAL GANANCIA:</font></strong></label>
+										<label class="col-sm-8 control-label"><i class="fa fa-hand-o-right" aria-hidden="true"></i>
+											<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Gastos & Inversión:</font></strong></label>
 											<div class="col-sm-4">					
 												<strong>
 													<font size ="3", color ="#f72900" face="Tahoma">
-														$ <label id="TotalGanancia"></label>
+														$ <label id="TotalGastos"></label>									
 													</font>
-												</strong>			
+												</strong>	
+												<br>
+												<br>						
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="col-sm-8 control-label"><i class="fa fa-money" aria-hidden="true"></i>
+												<strong> <font size ="2", color ="#151aaf" face="Tahoma">TOTAL GANANCIA:</font></strong></label>
+												<div class="col-sm-4">					
+													<strong>
+														<font size ="3", color ="#f72900" face="Tahoma">
+															$ <label id="TotalGanancia"></label>
+														</font>
+													</strong>			
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 
-							<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6 col-md-offset">
-								<div class="panel panel-primary">
-									<div class="panel-heading"><h4><strong>Estadisticas Ganancia - <label id="label_fecha"></label></strong></h4></div>
-									<div class="panel-body">
-										<div id="grafica_estadistica"></div>
-									</div>
-								</div>	
-							</div>
-						</div>						
+								<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6 col-md-offset">
+									<div class="panel panel-primary">
+										<div class="panel-heading"><h4><strong>Estadisticas Ganancia - <label id="label_fecha"></label></strong></h4></div>
+										<div class="panel-body">
+											<div id="grafica_estadistica"></div>
+										</div>
+									</div>	
+								</div>
+							</div>			
+						</div>
 						<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>"> 	
 
 						<style type="text/css">
 							div.cargando:before {
 								content:url(global/images/cargando.gif);
-							}
+								background-repeat: no-repeat;
+							}							
 						</style>
 
 						<script src="https://code.highcharts.com/highcharts.js"></script>
@@ -226,13 +230,12 @@ Menú Principal
 										'Fecha_Final' 	:Fecha_Final,
 										'_token' 		:_token
 									},
-
 									beforeSend: function(){
-										$('#content').show();
+										$('#loadinfo').show();
 									},
-
 									complete: function(){
-										$('#content').hide();
+										$('#loadinfo').hide();
+										$('#content').show();										
 									},
 									success:function(data){										
 										$('#TotalProducto').empty().html('$ '+data.TotalVentaProducto);	

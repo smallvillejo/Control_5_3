@@ -37,7 +37,7 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
-								<th class="column-title">Nombre Alimento</th>
+								<th class="column-title">Nombre Alimentoss</th>
 								<th class="column-title">Cantidad</th>
 								<th class="column-title">Valor/Uni</th>
 								<th class="column-title">Valor/Total</th>
