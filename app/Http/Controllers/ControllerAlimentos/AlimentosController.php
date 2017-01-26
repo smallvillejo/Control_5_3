@@ -516,8 +516,8 @@ class AlimentosController extends Controller{
     ->update($alimentos);
     $VentaAlimento=VentaAlimento::where('hora_venta_alimento', '>=',$fecha)
     ->where('id_comercio',$id_comercio)
-    ->paginate(10);
-    return view('Ventas/Alimentos/Tablas/VentaAlimentos_Tabla_x_Fecha')
+    ->paginate(8);
+    return view('Ventas/Alimentos/Tablas/Ultimas_Ventas_Alimentos_Tabla_x_Fecha')
     ->with('VentaAlimento',$VentaAlimento);
   }
   public function Consultar_Alimento_x_Busqueda(){
@@ -527,7 +527,7 @@ class AlimentosController extends Controller{
     $VentaAlimento=VentaAlimento::where('hora_venta_alimento', '>=',$fecha)
     ->where('id_comercio',$id_comercio)
     ->where('alimento_id',$id_alimento)
-    ->paginate(10);
+    ->paginate(8);
     return view('Ventas/Alimentos/Consultas/Consultando_VentaAlimentos_Tabla_x_Fecha')->with('VentaAlimento',$VentaAlimento);
   }
 
@@ -540,7 +540,7 @@ class AlimentosController extends Controller{
     $VentaAlimento=VentaAlimento::where('fecha_alimento_venta',$fecha)
     ->where('id_comercio',$id_comercio)
     ->orderBy('id','desc')
-    ->paginate(10);
+    ->paginate(8);
     return view('Ventas/Alimentos/Tablas.Ultimas_Ventas_Alimentos_Tabla_x_Fecha')->with('VentaAlimento',$VentaAlimento);
   }
    // Carga el valor de lasultimas Ventas de alimentos en Ventas_Alimentos_X_Fecha#
@@ -689,6 +689,7 @@ class AlimentosController extends Controller{
       }
     }
   }
+
   public function Ultimos_alimentos_vendidos(){
     $id_comercio=Auth::user()->id_comercio;
     $fecha= Input::get('Hora_Venta');
@@ -706,42 +707,42 @@ class AlimentosController extends Controller{
     ->with('TotalVendido',$TotalVendido);
   }
 
-  public function ListarDataProductos()   {
-    $id_comercio=Auth::user()->id_comercio;
-    $id=Input::get('id');
-    $productos = Producto::where('id', $id)
-    ->where('id_comercio',$id_comercio)
-    ->get();
-    return $productos;
-  }
+  // public function ListarDataProductos()   {
+  //   $id_comercio=Auth::user()->id_comercio;
+  //   $id=Input::get('id');
+  //   $productos = Producto::where('id', $id)
+  //   ->where('id_comercio',$id_comercio)
+  //   ->get();
+  //   return $productos;
+  // }
   public function Cargar_nombres_alimentos(){
     $id_comercio=Auth::user()->id_comercio;
     $resultado =Alimento::where('id_comercio', $id_comercio)->orderBy('nombre_alimento','ASC')->lists('nombre_alimento','id');
     return $resultado;
   }
-  public function Cargar_detalles_Productos_Venta(){
-    $id=Input::get('id_producto');
-    $resultados =Producto::where('id',$id)->get();
+  // public function Cargar_detalles_Productos_Venta(){
+  //   $id=Input::get('id_producto');
+  //   $resultados =Producto::where('id',$id)->get();
 
-    foreach ($resultados  as $resultado) {
-      $stock=$resultado->cantidad_producto;
-      $valor_venta_producto=$resultado->valor_venta_producto;
-      $ruta_imagen_producto=$resultado->ruta_imagen_producto;
-    }
-    if($ruta_imagen_producto="null"){
-      $ruta_imagen_producto="No Disponible";
-    }
-    return Response::json(['stock'=>$stock,'valor_venta_producto'=>$valor_venta_producto,'ruta_imagen_producto'=>$ruta_imagen_producto]);
-  }
-  public function Cargar_Ventas_Productos(){
-    $Fecha_Actual= Carbon::today()->toDateString();
-    $id_comercio=Auth::user()->id_comercio;
-    $VentaProducto =VentaProducto::where('fecha_producto_venta',$Fecha_Actual)
-    ->where('id_comercio',$id_comercio)
-    ->orderBy('hora_venta_producto','desc')
-    ->paginate(5);
-    return view('Productos/Tablas/VentaProductosTabla')->with('VentaProducto',$VentaProducto)->render();
-  }
+  //   foreach ($resultados  as $resultado) {
+  //     $stock=$resultado->cantidad_producto;
+  //     $valor_venta_producto=$resultado->valor_venta_producto;
+  //     $ruta_imagen_producto=$resultado->ruta_imagen_producto;
+  //   }
+  //   if($ruta_imagen_producto="null"){
+  //     $ruta_imagen_producto="No Disponible";
+  //   }
+  //   return Response::json(['stock'=>$stock,'valor_venta_producto'=>$valor_venta_producto,'ruta_imagen_producto'=>$ruta_imagen_producto]);
+  // }
+  // public function Cargar_Ventas_Productos(){
+  //   $Fecha_Actual= Carbon::today()->toDateString();
+  //   $id_comercio=Auth::user()->id_comercio;
+  //   $VentaProducto =VentaProducto::where('fecha_producto_venta',$Fecha_Actual)
+  //   ->where('id_comercio',$id_comercio)
+  //   ->orderBy('hora_venta_producto','desc')
+  //   ->paginate(5);
+  //   return view('Productos/Tablas/VentaProductosTabla')->with('VentaProducto',$VentaProducto)->render();
+  // }
   public function Cargar_Ventas_Productos_Cuadrado(){
     $Fecha_Actual= Carbon::today()->toDateString();
     $id_comercio=Auth::user()->id_comercio;

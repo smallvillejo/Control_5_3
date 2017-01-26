@@ -1,11 +1,24 @@
 @extends('layouts.master')
 @section('title')
-Registrar Venta
+Últimas Ventas - Alimentos
 @stop
 @section('content')
-<div class="panel panel-default">
-	<div class="panel-heading"><b><strong><font size ="3", color="#1074ff" face="Arial Black">Últimas Ventas - Alimentos</font></strong></b></div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Alimentos</font></strong></b>
+		<div class="btn-group pull-right">
+			
+			<h4>Total Vendido:<label id="TotalVendido"></label></h4>
+		</div>
+	</div>
 	<div class="panel-body">
+		<div id="Tabla_Venta_Alimentos_X_Fecha"></div>
+	</div>
+</div>
+
+
+
+<!-- <div class="panel-body"> -->
 
 	<!-- <div class="col-md-3 col-xs-12">
 		<div id="id_div_venta_alimento_cuadro" style="display: none">
@@ -34,10 +47,10 @@ Registrar Venta
 		</div>
 	</div> -->
 	
-	<div id="Tabla_Venta_Alimentos_X_Fecha"></div>
 	
-</div>
-</div>
+	
+<!-- </div>
+-->
 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token">
 <!-- <button onclick="funcionea();">CLICKO</button> -->
 <script type="text/javascript">
@@ -92,6 +105,7 @@ Registrar Venta
 			success: function(data){
 				$('#Tabla_Venta_Alimentos_X_Fecha').empty().html(data);
 				Notificaciones_PocoStock();
+				subir();
 			}
 		});
 	}
@@ -224,7 +238,7 @@ function  Cargar_Valor_Vendido_Alimentos_Cuadrado(){
 		type:'get',
 		url:'{{ url('Cuadrado_Venta_Alimentos_X_Fecha')}}',
 		success: function(data){
-			$('#Cuadro_Venta_Alimentos_X_Fecha').empty().html(data);
+			$('#TotalVendido').empty().html(data);
 		}
 	});
 // console.clear();
@@ -246,6 +260,15 @@ function  Cargar_Valor_Vendido_Alimentos_Cuadrado_Calendario(){
 		}
 	});
 // console.clear();
+}
+
+var arriba;
+function subir() {
+	if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
+		window.scrollBy(0, -2000);
+		arriba = setTimeout('subir()', 10);
+	}
+	else clearTimeout(arriba);
 }
 </script>
 
