@@ -125,202 +125,207 @@ Menú Principal
 
 										</div>
 										<div class="form-group">
-											<label class="col-sm-8 control-label"><i class="fa fa-money" aria-hidden="true"></i>
-												<strong> <font size ="2", color ="#151aaf" face="Tahoma">TOTAL GANANCIA:</font></strong></label>
-												<div class="col-sm-4">					
-													<strong>
-														<font size ="3", color ="#f72900" face="Tahoma">
-															$ <label id="TotalGanancia"></label>
-														</font>
-													</strong>			
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background: #000000;">
+												<label class="col-sm-8 control-label">
+													<strong> <font size ="4", color ="#16bf07" face="Tahoma">
+														<i class="fa fa-money" aria-hidden="true"></i>
+														TOTAL:</font></strong></label>
+														<div class="col-sm-4">					
+															<strong>
+																<font size ="5", color ="#16bf07" face="Tahoma">
+																	$ <label id="TotalGanancia"></label>
+																</font>
+															</strong>			
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 
-								<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6 col-md-offset">
-									<div class="panel panel-primary">
-										<div class="panel-heading"><h4><strong>Estadisticas Ganancia - <label id="label_fecha"></label></strong></h4></div>
-										<div class="panel-body">
-											<div id="grafica_estadistica"></div>
-										</div>
-									</div>	
-								</div>
-							</div>			
-						</div>
-						<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>"> 	
+									<div class="col-sm-12 col-xs-12 col-lg-6 col-md-6 col-md-offset">
+										<div class="panel panel-primary">
+											<div class="panel-heading"><h4><strong>Estadisticas Ganancia - <label id="label_fecha"></label></strong></h4></div>
+											<div class="panel-body">
+												<div id="grafica_estadistica"></div>
+											</div>
+										</div>	
+									</div>
+								</div>			
+							</div>
+							<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>"> 	
 
-						<style type="text/css">
-							div.cargando:before {
-								content:url(global/images/cargando.gif);
-								background-repeat: no-repeat;
-							}							
-						</style>
-
-						<script src="https://code.highcharts.com/highcharts.js"></script>
-						<script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-						<script type="text/javascript">
+							<style type="text/css">
+								div.cargando:before {
+									content:url(global/images/cargando.gif);
+									background-repeat: no-repeat;
+								}
+							</style>	
 
 
+							<script src="https://code.highcharts.com/highcharts.js"></script>
+							<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+							<script type="text/javascript">
 
 
-							$(function() {								
+								$(function() {								
 
-								moment.locale('es');
+									moment.locale('es');
 
-								var start =moment();
-								var end = moment();
+									var start =moment();
+									var end = moment();
 
-								$('#label_fecha').text(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-
-
-								function cb(start, end) {
-									$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-								}		
-								$('#reportrange').daterangepicker({
-									startDate: start,
-									endDate: end,
-									ranges: {
-										'Hoy': [moment(), moment()],
-										'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-										'Ultimos 7 Dias': [moment().subtract(6, 'days'), moment()],
-										'Ultimos 30 Dias': [moment().subtract(29, 'days'), moment()],
-										'Mes Actual': [moment().startOf('month'), moment().endOf('month')],
-										'Mes Anterior': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-									}
-								}, cb);
-
-								cb(start, end);	
-
-								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));								
-							});	
+									$('#label_fecha').text(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 
 
+									function cb(start, end) {
+										$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+									}		
+									$('#reportrange').daterangepicker({
+										startDate: start,
+										endDate: end,
+										ranges: {
+											'Hoy': [moment(), moment()],
+											'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+											'Ultimos 7 Dias': [moment().subtract(6, 'days'), moment()],
+											'Ultimos 30 Dias': [moment().subtract(29, 'days'), moment()],
+											'Mes Actual': [moment().startOf('month'), moment().endOf('month')],
+											'Mes Anterior': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+										}
+									}, cb);
 
-							function Cargar_Grafica($Fecha_Inicial, $Fecha_Final){
-								var Fecha_Inicial=$Fecha_Inicial;
-								var Fecha_Final=$Fecha_Final;
-								$.ajax({
-									url   : "<?= URL::to('cargar_grafica_estadistica') ?>",
-									type  : "GET",
-									async : false,	
-									data: {
-										'Fecha_Inicial' :Fecha_Inicial, 
-										'Fecha_Final' 	:Fecha_Final									
-									},								
-									success:function(data){
-										$('#grafica_estadistica').empty().html(data);	
-									}
-								});
-							}
+									cb(start, end);	
 
-							function Consultar_X_Fecha($Fecha_Inicial, $Fecha_Final){
-								var _token=$('#_token').val();
-								var Fecha_Inicial=$Fecha_Inicial;
-								var Fecha_Final=$Fecha_Final;
-
-								$.ajax({
-									url   : "<?= URL::to('consultar_x_Fecha') ?>",
-									type  : "POST",
-									async : false,		
-									data: {
-										'Fecha_Inicial' :Fecha_Inicial, 
-										'Fecha_Final' 	:Fecha_Final,
-										'_token' 		:_token
-									},
-									beforeSend: function(){
-										$('#loadinfo').show();
-									},
-									complete: function(){
-										$('#loadinfo').hide();
-										$('#content').show();										
-									},
-									success:function(data){										
-										$('#TotalProducto').empty().html('$ '+data.TotalVentaProducto);	
-										$('#TotalAlimento').empty().html('$ '+data.TotalVentaAlimento);
-										$('#CantidadVendidaProductos').empty().html(data.TotalProductos);
-										$('#CantidadVendidaAlimentos').empty().html(data.TotalAlimentos);
-										$('#TotalVentaMinutos').empty().html(data.TotalVentaMinutos);
-										$('#TotalVentaRecargas').empty().html(data.TotalVentaRecarga);
-										$('#TotalVentaInternet').empty().html(data.TotalVentaInternet);
-										$('#TotalCompras').empty().html(data.TotalCompra);
-										$('#TotalGastos').empty().html(data.TotalGasto);
-										$('#TotalGanancia').empty().html(data.TotalGanancia);
-										console.clear();					
-
-
-									}
+									Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));								
 								});	
 
-								Cargar_Grafica(Fecha_Inicial, Fecha_Final);
-							}
-
-							function Calendario1(){		
-								var Hoy=[moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-
-								$('#label_fecha').text([moment().format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
-
-								Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-
-							}
-
-							function Calendario2(){
-								var Ayer=[moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD')];
-
-								$('#label_fecha').text([moment().subtract(1, 'days').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'days').format('MMMM D, YYYY')]);
-
-								Consultar_X_Fecha(moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD'));
-							}
-
-							function Calendario3(){
-								var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-
-								$('#label_fecha').text([moment().subtract(6, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
-
-								Consultar_X_Fecha(moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-							}
-
-							function Calendario4(){
-								var Ultimos30Dias=[moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
-
-								$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
-
-								Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-
-							}
-
-							function Calendario5(){
-								var MesActual=[moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD')];
 
 
-								$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().endOf('month').format('MMMM D, YYYY')]);
+								function Cargar_Grafica($Fecha_Inicial, $Fecha_Final){
+									var Fecha_Inicial=$Fecha_Inicial;
+									var Fecha_Final=$Fecha_Final;
+									$.ajax({
+										url   : "<?= URL::to('cargar_grafica_estadistica') ?>",
+										type  : "GET",
+										async : false,	
+										data: {
+											'Fecha_Inicial' :Fecha_Inicial, 
+											'Fecha_Final' 	:Fecha_Final									
+										},								
+										success:function(data){
+											$('#grafica_estadistica').empty().html(data);	
+										}
+									});
+								}
 
-								Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
+								function Consultar_X_Fecha($Fecha_Inicial, $Fecha_Final){
+									var _token=$('#_token').val();
+									var Fecha_Inicial=$Fecha_Inicial;
+									var Fecha_Final=$Fecha_Final;
 
-							}
+									$.ajax({
+										url   : "<?= URL::to('consultar_x_Fecha') ?>",
+										type  : "POST",
+										async : false,		
+										data: {
+											'Fecha_Inicial' :Fecha_Inicial, 
+											'Fecha_Final' 	:Fecha_Final,
+											'_token' 		:_token
+										},
+										beforeSend: function(){
+											$('#loadinfo').show();
+										},
+										complete: function(){
+											$('#loadinfo').hide();
+											$('#content').show();										
+										},
+										success:function(data){										
+											$('#TotalProducto').empty().html('$ '+data.TotalVentaProducto);	
+											$('#TotalAlimento').empty().html('$ '+data.TotalVentaAlimento);
+											$('#CantidadVendidaProductos').empty().html(data.TotalProductos);
+											$('#CantidadVendidaAlimentos').empty().html(data.TotalAlimentos);
+											$('#TotalVentaMinutos').empty().html(data.TotalVentaMinutos);
+											$('#TotalVentaRecargas').empty().html(data.TotalVentaRecarga);
+											$('#TotalVentaInternet').empty().html(data.TotalVentaInternet);
+											$('#TotalCompras').empty().html(data.TotalCompra);
+											$('#TotalGastos').empty().html(data.TotalGasto);
+											$('#TotalGanancia').empty().html(data.TotalGanancia);
+											$("#TotalGanancia").css("fontSize", 23);						
+											$("#TotalGanancia").css("font-weight","Bold");
+											console.clear();					
 
-							function Calendario6(){
-								var MesAnterior=[moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')];
+
+										}
+									});	
+
+									Cargar_Grafica(Fecha_Inicial, Fecha_Final);
+								}
+
+								function Calendario1(){		
+									var Hoy=[moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+
+									$('#label_fecha').text([moment().format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
+
+									Consultar_X_Fecha(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+
+								}
+
+								function Calendario2(){
+									var Ayer=[moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD')];
+
+									$('#label_fecha').text([moment().subtract(1, 'days').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'days').format('MMMM D, YYYY')]);
+
+									Consultar_X_Fecha(moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD'));
+								}
+
+								function Calendario3(){
+									var Ultimos7Dias=[moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+
+									$('#label_fecha').text([moment().subtract(6, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
+
+									Consultar_X_Fecha(moment().subtract(6, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+								}
+
+								function Calendario4(){
+									var Ultimos30Dias=[moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
+
+									$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY')]);
+
+									Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+
+								}
+
+								function Calendario5(){
+									var MesActual=[moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD')];
 
 
-								$('#label_fecha').text([moment().subtract(1, 'month').startOf('month').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'month').endOf('month').format('MMMM D, YYYY')]);
+									$('#label_fecha').text([moment().startOf('month').format('MMMM D, YYYY') + ' - ' + moment().endOf('month').format('MMMM D, YYYY')]);
 
-								Consultar_X_Fecha(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
-							}
+									Consultar_X_Fecha(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
+
+								}
+
+								function Calendario6(){
+									var MesAnterior=[moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')];
+
+
+									$('#label_fecha').text([moment().subtract(1, 'month').startOf('month').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'month').endOf('month').format('MMMM D, YYYY')]);
+
+									Consultar_X_Fecha(moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'));
+								}
 
 
 
 
-							function BuscarRango(){			
+								function BuscarRango(){			
 
-								var Fecha_Inicial = moment($('#daterangepicker_start').val()).format('YYYY-MM-DD');
-								var Fecha_Final = moment($('#daterangepicker_end').val()).format('YYYY-MM-DD');
+									var Fecha_Inicial = moment($('#daterangepicker_start').val()).format('YYYY-MM-DD');
+									var Fecha_Final = moment($('#daterangepicker_end').val()).format('YYYY-MM-DD');
 
-								Consultar_X_Fecha(Fecha_Inicial,Fecha_Final);
+									Consultar_X_Fecha(Fecha_Inicial,Fecha_Final);
 
-								$('#label_fecha').text([moment($('#daterangepicker_start').val()).format('MMMM D, YYYY') + ' - ' + moment($('#daterangepicker_end').val()).format('MMMM D, YYYY')]);
+									$('#label_fecha').text([moment($('#daterangepicker_start').val()).format('MMMM D, YYYY') + ' - ' + moment($('#daterangepicker_end').val()).format('MMMM D, YYYY')]);
 
 								// var Hoy=[moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
 

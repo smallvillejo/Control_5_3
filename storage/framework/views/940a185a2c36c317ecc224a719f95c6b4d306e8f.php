@@ -15,9 +15,7 @@ Registrar Venta
 	<button type="button" class="btn btn-danger" id="btnBuscarProducto" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
 </div>
 </div>
-<div class="panel-body">		
-	<div class="col-xs-1 col-sm-2">
-	</div>
+<div class="panel-body">	
 	<div id="Tabla_Venta_Productos_X_Fecha"></div>
 </div>
 </div>
@@ -116,7 +114,11 @@ Registrar Venta
 				'cantidad_producto_vendido' : cantidad_producto_vendido
 			},
 			success: function(data){
-				Listar_Venta_Productos();				
+				$('#CuerpoMensaje').html('');  
+				$("#Modal_Confirmacion_Delete").modal('hide');
+				$('#ModalConfirmacion').modal('show');
+				$('#TitleModal').html('<p>Venta Eliminada.</p>');
+				$('#CuerpoMensaje').append('<p>La venta se elimino exitosamente.</p>'); 			
 			}
 		});
 // console.clear();

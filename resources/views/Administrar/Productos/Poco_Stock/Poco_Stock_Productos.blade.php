@@ -45,7 +45,7 @@
 		<br>
 		<br>		
 		<div class="panel panel-default" id="Panel_Tabla_Administrar_Productos" style="display: none">
-			<div class="panel-heading"><center><i class="fa fa-cube fa-2x"><font face="Lucida Sans">Hay <label id="PocoStockProductos"><font face="Lucida Sans", font size ="5"><strong></strong></font></label> Productos con poco STOCK</font></i></center>
+			<div class="panel-heading"><center><i class="fa fa-cube fa-2x"><font face="Lucida Sans">Hay <label id="PocoStockProductos"><font face="Lucida Sans", font size ="5"><strong></strong></font></label> con poco STOCK</font></i></center>
 			</div>
 			<div class="panel-body">			
 				<div class="alert alert-success" style="display: none;" id="success-alerta1">				
@@ -77,7 +77,12 @@
 								type:'get',
 								url:'{{ url('CargarCantidadStockAcabarseProducto')}}',
 								success: function(data){
-									$('#PocoStockProductos').text(data); 
+									var x = Number(data);				
+									if(x<=1){
+										$('#PocoStockProductos').text(data+' Producto'); 
+									}else{
+										$('#PocoStockProductos').text(data+' Productos'); 
+									}
 									$("#PocoStockProductos").css("fontSize", 23);									
 									$("#PocoStockProductos").css("font-weight","Bold");
 								}					

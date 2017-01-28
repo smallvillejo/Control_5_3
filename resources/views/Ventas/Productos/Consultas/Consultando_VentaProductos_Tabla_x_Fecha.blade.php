@@ -19,11 +19,11 @@
 <img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
 <center>{{$VentaProducto->links()}}</center>
 @foreach ($VentaProducto as $value)
-<div class="col-xs-12 col-sm-12 col col-md-6 col-lg-3">
+<div class="col-xs-12 col-sm-6 col col-md-6 col-lg-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<span class="badge btn-md btn-danger" title="{{strtoupper($nombre_producto=$value->Producto->nombre_producto)}}">
-				<b><strong> <font size ="1">{{strtoupper($nombre_producto=$value->Producto->nombre_producto)}}
+				<b><strong> <font size ="2">{{strtoupper($nombre_producto=$value->Producto->nombre_producto)}}
 				</font></strong></b></span>
 			</div>
 			<div class="panel-body">
@@ -470,6 +470,10 @@
 
 						if(variable=="La venta fue editada exitosamente."){
 							Listar_Venta_Productos();
+							refresPagina();
+						}else if(variable=="La venta se elimino exitosamente."){
+							Listar_Venta_Productos();
+							refresPagina();
 						}
 
 					});

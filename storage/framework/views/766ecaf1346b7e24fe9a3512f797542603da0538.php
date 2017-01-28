@@ -47,7 +47,7 @@
 		<!-- <button class="btn btn-primary clicko">CLICKO</button>	 -->
 		<!-- <button class="btn btn-primary clicko2">CLICKO2</button> -->
 		<div class="panel panel-default" id="Panel_Tabla_Administrar_Alimentos" style="display: none">
-			<div class="panel-heading"><center><i class="fa fa-cube fa-2x"><font face="Lucida Sans">Hay <label id="PocoStockAlimentos"><font face="Lucida Sans", font size ="5"><strong></strong></font></label> Alimentos con poco STOCK</font></i></center>
+			<div class="panel-heading"><center><i class="fa fa-cube fa-2x"><font face="Lucida Sans">Hay <label id="PocoStockAlimentos"><font face="Lucida Sans", font size ="5"><strong></strong></font></label> con poco STOCK</font></i></center>
 			</div>
 			<div class="panel-body">			
 				<div class="alert alert-success" style="display: none;" id="success-alerta1">				
@@ -78,7 +78,12 @@
 								type:'get',
 								url:'<?php echo e(url('CargarCantidadStockAcabarseAlimento')); ?>',
 								success: function(data){
-									$('#PocoStockAlimentos').text(data); 
+									var x = Number(data);				
+									if(x<=1){
+										$('#PocoStockAlimentos').text(data+' Alimento'); 
+									}else{
+										$('#PocoStockAlimentos').text(data+' Alimentos'); 
+									}									
 									$("#PocoStockAlimentos").css("fontSize", 23);									
 									$("#PocoStockAlimentos").css("font-weight","Bold");
 								}					

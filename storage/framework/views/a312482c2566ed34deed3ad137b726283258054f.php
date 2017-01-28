@@ -21,7 +21,7 @@
 <input type="hidden" value="<?php echo e($nombre_alimento=$value->nombre_alimento); ?>">
 
 
-<div class="col-xs-12 col-sm-12 col col-md-6 col-lg-4">
+<div class="col-xs-12 col-sm-6 col col-md-6 col-lg-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<span class="badge btn-md btn-success" title="<?php echo e($nombre_alimento = strtoupper($nombre_alimento)); ?>"><b><strong> <font size ="2"><?php echo e($nombre_alimento = strtoupper($nombre_alimento)); ?>

@@ -22,7 +22,7 @@
 <input type="hidden" value="<?php echo e($nombre_alimento=$value->nombre_alimento); ?>">
 
 
-<div class="col-xs-12 col-sm-12 col col-md-6 col-lg-4">
+<div class="col-xs-12 col-sm-6 col col-md-6 col-lg-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<span class="badge btn-md btn-success" title="<?php echo e($nombre_alimento = strtoupper($nombre_alimento)); ?>"><b><strong> <font size ="2"><?php echo e($nombre_alimento = strtoupper($nombre_alimento)); ?>
@@ -109,7 +109,7 @@
 				<div class="btn-group pull-right">				
 					<a href="#" data-toggle = 'modal' data-target="#Modal_Modificar_Alimentos" title="Modificar" class="Edit_Aliment" Id_alimentoEditar="<?php echo e($value->id); ?>" <strong> <font size ="3", color="#0eacf9" face="Lucida Sans"><span class= "fa fa-pencil-square fa-2x"></span></font></a>
 
-					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" title="Eliminar" class="Delete_Product" NombreAlimento="<?php echo e($nombre_alimento = strtoupper($nombre_alimento)); ?>"  Id_alimentoEliminar="<?php echo e($value->id); ?>" <strong> <font size ="3", color="#0eacf9" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></a>					
+					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" title="Eliminar" class="Delete_Aliment" NombreAlimento="<?php echo e($nombre_alimento = strtoupper($nombre_alimento)); ?>"  Id_alimentoEliminar="<?php echo e($value->id); ?>" <strong> <font size ="3", color="#0eacf9" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></a>					
 				</div>
 			</div>
 		</div>

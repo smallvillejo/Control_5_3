@@ -713,7 +713,7 @@ public function Eliminar_Venta_Producto_X_Fecha(){
   ->paginate(10);
   
 
-  return view('Ventas/Productos/Tablas/VentaProductos_Tabla_x_Fecha')
+  return view('Ventas/Productos/Tablas/Ultimas_Ventas_Productos_Tabla_x_Fecha')
   ->with('VentaProducto',$VentaProducto);
   
 }
@@ -753,7 +753,7 @@ public function Eliminar_Venta_Producto_X_Fecha_Calendario(){
   ->paginate(10);
   
 
-  return view('Ventas/Productos/Tablas/VentaProductos_Tabla_x_Fecha')
+  return view('Ventas/Productos/Tablas/Ultimas_Ventas_Productos_Tabla_x_Fecha')
   ->with('VentaProducto',$VentaProducto);
   
 }
@@ -776,7 +776,7 @@ public function Tabla_Venta_Productos_X_Fecha(){
   ->orderBy('id','desc')
   ->paginate(10);
 
-  return view('Ventas/Productos/Tablas/VentaProductos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
+  return view('Ventas/Productos/Tablas/Ultimas_Ventas_Productos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
 }
 
 public function Cuadrado_Venta_Productos_X_Fecha(){
@@ -844,7 +844,7 @@ public function Buscar_Venta_Producto_X_Fecha(){
     ->where('id_comercio',$id_comercio)
     ->orderBy('fecha_producto_venta','desc')
     ->paginate(10);
-    return view('Ventas/Productos/Tablas/VentaProductos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
+    return view('Ventas/Productos/Tablas/Ultimas_Ventas_Productos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
 
   }
 

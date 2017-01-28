@@ -154,9 +154,12 @@
 				'id_alimento_venta' 		: id_alimento_venta,
 				'cantidad_alimento_vendido' : cantidad_alimento_vendido
 			},
-			success: function(data){				
-				Listar_Venta_Alimentos();
-				refresPagina();
+			success: function(data){		
+				$('#CuerpoMensaje').html('');  
+				$("#Modal_Confirmacion_Delete").modal('hide');
+				$('#ModalConfirmacion').modal('show');
+				$('#TitleModal').html('<p>Venta Eliminada.</p>');
+				$('#CuerpoMensaje').append('<p>La venta se elimino exitosamente.</p>'); 
 			}
 		});
 // console.clear();

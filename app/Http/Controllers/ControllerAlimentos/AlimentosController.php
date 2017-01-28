@@ -296,6 +296,7 @@ class AlimentosController extends Controller{
     }
   }
   public function Eliminar_Alimentos(){
+    dd(Input::All());
     $Id_Alimento_Eliminar=Input::get('Id_alimento_delete');
     $id_comercio=Auth::user()->id_comercio;
     $Alimentos=Alimento::Where('id',$Id_Alimento_Eliminar)

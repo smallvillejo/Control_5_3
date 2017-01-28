@@ -19,11 +19,11 @@
 <img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
 <center><?php echo e($VentaProducto->links()); ?></center>
 <?php foreach($VentaProducto as $value): ?>
-<div class="col-xs-12 col-sm-12 col col-md-6 col-lg-3">
+<div class="col-xs-12 col-sm-6 col col-md-6 col-lg-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<span class="badge btn-md btn-danger" title="<?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>">
-				<b><strong> <font size ="1"><?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>
+				<b><strong> <font size ="2"><?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>
 
 				</font></strong></b></span>
 			</div>
@@ -472,6 +472,10 @@
 
 						if(variable=="La venta fue editada exitosamente."){
 							Listar_Venta_Productos();
+							refresPagina();
+						}else if(variable=="La venta se elimino exitosamente."){
+							Listar_Venta_Productos();
+							refresPagina();
 						}
 
 					});

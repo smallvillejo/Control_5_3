@@ -2,11 +2,11 @@
 <div class="col-md-10">
 	<img src="global/images/Error_No_Foundd.png" alt="logo" class="img-thumbnail img-responsive" >
 	<script type="text/javascript">	
-	$('#id_div_venta_alimento').hide();	
-	$('#idBuscarAlimento').hide();
-	$('#id_div_venta_alimento').hide();
-	$('#idTotalAlimentoVendido').hide();
-</script>
+		$('#id_div_venta_alimento').hide();	
+		$('#idBuscarAlimento').hide();
+		$('#id_div_venta_alimento').hide();
+		$('#idTotalAlimentoVendido').hide();
+	</script>
 </div>
 <?php else: ?>
 <script type="text/javascript">	
@@ -19,11 +19,11 @@
 <img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
 <center><?php echo e($VentaAlimento->links()); ?></center>
 <?php foreach($VentaAlimento as $value): ?>
-<div class="col-xs-12 col-sm-12 col col-md-6 col-lg-3">
+<div class="col-xs-12 col-sm-6 col col-md-6 col-lg-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<span class="badge btn-md btn-danger" title="<?php echo e(strtoupper($nombre_alimento=$value->Alimento->nombre_alimento)); ?>">
-				<b><strong> <font size ="1"><?php echo e(strtoupper($nombre_alimento=$value->Alimento->nombre_alimento)); ?>
+				<b><strong> <font size ="2"><?php echo e(strtoupper($nombre_alimento=$value->Alimento->nombre_alimento)); ?>
 
 				</font></strong></b></span>
 			</div>
@@ -422,7 +422,7 @@
 					}
 
 
-					$('.EditarVentaProduco').click(function(){
+					$('.EditarVentaAlimento').click(function(){
 
 						var id_alimento_venta			=$("#id_venta_alimento_editar").val();
 						var id_alimento_leido			=$("#id_alimento_leido").val();
@@ -477,9 +477,12 @@
 						if(variable=="La venta fue editada exitosamente."){
 							Listar_Venta_Alimentos();
 							refresPagina();
+						}else if(variable=="La venta se elimino exitosamente."){
+							Listar_Venta_Alimentos();
+							refresPagina();
 						}
 
-					});
+				});
 
-				</script>			
+			</script>			
 
