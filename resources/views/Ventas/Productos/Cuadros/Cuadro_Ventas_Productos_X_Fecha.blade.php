@@ -1,4 +1,4 @@
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<a class="dashboard-stat dashboard-stat-light blue-soft" href="javascript:;">
 		<div class="visual">
 			<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
@@ -16,4 +16,6 @@
 		</div>
 	</a>
 </div>
+ -->
 
+ <b><strong><font size ="3", color="#ffffff" face="Arial Black">${{$TotalVendido}}</font></strong></b>

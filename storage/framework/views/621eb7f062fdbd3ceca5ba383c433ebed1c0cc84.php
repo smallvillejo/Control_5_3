@@ -2,77 +2,125 @@
 <div class="col-md-10">
 	<img src="global/images/Error_No_Foundd.png" alt="logo" class="img-thumbnail img-responsive" >
 	<script type="text/javascript">
-	// $('.panelsito_ventas_productos').hide();
-	$('#id_div_venta_producto').hide();
-	$('#id_div_venta_producto_cuadro').hide();
-</script>
+		$('#id_div_venta_producto').hide();	
+		$('#idBuscarProducto').hide();
+		$('#id_div_venta_producto').hide();
+		$('#idTotalProductoVendido').hide();
+	</script>
 </div>
 <?php else: ?>
 <script type="text/javascript">
-	// $('.panelsito_ventas_productos').hide();
+	$('#id_div_venta_producto').show();	
+	$('#idBuscarProducto').show();
 	$('#id_div_venta_producto').show();
-	$('#id_div_venta_producto_cuadro').show();
+	$('#idTotalProductoVendido').show();
 </script>
-<img src="global/images/ImagenVacio.png" alt="logo" height="1" width="1" >
-<div class="row">
-	<div class="col-md-12">
-		<div class="portlet box blue">
-			<div class="portlet-title">
-				<div class="caption">
-					<i class="fa fa-usd" aria-hidden="true"></i>Últimas Ventas -- PRODUCTOS
-				</div>
-				<div class="tools">
-					<a href="javascript:;" class="collapse">
-					</a>
-					<a href="#portlet-config" data-toggle="modal" class="config">
-					</a>
-					<a href="javascript:;" class="reload">
-					</a>
-					<a href="javascript:;" class="remove">
-					</a>
-				</div>
+<!-- Diseño Panels Para ver el producto en el panel -->
+<img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
+<center><?php echo e($VentaProducto->links()); ?></center>
+<?php foreach($VentaProducto as $value): ?>
+<div class="col-xs-12 col-sm-12 col col-md-6 col-lg-3">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<span class="badge btn-md btn-danger" title="<?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>">
+				<b><strong> <font size ="1"><?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>
+
+				</font></strong></b></span>
 			</div>
-			<div class="portlet-body">
-				<div class="table-scrollable">
-					<table class="table table-striped table-bordered table-hover">
-						<thead>
+			<div class="panel-body">
+				<?php if($value->Producto->ruta_imagen_producto==null): ?>
+				<center><img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="80px" height="80px"/></center>
+				<?php else: ?>
+				<?php if(File::exists($value->Producto->ruta_imagen_producto)): ?>
+				<center><img class="cuadradoFoto FotoGrande" src="<?php echo e($value->Producto->ruta_imagen_producto); ?>" Imagen="<?php echo e($value->Producto->ruta_imagen_producto); ?>" width="80px" height="80px"/></center>	
+				<?php else: ?>		
+				<center><img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="80px" height="80px"/></center>
+				<?php endif; ?>
+				<?php endif; ?>
+				<h4><p class="text-muted credit"></p></h4>
+				<div class="panel panel-info">
+					<div class="panel-heading"></div>				
+					<table class="table table-user-information">
+						<div class="row">
+							<tbody>
+								<tr>
+									<td>								
+										<b><strong><font size ="2", color="#000000" face="Arial Black">Cant.Vendido</font></strong></b>
+									</td>
+									<td>								
+										<span class="badge btn-md btn-success">
+											<b><strong> <font size ="2"><?php echo e($value->cantidad_producto_venta); ?></font></strong></b>
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td>					
+										<b><strong> <font size ="2", color="#000000" face="Arial Black">Valor Producto:</font></strong>
+										</b>
+									</td>
+									<td>
+										<span class="badge btn-md btn-success"><b><strong> <font size ="2">
+											$ <?php echo e($value->precio_producto_venta); ?> 
+										</font></strong></b>
+									</span>
+								</td>								
+							</tr>
 							<tr>
-								<th class="column-title">Nombre Producto</th>
-								<th class="column-title">Cantidad</th>
-								<th class="column-title">Valor/Uni</th>
-								<th class="column-title">Valor/Total</th>
-								<th class="column-title">Hora Venta</th>
-								<th class="column-title">Opciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach($VentaProducto as $value): ?>
-							<input type="hidden" value="<?php echo e($ValorVenta=$value->total_producto_venta); ?>">
-							<input type="hidden" value="<?php echo e($ValorVenta=number_format($ValorVenta)); ?>">
-							<tr class="even pointer">
-								<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->Producto->nombre_producto); ?></font></strong></b></td>
-								<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->cantidad_producto_venta); ?></font></strong></b></td>
-								<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->precio_producto_venta); ?></font></strong></b></td>
-								<td class=" "><b><strong> <font size ="2", color="#fb0c48" face="Arial Black">$<?php echo e($ValorVenta); ?></font></strong></b></td>
-								<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e(Carbon::parse($value->hora_venta_producto)->diffForHumans()); ?> <!-- (A las: <?php echo e(Carbon::parse($value->hora_venta_producto)->toTimeString()); ?>) -->
-								</font></strong></b></td>
-								<td class=" ">
-									<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" id="<?php echo e($value->id); ?>" class="Eliminar_Venta" data-backdrop="static" data-keyboard="false" title="Eliminar" Producto_Venta="<?php echo e($value->Producto->nombre_producto); ?>" id_venta="<?php echo e($value->id); ?>" canti_vendido="<?php echo e($value->cantidad_producto_venta); ?>" id_producto_venta="<?php echo e($value->producto_id); ?>">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o"></span></font></strong>
-									</a>						|
-									<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Editar" id="<?php echo e($value->id); ?>" class="Editar_Venta" data-backdrop="static" data-keyboard="false" title="Editar" Producto_Venta="<?php echo e($value->Producto->nombre_producto); ?>" id_venta="<?php echo e($value->id); ?>" canti_vendido="<?php echo e($value->cantidad_producto_venta); ?>" id_producto_venta="<?php echo e($value->producto_id); ?>">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-pencil-square"></span></font></strong>
-									</a>
+								<td>
+									<b><strong> <font size ="2", color="#000000" face="Arial Black">Valor Vendido:</font></strong></b>
 								</td>
-							</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-					<center><?php echo e($VentaProducto->links()); ?></center>
+								<td>
+									<span class="badge btn-md btn-success"><b><strong><font size ="2">
+										$<?php echo e(number_format($value->total_producto_venta)); ?> 
+									</font></strong></b>
+								</span>
+							</td>
+						</tr>						
+						<tr>						
+							<td>
+							</td>
+							<td>
+							</td>
+						</tr>						
+					</tbody>
+				</div>
+			</table>				
+			<div class="panel-footer"><strong><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> <?php echo e(Carbon::parse($value->hora_venta_producto)->diffForHumans()); ?>
+
+				<div class="btn-group pull-right">				
+					
+					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" id="<?php echo e($value->id); ?>" class="Eliminar_Venta" data-backdrop="static" data-keyboard="false" title="Eliminar" Producto_Venta="<?php echo e($value->Producto->nombre_producto); ?>" id_venta="<?php echo e($value->id); ?>" canti_vendido="<?php echo e($value->cantidad_producto_venta); ?>" id_producto_venta="<?php echo e($value->producto_id); ?>">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></strong>
+					</a>						|
+					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Editar" id="<?php echo e($value->id); ?>" class="Editar_Venta" data-backdrop="static" data-keyboard="false" title="Editar" Producto_Venta="<?php echo e($value->Producto->nombre_producto); ?>" id_venta="<?php echo e($value->id); ?>" canti_vendido="<?php echo e($value->cantidad_producto_venta); ?>" id_producto_venta="<?php echo e($value->producto_id); ?>">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-pencil-square fa-2x"></span></font></strong>
+					</a>		
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+</div>
+<?php endforeach; ?>		
 <?php endif; ?>
+<!-- Termina Diseño Panel Producto -->
+<script type="text/javascript">
+	$('body').delegate('.FotoGrande','click',function(){
+		var ruta_imagen_producto =($(this).attr('Imagen'));	
+		$("#id_photo_preview").attr("src",ruta_imagen_producto);		
+		$('#Modal_See_Producto').modal('show');
+
+	});
+</script>
+<!-- Modal See Producto-->
+<div class="modal fade" id="Modal_See_Producto" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">	
+			<center><img class="cuadradoFoto" id="id_photo_preview" width="100%" height="100%"/></center>		
+		</div>
+	</div>
+</div>
+<!-- Termina Modal See Producto-->
+
 <div class="modal fade" tabindex="-1" role="dialog" id="ModalConfirmacion" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">

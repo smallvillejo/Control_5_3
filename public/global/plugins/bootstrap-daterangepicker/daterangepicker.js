@@ -340,9 +340,8 @@
                 }
 
                 var list = '<ul>';
-                var contador=1; 
                 for (range in this.ranges) {
-                    list += '<li onclick=Calendario'+contador+++'();>' + range + '</li>';
+                    list += '<li>' + range + '</li>';
                 }
                 list += '<li>' + this.locale.customRangeLabel + '</li>';
                 list += '</ul>';

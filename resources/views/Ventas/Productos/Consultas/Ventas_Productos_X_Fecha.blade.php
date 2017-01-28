@@ -3,40 +3,27 @@
 Registrar Venta
 @stop
 @section('content')
-<div class="panel panel-default">
-	<div class="panel-heading"><b><strong><font size ="3", color="#1074ff" face="Arial Black">Últimas Ventas - PRODUCTOS</font></strong></b></div>
-	
-	<div class="col-md-3 col-xs-12">
-		<div id="id_div_venta_producto_cuadro" style="display: none">
-			<div class="panel-body">
-				<div class="panel panel-default" >
-					<div class="panel-body">
-						<div id="Cuadro_Venta_Productos_X_Fecha">
-						</div>
-					</div>
-				</div>
-			</div>
+<div class="panel panel-primary">
+	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Productos</font></strong></b>
+		<div class="btn-group pull-right" style="display: none;" id="idTotalProductoVendido">			
+			<h4>Total Vendido:<label id="TotalVendido"></label></h4>
 		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div id="id_div_venta_producto" style="display: none">
-			<div class="col-xs-2 col-sm-1">
-				<label>Buscar Producto:</label>
-			</div>
-			<div class="col-xs-6 col-sm-2"><select class="form-control selectpicker" data-live-search="true" id="producto_id_venta_consulta" onchange="Seleccion_Busqueda()" >
-				<option></option>
-			</select>
-		</div>
-		<div class="col-xs-1 col-sm-2">
-			<button type="button" class="btn btn-danger" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-8 ">
-		<div id="Tabla_Venta_Productos_X_Fecha"></div>
-	</div>
+		<div id="idBuscarProducto" style="display: none;">
+			<br>Buscar Producto:<b><strong><font size ="3", color="#ea0000" face="Arial Black"><select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta" onchange="Seleccion_Busqueda()">
+			<option></option>
+		</select>
+	</font></strong></b>
+	<button type="button" class="btn btn-danger" id="btnBuscarProducto" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
 </div>
 </div>
+<div class="panel-body">		
+	<div class="col-xs-1 col-sm-2">
+	</div>
+	<div id="Tabla_Venta_Productos_X_Fecha"></div>
+</div>
+</div>
+
+
 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token">
 <!-- <button onclick="funcionea();">CLICKO</button> -->
 <script type="text/javascript">
@@ -137,11 +124,12 @@ Registrar Venta
 });
 // ---------------------------------------------------------------------------------------------------
 function refresPagina(){
-	$('.date').datepicker('setDate', null);
-	$('#FechaInicial *').prop('disabled',false);
-	$('#FechaFinal *').prop('disabled',false);
+	// $('.date').datepicker('setDate', null);
+	// $('#FechaInicial *').prop('disabled',false);
+	// $('#FechaFinal *').prop('disabled',false);
 	Listar_Venta_Productos();
 	$('#producto_id_venta_consulta').val('').selectpicker('refresh');
+	$('#btnBuscarProducto').hide();
 }
 // ---------------------------------------------------------------------------------------------------
 // function BuscarXFecha(){
@@ -223,7 +211,7 @@ function  Cargar_Valor_Vendido_Productos_Cuadrado(){
 		type:'get',
 		url:'{{ url('Cuadrado_Venta_Productos_X_Fecha')}}',
 		success: function(data){
-			$('#Cuadro_Venta_Productos_X_Fecha').empty().html(data);
+			$('#TotalVendido').empty().html(data);
 		}
 	});
 // console.clear();

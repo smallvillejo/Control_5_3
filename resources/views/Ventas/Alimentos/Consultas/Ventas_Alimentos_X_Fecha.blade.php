@@ -6,15 +6,16 @@
 
 <div class="panel panel-primary">
 	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Alimentos</font></strong></b>
-		<div class="btn-group pull-right">			
+		<div class="btn-group pull-right" style="display: none;" id="idTotalAlimentoVendido">			
 			<h4>Total Vendido:<label id="TotalVendido"></label></h4>
 		</div>
-		<div id="idBuscarAlimento">
-			<br>Buscar Alimento:<select class="selectpicker" data-live-search="true" id="alimento_id_venta_consulta" onchange="Seleccion_Busqueda()" >
+		<div id="idBuscarAlimento" style="display: none;">
+			<br>Buscar Alimento:<b><strong><font size ="3", color="#ea0000" face="Arial Black"><select class="selectpicker" data-live-search="true" id="alimento_id_venta_consulta" onchange="Seleccion_Busqueda()">
 			<option></option>
 		</select>
-		<button type="button" class="btn btn-danger" id="btnBuscarAlimento" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
-	</div>
+	</font></strong></b>
+	<button type="button" class="btn btn-danger" id="btnBuscarAlimento" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
+</div>
 </div>
 <div class="panel-body">		
 	<div class="col-xs-1 col-sm-2">
@@ -153,8 +154,9 @@
 				'id_alimento_venta' 		: id_alimento_venta,
 				'cantidad_alimento_vendido' : cantidad_alimento_vendido
 			},
-			success: function(data){
+			success: function(data){				
 				Listar_Venta_Alimentos();
+				refresPagina();
 			}
 		});
 // console.clear();

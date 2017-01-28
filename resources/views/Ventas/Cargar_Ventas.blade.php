@@ -24,12 +24,7 @@ Registrar Venta
 				<a href="#" id="boton_registrar_venta_alimento"><i class="fa fa-cutlery"></i>
 					Alimento</a>
 				</li>
-			</ul>
-			<div class="page-toolbar">
-				<div id="dashboard-report-range" class="pull-right tooltips btn btn-fit-height grey-salt" data-placement="top" data-original-title="Change dashboard date range">
-					<i class="icon-calendar"></i>&nbsp; <span class="uppercase visible-lg-inline-block"></span>&nbsp; <i class="fa fa-angle-down"></i>
-				</div>
-			</div>
+			</ul>			
 		</div>
 		<div id="Cargar_Formulario_Venta_Productos" style="display: none;">			
 		</div>

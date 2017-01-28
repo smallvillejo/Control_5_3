@@ -1,17 +1,20 @@
 <?php if($VentaAlimento->total()==0): ?>
 <div class="col-md-10">
 	<img src="global/images/Error_No_Foundd.png" alt="logo" class="img-thumbnail img-responsive" >
-	<script type="text/javascript">
-	// $('.panelsito_ventas_alimentos').hide();
+	<script type="text/javascript">	
 	$('#id_div_venta_alimento').hide();	
 	$('#idBuscarAlimento').hide();
+	$('#id_div_venta_alimento').hide();
+	$('#idTotalAlimentoVendido').hide();
 </script>
 </div>
 <?php else: ?>
-<script type="text/javascript">
-	// $('.panelsito_ventas_alimentos').hide();
+<script type="text/javascript">	
+	$('#idTotalAlimentoVendido').show();
 	$('#id_div_venta_alimento').show();
 	$('#idBuscarAlimento').show();
+	$('#idTotalAlimentoVendido').show();
+
 </script>
 <img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
 <center><?php echo e($VentaAlimento->links()); ?></center>
@@ -42,7 +45,7 @@
 							<tbody>
 								<tr>
 									<td>								
-										<b><strong><font size ="2", color="#000000" face="Arial Black">Cantidad Vendida:</font></strong></b>
+										<b><strong><font size ="2", color="#000000" face="Arial Black">Cant.Vendido</font></strong></b>
 									</td>
 									<td>								
 										<span class="badge btn-md btn-success">
@@ -52,7 +55,7 @@
 								</tr>
 								<tr>
 									<td>					
-										<b><strong> <font size ="2", color="#000000" face="Arial Black">Valor Venta Alimento:</font></strong>
+										<b><strong> <font size ="2", color="#000000" face="Arial Black">Valor Alimento:</font></strong>
 										</b>
 									</td>
 									<td>
@@ -64,7 +67,7 @@
 							</tr>
 							<tr>
 								<td>
-									<b><strong> <font size ="2", color="#000000" face="Arial Black">Valor Total Vendido:</font></strong></b>
+									<b><strong> <font size ="2", color="#000000" face="Arial Black">Valor Vendido:</font></strong></b>
 								</td>
 								<td>
 									<span class="badge btn-md btn-success"><b><strong><font size ="2">

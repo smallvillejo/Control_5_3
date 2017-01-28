@@ -5,7 +5,7 @@
 			<div class="panel panel-info" style="margin: 20 auto;width:100% ">
 				<div class="panel-heading">Datos de la Venta</div>
 				<div class="panel-body">
-					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">				
+					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">			
 						<input type="hidden" name="comercio_id" id="comercio_id" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
 						<input type="hidden" name="Fecha_Actual" id="Fecha_Actual" value="<?php echo e($today = Carbon::today()->toDateString()); ?>" class="form-control">
 						<input type="hidden" name="Hora_Venta" id="Hora_Venta" value="<?php echo e(Carbon::now()); ?>" class="form-control">
