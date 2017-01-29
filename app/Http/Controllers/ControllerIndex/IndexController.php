@@ -188,4 +188,12 @@ class IndexController extends Controller{
 			'TotalGanancia'=>$TotalGanancia]);
 	}
 
+	public function ExportarReportBalanceExcel(){
+		dd(Input::all());
+	}
+
+	public function ExportarReportBalancePdf(){
+		dd(Input::all());
+	}
+
 }

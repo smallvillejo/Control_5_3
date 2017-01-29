@@ -17,6 +17,10 @@ Route::any('Cerrar_Sesion_X_Tiempo', array('as'=>'Cerrar_Sesion_X_Tiempo','uses'
 Route::any('cargar_grafica_estadistica', array('as'=>'cargar_grafica_estadistica','uses'=>'ControllerIndex\IndexController@Cargar_grafica_estadistica'))->middleware('auth');
 // Ruta para cargar las consultas de las ventas en todo el index por fecha
 Route::any('consultar_x_Fecha', array('as'=>'consultar_x_Fecha','uses'=>'ControllerIndex\IndexController@Consultar_Ventas_X_Fecha'))->middleware('auth');
+// Exportar Reportes excel - BALANCE
+Route::any('exportar_report_excel', array('as'=>'exportar_report_excel','uses'=>'ControllerIndex\IndexController@ExportarReportBalanceExcel'))->middleware('auth');
+// Exportar Reportes pdf - BALANCE
+Route::any('exportar_report_pdf', array('as'=>'exportar_report_pdf','uses'=>'ControllerIndex\IndexController@ExportarReportBalancePdf'))->middleware('auth');
 // 
 
 
