@@ -34,142 +34,165 @@ class ProductosController extends Controller{
 
   } 
 
-  public function CargarCantidadStockAcabarseProducto(){
-    $NotificacionProductos=Producto::Where('cantidad_producto','<=',3)->count();
+  public function Actualizar_Total_Inversion_Productos(){
+    $Productos=Producto::all();
+    $id_comercio=Auth::user()->id_comercio; 
+    foreach ($Productos as $key => $value) {
 
-    if($NotificacionProductos==0){
-      $NotificacionProductos=0;
-    }
+     $id=$value->id;
+     $cantidad_producto=$value->cantidad_producto;
+     $valor_inversion_producto=$value->valor_inversion_producto;     
 
-    return $NotificacionProductos;
+     $ValorTotalInversion=$cantidad_producto*$valor_inversion_producto;
 
+     $productos = array(
+      'valor_total_inversion'               => $ValorTotalInversion         
+      );
+
+     $check = DB::table('producto_producto')
+     ->where('id',$id)
+     ->where('id_comercio',$id_comercio)
+     ->update($productos);
+
+   }
+ }
+
+ public function CargarCantidadStockAcabarseProducto(){
+  $NotificacionProductos=Producto::Where('cantidad_producto','<=',3)->count();
+
+  if($NotificacionProductos==0){
+    $NotificacionProductos=0;
   }
 
-  public function ProductosConPocoStock(){
+  return $NotificacionProductos;
 
-    $Productos=Producto::Where('cantidad_producto','<=',3)
-    ->orderBy('nombre_producto','asc')->paginate(9);  
+}
 
-    return view('Administrar/Productos/Tablas.Tabla_Administrar_Productos_Poco_Stock')->with('Productos',$Productos);
-  }
+public function ProductosConPocoStock(){
 
-  public function Cargar_ProductosConPocoStock(){
+  $Productos=Producto::Where('cantidad_producto','<=',3)
+  ->orderBy('nombre_producto','asc')->paginate(9);  
+
+  return view('Administrar/Productos/Tablas.Tabla_Administrar_Productos_Poco_Stock')->with('Productos',$Productos);
+}
+
+public function Cargar_ProductosConPocoStock(){
 
     // $NotificacionProductos=Producto::Where('cantidad_producto','<=',3)->count();
     // $NotificacionAlimentos=Alimento::Where('cantidad_alimento','<=',3)->count();
 
-    return view('Administrar/Productos/Poco_Stock/Poco_Stock_Productos');
+  return view('Administrar/Productos/Poco_Stock/Poco_Stock_Productos');
     // ->with('NotificacionProductos',$NotificacionProductos)
     // ->with('NotificacionAlimentos',$NotificacionAlimentos);
-  }
+}
 
-  public function  Exportar_PDF_Total_Productos(){
-    $id_comercio=Auth::user()->id_comercio; 
-    $nombreArchivo='Comercio_ID:'.$id_comercio.'-Listado Productos';
+public function  Exportar_PDF_Total_Productos(){
+  $id_comercio=Auth::user()->id_comercio; 
+  $nombreArchivo='Comercio_ID:'.$id_comercio.'-Listado Productos';
 
-    $Productos=Producto::Where('id_comercio',$id_comercio)
-    ->orderBy('nombre_producto','asc')->get(); 
+  $Productos=Producto::Where('id_comercio',$id_comercio)
+  ->orderBy('nombre_producto','asc')->get(); 
 
 
-    $id_usuario_logueado=Auth::user()->id;
+  $id_usuario_logueado=Auth::user()->id;
 
-    $nombre_empresa=Empresa::where('fk_usuario',$id_usuario_logueado)->get();
+  $nombre_empresa=Empresa::where('fk_usuario',$id_usuario_logueado)->get();
 
-    foreach ($nombre_empresa as $key => $value) {
-      $nombre_empresa=$value->nombre_empresa;
-    }     
+  foreach ($nombre_empresa as $key => $value) {
+    $nombre_empresa=$value->nombre_empresa;
+  }     
 
-    $TotalInversion=DB::table('producto_producto')
-    ->where('id_comercio',$id_comercio)
-    ->sum('valor_total_inversion');
-    $TotalInversion=number_format($TotalInversion); 
+  $TotalInversion=DB::table('producto_producto')
+  ->where('id_comercio',$id_comercio)
+  ->sum('valor_total_inversion');
+  $TotalInversion=number_format($TotalInversion); 
 
-    $pdf = App::make('dompdf.wrapper');
+  $pdf = App::make('dompdf.wrapper');
     // $pdf->loadHTML('<h1>Test</h1>');
 
-    $pdf = PDF::loadView('Administrar/Productos/Reporte_PDF/Reporte_PDF_Total_Productos',compact('Productos','nombre_empresa','TotalInversion'))->setPaper('letter', 'landscape');
+  $pdf = PDF::loadView('Administrar/Productos/Reporte_PDF/Reporte_PDF_Total_Productos',compact('Productos','nombre_empresa','TotalInversion'))->setPaper('letter', 'landscape');
 
      // $pdf = PDF::loadView('Administrar/Productos/Reporte_PDF/Reporte_PDF_Total_Productos',compact('Productos','nombre_empresa'))->setPaper('letter', 'portrait');
 
-    return $pdf->download($nombreArchivo.'.pdf');
-  }
+  return $pdf->download($nombreArchivo.'.pdf');
+}
 
-  public function Exportar_Excel_Total_Productos(){
-   $id_comercio=Auth::user()->id_comercio; 
+public function Exportar_Excel_Total_Productos(){
+ $id_comercio=Auth::user()->id_comercio; 
 
 
-   $Productos = DB::table('producto_producto')
-   ->where('id_comercio',$id_comercio)
-   ->orderBy('nombre_producto','asc')   
-   ->get();
+ $Productos = DB::table('producto_producto')
+ ->where('id_comercio',$id_comercio)
+ ->orderBy('nombre_producto','asc')   
+ ->get();
 
-   $TotalInversion=DB::table('producto_producto')
-   ->where('id_comercio',$id_comercio)
-   ->sum('valor_total_inversion');
-   $TotalInversion=number_format($TotalInversion); 
+ $TotalInversion=DB::table('producto_producto')
+ ->where('id_comercio',$id_comercio)
+ ->sum('valor_total_inversion');
+ $TotalInversion=number_format($TotalInversion); 
 
-   $TotalProductos= Producto::Where('id_comercio',$id_comercio)
-   ->count('id');   
-   $TotalProductos=number_format($TotalProductos);
+ $TotalProductos= Producto::Where('id_comercio',$id_comercio)
+ ->count('id');   
+ $TotalProductos=number_format($TotalProductos);
 
-   $nombreArchivo='Comercio_ID:'.$id_comercio.'-Listado Productos';
+ $nombreArchivo='Comercio_ID:'.$id_comercio.'-Listado Productos';
 
-   Excel::create($nombreArchivo, function($excel) use($Productos,$TotalInversion,$TotalProductos) {
+ Excel::create($nombreArchivo, function($excel) use($Productos,$TotalInversion,$TotalProductos) {
     // Título
-    $excel->setTitle('Listado de Productos');
+  $excel->setTitle('Listado de Productos');
     // $excel->setOrientation('landscape');
 
-    $excel->sheet('Página 1', function($sheet) use($Productos,$TotalInversion,$TotalProductos) {
-      $data = [];
-      $sheet->setFontFamily('Comic Sans MS');
-      $sheet->setFontSize(15);
+  $excel->sheet('Página 1', function($sheet) use($Productos,$TotalInversion,$TotalProductos) {
+    $data = [];
+    $sheet->setFontFamily('Comic Sans MS');
+    $sheet->setFontSize(15);
 
-      $style = array(
-        'alignment' => array(
-          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-          )          
-        );
+    $style = array(
+      'alignment' => array(
+        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+        )          
+      );
 
 
-      $sheet->getDefaultStyle()->applyFromArray($style);  
-      $sheet->mergeCells('A1:E1');
+    $sheet->getDefaultStyle()->applyFromArray($style);  
+    $sheet->mergeCells('A1:E1');
       // $sheet->setBackground('#000000');
 
-      array_push($data, ['Listado de Productos Registrados']);  
-      array_push($data, ['']);  
-      array_push($data, ['Nombre Producto','Stock', 'Valor Venta','Valor Inversión', 'Valor Total']);
-      foreach ($Productos as $key => $value) {
+    array_push($data, ['Listado de Productos Registrados']);  
+    array_push($data, ['']);  
+    array_push($data, ['Nombre Producto','Stock', 'Valor Venta','Valor Inversión', 'Valor Total']);
+    foreach ($Productos as $key => $value) {
 
-       $Valor_Inversion=number_format($value->valor_total_inversion); 
-       $Valor_Venta=number_format($value->valor_venta_producto);
-       $Valor_Inversion_Total=number_format($value->valor_inversion_producto);
+     $Valor_Inversion=number_format($value->valor_total_inversion); 
+     $Valor_Venta=number_format($value->valor_venta_producto);
+     $Valor_Inversion_Total=number_format($value->valor_inversion_producto);
 
 
        // $sheet->setColumnFormat(array(
        //  'B4:E4' => '0000'
        //  ));
-       array_push($data, [(string) $value->nombre_producto,(string) $value->cantidad_producto,(string) '$'.$Valor_Venta, (string) '$'.$Valor_Inversion_Total , (string) '$'.$Valor_Inversion]);
-     }
-     array_push($data, ['']);    
-     array_push($data, ['','', '','Total Inversion:','$'.$TotalInversion]);
-     array_push($data, ['','', '','Total Productos:',$TotalProductos]);
+     array_push($data, [(string) $value->nombre_producto,(string) $value->cantidad_producto,(string) '$'.$Valor_Venta, (string) '$'.$Valor_Inversion_Total , (string) '$'.$Valor_Inversion]);
+   }
+   array_push($data, ['']);    
+   array_push($data, ['','', '','Total Inversion:','$'.$TotalInversion]);
+   array_push($data, ['','', '','Total Productos:',$TotalProductos]);
 
 
 
-     $sheet->fromArray($data, null, 'A1', false, false);
-     $sheet->setStyle(array(
-      'font' => array(
-        'name'      =>  'Tahoma',
-        'size'      =>  12,
-        'bold'      =>  false
-        )
-      ));
-   });
-  })->export('xlsx');
+   $sheet->fromArray($data, null, 'A1', false, false);
+   $sheet->setStyle(array(
+    'font' => array(
+      'name'      =>  'Tahoma',
+      'size'      =>  12,
+      'bold'      =>  false
+      )
+    ));
+ });
+})->export('xlsx');
 
- }
+}
 
- public function Consultar_Producto_Modificar(){
+public function Consultar_Producto_Modificar(){
   $Id_productoEditar=Input::get('Id_productoEditar');
 
   $Productos=Producto::Where('id',$Id_productoEditar)->get();
@@ -985,6 +1008,9 @@ public function AdministrarProductos(){
 }
 
 public function Cargar_Productos_En_Administrar(){
+
+  $this->Actualizar_Total_Inversion_Productos();
+
   $Productos=Producto::orderBy('nombre_producto','asc')->paginate(9);
 
   return view('Administrar/Productos/Tablas.Tabla_Administrar_Productos')->with('Productos',$Productos);
@@ -1173,8 +1199,6 @@ public function store(){
 
  return view('Productos/Tablas/VentaProductosTabla')->with('VentaProducto',$VentaProducto)->render();
 }
-
-
 }
 
 

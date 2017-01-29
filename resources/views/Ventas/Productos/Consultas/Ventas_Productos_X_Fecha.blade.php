@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-Registrar Venta
+Últimas Ventas - Productos
 @stop
 @section('content')
 <div class="panel panel-primary">

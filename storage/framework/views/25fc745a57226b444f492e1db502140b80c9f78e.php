@@ -43,10 +43,7 @@
 		</div>		
 		<br>
 		<br>
-		<br>	
-
-
-
+		<br>
 		<div class="panel panel-default" id="Panel_Tabla_Administrar_Alimentos" style="display: none">
 			<div class="panel-heading"><center><i class="fa fa-cube fa-2x">Listado de Alimentos</center></i>
 			</div>
@@ -57,6 +54,8 @@
 				<div class="alert alert-danger" style="display: none;" id="success-alerta2">					
 					<h3><span class="fa fa-thumbs-up fa-2x"></span>
 						<strong>El alimento se elimino con éxito!!.</strong></h3>	
+					</div>
+					<div class="alert alert-danger" style="display: none;" id="Error_al_Eliminar">		<h3><strong><label id="Id_Alimento_Eliminar"></label></strong></h3>	
 					</div>
 					<div class="alert alert-info" style="display: none;" id="success-alerta3">					
 						<h3><span class="fa fa-thumbs-up fa-2x"></span>
@@ -520,13 +519,15 @@ $('.RegistrarAlimento').click(function(){
 }); 
 
 
-var arriba;
+// var arriba;
 function subir() {
-	if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
-		window.scrollBy(0, -2000);
-		arriba = setTimeout('subir()', 10);
-	}
-	else clearTimeout(arriba);
+	// if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
+	// 	document.body.scrollTop = 0;
+	// 	arriba = setTimeout('subir()', 10);
+	// }
+	// else clearTimeout(arriba);
+	$("html, body").animate({ scrollTop: 0 }, "slow");
+	return false;
 }
 
 function LimpiarModal(){	
@@ -706,6 +707,20 @@ $('#btn_cancelar_formulario_alimentos').click(function(){
 						});  
 					});
 
+				}else{
+					if(respuesta.ErrorTieneVentasAsociadas=="Si"){
+						subir();
+						$('#Error_al_Eliminar').show();
+						$('#Id_Alimento_Eliminar').text('ERROR AL ELIMINAR: El alimento: "'+respuesta.NombreAlimento+'" tiene ventas asociadas, elimine sus ventas y intente de nuevo..'); 
+						$("#Id_Alimento_Eliminar").css("fontSize", 23);								
+						$("#Id_Alimento_Eliminar").css("font-weight","Bold"); 						
+						$(document).ready (function(){                              
+							$("#Error_al_Eliminar").alert();						    
+							$("#Error_al_Eliminar").fadeTo(8000, 500).slideUp(500, function(){
+								$("#Error_al_Eliminar").hide();
+							});  
+						});
+					}					
 				}
 			}
 		});

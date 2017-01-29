@@ -133,8 +133,6 @@ info2.slideDown();
 <script type="text/javascript">
 
   function Notificaciones_PocoStock(){
-
-
     var $notifica = $('.notifica');
     var $MensajeNotifica = $('.MensajeNotifica');
     var count = Number($notifica.text());
@@ -144,8 +142,7 @@ info2.slideDown();
     $.ajax({
       type:'get',
       url:'<?php echo e(url('Notificaciones_PocoStock')); ?>',
-      success: function(data){
-        // $('#pulsate-regular').pulsate("destroy");
+      success: function(data){       
         if(data.NumeroNotificacion>0){
           $('#ID_notifica').show();         
         }else{
@@ -1276,8 +1273,8 @@ info2.slideDown();
                                       });
                                       Notificaciones_PocoStock();
                                     </script>
-                                    <script src="jquery.pulsate.min.js">
-                                    </script>
+                                   <!--  <script src="jquery.pulsate.min.js">
+                                    </script> -->
                                     
 
                                   </body>

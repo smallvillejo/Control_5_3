@@ -78,7 +78,6 @@
 									$('#Panel_Formulario_Administrar_Photos_Productos').hide(); 
 									$('#Tabla_Administrar_Productos').empty().html(data);
 									subir();
-									$('#pulsate-regular').pulsate("destroy"); 
 									Notificaciones_PocoStock();
 
 								}					

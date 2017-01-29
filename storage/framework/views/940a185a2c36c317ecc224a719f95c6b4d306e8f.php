@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-Registrar Venta
+Últimas Ventas - Productos
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <div class="panel panel-primary">
