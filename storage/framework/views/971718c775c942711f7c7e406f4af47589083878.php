@@ -73,9 +73,9 @@ License: You must have a valid license purchased only from themeforest(the above
   var Variable_Tiempo;
   
   function ini() {
- 
+
   // Variable_Tiempo= window.setTimeout(function(){ContadorSesion();},300000);//Tiempo en milesegundos en que carga la funcion contador    300000=5 Minutos
- 
+
 }
 function CancelarContador() {
   $('#success-alert2').hide();
@@ -385,7 +385,14 @@ info2.slideDown();
                                                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                                                 <li class="dropdown dropdown-user">
                                                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                                    <img alt="" class="img-circle" src="<?php echo e(Auth::user()->photo_perfil); ?>"/>
+
+                                                    <?php if(Auth::user()->photo_perfil==""): ?>
+                                                    <img src="global/login/login/photo.jpg" class="img-circle" alt="">               
+                                                    <?php elseif(File::exists(Auth::user()->photo_perfil)): ?>
+                                                    <img src="<?php echo e(Auth::user()->photo_perfil); ?>" class="img-circle" alt="">
+                                                    <?php else: ?>
+                                                    <img src="global/login/login/photo.jpg" class="img-circle" alt="">   
+                                                    <?php endif; ?>
                                                     <span class="username username-hide-on-mobile">
                                                       <?php echo e(Auth::user()->nombre); ?> <?php echo e(Auth::user()->apellido); ?></span>
                                                       <i class="fa fa-angle-down"></i>
@@ -1274,9 +1281,9 @@ info2.slideDown();
                                       Notificaciones_PocoStock();
                                     </script>
                                    <!--  <script src="jquery.pulsate.min.js">
-                                    </script> -->
-                                    
+                                 </script> -->
 
-                                  </body>
-                                  <!-- END BODY -->
-                                  </html>
+
+                               </body>
+                               <!-- END BODY -->
+                               </html>

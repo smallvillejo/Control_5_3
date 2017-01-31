@@ -73,9 +73,9 @@ License: You must have a valid license purchased only from themeforest(the above
   var Variable_Tiempo;
   
   function ini() {
- 
+
   // Variable_Tiempo= window.setTimeout(function(){ContadorSesion();},300000);//Tiempo en milesegundos en que carga la funcion contador    300000=5 Minutos
- 
+
 }
 function CancelarContador() {
   $('#success-alert2').hide();
@@ -385,7 +385,14 @@ info2.slideDown();
                                                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                                                 <li class="dropdown dropdown-user">
                                                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                                    <img alt="" class="img-circle" src="{{Auth::user()->photo_perfil}}"/>
+
+                                                    @if(Auth::user()->photo_perfil=="")
+                                                    <img src="global/login/login/photo.jpg" class="img-circle" alt="">               
+                                                    @elseif(File::exists(Auth::user()->photo_perfil))
+                                                    <img src="{{Auth::user()->photo_perfil}}" class="img-circle" alt="">
+                                                    @else
+                                                    <img src="global/login/login/photo.jpg" class="img-circle" alt="">   
+                                                    @endif
                                                     <span class="username username-hide-on-mobile">
                                                       {{Auth::user()->nombre}} {{Auth::user()->apellido}}</span>
                                                       <i class="fa fa-angle-down"></i>
@@ -1274,9 +1281,9 @@ info2.slideDown();
                                       Notificaciones_PocoStock();
                                     </script>
                                    <!--  <script src="jquery.pulsate.min.js">
-                                    </script> -->
-                                    
+                                 </script> -->
 
-                                  </body>
-                                  <!-- END BODY -->
-                                  </html>
+
+                               </body>
+                               <!-- END BODY -->
+                               </html>

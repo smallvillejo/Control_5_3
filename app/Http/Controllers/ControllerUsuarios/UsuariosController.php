@@ -60,8 +60,34 @@ class UsuariosController extends Controller {
 	}
 
 	public function Consultar_email_Usuario_Logueo(){
-		$usuario = Input::all();
-		dd($usuario);
+		$correo = Input::get('correo');
+		$usuarios= Usuario::Where('correo',$correo)->get();
+
+		if($usuarios!="[]"){
+			
+
+			foreach ($usuarios as $key => $value) {
+
+				$NombresUsuario=$value->nombre.' '.$value->apellido;
+				$CorreoUsuario=$value->correo;
+				$UrlFoto=$value->photo_perfil;
+			}
+			if($UrlFoto==""){
+				$UrlFoto="global/login/login/photo.jpg";	
+			}
+
+			$PrimeraMayuscula = $NombresUsuario;
+			$PrimeraMayuscula = ucwords($PrimeraMayuscula); 
+
+			return Response::json(['Resultado' =>'oK',
+				'NombreUsuario'=>$PrimeraMayuscula,
+				'CorreoUsuario'=>$CorreoUsuario,
+				'FotoUsuario'=>$UrlFoto]); 
+		}else{
+			return Response::json(['Resultado' =>"Error",
+				'ErrorEnEmail'=>"Merchandise no reconoce la dirección de correo electrónico."]); 
+		}		
+		
 	}
 
 	public function Logueo(){
@@ -108,7 +134,7 @@ class UsuariosController extends Controller {
 				return 'ok';   
 
 			}else{
-				$message = '¡Error... Correo o Contraseña Incorrectos..!';			
+				$message = '<center>La contraseña es incorrecta. Inténtalo de nuevo.</center>';			
 
 				return Response::json(['ErrorEnPass' =>false,
 					'errors'=>$message]); 

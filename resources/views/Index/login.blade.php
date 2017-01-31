@@ -25,11 +25,7 @@
     <!-- style="background: #082f59"   -->
     <div class="panel-body">
       <center><img id="profile-img" class="img-circle" alt="Cinque Terre" width="150" height="150" src="global/login/login/photo.jpg" /></center>
-      <br> 
-      <div class="panel panel-danger" style="display:none" id="mensaje">
-        <div class="panel-heading" id="valida" style="display:none">        
-        </div>
-      </div> 
+      <br>
       <center>
         <label id="NombreUser"></label><br>
         <label id="EmailUser"></label>
@@ -37,11 +33,15 @@
       <form class="form-signin">
         <span id="reauth-email" class="reauth-email"></span>
         <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingresa tu Correo Electrónico" required autofocus>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu Contraseña" style="display: none" required autofocus>
         <br>
         <input type="hidden" name="_token" id="_token" value="{{ csrf_token()}}">  
-        <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required> -->
-        <button class="btn btn-lg btn-success btn-block btn-signin btnSiguiente" type="button">Siguiente</button>
-        <button class="btn btn-lg btn-success btn-block btn-signin IniciarSesion" type="button" style="display: none">Iniciar Sesión</button>
+        <div class="panel panel-danger" style="display:none" id="mensaje">
+          <div class="panel-heading" id="valida" style="display:none">        
+          </div>
+        </div>         
+        <button class="btn btn-lg btn-success btn-block btn-signin btnSiguiente" type="button" id="Siguiente">Siguiente</button>
+        <button class="btn btn-lg btn-success btn-block btn-signin IniciarSesion" type="button" style="display: none" id="Iniciar">Iniciar Sesión</button>
 
       </form><!-- /form -->
       <a href="#" class="forgot-password">
@@ -49,7 +49,9 @@
       </a>
     </div>
   </div>
+  <center><a href=""><h4><font color ="#ffffff">Inciar Sesión con otra cuenta</font></h4></a></center>
 </div>
+
 <script src='global/plugins/jquery/jquery-3.1.0.min.js'></script>
 
 
@@ -82,7 +84,7 @@
   }
 
   function validar_login2(){
-    var email = $('#correo').val();
+    var email = $('#EmailUser').text();   
     var password = $('#password').val();
     emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i; 
     var str =  email;
@@ -117,7 +119,7 @@
 $('.btnSiguiente').click(function(){
   if(validar_login()==true){
   }else{
-    var email =$('#email').val();  
+    var correo =$('#correo').val();  
     var _token=$('#_token').val();
     $.ajax({
       url   : "<?= URL::to('ConsultarEmail') ?>",
@@ -125,64 +127,75 @@ $('.btnSiguiente').click(function(){
       async : false,   
       data  :{
         '_token'  : _token,
-        'email'   : email        
+        'correo'   : correo        
       },    
       success:function(data){
         $('#valida').html('');
-        if(data.error==false){
-          $.each(data.errors,function(index, error){ 
-            $('#mensaje').show();
-            $('#valida').append('<p><strong>'+error+'</strong></p>');     
-            document.getElementById("valida").style.display = "block";      
-          });  
-        }    
-        
-      }    
-    });
+        if(data.Resultado=="Error"){         
+          $('#mensaje').show();
+          $('#valida').append('<p><strong>'+data.ErrorEnEmail+'</strong></p>');     
+          document.getElementById("valida").style.display = "block";   
+          
+        }else{
+         if(data.Resultado=="oK"){
+          $('#NombreUser').text(data.NombreUsuario);
+          $('#EmailUser').text(data.CorreoUsuario);
+          $("#NombreUser").css("font-weight","Bold");
+          $("#NombreUser").css("fontSize", 23);          
+          $('#correo').hide();
+          $('#Siguiente').hide();
+          $('#password').show();
+          $('#Iniciar').show();
+          $("#profile-img").attr("src",data.FotoUsuario);         
+          
+        }
+      }   
+    }    
+  });
   }
 
 });
 $('.IniciarSesion').click(function(){
   if(validar_login2()==true){
   }else{
-    var email =$('#email').val();
-    var password =$('#password').val();
-    var _token=$('#_token').val();
+   var correo =$('#EmailUser').text();   
+   var password =$('#password').val();
+   var _token=$('#_token').val();
 
-    $.ajax({
-      url   : "<?= URL::to('Login') ?>",
-      type  : "POST",
-      async : false,   
-      data  :{
-        '_token'  : _token,
-        'email'   : email,
-        'password': password
-      },    
-      success:function(data){
-        $('#valida').html('');
-        if(data.error==false){
-          $.each(data.errors,function(index, error){ 
-            $('#mensaje').show();
-            $('#valida').append('<p><strong>'+error+'</strong></p>');     
-            document.getElementById("valida").style.display = "block";      
-          });  
-        }else{           
-          if(data.ErrorEnPass==false){               
-            $('#mensaje').show();           
-            $('#valida').append('<p><strong>'+data.errors+'</strong></p>'); 
-            document.getElementById("valida").style.display = "block"; 
-          }else{
-            if(data=='ok'){
-             $('#mensaje').hide();
-             $('#valida').html('');
-             document.getElementById("valida").style.display = "block"; 
-             $('#modal_bienvenido').modal('show');         
-           }
+   $.ajax({
+    url   : "<?= URL::to('Login') ?>",
+    type  : "POST",
+    async : false,   
+    data  :{
+      '_token'  : _token,
+      'correo'   : correo,
+      'password': password
+    },    
+    success:function(data){
+      $('#valida').html('');
+      if(data.error==false){
+        $.each(data.errors,function(index, error){ 
+          $('#mensaje').show();
+          $('#valida').append('<p><strong>'+error+'</strong></p>');     
+          document.getElementById("valida").style.display = "block";      
+        });  
+      }else{           
+        if(data.ErrorEnPass==false){               
+          $('#mensaje').show();           
+          $('#valida').append('<p><strong>'+data.errors+'</strong></p>'); 
+          document.getElementById("valida").style.display = "block"; 
+        }else{
+          if(data=='ok'){
+           $('#mensaje').hide();
+           $('#valida').html('');
+           document.getElementById("valida").style.display = "block";  
+           document.location.href = "{{ route('Index')}}";                
          }
        }
      }
-   });      
-  }
+   }
+ });      
+ }
 });
 
 
