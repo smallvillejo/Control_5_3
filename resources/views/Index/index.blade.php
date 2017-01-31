@@ -19,7 +19,7 @@ Menú Principal
 				<span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li>							
-						<a href="{{URL::route('Exportar_Excel_Total_Productos')}}" title="Exportar Excel" id="btn_reporte_excel_producto"><i class="fa fa-file-excel-o" aria-hidden="true"></i>Exporta en EXCEL</a>	
+						<a href="#" title="Exportar Excel" id="btn_reporte_excel_producto" class="ExportarExcel"><i class="fa fa-file-excel-o" aria-hidden="true"></i>Exporta en EXCEL</a>	
 					</li>
 					<li>
 						<a href="{{URL::route('Exportar_PDF_Total_Productos')}}" title="Exportar PDF" id="btn_reporte_pdf_producto"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>Exporta en PDF</a>	
@@ -364,6 +364,33 @@ Menú Principal
 										$('#fecha_oculta_final').val(Fecha_Final);
 
 									}
+
+									$('.ExportarExcel').click(function(){										
+
+										var _token=$('#_token').val();
+										var Fecha_Inicial=$('#fecha_oculta_inicial').val();
+										var Fecha_Final=$('#fecha_oculta_final').val();
+
+										$.ajax({
+											url   : "<?= URL::to('exportar_report_excel') ?>",
+											type  : "POST",
+											async : false,		
+											data: {
+												'Fecha_Inicial' :Fecha_Inicial, 
+												'Fecha_Final' 	:Fecha_Final,
+												'_token' 		:_token
+											},											
+											success:function(data){
+												var ruta= data.path;                 
+												location.href = ruta;
+
+												if (File::exists($RutaArchivo)) {
+													File::delete($RutaArchivo);			
+												}
+											}
+
+										});
+									});
 								</script>
 
 								@stop

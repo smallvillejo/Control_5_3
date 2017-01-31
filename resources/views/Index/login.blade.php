@@ -15,8 +15,6 @@
 <title>Bienvenido a Merchandise Control</title>
 
 <br>
-<br>
-<br>
 <div class="col-xs-12 col-sm-12 col col-md-4 col-lg-4 col-md-offset-4">
   <center><img src="global/login/login/logo.png" /></center>
   <br>
@@ -24,8 +22,7 @@
   <div class="panel panel-default"> 
     <!-- style="background: #082f59"   -->
     <div class="panel-body">
-      <center><img id="profile-img" class="img-circle" alt="Cinque Terre" width="150" height="150" src="global/login/login/photo.jpg" /></center>
-      <br>
+      <center><img id="profile-img" class="img-circle img-responsive" width="150" height="150" src="global/login/login/photo.jpg" /></center>     
       <center>
         <label id="NombreUser"></label><br>
         <label id="EmailUser"></label>
@@ -146,7 +143,9 @@ $('.btnSiguiente').click(function(){
           $('#Siguiente').hide();
           $('#password').show();
           $('#Iniciar').show();
-          $("#profile-img").attr("src",data.FotoUsuario);         
+          $("#profile-img").attr("src",data.FotoUsuario);  
+          $("#profile-img").attr("width","50%"); 
+          $("#profile-img").attr("height","50%");            
           
         }
       }   

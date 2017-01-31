@@ -161,13 +161,7 @@ public function Exportar_Excel_Total_Alimentos(){
   $TotalAlimentos=number_format($TotalAlimentos);
   $nombreArchivo='Comercio_ID:'.$id_comercio.'-Listado Alimentos';
   Excel::create($nombreArchivo, function($excel) use($Alimentos,$TotalInversion,$TotalAlimentos) {
-// Título
-// $style = array(
-//   'alignment' => array(
-//     'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-//     )
-//   );
-// $excel->getDefaultStyle()->applyFromArray($style);
+
     $excel->setTitle('Listado de Alimentos');
 // $excel->setOrientation('landscape');
     $excel->sheet('Página 1', function($sheet) use($Alimentos,$TotalInversion,$TotalAlimentos) {
@@ -175,7 +169,7 @@ public function Exportar_Excel_Total_Alimentos(){
       $sheet->setFontFamily('Comic Sans MS');
       $sheet->setFontSize(15);
       $sheet->mergeCells('A1:E1');
-// $sheet->setBackground('#000000');
+
       array_push($data, ['Listado de Alimentos Registrados']);
       array_push($data, ['']);
       array_push($data, ['Nombre Alimento','Stock', 'Valor Venta','Valor Inversión', 'Valor Total']);
@@ -183,9 +177,7 @@ public function Exportar_Excel_Total_Alimentos(){
         $Valor_Inversion=number_format($value->valor_total_inversion);
         $Valor_Venta=number_format($value->valor_venta_alimento);
         $Valor_Inversion_Total=number_format($value->valor_inversion_alimento);
-// $sheet->setColumnFormat(array(
-//  'B4:E4' => '0000'
-//  ));
+
         array_push($data, [(string) $value->nombre_alimento,(string) $value->cantidad_alimento,(string) '$'.$Valor_Venta, (string) '$'.$Valor_Inversion_Total , (string) '$'.$Valor_Inversion]);
       }
       array_push($data, ['']);
@@ -350,7 +342,7 @@ public function Eliminar_Alimentos(){
     return 0;
   }
 }else{
-return Response::json([
+  return Response::json([
     'ErrorTieneVentasAsociadas'=>"Si",
     'NombreAlimento'=>$NombreAlimento]);
 }

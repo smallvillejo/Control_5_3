@@ -23,6 +23,11 @@ use View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
 use Hash;
+use Excel;
+use PHPExcel_Style_Alignment;
+use App;
+use PDF;
+use File;
 
 
 
@@ -189,7 +194,41 @@ class IndexController extends Controller{
 	}
 
 	public function ExportarReportBalanceExcel(){
-		dd(Input::all());
+		$nombreArchivo='Laravel_Excel';
+
+		Excel::create($nombreArchivo, function($excel) {
+
+			$excel->sheet('Excel sheet', function($sheet) {
+
+				$sheet->setOrientation('landscape');
+
+
+			});
+
+		// })->export('xls');
+
+
+		})->store('xlsx','exports');
+
+		$RutaArchivo='Control_5_3/public/exports/'.$nombreArchivo.'.xlsx';
+
+
+						
+
+
+		// Para que funcione local
+		return Response::json([
+			'success' =>true,
+			'path'=>'/Control_5_3/public/exports/'.$nombreArchivo.'.xlsx']);
+
+
+ 				// Para que funcione web
+	// 	return Response::json([
+	// 		'success' =>true,
+	// 		'path'=>'/exports/'.$nombreArchivo.'.xlsx']);
+	// }
+
+
 	}
 
 	public function ExportarReportBalancePdf(){
