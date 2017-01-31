@@ -10,6 +10,8 @@ Route::any('Index', array('as'=>'Index','uses'=>'ControllerIndex\IndexController
 Route::any('Login', array('as'=>'Login','uses'=>'ControllerUsuarios\UsuariosController@Logueo'))->middleware('guest');
 Route::any('Salir', array('as'=>'Salir','uses'=>'ControllerUsuarios\UsuariosController@Salir'));
 Route::any('Cerrar_Sesion_X_Tiempo', array('as'=>'Cerrar_Sesion_X_Tiempo','uses'=>'ControllerUsuarios\UsuariosController@Cerrar_Sesion_X_Tiempo'));
+// Consultar Email Usuario antes de loguearse
+Route::any('ConsultarEmail', array('as'=>'ConsultarEmail','uses'=>'ControllerUsuarios\UsuariosController@Consultar_email_Usuario_Logueo'));
 // Rutas del Sistema
 
 // Rutas Index - Menú Principal

@@ -59,9 +59,15 @@ class UsuariosController extends Controller {
 		return View('Index.login');
 	}
 
+	public function Consultar_email_Usuario_Logueo(){
+		$usuario = Input::all();
+		dd($usuario);
+	}
+
 	public function Logueo(){
 
 		$usuario = Input::all();
+
 
 		$rules = array
 		(
@@ -73,55 +79,45 @@ class UsuariosController extends Controller {
 		$messages = array
 		(
 			'correo.required' => 'Ingrese el Email.',
-			'correo.exists' => 'El Email Ingresado No Se Encuentra Registrado',
+			'correo.exists' => 'El email Ingresado No Se Encuentra Registrado',
 			'correo.email' => 'El Formato Email Esta Incorrecto.',
-			'password.required' => 'Ingrese El Password.',
-			'password.exists' => 'El Correo o Password estan incorrectos.',
+			'password.required' => 'Ingrese el password.',
+			'password.exists' => 'El email o password estan incorrectos.',
 		// 'g-recaptcha-response.required'=>'El campo Captcha es requerido.',
 
 			);
 
 		$validator = Validator::make(Input::All(), $rules, $messages);
-		if ($validator->passes()) {
+		if ($validator->fails()) {
+
+			return Response::json(['error' =>false,
+				'errors'=>$validator->errors()->toArray()]);
+		}else{			
+
+			// $Pass_Encriptado = Hash::make(Input::get('password'));
 
 			$user = array(
 				'correo' => Input::get('correo'),
 				'password' => Input::get('password'), 
-				'estado' => 'Activo'                 
+				'estado' => 'Activo' 				              
 				);
 
-			$Usuarios = Usuario::where('correo',$usuario['correo'])->get();
+			// dd($user);
+			
+			if (Auth::guard()->attempt($user)==true){ 				
+				return 'ok';   
 
-
-
-			foreach ($Usuarios as $value) {
-				$estado=$value->estado;
-			}	
-
-			if($estado=='Inactivo'){
-				$mensaje_inactivo = '<strong>Tu cuenta se encuentra desactivada. Consulta al administrador de Merchandise Control.</strong>';
-				return Redirect::back()->with("mensaje_inactivo", $mensaje_inactivo); 
 			}else{
+				$message = '¡Error... Correo o Contraseña Incorrectos..!';			
 
-				$remember = Input::get("remember");
-				$remember == 'On' ? $remember = true : $remember = false;
+				return Response::json(['ErrorEnPass' =>false,
+					'errors'=>$message]); 
+			}
 
-				
-				if (Auth::guard()->attempt($user)==true){ 
-					return Redirect::route("verifity");
-					// return view('Index.index');    
-
-				}else{
-					$message = '¡Error... Correo o Contraseña Incorrectos..!';
-					return Redirect::back()->with("message", $message); 
-				}
-			}			
-		}else{
-			$message = '¡Error. El correo Ingresado no se encuentra Registrado en nuestro Sistema!';
-			return Redirect::back()->with("message", $message); 
 		}
-		return Redirect::back()->withInput()->withErrors($validator);  
-	}	
+	}
+
+
 
 
 
@@ -496,7 +492,7 @@ class UsuariosController extends Controller {
 				'confirmation_code'  => $confirmation_code
 				);
 
-			
+
 			$check = DB::table('usuarios')
 			->where('correo',$email)			
 			->update($Datos);
