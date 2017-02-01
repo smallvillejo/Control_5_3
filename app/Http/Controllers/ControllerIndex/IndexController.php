@@ -195,39 +195,129 @@ class IndexController extends Controller{
 
 	public function ExportarReportBalanceExcel(){
 		$nombreArchivo='Laravel_Excel';
-
-		Excel::create($nombreArchivo, function($excel) {
-
-			$excel->sheet('Excel sheet', function($sheet) {
-
-				$sheet->setOrientation('landscape');
+		$id_comercio=Auth::user()->id_comercio;
+		$Fecha_Inicial=Input::get('Fecha_Inicial');
+		$Fecha_Final=Input::get('Fecha_Final');
 
 
+		$TotalVentaProducto=VentaProducto::whereBetween('fecha_producto_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_producto_venta');
+
+
+		$TotalVentaAlimento=VentaAlimento::whereBetween('fecha_alimento_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_alimento_venta');	
+
+
+		$TotalProductos= VentaProducto::whereBetween('fecha_producto_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->count('id');   
+		$TotalProductos=number_format($TotalProductos);
+
+
+		$TotalAlimentos=VentaAlimento::whereBetween('fecha_alimento_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->count('id');   
+		$TotalAlimentos=number_format($TotalAlimentos);
+
+
+		$TotalVentaMinutos=DetallePlanMinutos::whereBetween('fecha_registro', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_minutos_venta');		 
+
+		$TotalVentaInternet=VentaInternet::whereBetween('fecha_internet_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('venta_total_dia');
+
+		$TotalVentaRecarga=VentaRecarga::whereBetween('fecha_venta_recarga', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_venta_recarga');
+
+
+		$TotalCompra=Compra::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_total_compra');
+
+
+		$TotalGasto=Gasto::whereBetween('fecha_gasto', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_gasto');
+
+
+		$TotalGanancia=$TotalVentaProducto+$TotalVentaAlimento+$TotalVentaMinutos+$TotalVentaInternet+$TotalVentaRecarga-$TotalCompra-$TotalGasto;
+
+		$TotalVentaProducto=number_format($TotalVentaProducto); 
+		$TotalVentaAlimento=number_format($TotalVentaAlimento);
+		$TotalVentaMinutos=number_format($TotalVentaMinutos);
+		$TotalVentaInternet=number_format($TotalVentaInternet); 
+		$TotalVentaRecarga=number_format($TotalVentaRecarga); 
+		$TotalCompra=number_format($TotalCompra);
+		$TotalGasto=number_format($TotalGasto);
+		$TotalGanancia=number_format($TotalGanancia);
+
+		$nombreArchivo='Comercio_ID_'.$id_comercio.'-Balance_General';
+		Excel::create($nombreArchivo, function($excel) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia) {
+
+			$excel->setTitle('Listado de Alimentos');
+// $excel->setOrientation('landscape');
+			$excel->sheet('Página 1', function($sheet) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia) {
+				$data = [];
+				$sheet->setFontFamily('Comic Sans MS');
+				$sheet->setFontSize(15);
+				$sheet->mergeCells('A1:E1');
+
+				array_push($data, ['Balance General']);
+				array_push($data, ['']);
+				array_push($data, ['Total Venta Producto','Total Venta Alimento','Total Venta Internet',]);
+				
+
+				array_push($data, [(string) $TotalVentaProducto]);
+				
+				array_push($data, ['']);
+				// array_push($data, ['','', '','Total Inversion:','$'.$TotalInversion]);
+				// array_push($data, ['','', '','Total Alimentos:',$TotalAlimentos]);
+				$sheet->fromArray($data, null, 'A1', false, false);
+				$sheet->setStyle(array(
+					'font' => array(
+						'name'      =>  'Tahoma',
+						'size'      =>  12,
+						'bold'      =>  false
+						)
+					));
 			});
-
-		// })->export('xls');
-
-
+		// })->export('xlsx');F
 		})->store('xlsx','exports');
 
-		$RutaArchivo='Control_5_3/public/exports/'.$nombreArchivo.'.xlsx';
 
+		$RutaArchivo='exports/'.$nombreArchivo.'.xlsx';
 
-						
 
 
 		// Para que funcione local
 		return Response::json([
 			'success' =>true,
-			'path'=>'/Control_5_3/public/exports/'.$nombreArchivo.'.xlsx']);
+			'path'=>'/Control_5_3/public/exports/'.$nombreArchivo.'.xlsx',
+			'RutaArchivo'=>$RutaArchivo]);
 
 
  				// Para que funcione web
 	// 	return Response::json([
 	// 		'success' =>true,
-	// 		'path'=>'/exports/'.$nombreArchivo.'.xlsx']);
-	// }
+	// 		'path'=>'/exports/'.$nombreArchivo.'.xlsx',
+			// 'RutaArchivo'=>$RutaArchivo]);
 
+
+	}
+
+	public function DeleteExportFile(){
+
+		$NombreArchivo=Input::get('ruta');
+
+
+		if (File::exists($NombreArchivo)) {
+			File::delete($NombreArchivo);			
+		}
 
 	}
 

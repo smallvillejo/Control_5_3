@@ -32,10 +32,10 @@
 					<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li>							
-							<a href="<?php echo e(URL::route('Exportar_Excel_Total_Productos')); ?>" title="Exportar Excel" id="btn_reporte_excel_producto"><i class="fa fa-file-excel-o" aria-hidden="true"></i>EXCEL</a>	
+							<a href="<?php echo e(URL::route('exportar_report_excel')); ?>" title="Exportar Excel" id="btn_reporte_excel_producto"><i class="fa fa-file-excel-o" aria-hidden="true"></i>EXCEL</a>	
 						</li>
 						<li>
-							<a href="<?php echo e(URL::route('Exportar_PDF_Total_Productos')); ?>" title="Exportar PDF" id="btn_reporte_pdf_producto"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF</a>	
+							<a href="<?php echo e(URL::route('exportar_report_pdf')); ?>" title="Exportar PDF" id="btn_reporte_pdf_producto"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF</a>	
 						</li>						
 					</ul>
 				</li>	

@@ -1279,6 +1279,7 @@ info2.slideDown();
                                         size: 8
                                       });
                                       Notificaciones_PocoStock();
+                                      console.clear();
                                     </script>
                                    <!--  <script src="jquery.pulsate.min.js">
                                  </script> -->

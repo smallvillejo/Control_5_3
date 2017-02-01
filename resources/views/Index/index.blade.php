@@ -40,7 +40,7 @@ Menú Principal
 	<center><div id="loadinfo" style="display: none" class="cargando"></div></center>
 	<div id="content" style="display: none">
 		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="col-sm-6 col-xs-12 col-md-6 col-lg-6">
 				<div class="dashboard-stat blue-madison">
 					<div class="visual">
 						<i class="fa fa-archive" aria-hidden="true"></i>
@@ -383,14 +383,24 @@ Menú Principal
 											success:function(data){
 												var ruta= data.path;                 
 												location.href = ruta;
+												window.setTimeout(function(){ElminiarArchivoExportado(data.RutaArchivo);},10);
+												console.clear();
+											}
+										});
+									});
 
-												if (File::exists($RutaArchivo)) {
-													File::delete($RutaArchivo);			
-												}
+									function ElminiarArchivoExportado($ruta){
+										$.ajax({
+											url   : "<?= URL::to('delete_archivo') ?>",
+											type  : "GET",
+											async : false,		
+											data: {
+												'ruta' :$ruta												
 											}
 
 										});
-									});
+									}
+									console.clear();
 								</script>
 
 								@stop

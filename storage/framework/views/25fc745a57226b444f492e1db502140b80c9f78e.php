@@ -711,7 +711,7 @@ $('#btn_cancelar_formulario_alimentos').click(function(){
 					if(respuesta.ErrorTieneVentasAsociadas=="Si"){
 						subir();
 						$('#Error_al_Eliminar').show();
-						$('#Id_Alimento_Eliminar').text('ERROR AL ELIMINAR: El alimento: "'+respuesta.NombreAlimento+'" tiene ventas asociadas, elimine sus ventas y intente de nuevo..'); 
+						$('#Id_Alimento_Eliminar').text('ERROR: El alimento: "'+respuesta.NombreAlimento+'" tiene ventas asociadas, elimine sus ventas y intente de nuevo..'); 
 						$("#Id_Alimento_Eliminar").css("fontSize", 23);								
 						$("#Id_Alimento_Eliminar").css("font-weight","Bold"); 						
 						$(document).ready (function(){                              

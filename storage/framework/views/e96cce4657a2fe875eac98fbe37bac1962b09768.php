@@ -379,14 +379,27 @@ Menú Principal
 												'Fecha_Final' 	:Fecha_Final,
 												'_token' 		:_token
 											},											
-											success:function(data){	
-												alert(data.path);
+											success:function(data){
 												var ruta= data.path;                 
 												location.href = ruta;
+												window.setTimeout(function(){ElminiarArchivoExportado(data.RutaArchivo);},10);
+												console.clear();
+											}
+										});
+									});
+
+									function ElminiarArchivoExportado($ruta){
+										$.ajax({
+											url   : "<?= URL::to('delete_archivo') ?>",
+											type  : "GET",
+											async : false,		
+											data: {
+												'ruta' :$ruta												
 											}
 
 										});
-									});
+									}
+									console.clear();
 								</script>
 
 								<?php $__env->stopSection(); ?>

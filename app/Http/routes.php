@@ -23,6 +23,8 @@ Route::any('consultar_x_Fecha', array('as'=>'consultar_x_Fecha','uses'=>'Control
 Route::any('exportar_report_excel', array('as'=>'exportar_report_excel','uses'=>'ControllerIndex\IndexController@ExportarReportBalanceExcel'))->middleware('auth');
 // Exportar Reportes pdf - BALANCE
 Route::any('exportar_report_pdf', array('as'=>'exportar_report_pdf','uses'=>'ControllerIndex\IndexController@ExportarReportBalancePdf'))->middleware('auth');
+// Ruta Eliminar Archivo Exportado
+Route::any('delete_archivo', array('as'=>'delete_archivo','uses'=>'ControllerIndex\IndexController@DeleteExportFile'))->middleware('auth');
 // 
 
 
