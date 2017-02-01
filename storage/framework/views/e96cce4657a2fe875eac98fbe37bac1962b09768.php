@@ -39,7 +39,7 @@ Menú Principal
 	<center><div id="loadinfo" style="display: none" class="cargando"></div></center>
 	<div id="content" style="display: none">
 		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="col-sm-6 col-xs-12 col-md-6 col-lg-6">
 				<div class="dashboard-stat blue-madison">
 					<div class="visual">
 						<i class="fa fa-archive" aria-hidden="true"></i>

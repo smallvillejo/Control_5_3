@@ -257,22 +257,34 @@ class IndexController extends Controller{
 		$TotalGanancia=number_format($TotalGanancia);
 
 		$nombreArchivo='Comercio_ID_'.$id_comercio.'-Balance_General';
-		Excel::create($nombreArchivo, function($excel) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia) {
+		Excel::create($nombreArchivo, function($excel) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaMinutos,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia,$Fecha_Inicial,$Fecha_Final) {
 
 			$excel->setTitle('Listado de Alimentos');
 // $excel->setOrientation('landscape');
-			$excel->sheet('Página 1', function($sheet) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia) {
+			$excel->sheet('Página 1', function($sheet) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaMinutos,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia,$Fecha_Inicial,$Fecha_Final) {
 				$data = [];
 				$sheet->setFontFamily('Comic Sans MS');
 				$sheet->setFontSize(15);
 				$sheet->mergeCells('A1:E1');
 
+				array_push($data, ['Nombre Empresa']);
 				array_push($data, ['Balance General']);
 				array_push($data, ['']);
-				array_push($data, ['Total Venta Producto','Total Venta Alimento','Total Venta Internet',]);
+				array_push($data, ['Fecha Reporte: Del '.$Fecha_Inicial.' Al '.$Fecha_Final]);
+				array_push($data, ['']);
+				array_push($data, ['Total Venta Producto','$'.$TotalVentaProducto]);
+				array_push($data, ['Total Venta Alimento','$'.$TotalVentaAlimento]);
+				array_push($data, ['Total Venta Minutos','$'.$TotalVentaMinutos]);
+				array_push($data, ['Total Venta Internet','$'.$TotalVentaInternet]);
+				array_push($data, ['Total Venta Recargas','$'.$TotalVentaRecarga]);
+				array_push($data, ['Total Compras','$'.$TotalCompra]);
+				array_push($data, ['Total Gastos','$'.$TotalGasto]);
+				array_push($data, ['']);
+				array_push($data, ['Total Ganancia','$'.$TotalGanancia]);
+
 				
 
-				array_push($data, [(string) $TotalVentaProducto]);
+				
 				
 				array_push($data, ['']);
 				// array_push($data, ['','', '','Total Inversion:','$'.$TotalInversion]);
