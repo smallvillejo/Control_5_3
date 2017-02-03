@@ -96,7 +96,7 @@ public function  Exportar_PDF_Total_Productos(){
 
   $id_usuario_logueado=Auth::user()->id;
 
-  $nombre_empresa=Empresa::where('fk_usuario',$id_usuario_logueado)->get();
+ $nombre_empresa=Empresa::where('comercio_id',$id_comercio)->get();
 
   foreach ($nombre_empresa as $key => $value) {
     $nombre_empresa=$value->nombre_empresa;
@@ -113,7 +113,6 @@ public function  Exportar_PDF_Total_Productos(){
   $pdf = PDF::loadView('Administrar/Productos/Reporte_PDF/Reporte_PDF_Total_Productos',compact('Productos','nombre_empresa','TotalInversion'))->setPaper('letter', 'landscape');
 
      // $pdf = PDF::loadView('Administrar/Productos/Reporte_PDF/Reporte_PDF_Total_Productos',compact('Productos','nombre_empresa'))->setPaper('letter', 'portrait');
-
   return $pdf->download($nombreArchivo.'.pdf');
 }
 

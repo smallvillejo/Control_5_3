@@ -21,7 +21,7 @@ Menú Principal
 						<a href="#" title="Exportar Excel" id="btn_reporte_excel_producto" class="ExportarExcel"><i class="fa fa-file-excel-o" aria-hidden="true"></i>Exporta en EXCEL</a>	
 					</li>
 					<li>
-						<a href="<?php echo e(URL::route('Exportar_PDF_Total_Productos')); ?>" title="Exportar PDF" id="btn_reporte_pdf_producto"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>Exporta en PDF</a>	
+						<a href="#" title="Exportar PDF" id="btn_reporte_pdf_producto" class="ExportarPdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>Exporta en PDF</a>	
 					</li>						
 				</ul>
 			</li>		
@@ -364,8 +364,7 @@ Menú Principal
 
 									}
 
-									$('.ExportarExcel').click(function(){										
-
+									$('.ExportarExcel').click(function(){						
 										var _token=$('#_token').val();
 										var Fecha_Inicial=$('#fecha_oculta_inicial').val();
 										var Fecha_Final=$('#fecha_oculta_final').val();
@@ -398,8 +397,32 @@ Menú Principal
 											}
 
 										});
+										console.clear();
 									}
 									console.clear();
+
+									$('.ExportarPdf').click(function(){	
+										var _token=$('#_token').val();
+										var Fecha_Inicial=$('#fecha_oculta_inicial').val();
+										var Fecha_Final=$('#fecha_oculta_final').val();
+
+										$.ajax({
+											url   : "<?= URL::to('exportar_report_pdf') ?>",
+											type  : "POST",
+											async : false,		
+											data: {
+												'Fecha_Inicial' :Fecha_Inicial, 
+												'Fecha_Final' 	:Fecha_Final,
+												'_token' 		:_token
+											},											
+											success:function(data){
+												var ruta= data.path;                 
+												location.href = ruta;
+												window.setTimeout(function(){ElminiarArchivoExportado(data.RutaArchivo);},10);
+												console.clear();
+											}
+										});
+									});
 								</script>
 
 								<?php $__env->stopSection(); ?>

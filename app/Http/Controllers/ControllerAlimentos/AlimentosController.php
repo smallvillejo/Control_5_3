@@ -132,7 +132,7 @@ public function  Exportar_PDF_Total_Alimentos(){
   $Alimentos=Alimento::Where('id_comercio',$id_comercio)
   ->orderBy('nombre_alimento','asc')->get();
   $id_usuario_logueado=Auth::user()->id;
-  $nombre_empresa=Empresa::where('fk_usuario',$id_usuario_logueado)->get();
+  $nombre_empresa=Empresa::where('comercio_id',$id_comercio)->get();
   foreach ($nombre_empresa as $key => $value) {
     $nombre_empresa=$value->nombre_empresa;
   }

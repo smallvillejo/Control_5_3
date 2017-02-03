@@ -14,6 +14,7 @@ use App\Models\Internet\VentaInternet;
 use App\Models\Recargas\VentaRecarga;
 use App\Models\Compras\Compra;
 use App\Models\Gastos\Gasto;
+use App\Models\Empresa\Empresa;
 use Control_5_3\Models\Cargo\Cargo;
 use Illuminate\Support\Facades\Input;
 use Response;
@@ -28,7 +29,10 @@ use PHPExcel_Style_Alignment;
 use App;
 use PDF;
 use File;
-
+use Storage;
+use Dompdf\Adapter\CPDF;
+use Dompdf\Dompdf;
+use Dompdf\Exception;
 
 
 class IndexController extends Controller{
@@ -193,6 +197,51 @@ class IndexController extends Controller{
 			'TotalGanancia'=>$TotalGanancia]);
 	}
 
+	public function ExportarReportBalancePdf(){
+		$id_comercio=Auth::user()->id_comercio; 
+		$nombreArchivo='Comercio_ID:'.$id_comercio.'-Listado Productos';
+
+		$Productos=Producto::Where('id_comercio',$id_comercio)
+		->orderBy('nombre_producto','asc')->get(); 
+
+
+		$id_usuario_logueado=Auth::user()->id;
+
+		$nombre_empresa=Empresa::where('comercio_id',$id_comercio)->get();
+
+		foreach ($nombre_empresa as $key => $value) {
+			$nombre_empresa=$value->nombre_empresa;
+		}     
+
+		$TotalInversion=DB::table('producto_producto')
+		->where('id_comercio',$id_comercio)
+		->sum('valor_total_inversion');
+		$TotalInversion=number_format($TotalInversion); 
+
+		$pdf = App::make('dompdf.wrapper'); 
+		$pdf = PDF::loadView('Administrar/Productos/Reporte_PDF/Reporte_PDF_Total_Productos',compact('Productos','nombre_empresa','TotalInversion'))->setPaper('letter', 'landscape');
+
+		$nombreArchivo='Comercio_ID_'.$id_comercio.'-Balance_General';
+		$RutaArchivo='exports/'.$nombreArchivo.'.pdf';
+		$output = $pdf->output();
+		file_put_contents($RutaArchivo, $output);
+
+		return Response::json([
+			// Para que funcione local
+			'success' =>true,
+			'path'=>'/Control_5_3/public/exports/'.$nombreArchivo.'.pdf',
+			'RutaArchivo'=>$RutaArchivo]);
+
+		// Para que funcione web
+
+		// 	return Response::json([
+	// 		'success' =>true,
+	// 		'path'=>'/exports/'.$nombreArchivo.'.pdf',
+			// 'RutaArchivo'=>$RutaArchivo])
+
+		
+	}
+
 	public function ExportarReportBalanceExcel(){
 		$nombreArchivo='Laravel_Excel';
 		$id_comercio=Auth::user()->id_comercio;
@@ -244,6 +293,11 @@ class IndexController extends Controller{
 		->Where('id_comercio',$id_comercio)
 		->sum('valor_gasto');
 
+		$Empresa=Empresa::where('comercio_id',$id_comercio)->get();
+
+		foreach ($Empresa as $key => $value) {
+			$nombre_empresa=$value->nombre_empresa;
+		}
 
 		$TotalGanancia=$TotalVentaProducto+$TotalVentaAlimento+$TotalVentaMinutos+$TotalVentaInternet+$TotalVentaRecarga-$TotalCompra-$TotalGasto;
 
@@ -257,18 +311,18 @@ class IndexController extends Controller{
 		$TotalGanancia=number_format($TotalGanancia);
 
 		$nombreArchivo='Comercio_ID_'.$id_comercio.'-Balance_General';
-		Excel::create($nombreArchivo, function($excel) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaMinutos,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia,$Fecha_Inicial,$Fecha_Final) {
+		Excel::create($nombreArchivo, function($excel) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaMinutos,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia,$Fecha_Inicial,$Fecha_Final,$nombre_empresa,$id_comercio) {
 
 			$excel->setTitle('Listado de Alimentos');
 // $excel->setOrientation('landscape');
-			$excel->sheet('Página 1', function($sheet) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaMinutos,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia,$Fecha_Inicial,$Fecha_Final) {
+			$excel->sheet('Página 1', function($sheet) use($TotalVentaProducto,$TotalVentaAlimento,$TotalVentaMinutos,$TotalVentaInternet,$TotalVentaRecarga,$TotalCompra,$TotalGasto,$TotalGanancia,$Fecha_Inicial,$Fecha_Final,$nombre_empresa,$id_comercio) {
 				$data = [];
 				$sheet->setFontFamily('Comic Sans MS');
 				$sheet->setFontSize(15);
 				$sheet->mergeCells('A1:E1');
-
-				array_push($data, ['Nombre Empresa']);
 				array_push($data, ['Balance General']);
+				array_push($data, ['Nombre Empresa',strtoupper($nombre_empresa)]);
+				array_push($data, ['Comercio ID:',$id_comercio]);
 				array_push($data, ['']);
 				array_push($data, ['Fecha Reporte: Del '.$Fecha_Inicial.' Al '.$Fecha_Final]);
 				array_push($data, ['']);
@@ -281,14 +335,7 @@ class IndexController extends Controller{
 				array_push($data, ['Total Gastos','$'.$TotalGasto]);
 				array_push($data, ['']);
 				array_push($data, ['Total Ganancia','$'.$TotalGanancia]);
-
-				
-
-				
-				
-				array_push($data, ['']);
-				// array_push($data, ['','', '','Total Inversion:','$'.$TotalInversion]);
-				// array_push($data, ['','', '','Total Alimentos:',$TotalAlimentos]);
+				array_push($data, ['']);				
 				$sheet->fromArray($data, null, 'A1', false, false);
 				$sheet->setStyle(array(
 					'font' => array(
@@ -297,28 +344,20 @@ class IndexController extends Controller{
 						'bold'      =>  false
 						)
 					));
-			});
-		// })->export('xlsx');F
+			});		
 		})->store('xlsx','exports');
-
-
 		$RutaArchivo='exports/'.$nombreArchivo.'.xlsx';
-
-
-
 		// Para que funcione local
 		return Response::json([
 			'success' =>true,
 			'path'=>'/Control_5_3/public/exports/'.$nombreArchivo.'.xlsx',
 			'RutaArchivo'=>$RutaArchivo]);
 
-
  				// Para que funcione web
 	// 	return Response::json([
 	// 		'success' =>true,
 	// 		'path'=>'/exports/'.$nombreArchivo.'.xlsx',
-			// 'RutaArchivo'=>$RutaArchivo]);
-
+			// 'RutaArchivo'=>$RutaArchivo])
 
 	}
 
@@ -331,10 +370,6 @@ class IndexController extends Controller{
 			File::delete($NombreArchivo);			
 		}
 
-	}
-
-	public function ExportarReportBalancePdf(){
-		dd(Input::all());
 	}
 
 }
