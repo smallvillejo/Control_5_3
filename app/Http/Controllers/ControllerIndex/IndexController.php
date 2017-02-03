@@ -199,27 +199,88 @@ class IndexController extends Controller{
 
 	public function ExportarReportBalancePdf(){
 		$id_comercio=Auth::user()->id_comercio; 
-		$nombreArchivo='Comercio_ID:'.$id_comercio.'-Listado Productos';
+		// $nombreArchivo='Comercio_ID:'.$id_comercio.'-Balance General';
 
-		$Productos=Producto::Where('id_comercio',$id_comercio)
-		->orderBy('nombre_producto','asc')->get(); 
+		$Fecha_Inicial=Input::get('Fecha_Inicial');
+		$Fecha_Final=Input::get('Fecha_Final');
+
+		$TotalVentaProducto=VentaProducto::whereBetween('fecha_producto_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_producto_venta');
 
 
-		$id_usuario_logueado=Auth::user()->id;
+		$TotalVentaAlimento=VentaAlimento::whereBetween('fecha_alimento_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_alimento_venta');	
+
+
+		$TotalProductos= VentaProducto::whereBetween('fecha_producto_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->count('id');   
+		$TotalProductos=number_format($TotalProductos);
+
+
+		$TotalAlimentos=VentaAlimento::whereBetween('fecha_alimento_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->count('id');   
+		$TotalAlimentos=number_format($TotalAlimentos);
+
+
+		$TotalVentaMinutos=DetallePlanMinutos::whereBetween('fecha_registro', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('total_minutos_venta');		 
+
+		$TotalVentaInternet=VentaInternet::whereBetween('fecha_internet_venta', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('venta_total_dia');
+
+		$TotalVentaRecarga=VentaRecarga::whereBetween('fecha_venta_recarga', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_venta_recarga');
+
+
+		$TotalCompra=Compra::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_total_compra');
+
+
+		$TotalGasto=Gasto::whereBetween('fecha_gasto', array($Fecha_Inicial, $Fecha_Final))
+		->Where('id_comercio',$id_comercio)
+		->sum('valor_gasto');
+
+		$Empresa=Empresa::where('comercio_id',$id_comercio)->get();
+
+		foreach ($Empresa as $key => $value) {
+			$nombre_empresa=$value->nombre_empresa;
+		}
+
+		$TotalGanancia=$TotalVentaProducto+$TotalVentaAlimento+$TotalVentaMinutos+$TotalVentaInternet+$TotalVentaRecarga-$TotalCompra-$TotalGasto;
+
+		$TotalVentaProducto=number_format($TotalVentaProducto); 
+		$TotalVentaAlimento=number_format($TotalVentaAlimento);
+		$TotalVentaMinutos=number_format($TotalVentaMinutos);
+		$TotalVentaInternet=number_format($TotalVentaInternet); 
+		$TotalVentaRecarga=number_format($TotalVentaRecarga); 
+		$TotalCompra=number_format($TotalCompra);
+		$TotalGasto=number_format($TotalGasto);
+		$TotalGanancia=number_format($TotalGanancia);
+		
 
 		$nombre_empresa=Empresa::where('comercio_id',$id_comercio)->get();
 
 		foreach ($nombre_empresa as $key => $value) {
 			$nombre_empresa=$value->nombre_empresa;
-		}     
-
-		$TotalInversion=DB::table('producto_producto')
-		->where('id_comercio',$id_comercio)
-		->sum('valor_total_inversion');
-		$TotalInversion=number_format($TotalInversion); 
+			$logo_empresa=$value->logo_empresa;
+			$direccion_empresa=$value->direccion_empresa;
+			$telefono_empresa=$value->telefono_empresa;
+			$correo_empresa=$value->correo_empresa;			
+		}  
+		$nombre_empresa=strtoupper($nombre_empresa);
+		$direccion_empresa=strtoupper($direccion_empresa);
+		$correo_empresa=strtoupper($correo_empresa);
 
 		$pdf = App::make('dompdf.wrapper'); 
-		$pdf = PDF::loadView('Administrar/Productos/Reporte_PDF/Reporte_PDF_Total_Productos',compact('Productos','nombre_empresa','TotalInversion'))->setPaper('letter', 'landscape');
+		$pdf = PDF::loadView('Index/Reporte_PDF/Reporte_PDF_BalanceGeneral',compact('TotalVentaProducto','TotalVentaAlimento','TotalVentaMinutos','TotalVentaInternet','TotalVentaRecarga','TotalCompra','TotalGasto','TotalGanancia','nombre_empresa','direccion_empresa','telefono_empresa','correo_empresa','logo_empresa','Fecha_Inicial','Fecha_Final','id_comercio'))->setPaper('letter', 'landscape');
 
 		$nombreArchivo='Comercio_ID_'.$id_comercio.'-Balance_General';
 		$RutaArchivo='exports/'.$nombreArchivo.'.pdf';
