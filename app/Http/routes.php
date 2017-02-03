@@ -12,6 +12,8 @@ Route::any('Salir', array('as'=>'Salir','uses'=>'ControllerUsuarios\UsuariosCont
 Route::any('Cerrar_Sesion_X_Tiempo', array('as'=>'Cerrar_Sesion_X_Tiempo','uses'=>'ControllerUsuarios\UsuariosController@Cerrar_Sesion_X_Tiempo'));
 // Consultar Email Usuario antes de loguearse
 Route::any('ConsultarEmail', array('as'=>'ConsultarEmail','uses'=>'ControllerUsuarios\UsuariosController@Consultar_email_Usuario_Logueo'));
+// Carga las notificaciones, ultimas ventas y perfil de usuario en div
+Route::any('cargar_div', array('as'=>'cargar_div','uses'=>'ControllerIndex\IndexController@CargarBarNotificaciones'));
 // Rutas del Sistema
 
 // Rutas Index - Menú Principal

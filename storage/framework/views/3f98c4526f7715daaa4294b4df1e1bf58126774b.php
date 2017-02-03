@@ -9,7 +9,7 @@
 <body>
 	<header class="clearfix">
 		<div id="logo">
-			<img src="<?php echo e($logo_empresa); ?>" height="|0%" width="50%">
+			<img src="<?php echo e($logo_empresa); ?>" height="10%" width="50%">
 		</div>
 		<h1>BALANCE GENERAL</h1>
 		<div id="company" class="clearfix">
@@ -39,36 +39,36 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma">Total Venta Producto</font></td>
-				<td class="desc"><font size ="3", color ="#000000" face="Tahoma"><?php echo e($TotalVentaProducto); ?></font></td>				
+				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma"><strong>Total Venta Producto</strong></font></td>
+				<td class="desc"><font size ="3", color ="#000000" face="Tahoma">$ <strong><?php echo e($TotalVentaProducto); ?></strong></font></td>				
 			</tr>		
 			<tr>
-				<td class="service"><font size ="2", color ="#0284ff" face="Tahoma">Total Venta Alimento</font></td>
-				<td class="desc"><font size ="2", color ="#000000" face="Tahoma"><?php echo e($TotalVentaAlimento); ?></font></td>
+				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma"><strong>Total Venta Alimento</strong></font></td>
+				<td class="desc"><font size ="3", color ="#000000" face="Tahoma">$ <strong><?php echo e($TotalVentaAlimento); ?></strong></font></td>
 			</tr>	
 			<tr>
-				<td class="service"><font size ="2", color ="#0284ff" face="Tahoma">Total Venta Minutos</font></td>
-				<td class="desc"><font size ="2", color ="#000000" face="Tahoma"><?php echo e($TotalVentaMinutos); ?></font></td>
+				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma"><strong>Total Venta Minutos</strong></font></td>
+				<td class="desc"><font size ="3", color ="#000000" face="Tahoma">$ <strong><?php echo e($TotalVentaMinutos); ?></strong></font></td>
 			</tr>
 			<tr>
-				<td class="service"><font size ="2", color ="#0284ff" face="Tahoma">Total Venta Internet</font></td>
-				<td class="desc"><font size ="2", color ="#000000" face="Tahoma"><?php echo e($TotalVentaInternet); ?></font></td>
+				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma"><strong>Total Venta Internet</strong></font></td>
+				<td class="desc"><font size ="3", color ="#000000" face="Tahoma">$ <strong><?php echo e($TotalVentaInternet); ?></strong></font></td>
 			</tr>
 			<tr>
-				<td class="service"><font size ="2", color ="#0284ff" face="Tahoma">Total Venta Recargas</font></td>
-				<td class="desc"><font size ="2", color ="#000000" face="Tahoma"><?php echo e($TotalVentaRecarga); ?></font></td>
+				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma"><strong>Total Venta Recargas</strong></font></td>
+				<td class="desc"><font size ="3", color ="#000000" face="Tahoma">$ <strong><?php echo e($TotalVentaRecarga); ?></strong></font></td>
 			</tr>
 			<tr>
-				<td class="service"><font size ="2", color ="#0284ff" face="Tahoma">Total Compras</font></td>
-				<td class="desc"><font size ="2", color ="#000000" face="Tahoma"><?php echo e($TotalCompra); ?></font></td>	
+				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma"><strong>Total Compras</strong></font></td>
+				<td class="desc"><font size ="3", color ="#000000" face="Tahoma">$ <strong><?php echo e($TotalCompra); ?></strong></font></td>	
 			</tr>
 			<tr>
-				<td class="service"><font size ="2", color ="#0284ff" face="Tahoma">Total Gastos</font></td>
-				<td class="desc"><font size ="2", color ="#000000" face="Tahoma"><?php echo e($TotalGasto); ?></font></td>	
+				<td class="service"><font size ="3", color ="#0284ff" face="Tahoma"><strong>Total Gastos</strong></font></td>
+				<td class="desc"><font size ="3", color ="#000000" face="Tahoma">$ <strong><?php echo e($TotalGasto); ?></strong></font></td>	
 			</tr>		
 			<tr>
-				<td class="final" style="ALIGN=right">TOTAL</td>
-				<td class="final" style="ALIGN=right"><?php echo e($TotalGanancia); ?></td>				
+				<td class="final" style="text-align: left"><strong>TOTAL</strong></td>
+				<td class="final" style="text-align: left"><font size ="3", color ="#008435" face="Tahoma"><strong>$ <?php echo e($TotalGanancia); ?></strong></font></td>				
 			</tr>
 		</tbody>
 	</table>

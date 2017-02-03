@@ -37,8 +37,6 @@ use Dompdf\Exception;
 
 class IndexController extends Controller{
 
-
-
 	public function Index(){
 		return view('Index.index');
 	}
@@ -46,6 +44,10 @@ class IndexController extends Controller{
 	public function Cargar_Ventas(){	
 		return view('Ventas.Cargar_Ventas');
 	}
+	public function CargarBarNotificaciones(){	
+		return view('Notificaciones.Notificacion_Poco_Stock');
+	}
+
 
 	public function Cargar_grafica_estadistica(){
 
