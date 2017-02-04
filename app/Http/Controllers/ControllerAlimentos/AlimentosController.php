@@ -739,42 +739,25 @@ public function Ultimos_alimentos_vendidos(){
   ->with('TotalVendido',$TotalVendido);
 }
 
-  // public function ListarDataProductos()   {
-  //   $id_comercio=Auth::user()->id_comercio;
-  //   $id=Input::get('id');
-  //   $productos = Producto::where('id', $id)
-  //   ->where('id_comercio',$id_comercio)
-  //   ->get();
-  //   return $productos;
-  // }
-public function Cargar_nombres_alimentos(){
-  $id_comercio=Auth::user()->id_comercio;
-  $resultado =Alimento::where('id_comercio', $id_comercio)->orderBy('nombre_alimento','ASC')->lists('nombre_alimento','id');
-  return $resultado;
-}
-  // public function Cargar_detalles_Productos_Venta(){
-  //   $id=Input::get('id_producto');
-  //   $resultados =Producto::where('id',$id)->get();
 
-  //   foreach ($resultados  as $resultado) {
-  //     $stock=$resultado->cantidad_producto;
-  //     $valor_venta_producto=$resultado->valor_venta_producto;
-  //     $ruta_imagen_producto=$resultado->ruta_imagen_producto;
-  //   }
-  //   if($ruta_imagen_producto="null"){
-  //     $ruta_imagen_producto="No Disponible";
-  //   }
-  //   return Response::json(['stock'=>$stock,'valor_venta_producto'=>$valor_venta_producto,'ruta_imagen_producto'=>$ruta_imagen_producto]);
-  // }
-  // public function Cargar_Ventas_Productos(){
-  //   $Fecha_Actual= Carbon::today()->toDateString();
-  //   $id_comercio=Auth::user()->id_comercio;
-  //   $VentaProducto =VentaProducto::where('fecha_producto_venta',$Fecha_Actual)
-  //   ->where('id_comercio',$id_comercio)
-  //   ->orderBy('hora_venta_producto','desc')
-  //   ->paginate(5);
-  //   return view('Productos/Tablas/VentaProductosTabla')->with('VentaProducto',$VentaProducto)->render();
-  // }
+
+public function Cargar_nombres_alimentos(){
+ $id_comercio=Auth::user()->id_comercio; 
+
+ $resultado =Alimento::where('id_comercio', $id_comercio)  
+ ->get();
+
+ $Alimentos=[]; 
+
+ foreach ($resultado  as $resultados) {    
+  $Alimentos[$resultados->id] = strtoupper($resultados->nombre_alimento).' ---- $'.number_format($resultados->valor_venta_alimento);
+}   
+return $Alimentos;
+
+}
+
+
+
 public function Cargar_Ventas_Productos_Cuadrado(){
   $Fecha_Actual= Carbon::today()->toDateString();
   $id_comercio=Auth::user()->id_comercio;

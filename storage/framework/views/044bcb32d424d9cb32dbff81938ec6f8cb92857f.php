@@ -1,3 +1,4 @@
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <?php if($VentaProducto->total()==0): ?>
 <div class="col-md-10">
 	<img src="global/images/Error_No_Foundd.png" alt="logo" class="img-thumbnail img-responsive" >
@@ -19,11 +20,11 @@
 <img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
 <center><?php echo e($VentaProducto->links()); ?></center>
 <?php foreach($VentaProducto as $value): ?>
-<div class="col-xs-12 col-sm-12 col col-md-6 col-lg-3">
+<div class="col-xs-12 col-sm-6 col col-md-6 col-lg-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<span class="badge btn-md btn-danger" title="<?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>">
-				<b><strong> <font size ="1"><?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>
+				<b><strong> <font size ="2"><?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>
 
 				</font></strong></b></span>
 			</div>
@@ -85,9 +86,8 @@
 					</tbody>
 				</div>
 			</table>				
-			<div class="panel-footer"><strong><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> <?php echo e(Carbon::parse($value->hora_venta_producto)->diffForHumans()); ?>
-
-				<div class="btn-group pull-right">				
+			<div class="panel-footer">Panel de opciones
+				<div class="pull-right">				
 					
 					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" id="<?php echo e($value->id); ?>" class="Eliminar_Venta" data-backdrop="static" data-keyboard="false" title="Eliminar" Producto_Venta="<?php echo e($value->Producto->nombre_producto); ?>" id_venta="<?php echo e($value->id); ?>" canti_vendido="<?php echo e($value->cantidad_producto_venta); ?>" id_producto_venta="<?php echo e($value->producto_id); ?>">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></strong>
 					</a>						|
@@ -98,7 +98,13 @@
 			</div>
 		</div>
 	</div>
+	<div class="panel-footer">
+		Venta Registrada Por: <strong><?php echo e(strtoupper($value->NombreUsuario->nombre).' '.strtoupper($value->NombreUsuario->apellido)); ?></strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> <?php echo e(Carbon::parse($value->hora_venta_producto)->diffForHumans()); ?>
+
+	</div>
 </div>
+
+
 </div>
 <?php endforeach; ?>		
 <?php endif; ?>
@@ -472,6 +478,10 @@
 
 						if(variable=="La venta fue editada exitosamente."){
 							Listar_Venta_Productos();
+							refresPagina();
+						}else if(variable=="La venta se elimino exitosamente."){
+							Listar_Venta_Productos();
+							refresPagina();
 						}
 
 					});

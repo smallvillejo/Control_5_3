@@ -96,7 +96,7 @@ public function  Exportar_PDF_Total_Productos(){
 
   $id_usuario_logueado=Auth::user()->id;
 
- $nombre_empresa=Empresa::where('comercio_id',$id_comercio)->get();
+  $nombre_empresa=Empresa::where('comercio_id',$id_comercio)->get();
 
   foreach ($nombre_empresa as $key => $value) {
     $nombre_empresa=$value->nombre_empresa;
@@ -608,10 +608,18 @@ public function RegistrarProducto(){
 
 
 public function Cargar_nombres_productos(){
- $id_comercio=Auth::user()->id_comercio;
+ $id_comercio=Auth::user()->id_comercio; 
 
- $resultado =Producto::where('id_comercio', $id_comercio)->lists('nombre_producto','id');
- return $resultado;
+ $resultado =Producto::where('id_comercio', $id_comercio)  
+ ->get();
+
+ $Productos=[]; 
+
+ foreach ($resultado  as $resultados) {    
+  $Productos[$resultados->id] = strtoupper($resultados->nombre_producto).' ---- $'.number_format($resultados->valor_venta_producto);
+}   
+return $Productos;
+
 }
 
 
@@ -817,6 +825,18 @@ public function Cuadrado_Venta_Productos_X_Fecha(){
  $TotalVendido=number_format($TotalVendido); 
 
  return view('Ventas/Productos/Cuadros.Cuadro_Ventas_Productos_X_Fecha')->with('TotalVendido',$TotalVendido)->with('CantidadVendida',$CantidadVendida);
+}
+
+public function CantidadVendidaProductos(){
+
+ $fecha= Carbon::today()->toDateString();
+ $id_comercio=Auth::user()->id_comercio;
+ 
+ $CantidadVendida =VentaProducto::where('hora_venta_producto', '>=',$fecha)
+ ->where('id_comercio',$id_comercio)
+ ->count('id');
+
+ return view('Ventas/Productos/Cuadros.Cantidad_Productos_Vendido')->with('CantidadVendida',$CantidadVendida);
 }
 // Para Buscar porfecha seleccionada las ventas en las ventas del dia 
 public function Cuadrado_Venta_Productos_X_BusquedaCalendario(){
@@ -1078,6 +1098,7 @@ public function RegistarVentaProducto(){
 
   $rules = array
   (
+    'user_id'           => 'required',
     'id_comercio'       => 'required',
     'producto_id'       => 'required|numeric',  
     'cantidad_producto_venta' => 'required|min:1|numeric',
@@ -1089,6 +1110,7 @@ public function RegistarVentaProducto(){
 
   $message = array
   (
+    'user_id.required'            => ' Se requiere el id del usuario',
     'id_comercio.required'        => ' Se requiere el id de comercio',
     'producto_id.required'        => ' Seleccione un producto de la lista.',
 
@@ -1150,14 +1172,15 @@ public function RegistarVentaProducto(){
       ->where('id_comercio',$venta_producto['id_comercio'])
       ->update($productos);
 
-      $venta_productos = array(
-        'id_comercio'         => $venta_producto['id_comercio'],
-        'producto_id'         => $venta_producto['producto_id'],
+      $venta_productos = array(        
+        'id_usuario'                => $venta_producto['user_id'],
+        'id_comercio'               => $venta_producto['id_comercio'],
+        'producto_id'               => $venta_producto['producto_id'],
         'cantidad_producto_venta'   => $venta_producto['cantidad_producto_venta'],
-        'precio_producto_venta'   => $venta_producto['precio_producto_venta'],
-        'total_producto_venta'    => $venta_producto['total_producto_venta'],       
-        'fecha_producto_venta'    => $venta_producto['fecha_producto_venta'],
-        'hora_venta_producto'   => $hora_venta_producto   
+        'precio_producto_venta'     => $venta_producto['precio_producto_venta'],
+        'total_producto_venta'      => $venta_producto['total_producto_venta'],       
+        'fecha_producto_venta'      => $venta_producto['fecha_producto_venta'],
+        'hora_venta_producto'       => $hora_venta_producto   
         );
 
       $check = DB::table('venta_producto')->insert($venta_productos);

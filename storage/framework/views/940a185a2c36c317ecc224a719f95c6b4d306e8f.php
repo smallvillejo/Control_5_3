@@ -6,6 +6,7 @@
 	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Productos</font></strong></b>
 		<div class="btn-group pull-right" style="display: none;" id="idTotalProductoVendido">			
 			<h4>Total Vendido:<label id="TotalVendido"></label></h4>
+			<h4>Cantidad:<label id="TotalVendido"></label></h4>
 		</div>
 		<div id="idBuscarProducto" style="display: none;">
 			<br>Buscar Producto:<b><strong><font size ="3", color="#ea0000" face="Arial Black"><select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta" onchange="Seleccion_Busqueda()">

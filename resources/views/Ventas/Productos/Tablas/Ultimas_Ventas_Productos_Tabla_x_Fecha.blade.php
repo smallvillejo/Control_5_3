@@ -1,3 +1,4 @@
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 @if($VentaProducto->total()==0)
 <div class="col-md-10">
 	<img src="global/images/Error_No_Foundd.png" alt="logo" class="img-thumbnail img-responsive" >
@@ -84,8 +85,8 @@
 					</tbody>
 				</div>
 			</table>				
-			<div class="panel-footer"><strong><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> {{Carbon::parse($value->hora_venta_producto)->diffForHumans()}}
-				<div class="btn-group pull-right">				
+			<div class="panel-footer">Panel de opciones
+				<div class="pull-right">				
 					
 					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" id="{{$value->id}}" class="Eliminar_Venta" data-backdrop="static" data-keyboard="false" title="Eliminar" Producto_Venta="{{$value->Producto->nombre_producto}}" id_venta="{{$value->id}}" canti_vendido="{{$value->cantidad_producto_venta}}" id_producto_venta="{{$value->producto_id}}">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></strong>
 					</a>						|
@@ -96,7 +97,12 @@
 			</div>
 		</div>
 	</div>
+	<div class="panel-footer">
+		Venta Registrada Por: <strong>{{strtoupper($value->NombreUsuario->nombre).' '.strtoupper($value->NombreUsuario->apellido)}}</strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> {{Carbon::parse($value->hora_venta_producto)->diffForHumans()}}
+	</div>
 </div>
+
+
 </div>
 @endforeach		
 @endif

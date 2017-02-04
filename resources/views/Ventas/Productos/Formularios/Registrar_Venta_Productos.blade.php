@@ -5,7 +5,8 @@
 			<div class="panel panel-info" style="margin: 20 auto;width:100% ">
 				<div class="panel-heading">Datos de la Venta</div>
 				<div class="panel-body">
-					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">			
+					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">	
+						<input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}" class="form-control">		
 						<input type="hidden" name="comercio_id" id="comercio_id" value="{{Auth::user()->id_comercio}}" class="form-control">
 						<input type="hidden" name="Fecha_Actual" id="Fecha_Actual" value="{{$today = Carbon::today()->toDateString()}}" class="form-control">
 						<input type="hidden" name="Hora_Venta" id="Hora_Venta" value="{{Carbon::now()}}" class="form-control">
@@ -258,6 +259,7 @@
 				}
 
 				$('.RegistrarVenta_Productos').click(function(){
+					var user_id 			=	$('#user_id').val();
 					var NumeroComercio 		=	$('#comercio_id').val();
 					var producto_id 		=	$('#id_producto').val();
 					var cantidad_producto 	=	$('#cantidad_productos_venta').val();
@@ -273,6 +275,7 @@
 						async : false,
 						data  :{
 							'_token'       	  			 : _token,
+							'user_id'               	 : user_id,
 							'id_comercio'                : NumeroComercio,
 							'producto_id'            	 : producto_id,
 							'cantidad_producto_venta'    : cantidad_producto,
@@ -354,14 +357,7 @@
 					$('#boton_registrar_venta_alimento').show();
 				});
 
-
-
 			</script>	
-
-
-
-
-
 
 			<script src="global/plugins/select/js/bootstrap-select.min.js" type="text/javascript"></script>
 			<script type="text/javascript">
