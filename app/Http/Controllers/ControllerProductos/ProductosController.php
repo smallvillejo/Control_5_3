@@ -8,6 +8,7 @@ use App\Models\Productos\Producto;
 use App\Models\Alimentos\Alimento;
 use App\Models\Usuarios\Empresa;
 use App\Models\Productos\VentaProducto;
+use App\Models\Usuarios\Usuario;
 use Control_5_3\Models\Cargo\Cargo;
 use Illuminate\Support\Facades\Input;
 use Response;
@@ -939,7 +940,42 @@ public function Consultar_Producto_x_Busqueda(){
 
   return view('Ventas/Productos/Consultas/Consultando_VentaProductos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
 
+}
 
+public function Consultar_Ultimas_Ventas_Producto_x_Nombre_Usuario(){
+
+  $producto_id_venta_consulta_usuario=Input::get('producto_id_venta_consulta_usuario');
+  $fecha= Carbon::today()->toDateString();
+  $id_comercio=Auth::user()->id_comercio;
+
+  dd($producto_id_venta_consulta_usuario,$fecha);
+
+  $VentaProducto=VentaProducto::where('fecha_producto_venta',$fecha)
+  ->where('id_comercio',$id_comercio)
+  ->where('id_usuario',$producto_id_venta_consulta_usuario)
+  ->paginate(10);
+
+
+  return view('Ventas/Productos/Consultas/Consultando_VentaProductos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
+
+
+}
+
+public function cargar_nombres_usuarios_ultimas_ventas(){
+ $id_comercio=Auth::user()->id_comercio; 
+ $fecha= Carbon::today()->toDateString();
+ $resultado =VentaProducto::where('id_comercio', $id_comercio)
+ ->where('fecha_producto_venta',$fecha)
+ ->get();
+
+ $Usuarios=[]; 
+
+
+ foreach ($resultado  as $resultados) {    
+  $Usuarios[$resultados->id] = ucwords($resultados->NombreUsuario->nombre).' '.ucwords($resultados->NombreUsuario->apellido);
+}  
+
+return $Usuarios;
 }
 
 

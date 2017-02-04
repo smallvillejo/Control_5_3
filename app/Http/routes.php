@@ -73,8 +73,10 @@ Route::any('Buscar_Venta_Producto_X_Fecha', array('as'=>'Buscar_Venta_Producto_X
 Route::any('Cargar_datos_Modal_editar_venta_productos', array('as'=>'Cargar_datos_Modal_editar_venta_productos','uses'=>'ControllerProductos\ProductosController@Cargar_datos_Modal_editar_venta_productos'))->middleware('auth');
 // Ruta Editar Venta Producto
 Route::any('Editar_Venta_Producto', array('as'=>'Editar_Venta_Producto','uses'=>'ControllerProductos\ProductosController@Editar_Venta_Producto'))->middleware('auth');
-// Consultar Producto en ultimas ventas
-Route::any('Consultar_Producto_x_Busqueda', array('as'=>'Consultar_Producto_x_Busqueda','uses'=>'ControllerProductos\ProductosController@Consultar_Producto_x_Busqueda'))->middleware('auth');
+// Carga el nombre en el combobox - Consultar Producto en ultimas ventas
+Route::any('Consultar_Producto_x_Nombre_Usuario', array('as'=>'Consultar_Producto_x_Nombre_Usuario','uses'=>'ControllerProductos\ProductosController@Consultar_Ultimas_Ventas_Producto_x_Nombre_Usuario'))->middleware('auth');
+// Carga el nombre de los usuarios que registraron la veenta en el combobox - Consultar Producto en ultimas ventas
+Route::any('cargar_nombres_usuarios_ultimas_ventas', array('as'=>'cargar_nombres_usuarios_ultimas_ventas','uses'=>'ControllerProductos\ProductosController@cargar_nombres_usuarios_ultimas_ventas'))->middleware('auth');
 //Carga Formulario Venta de Productos
 Route::any('Formulario_Venta_Productos', array('as'=>'Formulario_Venta_Productos','uses'=>'ControllerProductos\ProductosController@Formulario_Venta_Productos'))->middleware('auth');
 

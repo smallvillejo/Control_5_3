@@ -6,11 +6,19 @@
 <div class="panel panel-primary">
 	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Productos</font></strong></b>
 		<div class="btn-group pull-right" style="display: none;" id="idTotalProductoVendido">			
-			<h4>Total Vendido:<label id="TotalVendido"></label></h4>
-			<h4>Cantidad:<label id="CantidadVendida"></label></h4>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h4>Total Vendido:<label id="TotalVendido"></label></h4>
+				<h4>Cantidad:<label id="CantidadVendida"></label></h4>
+			</div>
 		</div>
 		<div id="idBuscarProducto" style="display: none;">
-			<br>Buscar Producto:<b><strong><font size ="3", color="#ea0000" face="Arial Black"><select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta" onchange="Seleccion_Busqueda()">
+			Buscar Producto:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
+			<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta" onchange="Seleccion_Busqueda()">
+				<option></option>
+			</select>
+		</font></strong></b>
+		Ventas por Usuario:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
+		<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta_usuario" onchange="Seleccion_Busqueda_X_Usuario()">
 			<option></option>
 		</select>
 	</font></strong></b>
@@ -31,12 +39,31 @@
 
 	Listar_Venta_Productos();
 	cargar_nombres_productos();
-	
+	cargar_nombres_usuarios();
 	function cargar_nombres_productos(){
 		$el =$('#producto_id_venta_consulta');
 		var _token=$('#_token').val();
 		$.ajax({
 			url   : "<?= URL::to('cargar_nombres_productos') ?>",
+			type  : "POST",
+			async : false,
+			data  :{
+				'_token'       	  : _token
+			},
+			success:function(re){
+				var option = $('<option />');
+				$.each(re, function(key,value) {
+					$el.append($("<option></option>")
+						.attr("value", key).text(value));
+				});
+			}
+		});
+	}
+	function cargar_nombres_usuarios(){
+		$el =$('#producto_id_venta_consulta_usuario');
+		var _token=$('#_token').val();
+		$.ajax({
+			url   : "<?= URL::to('cargar_nombres_usuarios_ultimas_ventas') ?>",
 			type  : "POST",
 			async : false,
 			data  :{
@@ -67,8 +94,26 @@
 			}
 		});
 	}
+
+	function Seleccion_Busqueda_X_Usuario(){
+		var producto_id_venta_consulta_usuario  = document.getElementById('producto_id_venta_consulta_usuario').value;
+		var _token=$('#_token').val();
+		$.ajax({
+			url   : "<?= URL::to('Consultar_Producto_x_Nombre_Usuario') ?>",
+			type  : "POST",
+			async : false,
+			data  :{
+				'_token'       	  : _token,
+				'producto_id_venta_consulta_usuario'     : producto_id_venta_consulta_usuario
+			},
+			success:function(resultado){
+				$('#Tabla_Venta_Productos_X_Fecha').empty().html(resultado);
+			}
+		});
+	}
 	function  Listar_Venta_Productos(){
 		Cargar_Valor_Vendido_Productos_Cuadrado();
+		Cargar_Cantidad_Vendido_Productos();
 		var Hora_Venta = "{{Carbon::today()->toDateString()}}";
 		$.ajax({
 			type:'get',

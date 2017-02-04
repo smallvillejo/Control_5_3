@@ -98,7 +98,7 @@
 		</div>
 	</div>
 	<div class="panel-footer">
-		Venta Registrada Por: <strong>{{strtoupper($value->NombreUsuario->nombre).' '.strtoupper($value->NombreUsuario->apellido)}}</strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> {{Carbon::parse($value->hora_venta_producto)->diffForHumans()}}
+		Venta Registrada Por: <strong>{{ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)}}</strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> {{Carbon::parse($value->hora_venta_producto)->diffForHumans()}}
 	</div>
 </div>
 

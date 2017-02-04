@@ -424,7 +424,7 @@ info2.slideDown();
                                       Cargar_Bar_Notificaciones();
                                                                        
                                       
-                                      console.clear();
+                                      // console.clear();
                                     </script>
                                    <!--  <script src="jquery.pulsate.min.js">
                                  </script> -->
