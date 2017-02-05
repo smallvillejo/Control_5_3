@@ -71,7 +71,7 @@
 								</td>
 								<td>
 									<span class="badge btn-md btn-success"><b><strong><font size ="2">
-										${{number_format($value->total_producto_venta)}} 
+										$ {{number_format($value->total_producto_venta)}} 
 									</font></strong></b>
 								</span>
 							</td>

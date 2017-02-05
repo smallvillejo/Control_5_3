@@ -71,7 +71,7 @@
 								</td>
 								<td>
 									<span class="badge btn-md btn-success"><b><strong><font size ="2">
-										${{number_format($value->total_producto_venta)}} 
+										$ {{number_format($value->total_producto_venta)}} 
 									</font></strong></b>
 								</span>
 							</td>
@@ -98,7 +98,7 @@
 		</div>
 	</div>
 	<div class="panel-footer">
-		Venta Registrada Por: <strong>{{ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)}}</strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> {{Carbon::parse($value->hora_venta_producto)->diffForHumans()}}
+		Venta Registrada Por: <strong>{{ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)}}</strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i>{{Carbon::parse($value->hora_venta_producto)->diffForHumans()}}
 	</div>
 </div>
 

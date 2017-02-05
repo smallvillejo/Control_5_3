@@ -58,13 +58,13 @@ Route::any('Eliminar_Venta_Producto_X_Fecha', array('as'=>'Eliminar_Venta_Produc
 //ruta para eliminar ventas de productos x Fecha Calendario
 Route::any('Eliminar_Venta_Producto_X_Fecha_Calendario', array('as'=>'Eliminar_Venta_Producto_X_Fecha_Calendario','uses'=>'ControllerProductos\ProductosController@Eliminar_Venta_Producto_X_Fecha_Calendario'))->middleware('auth');
 //ruta para mostrar Ventas de Productos del dia
-Route::any('Ventas_Productos_X_Fecha', array('as'=>'Ventas_Productos_X_Fecha','uses'=>'ControllerProductos\ProductosController@Ventas_Productos_X_Fecha'))->middleware('auth');
+Route::any('Ultimas_Ventas_Productos', array('as'=>'Ultimas_Ventas_Productos','uses'=>'ControllerProductos\ProductosController@Ultimas_Ventas_Productos'))->middleware('auth');
 //ruta cargar ventas en tabla de productos del dia
 Route::any('Tabla_Venta_Productos_X_Fecha', array('as'=>'Tabla_Venta_Productos_X_Fecha','uses'=>'ControllerProductos\ProductosController@Tabla_Venta_Productos_X_Fecha'))->middleware('auth');
 //ruta cargar ventas en cuadrado de productos x Fecha y del dia
-Route::any('Cuadrado_Venta_Productos_X_Fecha', array('as'=>'Cuadrado_Venta_Productos_X_Fecha','uses'=>'ControllerProductos\ProductosController@Cuadrado_Venta_Productos_X_Fecha'))->middleware('auth');
+Route::any('ValorVendidoUltimasVentasProductos', array('as'=>'ValorVendidoUltimasVentasProductos','uses'=>'ControllerProductos\ProductosController@ValorVendidoUltimasVentasProductos'))->middleware('auth');
 //ruta cargar ventas en cuadrado de productos x Fecha y del dia x Usuario Seleccionado
-Route::any('Cuadrado_Venta_Productos_X_Fecha_X_usuario', array('as'=>'Cuadrado_Venta_Productos_X_Fecha_X_usuario','uses'=>'ControllerProductos\ProductosController@Cuadrado_Venta_Productos_X_Fecha_X_usuario'))->middleware('auth');
+Route::any('ValorVendidoUltimasVentasProductos_X_usuario', array('as'=>'ValorVendidoUltimasVentasProductos_X_usuario','uses'=>'ControllerProductos\ProductosController@ValorVendidoUltimasVentasProductos_X_usuario'))->middleware('auth');
 //ruta cargar ventas en cuadrado de productos x Fecha y del dia 
 Route::any('CantidadVendidaProductos', array('as'=>'CantidadVendidaProductos','uses'=>'ControllerProductos\ProductosController@CantidadVendidaProductos'))->middleware('auth');
 //ruta cargar ventas en cuadrado de productos x Fecha y del dia  x Usuario Seleccionado
@@ -151,13 +151,13 @@ Route::post('RegistrarVentaAlimentos', array('as'=>'RegistrarVentaAlimentos','us
 Route::any('Ultimos_alimentos_vendidos', array('as'=>'Ultimos_alimentos_vendidos','uses'=>'ControllerAlimentos\AlimentosController@Ultimos_alimentos_vendidos'))->middleware('auth');
 
 //ruta para mostrar Ventas de Alimentos del dia
-Route::any('Ventas_Alimentos_X_Fecha', array('as'=>'Ventas_Alimentos_X_Fecha','uses'=>'ControllerAlimentos\AlimentosController@Ventas_Alimentos_X_Fecha'))->middleware('auth');
+Route::any('Ultimas_Ventas_Alimentos', array('as'=>'Ultimas_Ventas_Alimentos','uses'=>'ControllerAlimentos\AlimentosController@Ultimas_Ventas_Alimentos'))->middleware('auth');
 
 //ruta cargar consultas ventas en tabla de Alimentos del dia
 Route::any('Tabla_Venta_Alimentos_X_Fecha', array('as'=>'Tabla_Venta_Alimentos_X_Fecha','uses'=>'ControllerAlimentos\AlimentosController@Tabla_Venta_Alimentos_X_Fecha'))->middleware('auth');
 
 //ruta cargar consultas ventas en cuadrado de alimentos del dia
-Route::any('Cuadrado_Venta_Alimentos_X_Fecha', array('as'=>'Cuadrado_Venta_Alimentos_X_Fecha','uses'=>'ControllerAlimentos\AlimentosController@Cuadrado_Venta_Alimentos_X_Fecha'))->middleware('auth');
+Route::any('Ultimas_Ventas_Alimentoss_TotalVendido', array('as'=>'Ultimas_Ventas_Alimentoss_TotalVendido','uses'=>'ControllerAlimentos\AlimentosController@Ultimas_Ventas_Alimentoss_TotalVendido'))->middleware('auth');
 
 // Ruta Carga Datos en el modal Editar Venta Alimento
 Route::any('Cargar_datos_Modal_editar_venta_alimentos', array('as'=>'Cargar_datos_Modal_editar_venta_alimentos','uses'=>'ControllerAlimentos\AlimentosController@Cargar_datos_Modal_editar_venta_alimentos'))->middleware('auth');

@@ -431,8 +431,8 @@ public function RegistrarNewAlimento(){
 public function Formulario_Venta_Alimentos(){
   return view('Ventas/Alimentos/Formularios.Registrar_Venta_Alimentos');
 }
-public function Ventas_Alimentos_X_Fecha(){    
-  return view('Ventas/Alimentos/Consultas/Ventas_Alimentos_X_Fecha');
+public function Ultimas_Ventas_Alimentos(){    
+  return view('Ventas/Alimentos/Consultas/Ultimas_Ventas_Alimentos');
 }
 public function Cargar_datos_Modal_editar_venta_alimentos(){
   $id=Input::get('id_venta');
@@ -576,7 +576,7 @@ public function Tabla_Venta_Alimentos_X_Fecha(){
   return view('Ventas/Alimentos/Tablas.Ultimas_Ventas_Alimentos_Tabla_x_Fecha')->with('VentaAlimento',$VentaAlimento);
 }
    // Carga el valor de lasultimas Ventas de alimentos en Ventas_Alimentos_X_Fecha#
-public function Cuadrado_Venta_Alimentos_X_Fecha(){
+public function Ultimas_Ventas_Alimentoss_TotalVendido(){
   $fecha= Carbon::today()->toDateString();
   $id_comercio=Auth::user()->id_comercio;
   $TotalVendido =VentaAlimento::where('hora_venta_alimento', '>=',$fecha)
@@ -638,6 +638,7 @@ public function Cargar_detalles_Alimentos_Venta(){
 public function RegistrarVentaAlimentos(){
   $rules = array
   (
+    'user_id'           => 'required',
     'NumeroComercio'       => 'required',
     'id_alimento'       => 'required|numeric',
     'Cantidad_Alimentos_Venta' => 'required|min:1|numeric',
@@ -648,6 +649,7 @@ public function RegistrarVentaAlimentos(){
     );
   $message = array
   (
+    'user_id.required'            => ' Se requiere el id del usuario',
     'NumeroComercio.required'        => ' Se requiere el id de comercio',
     'id_alimento.required'        => ' Seleccione un producto de la lista.',
     'id_alimento.numeric'         => ' Seleccione un producto de la lista.',
@@ -692,6 +694,7 @@ public function RegistrarVentaAlimentos(){
       ->where('id_comercio',$id_comercio)
       ->update($alimentos);
       $Venta_Alimentos = array(
+         'id_usuario'             => $Venta_Alimentos['user_id'],
         'id_comercio'             => $Venta_Alimentos['NumeroComercio'],
         'alimento_id'             => $Venta_Alimentos['id_alimento'],
         'cantidad_alimento_venta' => $Venta_Alimentos['Cantidad_Alimentos_Venta'],

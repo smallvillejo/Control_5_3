@@ -787,9 +787,9 @@ public function Eliminar_Venta_Producto_X_Fecha_Calendario(){
   
 }
 
-public function Ventas_Productos_X_Fecha(){  
+public function Ultimas_Ventas_Productos(){  
 
-  return view('Ventas/Productos/Consultas/Ventas_Productos_X_Fecha');
+  return view('Ventas/Productos/Consultas/Ultimas_Ventas_Productos');
 }
 
 public function Tabla_Venta_Productos_X_Fecha(){
@@ -806,7 +806,7 @@ public function Tabla_Venta_Productos_X_Fecha(){
   return view('Ventas/Productos/Tablas/Ultimas_Ventas_Productos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
 }
 
-public function Cuadrado_Venta_Productos_X_Fecha(){
+public function ValorVendidoUltimasVentasProductos(){
 
  $fecha= Carbon::today()->toDateString();
  $id_comercio=Auth::user()->id_comercio;
@@ -821,11 +821,11 @@ public function Cuadrado_Venta_Productos_X_Fecha(){
 
  $TotalVendido=number_format($TotalVendido); 
 
- return view('Ventas/Productos/Cuadros.Cuadro_Ventas_Productos_X_Fecha')->with('TotalVendido',$TotalVendido)->with('CantidadVendida',$CantidadVendida);
+ return view('Ventas/Productos/Cuadros.Ultimas_Ventas_Productos_TotalVendido')->with('TotalVendido',$TotalVendido)->with('CantidadVendida',$CantidadVendida);
 }
 
 // Carga el valor total vendido en ultimas ventas x Usuario Seleccionado
-public function Cuadrado_Venta_Productos_X_Fecha_X_usuario(){
+public function ValorVendidoUltimasVentasProductos_X_usuario(){
 
  $fecha= Carbon::today()->toDateString();
  $id_comercio=Auth::user()->id_comercio;
@@ -838,7 +838,7 @@ public function Cuadrado_Venta_Productos_X_Fecha_X_usuario(){
 
  $TotalVendido=number_format($TotalVendido); 
 
- return view('Ventas/Productos/Cuadros.Cuadro_Ventas_Productos_X_Fecha')->with('TotalVendido',$TotalVendido);
+ return view('Ventas/Productos/Cuadros.Ultimas_Ventas_Productos_TotalVendido')->with('TotalVendido',$TotalVendido);
 }
 // Termina Carga el valor total vendido en ultimas ventas x Usuario Seleccionado
 public function CantidadVendidaProductos(){
@@ -850,7 +850,7 @@ public function CantidadVendidaProductos(){
  ->where('id_comercio',$id_comercio)
  ->count('id');
 
- return view('Ventas/Productos/Cuadros.Cantidad_Productos_Vendido')->with('CantidadVendida',$CantidadVendida);
+ return view('Ventas/Productos/Cuadros.Ultimas_Ventas_Productos_CantidadVendida')->with('CantidadVendida',$CantidadVendida);
 }
 // Consulta la cantidad de productos vendidos x Usuario Seleccionado
 public function CantidadVendidaProductos_X_usuario(){
@@ -865,7 +865,7 @@ public function CantidadVendidaProductos_X_usuario(){
  ->where('id_usuario',$producto_id_venta_consulta_usuario)
  ->count('id');
 
- return view('Ventas/Productos/Cuadros.Cantidad_Productos_Vendido')->with('CantidadVendida',$CantidadVendida);
+ return view('Ventas/Productos/Cuadros.Ultimas_Ventas_Productos_CantidadVendida')->with('CantidadVendida',$CantidadVendida);
 }
 // Termina Consulta la cantidad de productos vendidos x Usuario Seleccionado
 // Para Buscar porfecha seleccionada las ventas en las ventas del dia 

@@ -184,7 +184,7 @@ function refresPagina(){
 function  Cargar_Valor_Vendido_Productos_Cuadrado(){
 	$.ajax({
 		type:'get',
-		url:'<?php echo e(url('Cuadrado_Venta_Productos_X_Fecha')); ?>',
+		url:'<?php echo e(url('ValorVendidoUltimasVentasProductos')); ?>',
 		success: function(data){
 			$('#TotalVendido').empty().html(data);
 		}
@@ -206,7 +206,7 @@ function  Cargar_Valor_Vendido_Productos_Cuadrado_X_Usuario(){
 	var producto_id_venta_consulta_usuario  = document.getElementById('producto_id_venta_consulta_usuario').value;
 	$.ajax({
 		type:'get',		
-		url:'<?php echo e(url('Cuadrado_Venta_Productos_X_Fecha_X_usuario')); ?>',
+		url:'<?php echo e(url('ValorVendidoUltimasVentasProductos_X_usuario')); ?>',
 		data:{
 			'producto_id_venta_consulta_usuario'     : producto_id_venta_consulta_usuario
 		},

@@ -72,7 +72,7 @@
 								</td>
 								<td>
 									<span class="badge btn-md btn-success"><b><strong><font size ="2">
-										$<?php echo e(number_format($value->total_producto_venta)); ?> 
+										$ <?php echo e(number_format($value->total_producto_venta)); ?> 
 									</font></strong></b>
 								</span>
 							</td>

@@ -72,7 +72,7 @@
 								</td>
 								<td>
 									<span class="badge btn-md btn-success"><b><strong><font size ="2">
-										$<?php echo e(number_format($value->total_producto_venta)); ?> 
+										$ <?php echo e(number_format($value->total_producto_venta)); ?> 
 									</font></strong></b>
 								</span>
 							</td>
@@ -99,7 +99,7 @@
 		</div>
 	</div>
 	<div class="panel-footer">
-		Venta Registrada Por: <strong><?php echo e(ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)); ?></strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> <?php echo e(Carbon::parse($value->hora_venta_producto)->diffForHumans()); ?>
+		Venta Registrada Por: <strong><?php echo e(ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)); ?></strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i><?php echo e(Carbon::parse($value->hora_venta_producto)->diffForHumans()); ?>
 
 	</div>
 </div>

@@ -7,6 +7,7 @@
 				<div class="panel-body">
 					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">	
 						<input type="hidden" name="comercio_id" id="comercio_id" value="{{Auth::user()->id_comercio}}" class="form-control">
+						<input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}" class="form-control">	
 						<input type="hidden" name="Fecha_Actual_Venta_Alimento" id="Fecha_Actual_Venta_Alimento" value="{{$today = Carbon::today()->toDateString()}}" class="form-control">
 						<input type="hidden" name="Hora_Venta" id="Hora_Venta" value="{{Carbon::now()}}" class="form-control">
 						<div class="form-group">
@@ -155,7 +156,7 @@
 
 						$('.RegistrarVenta_Alimentos').click(function(){
 
-
+							var user_id 			=	$('#user_id').val();
 							var NumeroComercio 		=	$('#comercio_id').val();
 							var stock_alimento =parseInt($('#stock_alimento').text());
 							var Cantidad_Alimentos_Venta =$('#Cantidad_Alimentos_Venta').val();
@@ -173,6 +174,7 @@
 								async : false,
 								data  :{
 									'_token'       	  			 	: _token,
+									'user_id'               	 	: user_id,
 									'NumeroComercio'                : NumeroComercio,
 									'stock_alimento'            	: stock_alimento,
 									'Cantidad_Alimentos_Venta'    	: Cantidad_Alimentos_Venta,

@@ -13,7 +13,7 @@
       <li>
         <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
           <li>
-            <a href="{{URL::route('Ventas_Productos_X_Fecha')}}">
+            <a href="{{URL::route('Ultimas_Ventas_Productos')}}">
               <!-- <span class="time">just now</span> -->
               <span class="details">
                 <span class="label label-sm label-icon label-success"> <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
@@ -22,7 +22,7 @@
               </a>
             </li>
             <li>
-              <a href="{{URL::route('Ventas_Alimentos_X_Fecha')}}">
+              <a href="{{URL::route('Ultimas_Ventas_Alimentos')}}">
                 <!-- <span class="time">just now</span> -->
                 <span class="details">
                   <span class="label label-sm label-icon label-danger"> <i class="fa fa-cutlery" aria-hidden="true"></i>
@@ -76,28 +76,8 @@
               <a href="{{URL::route('perfil_user')}}">
                 <i class="icon-user"></i> Mi Perfil </a>
               </li>
-              <li>
-                <a href="page_calendar.html">
-                  <i class="icon-calendar"></i> My Calendar </a>
-                </li>
-                <li>
-                  <a href="inbox.html">
-                    <i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger">
-                    3 </span>
-                  </a>
-                </li>
-                <li>
-                  <a href="page_todo.html">
-                    <i class="icon-rocket"></i> My Tasks <span class="badge badge-success">
-                    7 </span>
-                  </a>
-                </li>
                 <li class="divider">
-                </li>
-                <li>
-                  <a href="extra_lock.html">
-                    <i class="icon-lock"></i> Lock Screen </a>
-                  </li>
+                </li>               
                   <li>
                     <a href="{{URL::route('Salir')}}">
                       <i class="icon-key"></i> Cerrar Sesión </a>

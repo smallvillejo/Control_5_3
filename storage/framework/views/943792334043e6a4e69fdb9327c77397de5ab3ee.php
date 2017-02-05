@@ -98,10 +98,13 @@
 				</div>
 			</div>
 		</div>
+		<div class="panel-footer">
+			Venta Registrada Por: <strong><?php echo e(ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)); ?></strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i><?php echo e(Carbon::parse($value->hora_venta_alimento)->diffForHumans()); ?>
+
+		</div>
 	</div>
 </div>
 </div>
-
 
 
 <?php endforeach; ?>		
@@ -482,7 +485,7 @@
 							refresPagina();
 						}
 
-				});
+					});
 
-			</script>			
+				</script>			
 
