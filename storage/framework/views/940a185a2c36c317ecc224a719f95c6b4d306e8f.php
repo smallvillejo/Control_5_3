@@ -16,11 +16,13 @@
 				<option></option>
 			</select>
 		</font></strong></b>
+		<?php if(Auth::user()->perfil_id==2): ?>
 		Ventas por Usuario:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
 		<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta_usuario" onchange="Seleccion_Busqueda_X_Usuario()">
 			<option></option>
 		</select>
 	</font></strong></b>
+	<?php endif; ?>
 	<button type="button" class="btn btn-danger" id="btnBuscarProducto" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
 </div>
 </div>
@@ -107,6 +109,8 @@
 			},
 			success:function(resultado){
 				$('#Tabla_Venta_Productos_X_Fecha').empty().html(resultado);
+				Cargar_Valor_Vendido_Productos_Cuadrado_X_Usuario();
+				Cargar_Cantidad_Vendido_Productos_X_Usuario();
 			}
 		});
 	}
@@ -173,88 +177,10 @@
 });
 // ---------------------------------------------------------------------------------------------------
 function refresPagina(){
-	// $('.date').datepicker('setDate', null);
-	// $('#FechaInicial *').prop('disabled',false);
-	// $('#FechaFinal *').prop('disabled',false);
 	Listar_Venta_Productos();
 	$('#producto_id_venta_consulta').val('').selectpicker('refresh');
 	$('#btnBuscarProducto').hide();
 }
-// ---------------------------------------------------------------------------------------------------
-// function BuscarXFecha(){
-// 	var info3   = $('.info3');
-// 	$('#_token').val('<?php echo e(csrf_token()); ?>');
-// 	Cargar_Valor_Vendido_Productos_Cuadrado_Calendario();
-// 	var Fecha_Inicial = $('#Fecha_Inicial').val();
-// 	var Fecha_Final   = $('#Fecha_Final').val();
-// 	var _token		  =	$('#_token').val();
-// 	var startDate = new Date($('#Fecha_Inicial').val());
-// 	var endDate = new Date($('#Fecha_Final').val());
-// 	if (startDate < endDate|| Fecha_Inicial==""|| Fecha_Final==""){
-// 		$('#success-alert3').hide();
-// 		$.ajax({
-// 			type:'POST',
-// 			url:'<?php echo e(url('Buscar_Venta_Producto_X_Fecha')); ?>',
-// 			data:{
-// 				'Fecha_Inicial' : Fecha_Inicial,
-// 				'Fecha_Final'   : Fecha_Final,
-// 				'_token'   		: _token
-// 			},
-// 			success: function(data){
-// 				if(data.errores){
-// 					$('#success-alert3').show();
-// 					info3.find('ul2').empty();
-// 					$.each(data.errores,function(index, error){
-// 							// $('#CuerpoMensaje').append('<p>'+error+'</p>');
-// 							info3.find('ul2').append('<li>'+error+'</li>');
-// 						});
-// 					info3.slideDown();
-// 				}else{
-// 					$('#Tabla_Venta_Productos_X_Fecha').empty().html(data);
-// 					$('#FechaInicial *').prop('disabled',true);
-// 					$('#FechaFinal *').prop('disabled',true);
-// 					$('#FechaFinal *').prop('disabled',true);
-// 					document.getElementById('btn_buscarProducto').disabled=true;
-// 				}
-// 			}
-// 		});
-// 	}else{
-// 		if(Fecha_Inicial==Fecha_Final){
-// 			$('#success-alert3').hide();
-// 			$.ajax({
-// 				type:'POST',
-// 				url:'<?php echo e(url('Buscar_Venta_Producto_X_Fecha')); ?>',
-// 				data:{
-// 					'Fecha_Inicial' : Fecha_Inicial,
-// 					'Fecha_Final'   : Fecha_Final,
-// 					'_token'   		: _token
-// 				},
-// 				success: function(data){
-// 					if(data.errores){
-// 						$('#success-alert3').show();
-// 						info3.find('ul2').empty();
-// 						$.each(data.errores,function(index, error){
-// 							// $('#CuerpoMensaje').append('<p>'+error+'</p>');
-// 							info3.find('ul2').append('<li>'+error+'</li>');
-// 						});
-// 						info3.slideDown();
-// 					}else{
-// 						$('#Tabla_Venta_Productos_X_Fecha').empty().html(data);
-// 						$('#FechaInicial *').prop('disabled',true);
-// 						$('#FechaFinal *').prop('disabled',true);
-// 						$('#FechaFinal *').prop('disabled',true);
-// 						document.getElementById('btn_buscarProducto').disabled=true;
-// 					}
-// 				}
-// 			});
-// 		}else{
-// 			$('#success-alert3').show();
-// 			info3.find('ul2').html('<li>La fecha final no puede ser mayor a la fecha inicial.</li>');
-// 			info3.slideDown();
-// 		}
-// 	}
-// }
-// ---------------------------------------------------------------------------------------------------
 function  Cargar_Valor_Vendido_Productos_Cuadrado(){
 	$.ajax({
 		type:'get',
@@ -275,6 +201,37 @@ function  Cargar_Cantidad_Vendido_Productos(){
 	});
 // console.clear();
 }
+// Cargar Los valores de cantidad y valor vendidos x Usuario Seleccionado
+function  Cargar_Valor_Vendido_Productos_Cuadrado_X_Usuario(){
+	var producto_id_venta_consulta_usuario  = document.getElementById('producto_id_venta_consulta_usuario').value;
+	$.ajax({
+		type:'get',		
+		url:'<?php echo e(url('Cuadrado_Venta_Productos_X_Fecha_X_usuario')); ?>',
+		data:{
+			'producto_id_venta_consulta_usuario'     : producto_id_venta_consulta_usuario
+		},
+		success: function(data){
+			$('#TotalVendido').empty().html(data);
+		}
+	});
+// console.clear();
+}
+function  Cargar_Cantidad_Vendido_Productos_X_Usuario(){
+	var producto_id_venta_consulta_usuario  = document.getElementById('producto_id_venta_consulta_usuario').value;
+	$.ajax({
+		type:'get',
+		url:'<?php echo e(url('CantidadVendidaProductos_X_usuario')); ?>',
+		data:{
+			'producto_id_venta_consulta_usuario'     : producto_id_venta_consulta_usuario
+		},
+		success: function(data){
+			$('#CantidadVendida').empty().html(data);
+		}
+	});
+// console.clear();
+}
+// Terminar Cargar Los valores de cantidad y valor vendidos x Usuario Seleccionado
+
 function  Cargar_Valor_Vendido_Productos_Cuadrado_Calendario(){
 	var Fecha_Inicial = $('#Fecha_Inicial').val();
 	var Fecha_Final   = $('#Fecha_Final').val();

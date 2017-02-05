@@ -5,14 +5,13 @@
 		</div>
 		<div class="details">
 			<div class="number">
-				$<?php echo e($TotalVendido); ?>
-
+			
 			</div>
 			<div class="desc">
 				Valor Vendido
 			</div>
 			
-			<h5><b><strong><font size ="2", color="ffffff" face="Arial Black">Productos Vendidos:  <?php echo e($CantidadVendida); ?></font></strong></b></h5>
+			<h5><b><strong><font size ="2", color="ffffff" face="Arial Black">Productos Vendidos:  </font></strong></b></h5>
 			
 		</div>
 	</a>

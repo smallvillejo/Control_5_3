@@ -29,8 +29,8 @@
       </center>    
       <form class="form-signin">
         <span id="reauth-email" class="reauth-email"></span>
-        <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingresa tu Correo Electrónico" required autofocus>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu Contraseña" style="display: none" required autofocus>
+        <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingresa tu Correo Electrónico" onkeypress="handle(event)" required autofocus>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu Contraseña" style="display: none" onkeypress="handle2(event)" required autofocus>
         <br>
         <input type="hidden" name="_token" id="_token" value="<?php echo e(csrf_token()); ?>">  
         <div class="panel panel-danger" style="display:none" id="mensaje">
@@ -242,134 +242,227 @@ function Mostrar_Mensaje_Verificacion_Email2(){
   $('#TitleModal').html('<p>Error al verificar la cuenta.</p>');
   $('#CuerpoMensaje').html('<p><?php echo e(Session::get('mensaje2')); ?></p>');  
 
-
 }
 
-</script>
+function handle(e){
+  if(e.keyCode === 13){
+            e.preventDefault(); // Ensure it is only this code that rusn
+            Comprobar_Email();            
+          }
+        }
 
-<script type="text/javascript">
+        function handle2(e){
+          if(e.keyCode === 13){
+            e.preventDefault(); // Ensure it is only this code that rusn
+           Loguearse();            
+          }
+        }
 
-  function Validar_Email_Existente(){
+        function Comprobar_Email(){
+          if(validar_login()==true){
+          }else{
+            var correo =$('#correo').val();  
+            var _token=$('#_token').val();
+            $.ajax({
+              url   : "<?= URL::to('ConsultarEmail') ?>",
+              type  : "POST",
+              async : false,   
+              data  :{
+                '_token'  : _token,
+                'correo'   : correo        
+              },    
+              success:function(data){
+                $('#valida').html('');
+                if(data.Resultado=="Error"){         
+                  $('#mensaje').show();
+                  $('#valida').append('<p><strong>'+data.ErrorEnEmail+'</strong></p>');     
+                  document.getElementById("valida").style.display = "block";   
 
+                }else{
+                 if(data.Resultado=="oK"){
+                  $('#NombreUser').text(data.NombreUsuario);
+                  $('#EmailUser').text(data.CorreoUsuario);
+                  $("#NombreUser").css("font-weight","Bold");
+                  $("#NombreUser").css("fontSize", 23);          
+                  $('#correo').hide();
+                  $('#Siguiente').hide();
+                  $('#password').show();
+                  $('#Iniciar').show();
+                  $("#profile-img").attr("src",data.FotoUsuario);  
+                  $("#profile-img").attr("width","50%"); 
+                  $("#profile-img").attr("height","50%");            
 
-    var email       = $('#email').val();  
+                }
+              }   
+            }    
+          });
+          }
+        }
 
+        function Loguearse(){
+          if(validar_login2()==true){
+          }else{
+           var correo =$('#EmailUser').text();   
+           var password =$('#password').val();
+           var _token=$('#_token').val();
 
-    if(email==""){
-      document.getElementById("Recuperaremail").disabled=true;
-    }else{
-      document.getElementById("Recuperaremail").disabled=false;    
-    }
-  }
+           $.ajax({
+            url   : "<?= URL::to('Login') ?>",
+            type  : "POST",
+            async : false,   
+            data  :{
+              '_token'  : _token,
+              'correo'   : correo,
+              'password': password
+            },    
+            success:function(data){
+              $('#valida').html('');
+              if(data.error==false){
+                $.each(data.errors,function(index, error){ 
+                  $('#mensaje').show();
+                  $('#valida').append('<p><strong>'+error+'</strong></p>');     
+                  document.getElementById("valida").style.display = "block";      
+                });  
+              }else{           
+                if(data.ErrorEnPass==false){               
+                  $('#mensaje').show();           
+                  $('#valida').append('<p><strong>'+data.errors+'</strong></p>'); 
+                  document.getElementById("valida").style.display = "block"; 
+                }else{
+                  if(data=='ok'){
+                   $('#mensaje').hide();
+                   $('#valida').html('');
+                   document.getElementById("valida").style.display = "block";  
+                   document.location.href = "<?php echo e(route('Index')); ?>";                
+                 }
+               }
+             }
+           }
+         });      
+         }
+       }
 
+     </script>
 
-  function validarEmail(){
-    var email = $('#email').val();    
-    emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;   
-    var str =  email;
-    var resultado = str.toLowerCase();
+     <script type="text/javascript">
 
-    if(email==''){
-      $('#id_estilo').hide();
-      $('#id_estilo2').hide();
-      document.getElementById("mensaje_valida").innerText = ""; 
-      document.getElementById("Recuperaremail").disabled=true;   
-    }else{    
-      if (emailRegex.test(resultado)) {
-        $('#id_estilo').hide();
-        $('#id_estilo2').hide();
-        document.getElementById("mensaje_valida").innerText = ""; 
-        verificar_email_existe(resultado);
-        document.getElementById("Recuperaremail").disabled=false;   
-      } else {
-        $('#id_estilo').show();
-        $('#id_estilo2').hide();
-        document.getElementById("mensaje_valida").innerText = "Error: La dirección de correo es incorrecta.";   
-        document.getElementById("mensaje_valida").style.display = "block";
-        document.getElementById("Recuperaremail").disabled=true;
+       function Validar_Email_Existente(){
+        var email       = $('#email').val();  
+
+        if(email==""){
+          document.getElementById("Recuperaremail").disabled=true;
+        }else{
+          document.getElementById("Recuperaremail").disabled=false;    
+        }
       }
-    }
-  }
 
-  function verificar_email_existe(email){
+      function validarEmail(){
+        var email = $('#email').val();    
+        emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;   
+        var str =  email;
+        var resultado = str.toLowerCase();
 
-   $.ajax({
-    url   : "<?= URL::to('consultar_email_usuario') ?>",
-    type  : "POST",
-    async : false,
-    data  :{ 
-      'email'  : email                       
+        if(email==''){
+          $('#id_estilo').hide();
+          $('#id_estilo2').hide();
+          document.getElementById("mensaje_valida").innerText = ""; 
+          document.getElementById("Recuperaremail").disabled=true;   
+        }else{    
+          if (emailRegex.test(resultado)) {
+            $('#id_estilo').hide();
+            $('#id_estilo2').hide();
+            document.getElementById("mensaje_valida").innerText = ""; 
+            verificar_email_existe(resultado);
+            document.getElementById("Recuperaremail").disabled=false;   
+          } else {
+            $('#id_estilo').show();
+            $('#id_estilo2').hide();
+            document.getElementById("mensaje_valida").innerText = "Error: La dirección de correo es incorrecta.";   
+            document.getElementById("mensaje_valida").style.display = "block";
+            document.getElementById("Recuperaremail").disabled=true;
+          }
+        }
+      }
 
-    },  
-    success:function(re){  
+      function verificar_email_existe(email){
 
-      if(re.correo=="Disponible"){         
-        $('#id_estilo2').hide(); 
-        $('#id_estilo').show(); 
-        document.getElementById("mensaje_valida").innerText = "El correo no se encuentra registrado en nuestro sistema."; 
-        document.getElementById("mensaje_valida").style.display = "block";
-        document.getElementById("Recuperaremail").disabled=true;  
+       $.ajax({
+        url   : "<?= URL::to('consultar_email_usuario') ?>",
+        type  : "POST",
+        async : false,
+        data  :{ 
+          'email'  : email                       
+
+        },  
+        success:function(re){  
+
+          if(re.correo=="Disponible"){         
+            $('#id_estilo2').hide(); 
+            $('#id_estilo').show(); 
+            document.getElementById("mensaje_valida").innerText = "El correo no se encuentra registrado en nuestro sistema."; 
+            document.getElementById("mensaje_valida").style.display = "block";
+            document.getElementById("Recuperaremail").disabled=true;  
 
 
-      }else{  
-       $('#id_estilo').hide();      
+          }else{  
+           $('#id_estilo').hide();      
 
-       document.getElementById("mensaje_valida").innerText = "";
-       document.getElementById("Recuperaremail").disabled=false;
+           document.getElementById("mensaje_valida").innerText = "";
+           document.getElementById("Recuperaremail").disabled=false;
        // document.getElementById("mensaje_valida").style.display = "block";
      }
    }
 
  });
- } 
+     } 
 
- $('.Recuperar_Email').click(function() {  
-  Generar_Password_Aleatorio(10);
+     $('.Recuperar_Email').click(function() {  
+      Generar_Password_Aleatorio(10);
 
-  var email =$("#email").val();  
-  var password =$("#password_email").val();  
-  var info2   = $('.info2');
+      var email =$("#email").val();  
+      var password =$("#password_email").val();  
+      var info2   = $('.info2');
 
-  $.ajax({
-    url   : "<?= URL::to('Recuperar_Password_Email') ?>",
-    type  : "POST",
-    async : false,
-    data  :{ 
-      'email'          : email,        
-      'password'       : password                        
-    },  
-    success:function(re){
-      info2.hide().find('ul2').empty();
-      if(re == 0){        
-       info2.find('ul2').append('<li>Se ha enviado un correo a la dirección Ingresada para recuperar tu contraseña.!!</li>'); 
-       info2.slideDown();              
+      $.ajax({
+        url   : "<?= URL::to('Recuperar_Password_Email') ?>",
+        type  : "POST",
+        async : false,
+        data  :{ 
+          'email'          : email,        
+          'password'       : password                        
+        },  
+        success:function(re){
+          info2.hide().find('ul2').empty();
+          if(re == 0){        
+           info2.find('ul2').append('<li>Se ha enviado un correo a la dirección Ingresada para recuperar tu contraseña.!!</li>'); 
+           info2.slideDown();              
 
-       $("#success-alert2").hide(); 
-       $("#success-alert2").alert();   
-       $("#success-alert2").fadeTo(6000, 500).slideUp(500, function(){
-        info2.hide().find('ul2').empty();
-        $("#ModalRecuperarPassword").modal('hide'); 
-      });
+           $("#success-alert2").hide(); 
+           $("#success-alert2").alert();   
+           $("#success-alert2").fadeTo(6000, 500).slideUp(500, function(){
+            info2.hide().find('ul2').empty();
+            $("#ModalRecuperarPassword").modal('hide'); 
+          });
 
-     }
-   },
-   error:function(re){             
+         }
+       },
+       error:function(re){             
+       }
+     });
+    });
+
+     function Generar_Password_Aleatorio(longitud)
+     {
+      long=parseInt(longitud);
+      var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789";
+      var contraseña = "";
+      for (i=0; i<long; i++) contraseña += caracteres.charAt(Math.floor(Math.random()*caracteres.length));   
+
+       $('#password_email').val(contraseña);
+
    }
- });
-});
 
- function Generar_Password_Aleatorio(longitud)
- {
-  long=parseInt(longitud);
-  var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789";
-  var contraseña = "";
-  for (i=0; i<long; i++) contraseña += caracteres.charAt(Math.floor(Math.random()*caracteres.length));   
-
-   $('#password_email').val(contraseña);
-
-}
-
-function ini() { 
+   function ini() { 
   pepe = setTimeout(RenovarToken(),10000); // 5 segundos
   RenovarToken();
 }

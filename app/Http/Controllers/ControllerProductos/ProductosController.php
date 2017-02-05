@@ -718,9 +718,7 @@ public function Eliminar_Venta_Producto_X_Fecha(){
   $id_producto=Input::get('id_producto_venta');  
   $id_comercio=Auth::user()->id_comercio;  
 
-  // dd($id_venta_producto,$cantidad_vendido,$id_producto,$id_comercio);
 
-  
   $check = DB::table('venta_producto')
   ->where('id',$id_venta_producto)
   ->where('id_comercio',$id_comercio)
@@ -799,9 +797,7 @@ public function Tabla_Venta_Productos_X_Fecha(){
   $fecha= Carbon::today()->toDateString();
   $id_comercio=Auth::user()->id_comercio;
 
-  // dd($fecha);
-
-  // $VentaProducto=VentaProducto::where('hora_venta_producto', '>=',$fecha)
+   // $VentaProducto=VentaProducto::where('hora_venta_producto', '>=',$fecha)
   $VentaProducto=VentaProducto::where('fecha_producto_venta',$fecha)
   ->where('id_comercio',$id_comercio)
   ->orderBy('id','desc')
@@ -828,6 +824,23 @@ public function Cuadrado_Venta_Productos_X_Fecha(){
  return view('Ventas/Productos/Cuadros.Cuadro_Ventas_Productos_X_Fecha')->with('TotalVendido',$TotalVendido)->with('CantidadVendida',$CantidadVendida);
 }
 
+// Carga el valor total vendido en ultimas ventas x Usuario Seleccionado
+public function Cuadrado_Venta_Productos_X_Fecha_X_usuario(){
+
+ $fecha= Carbon::today()->toDateString();
+ $id_comercio=Auth::user()->id_comercio;
+ $producto_id_venta_consulta_usuario=Input::get('producto_id_venta_consulta_usuario');
+
+ $TotalVendido =VentaProducto::where('fecha_producto_venta',$fecha)
+ ->where('id_comercio',$id_comercio)
+ ->where('id_usuario',$producto_id_venta_consulta_usuario)
+ ->sum('total_producto_venta'); 
+
+ $TotalVendido=number_format($TotalVendido); 
+
+ return view('Ventas/Productos/Cuadros.Cuadro_Ventas_Productos_X_Fecha')->with('TotalVendido',$TotalVendido);
+}
+// Termina Carga el valor total vendido en ultimas ventas x Usuario Seleccionado
 public function CantidadVendidaProductos(){
 
  $fecha= Carbon::today()->toDateString();
@@ -839,6 +852,22 @@ public function CantidadVendidaProductos(){
 
  return view('Ventas/Productos/Cuadros.Cantidad_Productos_Vendido')->with('CantidadVendida',$CantidadVendida);
 }
+// Consulta la cantidad de productos vendidos x Usuario Seleccionado
+public function CantidadVendidaProductos_X_usuario(){
+
+ $fecha= Carbon::today()->toDateString();
+ $id_comercio=Auth::user()->id_comercio;
+ $producto_id_venta_consulta_usuario=Input::get('producto_id_venta_consulta_usuario');
+
+ 
+ $CantidadVendida =VentaProducto::where('fecha_producto_venta',$fecha)
+ ->where('id_comercio',$id_comercio)
+ ->where('id_usuario',$producto_id_venta_consulta_usuario)
+ ->count('id');
+
+ return view('Ventas/Productos/Cuadros.Cantidad_Productos_Vendido')->with('CantidadVendida',$CantidadVendida);
+}
+// Termina Consulta la cantidad de productos vendidos x Usuario Seleccionado
 // Para Buscar porfecha seleccionada las ventas en las ventas del dia 
 public function Cuadrado_Venta_Productos_X_BusquedaCalendario(){
 
@@ -946,19 +975,14 @@ public function Consultar_Ultimas_Ventas_Producto_x_Nombre_Usuario(){
 
   $producto_id_venta_consulta_usuario=Input::get('producto_id_venta_consulta_usuario');
   $fecha= Carbon::today()->toDateString();
-  $id_comercio=Auth::user()->id_comercio;
-
-  dd($producto_id_venta_consulta_usuario,$fecha);
+  $id_comercio=Auth::user()->id_comercio;  
 
   $VentaProducto=VentaProducto::where('fecha_producto_venta',$fecha)
   ->where('id_comercio',$id_comercio)
   ->where('id_usuario',$producto_id_venta_consulta_usuario)
   ->paginate(10);
 
-
   return view('Ventas/Productos/Consultas/Consultando_VentaProductos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
-
-
 }
 
 public function cargar_nombres_usuarios_ultimas_ventas(){
@@ -972,7 +996,7 @@ public function cargar_nombres_usuarios_ultimas_ventas(){
 
 
  foreach ($resultado  as $resultados) {    
-  $Usuarios[$resultados->id] = ucwords($resultados->NombreUsuario->nombre).' '.ucwords($resultados->NombreUsuario->apellido);
+  $Usuarios[$resultados->id_usuario] = ucwords($resultados->NombreUsuario->nombre).' '.ucwords($resultados->NombreUsuario->apellido);
 }  
 
 return $Usuarios;

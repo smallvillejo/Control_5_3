@@ -63,8 +63,12 @@ Route::any('Ventas_Productos_X_Fecha', array('as'=>'Ventas_Productos_X_Fecha','u
 Route::any('Tabla_Venta_Productos_X_Fecha', array('as'=>'Tabla_Venta_Productos_X_Fecha','uses'=>'ControllerProductos\ProductosController@Tabla_Venta_Productos_X_Fecha'))->middleware('auth');
 //ruta cargar ventas en cuadrado de productos x Fecha y del dia
 Route::any('Cuadrado_Venta_Productos_X_Fecha', array('as'=>'Cuadrado_Venta_Productos_X_Fecha','uses'=>'ControllerProductos\ProductosController@Cuadrado_Venta_Productos_X_Fecha'))->middleware('auth');
-//ruta cargar ventas en cuadrado de productos x Fecha y del dia
+//ruta cargar ventas en cuadrado de productos x Fecha y del dia x Usuario Seleccionado
+Route::any('Cuadrado_Venta_Productos_X_Fecha_X_usuario', array('as'=>'Cuadrado_Venta_Productos_X_Fecha_X_usuario','uses'=>'ControllerProductos\ProductosController@Cuadrado_Venta_Productos_X_Fecha_X_usuario'))->middleware('auth');
+//ruta cargar ventas en cuadrado de productos x Fecha y del dia 
 Route::any('CantidadVendidaProductos', array('as'=>'CantidadVendidaProductos','uses'=>'ControllerProductos\ProductosController@CantidadVendidaProductos'))->middleware('auth');
+//ruta cargar ventas en cuadrado de productos x Fecha y del dia  x Usuario Seleccionado
+Route::any('CantidadVendidaProductos_X_usuario', array('as'=>'CantidadVendidaProductos_X_usuario','uses'=>'ControllerProductos\ProductosController@CantidadVendidaProductos_X_usuario'))->middleware('auth');
 //ruta cargar ventas en cuadrado para buscar por fecha
 Route::any('Cuadrado_Venta_Productos_X_BusquedaCalendario', array('as'=>'Cuadrado_Venta_Productos_X_BusquedaCalendario','uses'=>'ControllerProductos\ProductosController@Cuadrado_Venta_Productos_X_BusquedaCalendario'))->middleware('auth');
 //ruta Buscar Ventas de Productos x Rango de Fecha
