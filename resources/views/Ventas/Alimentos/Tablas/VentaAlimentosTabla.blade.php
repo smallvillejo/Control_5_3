@@ -25,7 +25,7 @@
 			<table class="table table-bordered table-striped table-condensed flip-content">
 				<thead class="flip-content">
 					<tr>
-						<th class="column-title">#</th>
+						<th class="column-title">Item</th>
 						<th class="column-title">Nombre Alimento</th>
 						<th class="column-title">Cantidad Venta</th>
 						<th class="column-title">Precio Alimento</th>
@@ -34,14 +34,21 @@
 						<th class="column-title">Remover</th>
 					</tr>	
 				</thead>
-				<tbody>
-					<input type="hidden" value="{{$numero = 1}}" onclick="">	
+				<tbody>						
 					@foreach ($VentaAlimento as $value)
 					<input type="hidden" value="{{$ValorVenta=$value->total_alimento_venta}}">	
 					<input type="hidden" value="{{$ValorVenta=number_format($ValorVenta)}}">	
 					<tr class="even pointer">							
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$numero++}}</font></strong></b></td>
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->Alimento->nombre_alimento}}</font></strong></b></td>
+						<td class="">
+							@if($value->Alimento->ruta_imagen_alimento==null)
+							<img class="cuadradoFoto" src="global/images/AlimentoNoDisponible.png" width="130px" height="80px"/>
+							@else
+							@if(File::exists($value->Alimento->ruta_imagen_alimento))
+							<img class="cuadradoFoto" src="{{$value->Alimento->ruta_imagen_alimento}}" width="130px" height="80px"/>					@endif
+							@endif
+						</td>
+						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->Alimento->nombre_alimento}}</font></strong></b>			
+						</td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->cantidad_alimento_venta}}</font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->precio_alimento_venta}}</font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$ValorVenta}}</font></strong></b></td>

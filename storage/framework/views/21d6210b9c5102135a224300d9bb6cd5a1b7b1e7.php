@@ -25,7 +25,7 @@
 			<table class="table table-bordered table-striped table-condensed flip-content">
 				<thead class="flip-content">
 					<tr>
-						<th class="column-title">#</th>
+						<th class="column-title">Item</th>
 						<th class="column-title">Nombre Alimento</th>
 						<th class="column-title">Cantidad Venta</th>
 						<th class="column-title">Precio Alimento</th>
@@ -34,14 +34,21 @@
 						<th class="column-title">Remover</th>
 					</tr>	
 				</thead>
-				<tbody>
-					<input type="hidden" value="<?php echo e($numero = 1); ?>" onclick="">	
+				<tbody>						
 					<?php foreach($VentaAlimento as $value): ?>
 					<input type="hidden" value="<?php echo e($ValorVenta=$value->total_alimento_venta); ?>">	
 					<input type="hidden" value="<?php echo e($ValorVenta=number_format($ValorVenta)); ?>">	
 					<tr class="even pointer">							
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($numero++); ?></font></strong></b></td>
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->Alimento->nombre_alimento); ?></font></strong></b></td>
+						<td class="">
+							<?php if($value->Alimento->ruta_imagen_alimento==null): ?>
+							<img class="cuadradoFoto" src="global/images/AlimentoNoDisponible.png" width="130px" height="80px"/>
+							<?php else: ?>
+							<?php if(File::exists($value->Alimento->ruta_imagen_alimento)): ?>
+							<img class="cuadradoFoto" src="<?php echo e($value->Alimento->ruta_imagen_alimento); ?>" width="130px" height="80px"/>					<?php endif; ?>
+							<?php endif; ?>
+						</td>
+						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->Alimento->nombre_alimento); ?></font></strong></b>			
+						</td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->cantidad_alimento_venta); ?></font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->precio_alimento_venta); ?></font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($ValorVenta); ?></font></strong></b></td>

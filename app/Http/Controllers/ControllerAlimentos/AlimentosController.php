@@ -586,7 +586,7 @@ public function Ultimas_Ventas_Alimentoss_TotalVendido(){
   ->where('id_comercio',$id_comercio)
   ->count('id');
   $TotalVendido=number_format($TotalVendido);
-  return view('Ventas/Alimentos/Cuadros.Cuadro_Ventas_Alimentos_X_Fecha')->with('TotalVendido',$TotalVendido)->with('CantidadVendida',$CantidadVendida);
+  return view('Ventas/Alimentos/Cuadros.Ultimas_Ventas_Alimentos_TotalVendido')->with('TotalVendido',$TotalVendido)->with('CantidadVendida',$CantidadVendida);
 }
 // Elimina la venta de aliemento en la vista registrar Venta Alimento
 public function Eliminar_Venta_Alimento(){
@@ -694,15 +694,15 @@ public function RegistrarVentaAlimentos(){
       ->where('id_comercio',$id_comercio)
       ->update($alimentos);
       $Venta_Alimentos = array(
-         'id_usuario'             => $Venta_Alimentos['user_id'],
-        'id_comercio'             => $Venta_Alimentos['NumeroComercio'],
-        'alimento_id'             => $Venta_Alimentos['id_alimento'],
-        'cantidad_alimento_venta' => $Venta_Alimentos['Cantidad_Alimentos_Venta'],
-        'precio_alimento_venta'   => $Venta_Alimentos['valor_venta_alimento'],
-        'total_alimento_venta'    => $Venta_Alimentos['valor_total_venta_alimentos2'],
-        'fecha_alimento_venta'    => $Venta_Alimentos['Fecha_Actual_Venta_Alimento'],
-        'hora_venta_alimento'     => $Venta_Alimentos['Hora_Venta_Alimentos'],
-        );
+       'id_usuario'             => $Venta_Alimentos['user_id'],
+       'id_comercio'             => $Venta_Alimentos['NumeroComercio'],
+       'alimento_id'             => $Venta_Alimentos['id_alimento'],
+       'cantidad_alimento_venta' => $Venta_Alimentos['Cantidad_Alimentos_Venta'],
+       'precio_alimento_venta'   => $Venta_Alimentos['valor_venta_alimento'],
+       'total_alimento_venta'    => $Venta_Alimentos['valor_total_venta_alimentos2'],
+       'fecha_alimento_venta'    => $Venta_Alimentos['Fecha_Actual_Venta_Alimento'],
+       'hora_venta_alimento'     => $Venta_Alimentos['Hora_Venta_Alimentos'],
+       );
       $check = DB::table('venta_alimento')->insert($Venta_Alimentos);
       if($check >0){
         return 0;
@@ -742,6 +742,19 @@ public function Ultimos_alimentos_vendidos(){
   ->with('TotalVendido',$TotalVendido);
 }
 
+// Metodo para saber la cantidad de aliemtnos vendidos en Ultimas Ventas Alimentos
+public function CantidadVendidaAlimentos(){
+
+ $fecha= Carbon::today()->toDateString();
+ $id_comercio=Auth::user()->id_comercio;
+ 
+ $CantidadVendida =VentaAlimento::where('fecha_alimento_venta',$fecha)
+ ->where('id_comercio',$id_comercio)
+ ->count('id');
+
+ return view('Ventas/Alimentos/Cuadros.Ultimas_Ventas_Alimentos_CantidadVendida')->with('CantidadVendida',$CantidadVendida);
+}
+
 
 
 public function Cargar_nombres_alimentos(){
@@ -758,6 +771,72 @@ public function Cargar_nombres_alimentos(){
 return $Alimentos;
 
 }
+// Carga los nombre de los usuarios que han vendido algun alimento en ultimas ventas.
+public function cargar_nombres_usuarios_ultimas_ventas_alimentos(){
+ $id_comercio=Auth::user()->id_comercio; 
+ $fecha= Carbon::today()->toDateString();
+ $resultado =VentaAlimento::where('id_comercio', $id_comercio)
+ ->where('fecha_alimento_venta',$fecha)
+ ->get();
+
+ $Usuarios=[]; 
+
+ foreach ($resultado  as $resultados) {    
+  $Usuarios[$resultados->id_usuario] = ucwords($resultados->NombreUsuario->nombre).' '.ucwords($resultados->NombreUsuario->apellido);
+}  
+
+return $Usuarios;
+}
+
+public function Consultar_Ultimas_Ventas_Alimento_x_Nombre_Usuario(){
+
+  $alimento_id_venta_consulta_usuario=Input::get('alimento_id_venta_consulta_usuario');
+  $fecha= Carbon::today()->toDateString();
+  $id_comercio=Auth::user()->id_comercio;  
+
+  $VentaAlimento=VentaAlimento::where('fecha_alimento_venta',$fecha)
+  ->where('id_comercio',$id_comercio)
+  ->where('id_usuario',$alimento_id_venta_consulta_usuario)
+  ->paginate(10);
+
+  return view('Ventas/Alimentos/Consultas/Consultando_VentaAlimentos_Tabla_x_Fecha')->with('VentaAlimento',$VentaAlimento);
+}
+
+
+// Carga el valor total vendido en ultimas ventas x Usuario Seleccionado
+public function ValorVendidoUltimasVentasAlimentos_X_usuario(){
+
+ $fecha= Carbon::today()->toDateString();
+ $id_comercio=Auth::user()->id_comercio;
+ $alimento_id_venta_consulta_usuario=Input::get('alimento_id_venta_consulta_usuario');
+
+ $TotalVendido =VentaAlimento::where('fecha_alimento_venta',$fecha)
+ ->where('id_comercio',$id_comercio)
+ ->where('id_usuario',$alimento_id_venta_consulta_usuario)
+ ->sum('total_alimento_venta'); 
+
+ $TotalVendido=number_format($TotalVendido); 
+
+ return view('Ventas/Alimentos/Cuadros.Ultimas_Ventas_Alimentos_TotalVendido')->with('TotalVendido',$TotalVendido);
+}
+
+// Consulta la cantidad de alimentos vendidos x Usuario Seleccionado
+public function CantidadVendidaAlimentos_X_usuario(){
+
+ $fecha= Carbon::today()->toDateString();
+ $id_comercio=Auth::user()->id_comercio;
+ $alimento_id_venta_consulta_usuario=Input::get('alimento_id_venta_consulta_usuario');
+
+ 
+ $CantidadVendida  =VentaAlimento::where('fecha_alimento_venta',$fecha)
+ ->where('id_comercio',$id_comercio)
+ ->where('id_usuario',$alimento_id_venta_consulta_usuario)
+ ->count('id');
+
+ return view('Ventas/Alimentos/Cuadros.Ultimas_Ventas_Alimentos_CantidadVendida')->with('CantidadVendida',$CantidadVendida);
+}
+// Termina Consulta la cantidad de productos vendidos x Usuario Seleccionado
+
 
 
 

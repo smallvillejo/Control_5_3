@@ -961,7 +961,7 @@ public function Consultar_Producto_x_Busqueda(){
   $fecha= Carbon::today()->toDateString();
   $id_comercio=Auth::user()->id_comercio;
 
-  $VentaProducto=VentaProducto::where('hora_venta_producto', '>=',$fecha)
+  $VentaProducto=VentaProducto::where('fecha_producto_venta', $fecha)
   ->where('id_comercio',$id_comercio)
   ->where('producto_id',$id_producto)
   ->paginate(10);
@@ -985,7 +985,7 @@ public function Consultar_Ultimas_Ventas_Producto_x_Nombre_Usuario(){
   return view('Ventas/Productos/Consultas/Consultando_VentaProductos_Tabla_x_Fecha')->with('VentaProducto',$VentaProducto);
 }
 
-public function cargar_nombres_usuarios_ultimas_ventas(){
+public function cargar_nombres_usuarios_ultimas_ventas_productos(){
  $id_comercio=Auth::user()->id_comercio; 
  $fecha= Carbon::today()->toDateString();
  $resultado =VentaProducto::where('id_comercio', $id_comercio)
@@ -993,7 +993,6 @@ public function cargar_nombres_usuarios_ultimas_ventas(){
  ->get();
 
  $Usuarios=[]; 
-
 
  foreach ($resultado  as $resultados) {    
   $Usuarios[$resultados->id_usuario] = ucwords($resultados->NombreUsuario->nombre).' '.ucwords($resultados->NombreUsuario->apellido);

@@ -25,7 +25,7 @@
 			<table class="table table-bordered table-striped table-condensed flip-content">
 				<thead class="flip-content">
 					<tr>
-						<th class="column-title">#</th>
+						<th class="column-title">Item</th>
 						<th class="column-title">Nombre Producto</th>
 						<th class="column-title">Cantidad Venta</th>
 						<th class="column-title">Precio Producto</th>
@@ -40,8 +40,16 @@
 					<input type="hidden" value="<?php echo e($ValorVenta=$value->total_producto_venta); ?>">	
 					<input type="hidden" value="<?php echo e($ValorVenta=number_format($ValorVenta)); ?>">	
 					<tr class="even pointer">							
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($numero++); ?></font></strong></b></td>
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->Producto->nombre_producto); ?></font></strong></b></td>
+						<td class=" ">
+							<?php if($value->Producto->ruta_imagen_producto==null): ?>
+							<img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="80px" height="80px"/>
+							<?php else: ?>
+							<?php if(File::exists($value->Producto->ruta_imagen_producto)): ?>
+							<img class="cuadradoFoto" src="<?php echo e($value->Producto->ruta_imagen_producto); ?>" width="80px" height="80px"/>					<?php endif; ?>
+							<?php endif; ?>
+						</td>
+						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->Producto->nombre_producto); ?></font></strong></b>			
+						</td>					
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->cantidad_producto_venta); ?></font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->precio_producto_venta); ?></font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($ValorVenta); ?></font></strong></b></td>

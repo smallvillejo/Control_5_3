@@ -25,7 +25,7 @@
 			<table class="table table-bordered table-striped table-condensed flip-content">
 				<thead class="flip-content">
 					<tr>
-						<th class="column-title">#</th>
+						<th class="column-title">Item</th>
 						<th class="column-title">Nombre Producto</th>
 						<th class="column-title">Cantidad Venta</th>
 						<th class="column-title">Precio Producto</th>
@@ -40,8 +40,16 @@
 					<input type="hidden" value="{{$ValorVenta=$value->total_producto_venta}}">	
 					<input type="hidden" value="{{$ValorVenta=number_format($ValorVenta)}}">	
 					<tr class="even pointer">							
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$numero++}}</font></strong></b></td>
-						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->Producto->nombre_producto}}</font></strong></b></td>
+						<td class=" ">
+							@if($value->Producto->ruta_imagen_producto==null)
+							<img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="130px" height="80px"/>
+							@else
+							@if(File::exists($value->Producto->ruta_imagen_producto))
+							<img class="cuadradoFoto" src="{{$value->Producto->ruta_imagen_producto}}" width="130px" height="80px"/>					@endif
+							@endif
+						</td>
+						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->Producto->nombre_producto}}</font></strong></b>			
+						</td>					
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->cantidad_producto_venta}}</font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$value->precio_producto_venta}}</font></strong></b></td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black">{{$ValorVenta}}</font></strong></b></td>

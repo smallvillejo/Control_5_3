@@ -4,26 +4,25 @@
 <?php $__env->startSection('content'); ?>
 <div class="panel panel-primary">
 	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Productos</font></strong></b>
-		<div class="btn-group pull-right" style="display: none;" id="idTotalProductoVendido">			
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<h4>Total Vendido:<label id="TotalVendido"></label></h4>
-				<h4>Cantidad:<label id="CantidadVendida"></label></h4>
-			</div>
+		<div class="btn-group pull-right" style="display: none;" id="idTotalProductoVendido">		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<h4>Total Vendido:<label id="TotalVendido"></label></h4>
+			<h4>Cantidad:<label id="CantidadVendida"></label></h4>
 		</div>
-		<div id="idBuscarProducto" style="display: none;">
-			Buscar Producto:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
-			<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta" onchange="Seleccion_Busqueda()">
-				<option></option>
-			</select>
-		</font></strong></b>
-		<?php if(Auth::user()->perfil_id==2): ?>
-		Ventas por Usuario:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
-		<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta_usuario" onchange="Seleccion_Busqueda_X_Usuario()">
+	</div>
+	<div id="idBuscarProducto" style="display: none;">
+		Buscar Producto:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
+		<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta" onchange="Seleccion_Busqueda()">
 			<option></option>
 		</select>
 	</font></strong></b>
-	<?php endif; ?>
-	<button type="button" class="btn btn-danger" id="btnBuscarProducto" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
+	<?php if(Auth::user()->perfil_id==2): ?>
+	Ventas por Usuario:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
+	<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta_usuario" onchange="Seleccion_Busqueda_X_Usuario()">
+		<option></option>
+	</select>
+</font></strong></b>
+<?php endif; ?>
+<button type="button" class="btn btn-danger" id="btnBuscarProducto" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
 </div>
 </div>
 <div class="panel-body">
@@ -64,7 +63,7 @@
 		$el =$('#producto_id_venta_consulta_usuario');
 		var _token=$('#_token').val();
 		$.ajax({
-			url   : "<?= URL::to('cargar_nombres_usuarios_ultimas_ventas') ?>",
+			url   : "<?= URL::to('cargar_nombres_usuarios_ultimas_ventas_productos') ?>",
 			type  : "POST",
 			async : false,
 			data  :{

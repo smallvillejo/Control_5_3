@@ -80,7 +80,7 @@ Route::any('Editar_Venta_Producto', array('as'=>'Editar_Venta_Producto','uses'=>
 // Carga el nombre en el combobox - Consultar Producto en ultimas ventas
 Route::any('Consultar_Producto_x_Nombre_Usuario', array('as'=>'Consultar_Producto_x_Nombre_Usuario','uses'=>'ControllerProductos\ProductosController@Consultar_Ultimas_Ventas_Producto_x_Nombre_Usuario'))->middleware('auth');
 // Carga el nombre de los usuarios que registraron la veenta en el combobox - Consultar Producto en ultimas ventas
-Route::any('cargar_nombres_usuarios_ultimas_ventas', array('as'=>'cargar_nombres_usuarios_ultimas_ventas','uses'=>'ControllerProductos\ProductosController@cargar_nombres_usuarios_ultimas_ventas'))->middleware('auth');
+Route::any('cargar_nombres_usuarios_ultimas_ventas_productos', array('as'=>'cargar_nombres_usuarios_ultimas_ventas_productos','uses'=>'ControllerProductos\ProductosController@cargar_nombres_usuarios_ultimas_ventas_productos'))->middleware('auth');
 //Carga Formulario Venta de Productos
 Route::any('Formulario_Venta_Productos', array('as'=>'Formulario_Venta_Productos','uses'=>'ControllerProductos\ProductosController@Formulario_Venta_Productos'))->middleware('auth');
 
@@ -174,6 +174,11 @@ Route::any('Consultar_Alimento_x_Busqueda', array('as'=>'Consultar_Alimento_x_Bu
 // Consultar Carga la cantidad de alimentos sin stosck PocoStockAlimentos
 Route::any('CargarCantidadStockAcabarseAlimento', array('as'=>'CargarCantidadStockAcabarseAlimento','uses'=>'ControllerAlimentos\AlimentosController@CargarCantidadStockAcabarseAlimento'))->middleware('auth');
 
+// Ruta para cargar la cantidad de alimentos vendidos en ultimas ventas Alimentos
+Route::any('CantidadVendidaAlimentos', array('as'=>'CantidadVendidaAlimentos','uses'=>'ControllerAlimentos\AlimentosController@CantidadVendidaAlimentos'))->middleware('auth');
+// Ruta para cargar la cantidad de alimentos vendidos en ultimas ventas Alimentos  x Usuario Seleccionado
+Route::any('CantidadVendidaAlimentoss_X_usuario', array('as'=>'CantidadVendidaAlimentoss_X_usuario','uses'=>'ControllerAlimentoss\AlimentossController@CantidadVendidaAlimentoss_X_usuario'))->middleware('auth');
+
 
 // Administrar Alimentos
 //Ruta Administrar Alimentos
@@ -203,8 +208,20 @@ Route::any('Exportar_PDF_Total_Alimentos', array('as'=>'Exportar_PDF_Total_Alime
 Route::any('AlimentosConPocoStock', array('as'=>'AlimentosConPocoStock','uses'=>'ControllerAlimentos\AlimentosController@AlimentosConPocoStock'))->middleware('auth');
 // Ruta Carga Vista Alimentos con Poco Stock
 Route::any('Cargar_AlimentosConPocoStock', array('as'=>'Cargar_AlimentosConPocoStock','uses'=>'ControllerAlimentos\AlimentosController@Cargar_AlimentosConPocoStock'))->middleware('auth');
+// Ruta para cargar los nombres de los usuarios que han vendido algun alimento en ultimas ventas
+Route::any('cargar_nombres_usuarios_ultimas_ventas_alimentos', array('as'=>'cargar_nombres_usuarios_ultimas_ventas_alimentos','uses'=>'ControllerAlimentos\AlimentosController@cargar_nombres_usuarios_ultimas_ventas_alimentos'))->middleware('auth');
 
-// Termina Administrar Productos
+// Carga el nombre en el combobox - Consultar Alimento en ultimas ventas
+Route::any('Consultar_Ultimas_Ventas_Alimento_x_Nombre_Usuario', array('as'=>'Consultar_Ultimas_Ventas_Alimento_x_Nombre_Usuario','uses'=>'ControllerAlimentos\AlimentosController@Consultar_Ultimas_Ventas_Alimento_x_Nombre_Usuario'))->middleware('auth');
+
+// Carga la cantidad vendida de alimentos x usuario en ultimas ventas alimentos
+Route::any('CantidadVendidaAlimentos_X_usuario', array('as'=>'CantidadVendidaAlimentos_X_usuario','uses'=>'ControllerAlimentos\AlimentosController@CantidadVendidaAlimentos_X_usuario'))->middleware('auth');
+
+// Carga el valor vendida de alimentos x usuario en ultimas ventas alimentos
+Route::any('ValorVendidoUltimasVentasAlimentos_X_usuario', array('as'=>'ValorVendidoUltimasVentasAlimentos_X_usuario','uses'=>'ControllerAlimentos\AlimentosController@ValorVendidoUltimasVentasAlimentos_X_usuario'))->middleware('auth');
+
+
+// Termina Administrar Alimentos
 
 
 
