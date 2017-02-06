@@ -51,325 +51,325 @@
 				<div class="alert alert-success" style="display: none;" id="success-alerta1">				
 					<h3><span class="fa fa-thumbs-up fa-2x"></span> <strong>El producto se registró con éxito!!.</strong></h3>					
 				</div>
-				<div class="alert alert-danger" style="display: none;" id="success-alerta2">					
-					<h3><span class="fa fa-thumbs-up fa-2x"></span>
-						<strong>El producto se elimino con éxito!!.</strong></h3>	
+				<div class="alert alert-danger" style="display: none;" id="success-alerta2">				<h3><span class="fa fa-thumbs-up fa-2x"></span>
+					<strong>El producto se elimino con éxito!!.</strong></h3>	
+				</div>
+				<div class="alert alert-danger" style="display: none;" id="Error_al_Eliminar">		<h3><strong><label id="Id_Producto_Eliminar"></label></strong></h3>	
+				</div>
+				<div class="alert alert-info" style="display: none;" id="success-alerta3">				<h3><span class="fa fa-thumbs-up fa-2x"></span>
+					<strong>El producto se actualizo con éxito!!.</strong></h3>	
+				</div>
+				<div class="alert alert-danger" style="display: none;" id="success-alerta4">					
+					<h3><span class="fa fa-thumbs-down fa-2x"></span>
+						<strong>ERROR: No hay nada nuevo a modificar.</strong></h3>	
 					</div>
-					<div class="alert alert-info" style="display: none;" id="success-alerta3">					
-						<h3><span class="fa fa-thumbs-up fa-2x"></span>
-							<strong>El producto se actualizo con éxito!!.</strong></h3>	
-						</div>
-						<div class="alert alert-danger" style="display: none;" id="success-alerta4">					
-							<h3><span class="fa fa-thumbs-down fa-2x"></span>
-								<strong>ERROR: No hay nada nuevo a modificar.</strong></h3>	
-							</div>
-							<div id="Tabla_Administrar_Productos">						
-							</div>				
-						</div>
-					</div>			
-					<script type="text/javascript">
-						Listar_Productos();
-						function Listar_Productos(){
-							$.ajax({
-								type:'get',
-								url:'<?php echo e(url('Cargar_Productos_En_Administrar')); ?>',
-								success: function(data){
-									$('#Panel_Tabla_Administrar_Productos').show();  
-									$('#Panel_Formulario_Administrar_Photos_Productos').hide(); 
-									$('#Tabla_Administrar_Productos').empty().html(data);
-									subir();
-									Notificaciones_PocoStock();
+					<div id="Tabla_Administrar_Productos">						
+					</div>				
+				</div>
+			</div>			
+			<script type="text/javascript">
+				Listar_Productos();
+				function Listar_Productos(){
+					$.ajax({
+						type:'get',
+						url:'<?php echo e(url('Cargar_Productos_En_Administrar')); ?>',
+						success: function(data){
+							$('#Panel_Tabla_Administrar_Productos').show();  
+							$('#Panel_Formulario_Administrar_Photos_Productos').hide(); 
+							$('#Tabla_Administrar_Productos').empty().html(data);
+							subir();
+							Notificaciones_PocoStock();
 
-								}					
-							});
+						}					
+					});
 
-							$(document).on("click",".pagination li a",function(e) {
-								e.preventDefault();		
-								var url = $(this).attr("href");
-								$.ajax({
-									type:'get',
-									url:url,			
-									success: function(data){
-										$('#Tabla_Administrar_Productos').empty().html(data);
-										subir();
-									}
-								});
-							});				
-						}
-
-						$('#btn_nuevo_producto').click(function(){					
-							$('#Modal_Registro_Productos').modal('show');			
+					$(document).on("click",".pagination li a",function(e) {
+						e.preventDefault();		
+						var url = $(this).attr("href");
+						$.ajax({
+							type:'get',
+							url:url,			
+							success: function(data){
+								$('#Tabla_Administrar_Productos').empty().html(data);
+								subir();
+							}
 						});
+					});				
+				}
 
-						$('#btn_buscar_producto').click(function(){	
+				$('#btn_nuevo_producto').click(function(){					
+					$('#Modal_Registro_Productos').modal('show');			
+				});
 
-							$('#id_producto').selectpicker('toggle');
-							$('#id_producto').val('').selectpicker('refresh');
-							$('#id_producto').focus()
-							$('#Modal_buscar_producto').modal('show');						
+				$('#btn_buscar_producto').click(function(){	
 
-						});	
+					$('#id_producto').selectpicker('toggle');
+					$('#id_producto').val('').selectpicker('refresh');
+					$('#id_producto').focus()
+					$('#Modal_buscar_producto').modal('show');						
 
-					</script>	
+				});	
+
+			</script>	
 
 
 
-					<!-- Empieza Registro Productos -->
-					<!-- Modal Registrar Producto -->
-					<div class="modal fade" id="Modal_Registro_Productos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">						
-									<h4 class="modal-title" id="myModalLabel">Registro Nuevo Producto</h4>
+			<!-- Empieza Registro Productos -->
+			<!-- Modal Registrar Producto -->
+			<div class="modal fade" id="Modal_Registro_Productos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">						
+							<h4 class="modal-title" id="myModalLabel">Registro Nuevo Producto</h4>
+						</div>
+						<div class="modal-body">
+
+							<form class="form-horizontal" enctype="multipart/form-data" id="upload_form" role="form" method="POST" action="" >
+								<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">   
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label"></label>
+									<div class="col-sm-9">
+										<div class="panel panel-danger" style="display:none" id="estilo_mensaje">
+											<div class="panel-heading" id="id_validacion" style="display:none">
+											</div>
+										</div>
+									</div>
 								</div>
-								<div class="modal-body">
+								<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Nombre Producto:</label>
+									<div class="col-sm-9">
+										<input type="text" id="nombre_producto" name="nombre_producto" placeholder="Nombre Producto" class="form-control" autofocus>
+										<!-- <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span> -->
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Stock Producto:</label>
+									<div class="col-sm-9">
+										<input type="number" id="cantidad_producto" name="cantidad_producto" placeholder="Stock Producto" class="form-control">      
+									</div>
+								</div>  
 
-									<form class="form-horizontal" enctype="multipart/form-data" id="upload_form" role="form" method="POST" action="" >
-										<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">   
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Valor Inversión:</label>
+									<div class="col-sm-9">
+										<input type="number" id="valor_inversion_producto" name="valor_inversion_producto" placeholder="Valor Inversión Producto" class="form-control">      
+									</div>
+								</div>
 
-										<div class="form-group">
-											<label class="col-sm-3 control-label"></label>
-											<div class="col-sm-9">
-												<div class="panel panel-danger" style="display:none" id="estilo_mensaje">
-													<div class="panel-heading" id="id_validacion" style="display:none">
-													</div>
-												</div>
-											</div>
-										</div>
-										<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-										<div class="form-group">
-											<label class="col-sm-3 control-label">Nombre Producto:</label>
-											<div class="col-sm-9">
-												<input type="text" id="nombre_producto" name="nombre_producto" placeholder="Nombre Producto" class="form-control" autofocus>
-												<!-- <span class="help-block">Last Name, First Name, eg.: Smith, Harry</span> -->
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-3 control-label">Stock Producto:</label>
-											<div class="col-sm-9">
-												<input type="number" id="cantidad_producto" name="cantidad_producto" placeholder="Stock Producto" class="form-control">      
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Valor Total Inversión:</label>
+									<div class="col-sm-9">
+										<input type="text" id="valor_total_inversion" name="valor_total_inversion" placeholder="Valor Total Inversión Producto" class="form-control" readonly>     
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Valor Venta Producto:</label>
+									<div class="col-sm-9">
+										<input type="number" id="valor_venta_producto" name="valor_venta_producto" placeholder="Valor Venta Producto" class="form-control">    
+										<div class="panel panel-danger" style="display:none" id="id_estilo">
+											<div class="panel-heading" id="valida_valor_venta_producto" style="display:none">
 											</div>
 										</div>  
-
-										<div class="form-group">
-											<label class="col-sm-3 control-label">Valor Inversión:</label>
-											<div class="col-sm-9">
-												<input type="number" id="valor_inversion_producto" name="valor_inversion_producto" placeholder="Valor Inversión Producto" class="form-control">      
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-sm-3 control-label">Valor Total Inversión:</label>
-											<div class="col-sm-9">
-												<input type="text" id="valor_total_inversion" name="valor_total_inversion" placeholder="Valor Total Inversión Producto" class="form-control" readonly>     
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-sm-3 control-label">Valor Venta Producto:</label>
-											<div class="col-sm-9">
-												<input type="number" id="valor_venta_producto" name="valor_venta_producto" placeholder="Valor Venta Producto" class="form-control">    
-												<div class="panel panel-danger" style="display:none" id="id_estilo">
-													<div class="panel-heading" id="valida_valor_venta_producto" style="display:none">
-													</div>
-												</div>  
-											</div>
-										</div>
-
-										<div class="form-group">    
-											<label class="col-sm-3 control-label">Imagen Producto:</label>  
-											<div class="col-sm-9">   
-												<input type="file" name="imagenProducto" class="form-control btn btn-primary" id="catagry_logo" accept="image/jpeg, image/jpg,image/png" />
-												<span class="help-block">Solo se permiten formatos: JPG,JPEG y PNG.</span>        
-											</div>
-										</div>
-
-										<div class="form-group" id="div_photo_producto" style="display: none">    
-											<label class="col-sm-3 control-label">Vista Previa:</label> 
-											<div class="col-sm-9">  
-												<img id="img_destino" name="img_destino" height="200" width="300"> 
-												<span class="help-block">Capacidad Máxima 1 MB.</span>    
-											</div>
-										</div>
-										<div class="form-group" id="div_peso_imagen" style="display: none">    
-											<label class="col-sm-3 control-label">Peso Imagen:</label> 
-											<label class="col-sm control-label" id="totalPeso"></label></div>
-										</form>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-primary Registrar_Producto addbtn" id="btn_registrar_producto">Registrar</button>
-										<button type="button" class="btn btn-danger" id="btn_cancelar_formulario_productos" data-dismiss="modal">Cancelar</button>
 									</div>
 								</div>
-							</div>
-						</div>
 
-
-						<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="ModalConfirmacion2" data-backdrop="static" data-keyboard="false">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">        
-										<center><b><strong> <font size ="3", color="#fb0c48" face="Arial Black"><label id="TitleModal2"></label></font></strong></b></center>
-									</div>
-									<div class="modal-body">
-										<b><strong> <font size ="3", color="#000000" face="Arial Black"><label id="CuerpoMensaje2"></label></font></strong></b>     
-									</div>
-									<div class="modal-footer">        
-										<button type="button" class="btn btn-primary RegistrarProducto" data-dismiss="modal">Si</button>
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+								<div class="form-group">    
+									<label class="col-sm-3 control-label">Imagen Producto:</label>  
+									<div class="col-sm-9">   
+										<input type="file" name="imagenProducto" class="form-control btn btn-primary" id="catagry_logo" accept="image/jpeg, image/jpg,image/png" />
+										<span class="help-block">Solo se permiten formatos: JPG,JPEG y PNG.</span>        
 									</div>
 								</div>
+
+								<div class="form-group" id="div_photo_producto" style="display: none">    
+									<label class="col-sm-3 control-label">Vista Previa:</label> 
+									<div class="col-sm-9">  
+										<img id="img_destino" name="img_destino" height="200" width="300"> 
+										<span class="help-block">Capacidad Máxima 1 MB.</span>    
+									</div>
+								</div>
+								<div class="form-group" id="div_peso_imagen" style="display: none">    
+									<label class="col-sm-3 control-label">Peso Imagen:</label> 
+									<label class="col-sm control-label" id="totalPeso"></label></div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary Registrar_Producto addbtn" id="btn_registrar_producto">Registrar</button>
+								<button type="button" class="btn btn-danger" id="btn_cancelar_formulario_productos" data-dismiss="modal">Cancelar</button>
 							</div>
 						</div>
+					</div>
+				</div>
 
 
-						<script type="text/javascript">		
+				<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="ModalConfirmacion2" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">        
+								<center><b><strong> <font size ="3", color="#fb0c48" face="Arial Black"><label id="TitleModal2"></label></font></strong></b></center>
+							</div>
+							<div class="modal-body">
+								<b><strong> <font size ="3", color="#000000" face="Arial Black"><label id="CuerpoMensaje2"></label></font></strong></b>     
+							</div>
+							<div class="modal-footer">        
+								<button type="button" class="btn btn-primary RegistrarProducto" data-dismiss="modal">Si</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
 
-							function Obtener_Imagen_Registro_Producto(input) {
-								var size=2097152;
-								if (input.files && input.files[0]) {
-									var reader = new FileReader();
-									var file_size=document.getElementById('catagry_logo').files[0].size;
-									if(file_size>=size){
-										$('#estilo_mensaje').show();
-										document.getElementById("id_validacion").innerText = "La imagen que intentas subir es muy pesada.";
-										document.getElementById("id_validacion").style.display = "block";
-										$('#Modal_Registro_Productos').scrollTop(0);					
-										document.getElementById('btn_registrar_producto').disabled=true;
-										$('#catagry_logo').val('');	
-										$('#div_photo_producto').hide();
-										$('#div_peso_imagen').hide();				
-										return false;
-									}
-									document.getElementById('btn_registrar_producto').disabled=false;
-									$('#estilo_mensaje').hide();
-									document.getElementById("id_validacion").innerText = "";			reader.onload = function (e) {
-										$('#img_destino').attr('src', e.target.result);
-										$('#totalPeso').text(Math.round(e.loaded/1024/1024) + "MB");
-									}
-									reader.readAsDataURL(input.files[0]);
-								}else{
-									$('#div_photo_producto').hide();
-									$('#div_peso_imagen').hide();
-								}
+				<script type="text/javascript">		
+
+
+					function Obtener_Imagen_Registro_Producto(input) {
+						var size=2097152;
+						if (input.files && input.files[0]) {
+							var reader = new FileReader();
+							var file_size=document.getElementById('catagry_logo').files[0].size;
+							if(file_size>=size){
+								$('#estilo_mensaje').show();
+								document.getElementById("id_validacion").innerText = "La imagen que intentas subir es muy pesada.";
+								document.getElementById("id_validacion").style.display = "block";
+								$('#Modal_Registro_Productos').scrollTop(0);					
+								document.getElementById('btn_registrar_producto').disabled=true;
+								$('#catagry_logo').val('');	
+								$('#div_photo_producto').hide();
+								$('#div_peso_imagen').hide();				
+								return false;
 							}
-
-							$("#catagry_logo").change(function(){
-								$('#div_photo_producto').show();
-								$('#div_peso_imagen').show();
-								Obtener_Imagen_Registro_Producto(this);
-							});
-
-
-							$("#valor_inversion_producto").change(function(){
-								var valor_inversion_productoo =$('#valor_inversion_producto').val();
-								valor_inversion_productoo=valor_inversion_productoo.replace(".","");	
-								$('#valor_inversion_producto').val(valor_inversion_productoo);
-							});
-
-
-
-							$("#valor_inversion_producto").change(function(){
-								var cantidad_productoo =$('#cantidad_producto').val();
-								var valor_inversion_productoo =$('#valor_inversion_producto').val();    
-								var cantidad_producto =parseInt($('#cantidad_producto').val());
-								var valor_inversion_producto =parseInt($('#valor_inversion_producto').val());
-								var valor_venta_productoo =parseInt($('#valor_venta_producto').val());
-								var total;			 
-
-
-
-
-								total=(cantidad_producto*valor_inversion_producto);
-								$('#valor_total_inversion').val(ConvertirDecimales(total));   
-								if(valor_inversion_productoo==""){
-									$('#valor_total_inversion').val('0');
-								} 
-
-								if(valor_inversion_productoo==""){
-									$('#valor_inversion_producto').val('0');
-								}
-
-								if(valor_total_inversion=="NaN"){
-									$('#valor_total_inversion').val('0');
-								}
-
-
-								if(valor_inversion_producto>=valor_venta_productoo){
-									$('#id_estilo').show();
-									document.getElementById("valida_valor_venta_producto").innerText = "El valor de la Venta no puede ser menor o igual al de la Inversión.";
-									document.getElementById("valida_valor_venta_producto").style.display = "block";
-								}else{
-									document.getElementById("valida_valor_venta_producto").innerText = "";
-									$('#id_estilo').hide();
-								}
-
-
-							});
-
-							$("#cantidad_producto").change(function(){    
-								var cantidad_productoo =$('#cantidad_producto').val();    
-								var cantidad_producto =parseInt($('#cantidad_producto').val());
-								var valor_inversion_producto =parseInt($('#valor_inversion_producto').val());
-								var valor_total_inversion =$('#valor_total_inversion').val();   
-								var total;
-
-
-								cantidad_productoo=cantidad_productoo.replace(".","");	
-								$('#cantidad_producto').val(cantidad_productoo);  
-
-								total=(cantidad_producto*valor_inversion_producto);
-								$('#valor_total_inversion').val(ConvertirDecimales(total));   
-								if(cantidad_productoo==""){
-									$('#valor_total_inversion').val('0');
-								}
-								if(valor_total_inversion==""){
-									$('#valor_total_inversion').val('0');
-								} 
-
-								if(valor_total_inversion=="NaN"){
-									$('#valor_total_inversion').val('0');
-								}
-								if(cantidad_productoo=="0"){
-									$('#valor_total_inversion').val('0');
-								}
-
-								if(cantidad_producto<0){
-									$('#estilo_mensaje').show();
-									document.getElementById("id_validacion").innerText = "El stock del producto no puede ser negativo.";
-									document.getElementById("id_validacion").style.display = "block";
-								}
-							});
-							$("#valor_total_inversion").change(function(){
-								var valor_total_inversion =$('#valor_total_inversion').val();		
-
-								if(valor_total_inversion==""){
-									$('#valor_total_inversion').val('0');
-								}   
-							});
-
-							$("#valor_venta_producto").change(function(){
-								var valor_venta_producto =$('#valor_venta_producto').val();
-								valor_venta_producto=valor_venta_producto.replace(".","");	
-								$('#valor_venta_producto').val(valor_venta_producto);
-							});
-
-
-							$("#valor_venta_producto").change(function(){
-								var valor_venta_producto =$('#valor_venta_producto').val();			
-								if(valor_venta_producto==""){
-									$('#valor_venta_producto').val('0');
-								}
-							});
-
-							function ConvertirDecimales(n, dp) {
-								var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
-								while ( (i -= 3) > 0 ) { r = '.' + s.substr(i, 3) + r; }
-								return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
+							document.getElementById('btn_registrar_producto').disabled=false;
+							$('#estilo_mensaje').hide();
+							document.getElementById("id_validacion").innerText = "";			reader.onload = function (e) {
+								$('#img_destino').attr('src', e.target.result);
+								$('#totalPeso').text(Math.round(e.loaded/1024/1024) + "MB");
 							}
+							reader.readAsDataURL(input.files[0]);
+						}else{
+							$('#div_photo_producto').hide();
+							$('#div_peso_imagen').hide();
+						}
+					}
 
-							function Validacion_Registro(){
+					$("#catagry_logo").change(function(){
+						$('#div_photo_producto').show();
+						$('#div_peso_imagen').show();
+						Obtener_Imagen_Registro_Producto(this);
+					});
+
+
+					$("#valor_inversion_producto").change(function(){
+						var valor_inversion_productoo =$('#valor_inversion_producto').val();
+						valor_inversion_productoo=valor_inversion_productoo.replace(".","");	
+						$('#valor_inversion_producto').val(valor_inversion_productoo);
+					});
+
+
+
+					$("#valor_inversion_producto").change(function(){
+						var cantidad_productoo =$('#cantidad_producto').val();
+						var valor_inversion_productoo =$('#valor_inversion_producto').val();    
+						var cantidad_producto =parseInt($('#cantidad_producto').val());
+						var valor_inversion_producto =parseInt($('#valor_inversion_producto').val());
+						var valor_venta_productoo =parseInt($('#valor_venta_producto').val());
+						var total;			 
+
+
+
+
+						total=(cantidad_producto*valor_inversion_producto);
+						$('#valor_total_inversion').val(ConvertirDecimales(total));   
+						if(valor_inversion_productoo==""){
+							$('#valor_total_inversion').val('0');
+						} 
+
+						if(valor_inversion_productoo==""){
+							$('#valor_inversion_producto').val('0');
+						}
+
+						if(valor_total_inversion=="NaN"){
+							$('#valor_total_inversion').val('0');
+						}
+
+
+						if(valor_inversion_producto>=valor_venta_productoo){
+							$('#id_estilo').show();
+							document.getElementById("valida_valor_venta_producto").innerText = "El valor de la Venta no puede ser menor o igual al de la Inversión.";
+							document.getElementById("valida_valor_venta_producto").style.display = "block";
+						}else{
+							document.getElementById("valida_valor_venta_producto").innerText = "";
+							$('#id_estilo').hide();
+						}
+
+
+					});
+
+					$("#cantidad_producto").change(function(){    
+						var cantidad_productoo =$('#cantidad_producto').val();    
+						var cantidad_producto =parseInt($('#cantidad_producto').val());
+						var valor_inversion_producto =parseInt($('#valor_inversion_producto').val());
+						var valor_total_inversion =$('#valor_total_inversion').val();   
+						var total;
+
+
+						cantidad_productoo=cantidad_productoo.replace(".","");	
+						$('#cantidad_producto').val(cantidad_productoo);  
+
+						total=(cantidad_producto*valor_inversion_producto);
+						$('#valor_total_inversion').val(ConvertirDecimales(total));   
+						if(cantidad_productoo==""){
+							$('#valor_total_inversion').val('0');
+						}
+						if(valor_total_inversion==""){
+							$('#valor_total_inversion').val('0');
+						} 
+
+						if(valor_total_inversion=="NaN"){
+							$('#valor_total_inversion').val('0');
+						}
+						if(cantidad_productoo=="0"){
+							$('#valor_total_inversion').val('0');
+						}
+
+						if(cantidad_producto<0){
+							$('#estilo_mensaje').show();
+							document.getElementById("id_validacion").innerText = "El stock del producto no puede ser negativo.";
+							document.getElementById("id_validacion").style.display = "block";
+						}
+					});
+					$("#valor_total_inversion").change(function(){
+						var valor_total_inversion =$('#valor_total_inversion').val();		
+
+						if(valor_total_inversion==""){
+							$('#valor_total_inversion').val('0');
+						}   
+					});
+
+					$("#valor_venta_producto").change(function(){
+						var valor_venta_producto =$('#valor_venta_producto').val();
+						valor_venta_producto=valor_venta_producto.replace(".","");	
+						$('#valor_venta_producto').val(valor_venta_producto);
+					});
+
+
+					$("#valor_venta_producto").change(function(){
+						var valor_venta_producto =$('#valor_venta_producto').val();			
+						if(valor_venta_producto==""){
+							$('#valor_venta_producto').val('0');
+						}
+					});
+
+					function ConvertirDecimales(n, dp) {
+						var s = ''+(Math.floor(n)), d = n % 1, i = s.length, r = '';
+						while ( (i -= 3) > 0 ) { r = '.' + s.substr(i, 3) + r; }
+						return s.substr(0, i + 3) + r + (d ? '.' + Math.round(d * Math.pow(10,dp||2)) : '');
+					}
+
+					function Validacion_Registro(){
     var espacio_blanco    = /[a-z]/i;  //Expresión regular
     var nombre_producto =$('#nombre_producto').val(); 
 
@@ -518,13 +518,14 @@ $('.RegistrarProducto').click(function(){
 }); 
 
 
-var arriba;
 function subir() {
-	if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
-		window.scrollBy(0, -2000);
-		arriba = setTimeout('subir()', 10);
-	}
-	else clearTimeout(arriba);
+	// if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
+	// 	document.body.scrollTop = 0;
+	// 	arriba = setTimeout('subir()', 10);
+	// }
+	// else clearTimeout(arriba);
+	$("html, body").animate({ scrollTop: 0 }, "slow");
+	return false;
 }
 
 function LimpiarModal(){	
@@ -704,6 +705,20 @@ $('#btn_cancelar_formulario_productos').click(function(){
 						});  
 					});
 
+				}else{
+					if(respuesta.ErrorTieneVentasAsociadas=="Si"){
+						subir();
+						$('#Error_al_Eliminar').show();
+						$('#Id_Producto_Eliminar').text('ERROR: El producto: "'+respuesta.NombreProducto+'" tiene ventas asociadas, elimine sus ventas y intente de nuevo..'); 
+						$("#Id_Producto_Eliminar").css("fontSize", 23);								
+						$("#Id_Producto_Eliminar").css("font-weight","Bold"); 						
+						$(document).ready (function(){                              
+							$("#Error_al_Eliminar").alert();						    
+							$("#Error_al_Eliminar").fadeTo(8000, 500).slideUp(500, function(){
+								$("#Error_al_Eliminar").hide();
+							});  
+						});
+					}					
 				}
 			}
 		});

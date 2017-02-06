@@ -753,17 +753,7 @@ $('#btn_cancelar_formulario_alimentos').click(function(){
 				$('#id_alimento_editarr').val(respuesta.id_alimento_editarr);
 
 
-				$('#id_validacion_editar').hide();
-				// existeUrl(respuesta.ruta_imagen_);
-				// try {
-				// 	if(fs.accessSync(respuesta.ruta_imagen_)) {
-				// 		$('#img_destino_editar').attr('src', respuesta.ruta_imagen_);
-				// 	}
-				// } catch (e) {
-				// 	console.log(e);
-				// 	$('#img_destino_editar').attr("src",$NoDisponible);
-				// }
-				console.log(respuesta.ruta_imagen_alimento);
+				$('#id_validacion_editar').hide();				
 				$.get(respuesta.ruta_imagen_alimento)
 				.done(function() { 
 					$('#img_destino_editar').attr('src', respuesta.ruta_imagen_alimento);
@@ -924,10 +914,6 @@ $('#btn_cancelar_formulario_alimentos').click(function(){
 			$('#div_peso_imagen_editar').show();
 			readURL(this);
 		});
-
-
-
-
 
 		$("#valor_inversion_alimento_editar").change(function(){
 			var valor_inversion_alimentoo =$('#valor_inversion_alimento_editar').val();

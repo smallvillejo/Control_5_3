@@ -350,30 +350,41 @@ public function ModificarProducto(){
 
 
 public function Eliminar_Productos(){
-  $Id_Producto_Eliminar=Input::get('Id_producto_delete');   
-
+  $Id_Producto_Eliminar=Input::get('Id_producto_delete');  
   $id_comercio=Auth::user()->id_comercio;
 
-  $Productos=Producto::Where('id',$Id_Producto_Eliminar)
-  ->where('id_comercio',$id_comercio)->get();
+  $Ventas_Productos=VentaProducto::Where('producto_id',$Id_Producto_Eliminar)
+  ->where('id_comercio',$id_comercio)->paginate(9);
 
-  foreach ($Productos as $key => $value) {
-    $DireccionURLFoto=$value->ruta_imagen_producto;
+  foreach ($Ventas_Productos as $key => $value) {
+    $NombreProducto=$value->Producto->nombre_producto;
   }
+  if($Ventas_Productos->total()==0){
 
-  $filename = $DireccionURLFoto;
+    $Productos=Producto::Where('id',$Id_Producto_Eliminar)
+    ->where('id_comercio',$id_comercio)->get();
+    foreach ($Productos as $key => $value) {
+      $DireccionURLFoto=$value->ruta_imagen_alimento;
+    }
 
-  if (File::exists($filename)) {
-    File::delete($filename);
-  } 
+    $filename = $DireccionURLFoto;
 
-  $check = DB::table('producto_producto')
-  ->where('id',$Id_Producto_Eliminar)
-  ->where('id_comercio',$id_comercio)
-  ->delete();
+    if (File::exists($filename)) {
+      File::delete($filename);
+    } 
 
-  if($check >0){
-    return 0;
+    $check = DB::table('producto_producto')
+    ->where('id',$Id_Producto_Eliminar)
+    ->where('id_comercio',$id_comercio)
+    ->delete();
+
+    if($check >0){
+      return 0;
+    }
+  }else{
+    return Response::json([
+      'ErrorTieneVentasAsociadas'=>"Si",
+      'NombreProducto'=>$NombreProducto]);
   }
 }
 

@@ -62,16 +62,19 @@ class UsuariosController extends Controller {
 	public function Consultar_email_Usuario_Logueo(){
 		$correo = Input::get('correo');
 		$usuarios= Usuario::Where('correo',$correo)->get();
-
-		if($usuarios!="[]"){
-			
-
-			foreach ($usuarios as $key => $value) {
+		
+		$NombresUsuario="";
+		$UrlFoto="";
+		foreach ($usuarios as $key => $value) {
 
 				$NombresUsuario=$value->nombre.' '.$value->apellido;
 				$CorreoUsuario=$value->correo;
 				$UrlFoto=$value->photo_perfil;
 			}
+		
+
+		if($NombresUsuario!==""){	
+
 			if($UrlFoto==""){
 				$UrlFoto="global/login/login/photo.jpg";	
 			}

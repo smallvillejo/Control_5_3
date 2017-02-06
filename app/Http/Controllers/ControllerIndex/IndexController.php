@@ -33,7 +33,9 @@ use Storage;
 use Dompdf\Adapter\CPDF;
 use Dompdf\Dompdf;
 use Dompdf\Exception;
-
+use ZipArchive;
+use PHPExcel_Settings;
+PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
 
 class IndexController extends Controller{
 
@@ -289,23 +291,25 @@ class IndexController extends Controller{
 		$output = $pdf->output();
 		file_put_contents($RutaArchivo, $output);
 
-		return Response::json([
-			// Para que funcione local
+		// Para que funcione Local
+
+		return Response::json([			
 			'success' =>true,
 			'path'=>'/Control_5_3/public/exports/'.$nombreArchivo.'.pdf',
 			'RutaArchivo'=>$RutaArchivo]);
 
 		// Para que funcione web
 
-		// 	return Response::json([
-	// 		'success' =>true,
-	// 		'path'=>'/exports/'.$nombreArchivo.'.pdf',
-			// 'RutaArchivo'=>$RutaArchivo])
+		 // 	return Response::json([
+	 	// 	'success' =>true,
+	 	// 	'path'=>'/exports/'.$nombreArchivo.'.pdf',
+			// 'RutaArchivo'=>$RutaArchivo]);
 
 		
 	}
 
 	public function ExportarReportBalanceExcel(){
+	
 		$nombreArchivo='Laravel_Excel';
 		$id_comercio=Auth::user()->id_comercio;
 		$Fecha_Inicial=Input::get('Fecha_Inicial');
@@ -417,10 +421,10 @@ class IndexController extends Controller{
 			'RutaArchivo'=>$RutaArchivo]);
 
  				// Para que funcione web
-	// 	return Response::json([
-	// 		'success' =>true,
-	// 		'path'=>'/exports/'.$nombreArchivo.'.xlsx',
-			// 'RutaArchivo'=>$RutaArchivo])
+	 	// return Response::json([
+	 	// 	'success' =>true,
+	 	// 	'path'=>'/exports/'.$nombreArchivo.'.xlsx',
+			//  'RutaArchivo'=>$RutaArchivo]);
 
 	}
 

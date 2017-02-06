@@ -42,10 +42,10 @@
 					<tr class="even pointer">							
 						<td class=" ">
 							<?php if($value->Producto->ruta_imagen_producto==null): ?>
-							<img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="80px" height="80px"/>
+							<img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="130px" height="80px"/>
 							<?php else: ?>
 							<?php if(File::exists($value->Producto->ruta_imagen_producto)): ?>
-							<img class="cuadradoFoto" src="<?php echo e($value->Producto->ruta_imagen_producto); ?>" width="80px" height="80px"/>					<?php endif; ?>
+							<img class="cuadradoFoto" src="<?php echo e($value->Producto->ruta_imagen_producto); ?>" width="130px" height="80px"/>					<?php endif; ?>
 							<?php endif; ?>
 						</td>
 						<td class=" "><b><strong> <font size ="2", color="#000000" face="Arial Black"><?php echo e($value->Producto->nombre_producto); ?></font></strong></b>			
