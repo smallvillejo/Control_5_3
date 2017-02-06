@@ -3,23 +3,7 @@ date_default_timezone_set('America/Bogota');
 use Carbon\Carbon;
 ?>
 <!DOCTYPE html>
-<!--
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.2
-Version: 3.7.0
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="en">
-<!--<![endif]-->
-<!-- BEGIN HEAD -->
+<html lang="es">
 <head>
   <meta charset="utf-8"/>
   <title><?php echo $__env->yieldContent('title'); ?> | Merchandise Control</title>
@@ -32,19 +16,13 @@ License: You must have a valid license purchased only from themeforest(the above
   <meta http-equiv="no-cache">
   <meta http-equiv="Expires" content="-1">
   <meta http-equiv="Cache-Control" content="no-cache">
-  <!-- Para que no guarde en cache -->
-  
-  <!-- BEGIN GLOBAL MANDATORY STYLES -->
-  <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"> -->
-  <!-- <link href="global/master/css.css" rel="stylesheet" type="text/css"> -->
+  <!-- Para que no guarde en cache -->  
   <link href="global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
   <link href="global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
   <link href="global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
-  <link type="text/css" rel="stylesheet" href="global/plugins/zoom/style.css"/>
-  <!-- END GLOBAL MANDATORY STYLES -->
-  <!-- BEGIN THEME STYLES -->
+  <link type="text/css" rel="stylesheet" href="global/plugins/zoom/style.css"/> 
   <link href="global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
   <link href="global/css/components-md.css" id="style_components" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" type="text/css" href="global/plugins/bootstrap-datepicker/css/datepicker.css"/>
@@ -54,20 +32,10 @@ License: You must have a valid license purchased only from themeforest(the above
   <link id="style_color" href="global/admin/layout2/css/themes/grey.css" rel="stylesheet" type="text/css"/>
   <link href="global/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
   <link href="global/plugins/select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
-  <!-- END THEME STYLES -->
   <link rel="shortcut icon" href="global/images/LogoEmpresa.ico"/>
   <script src="global/plugins/jquery/jquery-3.1.0.min.js"></script>
-  
-
 </head>
 <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" id="_token">
-  <!--  <script type="text/javascript">
-  window.onbeforeunload = function exitAlert()
-  {
-  var textillo = L"os datos que no se han guardado se perderan.";
-  return textillo;
-  }
-</script> -->
 <script type="text/javascript">
   var timer;
   var Variable_Tiempo;
@@ -220,51 +188,26 @@ info2.slideDown();
                 </li>
               </ul>
             </div>
-          </div>
-          <!-- END PAGE ACTIONS -->
-          <!-- BEGIN PAGE TOP -->
+          </div>          
           <div class="page-top">
-            <!-- END HEADER SEARCH BOX -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
             <div class="top-menu">
               <ul class="nav navbar-nav pull-right">
-                <!-- BEGIN NOTIFICATION DROPDOWN -->
-                <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                <!-- Contador -->
                 <li style="right:20px;top:10px;">
                   <span id="countdown"></span>
                   <div class="alert alert-success info2" style="display: none;" id="success-alert2"  title="La Sessión se cerrara..."><strong><ul2></ul2></strong>
                   </div>
-                </li>
-                <!-- Termina Contador -->
-                <!-- BEGIN TODO DROPDOWN -->
-                <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                </li>               
                 <div id="notificaciones_id"></div>
               </ul>
-            </div>
-            <!-- END TOP NAVIGATION MENU -->
-          </div>
-          <!-- END PAGE TOP -->
-        </div>
-        <!-- END HEADER INNER -->
-      </div>
-      <!-- END HEADER -->
+            </div>           
+          </div>        
+        </div>        
+      </div>     
       <div class="clearfix">
       </div>
-      <!-- BEGIN CONTAINER -->
-      <div class="page-container">
-        <!-- BEGIN SIDEBAR -->
-        <div class="page-sidebar-wrapper">
-          <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-          <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-          <div class="page-sidebar navbar-collapse collapse">
-            <!-- BEGIN SIDEBAR MENU -->
-            <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
-            <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
-            <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
-            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-            <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
-            <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+      <div class="page-container">      
+        <div class="page-sidebar-wrapper">        
+          <div class="page-sidebar navbar-collapse collapse">           
             <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
               <?php
               $vista = Route::currentRouteName();
@@ -273,25 +216,31 @@ info2.slideDown();
                 'Index' => '',
                 'RegistrarVenta' => '',
                 'Administrar' => '',
+                'Consultas' => '',
+                'AdministrarPlanes' => ''                    
 
                 );
-              if ($vista == '' || $vista == 'Index')
-              {
+              if ($vista == '' || $vista == 'Index'){
                 $current['Index'] = 'active';
               }
-              else if ($vista == '' || $vista == 'RegistrarVenta')
-              {
+              else if ($vista == '' || $vista == 'RegistrarVenta'){
                 $current['RegistrarVenta'] = 'active';
               }
-              else if ($vista == '' || $vista == 'AdministrarProductos' || $vista == 'AdministrarAlimentos')
-              {
+              else if ($vista == '' || $vista == 'AdministrarProductos' || $vista == 'AdministrarAlimentos'){
                 $current['Administrar'] = 'active';
-              }                                                                      
+              } 
+              else if ($vista == '' || $vista == 'ConsultarVentaProducto'){
+                $current['Consultas'] = 'active';
+              }  
+              else if ($vista == '' || $vista == 'AdministrarPlanes'){
+                $current['AdministrarPlanes'] = 'active';
+              } 
+
               ?>
               <li class="<?php echo e($current['Index']); ?>">
                 <a href="<?php echo e(URL::route('Index')); ?>">
                   <i class="icon-home"></i>
-                  <span class="title">Index</span>
+                  <span class="title">Menú Principal</span>
                 </a>
               </li>
               <li class="<?php echo e($current['RegistrarVenta']); ?>">
@@ -326,85 +275,143 @@ info2.slideDown();
                         Administrar Alimentos</a>
                       </li>
                     </ul>
-                  </li>                    
-                </div>
-              </div>
-              <!-- END SIDEBAR -->
-              <!-- BEGIN CONTENT -->
-              <div class="page-content-wrapper">
-                <div class="page-content">
-                  <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-                  <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                          <h4 class="modal-title">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                          Widget settings form goes here
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn blue">Save changes</button>
-                          <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                        </div>
+                  </li>                
+                  <li class="<?php echo e($current['AdministrarPlanes']); ?>">
+                    <a href="javascript:;">
+                     <i class="fa fa-phone-square" aria-hidden="true"></i>
+                     <span class="title">Administrar Planes</span>
+                     <span class="arrow "></span>
+                   </a>
+                   <ul class="sub-menu">
+                    <li>
+                      <a href="<?php echo e(URL::route('AdministrarPlanes')); ?>">
+                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                       Menú Planes Celular</a>
+                     </li>                      
+                   </ul>
+                 </li>
+                 <li class="<?php echo e($current['Consultas']); ?>">
+                  <a href="javascript:;">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <span class="title">Consultas</span>
+                    <span class="arrow "></span>
+                  </a>
+                  <ul class="sub-menu">
+                    <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Producto</a>
+                     </li> 
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Alimento</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Minutos</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Recargas</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Internet</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Compras</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Gastos&Inversiones</a>
+                     </li>
+                   </ul>
+                 </li>                    
+               </div>
+             </div>
+             <!-- END SIDEBAR -->
+             <!-- BEGIN CONTENT -->
+             <div class="page-content-wrapper">
+              <div class="page-content">
+                <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+                <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Modal title</h4>
                       </div>
-                      <!-- /.modal-content -->
+                      <div class="modal-body">
+                        Widget settings form goes here
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn blue">Save changes</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                      </div>
                     </div>
-                    <!-- /.modal-dialog -->
-                  </div>                    
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                      <?php echo $__env->yieldContent('content'); ?>
-                    </div>
+                    <!-- /.modal-content -->
                   </div>
-                  <!-- END PAGE CONTENT-->
+                  <!-- /.modal-dialog -->
+                </div>                    
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <?php echo $__env->yieldContent('content'); ?>
+                  </div>
                 </div>
+                <!-- END PAGE CONTENT-->
               </div>
-              <!-- END CONTENT -->
-              <!-- BEGIN QUICK SIDEBAR -->
-              <!--Cooming Soon...-->
-              <!-- END QUICK SIDEBAR -->
             </div>
-            <!-- END CONTAINER -->
-            <!-- BEGIN FOOTER -->
-            <div class="page-footer">
-              <div class="page-footer-inner">
-                2016 &copy; Merchandise Control by Jorge Muñoz.
-              </div>
-              <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-              </div>
-            </div>              
-            <script src="global/plugins/jquery.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-            <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-            <script src="global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-            <script src="global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-            <!-- END CORE PLUGINS -->
-            <script src="global/scripts/metronic.js" type="text/javascript"></script>
-            <script src="global/admin/layout2/scripts/layout.js" type="text/javascript"></script>
-            <script src="global/admin/layout2/scripts/demo.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-            <script src="global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-            <script src="global/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
-            <script src="global/admin/pages/scripts/index.js" type="text/javascript"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-            <script type="text/javascript" src="global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
-            <script src="global/scripts/datatable.js"></script>
-            <script src="global/admin/pages/scripts/ecommerce-orders-view.js"></script>
-            <script>
-              jQuery(document).ready(function() {
+            <!-- END CONTENT -->
+            <!-- BEGIN QUICK SIDEBAR -->
+            <!--Cooming Soon...-->
+            <!-- END QUICK SIDEBAR -->
+          </div>
+          <!-- END CONTAINER -->
+          <!-- BEGIN FOOTER -->
+          <div class="page-footer">
+            <div class="page-footer-inner">
+              2016 &copy; Merchandise Control by Jorge Muñoz.
+            </div>
+            <div class="scroll-to-top">
+              <i class="icon-arrow-up"></i>
+            </div>
+          </div>              
+          <script src="global/plugins/jquery.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+          <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+          <script src="global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+          <script src="global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+          <!-- END CORE PLUGINS -->
+          <script src="global/scripts/metronic.js" type="text/javascript"></script>
+          <script src="global/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+          <script src="global/admin/layout2/scripts/demo.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+          <script src="global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+          <script src="global/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
+          <script src="global/admin/pages/scripts/index.js" type="text/javascript"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+          <script type="text/javascript" src="global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+          <script src="global/scripts/datatable.js"></script>
+          <script src="global/admin/pages/scripts/ecommerce-orders-view.js"></script>
+          <script>
+            jQuery(document).ready(function() {
                                         Metronic.init(); // init metronic core componets
                                         Layout.init(); // init layout
                                         QuickSidebar.init(); // init quick sidebar
@@ -422,7 +429,7 @@ info2.slideDown();
                                         size: 8
                                       });
                                       Cargar_Bar_Notificaciones();
-                                                                       
+
                                       
                                       // console.clear();
                                     </script>

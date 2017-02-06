@@ -1113,6 +1113,13 @@ public function Consultar_Producto_Por_ID(){
 
 }
 
+// Carga la vista - Consultas de Ventas de Productos
+
+public function ConsultarVentaProducto(){  
+  return view('Administrar/Productos/ConsultasVentasProductos.Consulta_Ventas_Productos');
+}
+// Termina  la vista - Consultas de Ventas de Productos
+
 
 
 

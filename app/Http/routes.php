@@ -219,13 +219,16 @@ Route::any('CantidadVendidaAlimentos_X_usuario', array('as'=>'CantidadVendidaAli
 
 // Carga el valor vendida de alimentos x usuario en ultimas ventas alimentos
 Route::any('ValorVendidoUltimasVentasAlimentos_X_usuario', array('as'=>'ValorVendidoUltimasVentasAlimentos_X_usuario','uses'=>'ControllerAlimentos\AlimentosController@ValorVendidoUltimasVentasAlimentos_X_usuario'))->middleware('auth');
-
-
 // Termina Administrar Alimentos
 
+// Comienzan las consultas de Venta de productos
+Route::any('ConsultarVentaProducto', array('as'=>'ConsultarVentaProducto','uses'=>'ControllerProductos\ProductosController@ConsultarVentaProducto'))->middleware('auth');
+// Terminan Las consultas de  Venta de productos
 
 
-
+// Ruta para todo de Minutos
+Route::any('AdministrarPlanes', array('as'=>'AdministrarPlanes','uses'=>'ControllerMinutos\MinutosController@AdministrarPlanes'))->middleware('auth');
+// Terminan Ruta para todo de Minutos
 
 
 
