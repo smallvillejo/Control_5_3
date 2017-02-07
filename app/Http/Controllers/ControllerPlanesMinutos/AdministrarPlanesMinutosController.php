@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
 use App\Models\PlanesCelular\MinutosPlanes;
+use App\Models\PlanesCelular\DetallePlanMinutos;
 use Carbon\Carbon;
 use File;
 use Excel;
@@ -120,9 +121,19 @@ class AdministrarPlanesMinutosController extends Controller{
 				return 0;
 			}else{
 				return 1;	
-			}
-			return Response::json(['success' =>true]);
+			}			
 		}
+	}
+
+	public function Cargar_Tabla_Minutos_Ingresados(){
+		$fecha= Carbon::today()->toDateString();
+		$id_comercio=Auth::user()->id_comercio; 
+
+		$MinutosRegistrados=DetallePlanMinutos::Where('fecha_registro',$fecha)
+		->Where('id_comercio',$id_comercio)->paginate(5);
+
+		return view('AdministrarPlanes/Tablas.Tabla_Ingreso_Minutos')
+		->with('MinutosRegistrados',$MinutosRegistrados);
 	}
 
 }

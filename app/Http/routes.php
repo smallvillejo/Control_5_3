@@ -232,8 +232,11 @@ Route::any('AdministrarPlanes', array('as'=>'AdministrarPlanes','uses'=>'Control
 Route::any('Cargar_Nombre_Planes', array('as'=>'Cargar_Nombre_Planes','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@cargar_nombres_planes_combox'))->middleware('auth');
 // Carga todos los datos del plan de minutos para ingresar los minutos vendidos
 Route::any('Consultar_Datos_PlanMinutos', array('as'=>'Consultar_Datos_PlanMinutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Consultar_Datos_PlanMinutos'))->middleware('auth');
-
+// Ruta Para registrar los minutos vendidos del plan seleccionado
 Route::any('Registrar_Ingreso_Minutos', array('as'=>'Registrar_Ingreso_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Registrar_Ingreso_Minutos'))->middleware('auth');
+
+// Ruta Para registrar los minutos vendidos del plan seleccionado
+Route::any('Cargar_Tabla_Minutos_Ingresados', array('as'=>'Cargar_Tabla_Minutos_Ingresados','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Cargar_Tabla_Minutos_Ingresados'))->middleware('auth');
 
 // Terminan Ruta para todo de Minutos
 

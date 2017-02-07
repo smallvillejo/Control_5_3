@@ -95,6 +95,8 @@
 					</div>
 				</div>
 			</div>
+			<div id="tabla_id" class="col-xs-12 col-sm-12 col-md-8 col-lg-7">				
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-5" onmousemove="Validar_Seleccion_Plan_Ingres_Minutos()">
@@ -145,7 +147,6 @@
 								</div>
 							</div> 
 							<!-- Fecha Registro -->
-
 							<div class="row">
 								<div class="form-group col-sm-4">
 									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
@@ -549,21 +550,17 @@
 			</div>
 		</div>
 		<!-- Termina Modal Para Confirmaciones -->
-
 		<script type="text/javascript">
-			$(function() {
-				$('input[name="birthdate"]').daterangepicker({
-					singleDatePicker: true,
-					showDropdowns: true
-				}, 
-				function(start, end, label) {
-					var years = moment().diff(start, 'years');
-					alert("You are " + years + " years old.");
-				});
-			});
-		</script>
-
-		<script type="text/javascript">
+			Cargar_Tabla_Minutos_Ingresados();
+			function Cargar_Tabla_Minutos_Ingresados(){
+				$.ajax({
+					type:'get',
+					url:'<?php echo e(url('Cargar_Tabla_Minutos_Ingresados')); ?>',
+					success: function(data){      
+						$('#tabla_id').empty().html(data);
+					}
+				});	
+			}
 
 			cargar_combox();
 			document.getElementById('BtnIngresarMinutos').disabled=true;
@@ -784,13 +781,8 @@
 							$('#ModalConfirmacion').modal('show');
 							$('#TitleModal').html('<p>Plan Eliminado.</p>');
 							$('#CuerpoMensaje').html('<p>El plan fue eliminado con Exito.!!</p>');
-
-
 							cargar_combox();
 							Validar_Seleccion_Plan_Ingres_Minutos();
-							Cargar_datos_en_cuadrado($('#fecha_oculta').val());
-							cargar_minutos_tabla();									
-
 						}	
 					},
 					error:function(re){  
@@ -1015,8 +1007,7 @@ $.each(re.nombre_plan, function(key,value) {
 			$('.RegistrarIngresoMinutos').click(function(){
 				var plan_id = document.getElementById('plan_id').value;	
 
-				$('#Cantidad_Minutos_Vendidos_Registrar').val('');
-				$('#Fecha_Ingreso_Minutoss').val('');
+				$('#Cantidad_Minutos_Vendidos_Registrar').val('');				
 				$('#Valor_Total_Minutos_Vendidos').text('0');
 
 				$.ajax({
@@ -1105,13 +1096,8 @@ $.each(re.nombre_plan, function(key,value) {
 							$('#ModalConfirmacion').modal('show');
 							$('#TitleModal').html('<p>Plan Modificado.</p>');
 							$('#CuerpoMensaje').html('<p>El plan fue modificado con Exito.!!</p>');
-
-
-							Cargar_datos_en_cuadrado($('#fecha_oculta').val());
-							cargar_minutos_tabla();
 							cargar_combox();
 							Limpiar_data_Despues_de_Registrar_Plan();
-
 						}	
 					},
 					error:function(re){  
@@ -1123,9 +1109,7 @@ $.each(re.nombre_plan, function(key,value) {
 						$('#CuerpoMensaje').html('<p>'+re+'</p>');
 					}
 				});
-			});	
-
-			cargar_minutos_tabla();	
+			});				
 
 			$('.RegistrarNuevoPlan').click(function(){
 
@@ -1164,13 +1148,8 @@ $.each(re.nombre_plan, function(key,value) {
 							$('#ModalConfirmacion').modal('show');
 							$('#TitleModal').html('<p>Plan Registrado.</p>');
 							$('#CuerpoMensaje').html('<p>El plan fue registrado con Exito.!!</p>');
-
-
-							Cargar_datos_en_cuadrado($('#fecha_oculta').val());
-							cargar_minutos_tabla();
 							cargar_combox();
 							Limpiar_data_Despues_de_Registrar_Plan();
-
 						}	
 					},
 					error:function(re){  
@@ -1209,8 +1188,10 @@ $.each(re.nombre_plan, function(key,value) {
 					},  
 					success:function(re){
 
+						console.log('Resultado'+re);
 
-						if(!re.success){					
+
+						if(re.success==false){					
 							$("#ModalRegistrarMinutos").modal('hide');	
 							$("#formulario_RegistrarMinutos").modal('hide');						
 							$('#CuerpoMensaje').html('');				
@@ -1227,11 +1208,6 @@ $.each(re.nombre_plan, function(key,value) {
 							$('#ModalConfirmacion').modal('show');
 							$('#TitleModal').html('<p>Minutos Registrados.</p>');
 							$('#CuerpoMensaje').html('<p>Los minutos fueron ingresados con Exito.!!</p>');
-
-
-							Cargar_datos_en_cuadrado($('#fecha_oculta').val());
-							cargar_minutos_tabla();
-
 						}	
 					},
 					error:function(re){  
@@ -1244,259 +1220,157 @@ $.each(re.nombre_plan, function(key,value) {
 					}
 				});
 			});
+			
 
-			function cargar_minutos_tabla(){	
+			$('.Eliminar_Registro').click(function(){
 
-				var fecha_oculta=$('#fecha_oculta').val();							
+				var comercio_id       			= $('#comercio_id').val();
+				var id_registro_minutos   		= $('#id_detalle_plan').val();  
+				var Cantidad_Minutos   			= $('#Cantidad_Minutos').val();
+				var Cantidad_Minutos_Vendidos   = $('#Cantidad_Minutos_Vendidos').val();
+				var id_plan   					= $('#id_plan').val();
 
 				$.ajax({
-					url   : "<?= URL::to('Cargar_Tabla_Registro_Minutos_X_Dia')?>",
+					url   : "<?= URL::to('Eliminar_Registro_Minutos') ?>",
 					type  : "POST",
 					async : false,
 					data  :{
-						'data'  		: 1,
-						'fecha_oculta'	:fecha_oculta
+						'comercio_id'        			: comercio_id,        
+						'id_registro_minutos'  			: id_registro_minutos,
+						'Cantidad_Minutos'  			: Cantidad_Minutos,
+						'Cantidad_Minutos_Vendidos'  	: Cantidad_Minutos_Vendidos,
+						'id_plan'  						: id_plan
+
+
+
 					},  
 					success:function(re){
 
-
-						if(re==''){											
-
-						}else{
-							$('.searchable').html(re); 
-
+						if(!re.success){
+							$('#CuerpoMensaje').html('');
+							$("#confirm-delete").modal('hide');  
+							$("#confirm-delete2").modal('hide');         
+							$('#ModalConfirmacion').modal('show');
+							$('#TitleModal').html('<p>Se presentaron algunos erores al Eliminar el registro de minutos.</p>');  
+							$.each(re.errors,function(index, error){       
+								$('#CuerpoMensaje').append('<p>'+error+'</p>');          
+							});              
+						}
+						if(re == 0){         
+							$('#CuerpoMensaje').html('');
+							$("#confirm-delete").modal('hide');
+							$("#confirm-delete2").modal('hide');      
+							$('#ModalConfirmacion').modal('show');
+							$('#TitleModal').html('<p>Registro Eliminado.</p>');
+							$('#CuerpoMensaje').html('<p>El registro de minutos fue Eliminado Exitosamente.</p>'); 
 						}
 					},
-					error:function(re){  
-
+					error:function(re){
+						$('#CuerpoMensaje').html('');
+						$("#confirm-delete").modal('hide');  
+						$("#confirm-delete2").modal('hide');         
+						$('#ModalConfirmacion').modal('show');
+						$('#TitleModal').html('<p>Error al Eliminar el Registro.</p>');  
+						$.each(re.errors,function(index, error){       
+							$('#CuerpoMensaje').append('<p>'+error+'</p>');          
+						});        
 					}
 				});
-			}
+			});
+
+			$('body').delegate('.edit','click',function(){
+				var id = $(this).data('id');
+				console.log(id);
+				var faction = "<?php echo URL::to('consultar_datos_minutos_modificar/data'); ?>";
+				var fdata = $('#id_venta').val(id);		
+				$('#load').show();
+				$.post(faction, fdata, function(json) {
+					if (json.success) {
+						$('#formulario_Editar_Registro_Minutos input[name="id_plan3"]').val(json.id_detalle_plan);	
+
+						$('#formulario_Editar_Registro_Minutos input[name="id_plan3"]').val(json.id_detalle_plan);						
+						$('#formulario_Editar_Registro_Minutos input[name="Fecha_Editar_Ingreso_Minutos"]').val(json.fecha_registro);
+						$('#formulario_Editar_Registro_Minutos label[name="Nombre_Plan_Editar"]').text(json.nombre_plan_minutos);
+						$('#formulario_Editar_Registro_Minutos label[name="Cantidad_Minutos_Plan_Modificar"]').text(json.cantidad_minutos);								
+						$('#formulario_Editar_Registro_Minutos label[name="cantidad_minutos_restantes_plan_modificar"]').text(json.cantidad_minutos_restantes);
+						$('#formulario_Editar_Registro_Minutos label[name="valor_minuto_plan_modificar"]').text(json.valor_venta_minutos);							
+						$('#formulario_Editar_Registro_Minutos input[name="Cantidad_Minutos_Vendidos_Modificar"]').val(json.cantidad_minutos_vendidos);
+						$('#formulario_Editar_Registro_Minutos label[name="Valor_Total_Minutos_Vendidos_Modificar"]').text(json.total_minutos_venta);
+
+						$('#formulario_Editar_Registro_Minutos  input[name="cantidad_oculta"]').val(json.cantidad_minutos_vendidos);
+
+						$('#formulario_Editar_Registro_Minutos  input[name="id_plan_minutos"]').val(json.id_plan_minutos);
 
 
 
-
-			Cargar_datos_en_cuadrado($('#fecha_oculta').val());
-// console.log($('#fecha_oculta').val());
-
-function Cargar_datos_en_cuadrado(fecha){
-	cargar_minutos_tabla();
-
-	var $total_minutos_vendidos = $("#total_minutos_vendidos");
-	var $Valor_Venta_Minutos  = $("#Valor_Venta_Minutos");
+					} else {
+						$('#errorMessage').html(json.message);
+						$('#errorMessage').show();
+					}
+				});
+			});
 
 
-	$.ajax({
-		url   : "<?= URL::to('Cargar_Registros_En_Cuadro')?>",
-		type  : "POST",
-		async : false,
-		data  :{
-			'fecha'  : fecha
-		},  
-		success:function(re){									
+			$('.ModificarRegistroMinutos').click(function(){
 
-			if(re.Total_Minutos_Vendidos==0){
-				$Valor_Venta_Minutos.append($('#Formulario_Venta_Minutos label[name="Valor_Venta_Minutos"]').text('$0'));     
-				$total_minutos_vendidos.append($('#Formulario_Venta_Minutos label[name="total_minutos_vendidos"]').text('0'));
-
-				$('.progress-bar').css('width', '' + (0+ '%')); 
-				$('#mostrarTabla').hide();
-				$('#cuadrado_valor_minutos').hide();
-				$('#id_estilo5').show();
-				document.getElementById("NoseEncontroData").innerText = "No se encontró ningún registro de venta.";
-				document.getElementById("NoseEncontroData").style.display = "block";										
-			}else{
-				$('#mostrarTabla').show();
-				$('#cuadrado_valor_minutos').show();
-				$('#id_estilo5').hide();											
-				document.getElementById("NoseEncontroData").innerText = "";
-				$total_minutos_vendidos.empty(); 
-				$Valor_Venta_Minutos.empty();          
-				$Valor_Venta_Minutos.append($('#Formulario_Venta_Minutos label[name="Valor_Venta_Minutos"]').text('$'+re.Valor_Venta_Minutos));     
-				$total_minutos_vendidos.append($('#Formulario_Venta_Minutos label[name="total_minutos_vendidos"]').text(re.Total_Minutos_Vendidos));
-
-				$('.progress-bar').css('width', '' + (re.Valor_Venta_Minutos2+ '%'));  
-			}
-		},
-		error:function(re){  
-
-		}
-	});
-}
-
-$('.Eliminar_Registro').click(function(){
-
-	var comercio_id       			= $('#comercio_id').val();
-	var id_registro_minutos   		= $('#id_detalle_plan').val();  
-	var Cantidad_Minutos   			= $('#Cantidad_Minutos').val();
-	var Cantidad_Minutos_Vendidos   = $('#Cantidad_Minutos_Vendidos').val();
-	var id_plan   					= $('#id_plan').val();
-
-	$.ajax({
-		url   : "<?= URL::to('Eliminar_Registro_Minutos') ?>",
-		type  : "POST",
-		async : false,
-		data  :{
-			'comercio_id'        			: comercio_id,        
-			'id_registro_minutos'  			: id_registro_minutos,
-			'Cantidad_Minutos'  			: Cantidad_Minutos,
-			'Cantidad_Minutos_Vendidos'  	: Cantidad_Minutos_Vendidos,
-			'id_plan'  						: id_plan
+				var comercio_id_oculto       					= $('#comercio_id_oculto').val();								
+				var Cantidad_Minutos_Vendidos_Modificar   		= $('#Cantidad_Minutos_Vendidos_Modificar').val();
+				var id_plan3   									= $('#id_plan3').val();
+				var cantidad_oculta   						 	= $('#cantidad_oculta').val();
+				var cantidad_minutos_restantes_plan_modificar   = $('#cantidad_minutos_restantes_plan_modificar').text();
+				var Valor_Total_Minutos_Vendidosss   			= $('#Valor_Total_Minutos_Vendidosss').val();
+				var id_plan_minutos   							= $('#id_plan_minutos').val();
 
 
-
-		},  
-		success:function(re){
-
-			if(!re.success){
-				$('#CuerpoMensaje').html('');
-				$("#confirm-delete").modal('hide');  
-				$("#confirm-delete2").modal('hide');         
-				$('#ModalConfirmacion').modal('show');
-				$('#TitleModal').html('<p>Se presentaron algunos erores al Eliminar el registro de minutos.</p>');  
-				$.each(re.errors,function(index, error){       
-					$('#CuerpoMensaje').append('<p>'+error+'</p>');          
-				});              
-			}
-
-			if(re == 0){         
-				$('#CuerpoMensaje').html('');
-				$("#confirm-delete").modal('hide');
-				$("#confirm-delete2").modal('hide');      
-				$('#ModalConfirmacion').modal('show');
-				$('#TitleModal').html('<p>Registro Eliminado.</p>');
-				$('#CuerpoMensaje').html('<p>El registro de minutos fue Eliminado Exitosamente.</p>');            
+				$.ajax({
+					url   : "<?= URL::to('Modificar_Registro_Minutos') ?>",
+					type  : "POST",
+					async : false,
+					data  :{
+						'comercio_id_oculto'        				: comercio_id_oculto,										
+						'Cantidad_Minutos_Vendidos_Modificar'  		: Cantidad_Minutos_Vendidos_Modificar,
+						'id_plan3'  								: id_plan3,
+						'cantidad_oculta'  							: cantidad_oculta,
+						'cantidad_minutos_restantes_plan_modificar' : cantidad_minutos_restantes_plan_modificar,
+						'Valor_Total_Minutos_Vendidosss' 			: Valor_Total_Minutos_Vendidosss,
+						'id_plan_minutos' 							: id_plan_minutos
 
 
-				Cargar_datos_en_cuadrado($('#fecha_oculta').val());
-				cargar_minutos_tabla();
-			}
+					},  
+					success:function(re){
 
+						if(!re.success){
+							$('#CuerpoMensaje').html('');
+							$("#ModalEditar_Registro_Minutos").modal('hide');  
+							$("#confirm-update2").modal('hide');         
+							$('#ModalConfirmacion').modal('show');
+							$('#TitleModal').html('<p>Se presentaron algunos erores al Modificar el registro de minutos.</p>');  
+							$.each(re.errors,function(index, error){       
+								$('#CuerpoMensaje').append('<p>'+error+'</p>');          
+							});              
+						}
 
-		},
-		error:function(re){
-			$('#CuerpoMensaje').html('');
-			$("#confirm-delete").modal('hide');  
-			$("#confirm-delete2").modal('hide');         
-			$('#ModalConfirmacion').modal('show');
-			$('#TitleModal').html('<p>Error al Eliminar el Registro.</p>');  
-			$.each(re.errors,function(index, error){       
-				$('#CuerpoMensaje').append('<p>'+error+'</p>');          
-			});        
-		}
-	});
-});
-
-$('body').delegate('.edit','click',function(){
-	var id = $(this).data('id');
-	console.log(id);
-	var faction = "<?php echo URL::to('consultar_datos_minutos_modificar/data'); ?>";
-	var fdata = $('#id_venta').val(id);		
-	$('#load').show();
-	$.post(faction, fdata, function(json) {
-		if (json.success) {
-			$('#formulario_Editar_Registro_Minutos input[name="id_plan3"]').val(json.id_detalle_plan);	
-
-			$('#formulario_Editar_Registro_Minutos input[name="id_plan3"]').val(json.id_detalle_plan);						
-			$('#formulario_Editar_Registro_Minutos input[name="Fecha_Editar_Ingreso_Minutos"]').val(json.fecha_registro);
-			$('#formulario_Editar_Registro_Minutos label[name="Nombre_Plan_Editar"]').text(json.nombre_plan_minutos);
-			$('#formulario_Editar_Registro_Minutos label[name="Cantidad_Minutos_Plan_Modificar"]').text(json.cantidad_minutos);								
-			$('#formulario_Editar_Registro_Minutos label[name="cantidad_minutos_restantes_plan_modificar"]').text(json.cantidad_minutos_restantes);
-			$('#formulario_Editar_Registro_Minutos label[name="valor_minuto_plan_modificar"]').text(json.valor_venta_minutos);							
-			$('#formulario_Editar_Registro_Minutos input[name="Cantidad_Minutos_Vendidos_Modificar"]').val(json.cantidad_minutos_vendidos);
-			$('#formulario_Editar_Registro_Minutos label[name="Valor_Total_Minutos_Vendidos_Modificar"]').text(json.total_minutos_venta);
-
-			$('#formulario_Editar_Registro_Minutos  input[name="cantidad_oculta"]').val(json.cantidad_minutos_vendidos);
-
-			$('#formulario_Editar_Registro_Minutos  input[name="id_plan_minutos"]').val(json.id_plan_minutos);
-
-
-
-		} else {
-			$('#errorMessage').html(json.message);
-			$('#errorMessage').show();
-		}
-	});
-});
-
-
-$('.ModificarRegistroMinutos').click(function(){
-
-	var comercio_id_oculto       					= $('#comercio_id_oculto').val();								
-	var Cantidad_Minutos_Vendidos_Modificar   		= $('#Cantidad_Minutos_Vendidos_Modificar').val();
-	var id_plan3   									= $('#id_plan3').val();
-	var cantidad_oculta   						 	= $('#cantidad_oculta').val();
-	var cantidad_minutos_restantes_plan_modificar   = $('#cantidad_minutos_restantes_plan_modificar').text();
-	var Valor_Total_Minutos_Vendidosss   			= $('#Valor_Total_Minutos_Vendidosss').val();
-	var id_plan_minutos   							= $('#id_plan_minutos').val();
-
-
-	$.ajax({
-		url   : "<?= URL::to('Modificar_Registro_Minutos') ?>",
-		type  : "POST",
-		async : false,
-		data  :{
-			'comercio_id_oculto'        				: comercio_id_oculto,										
-			'Cantidad_Minutos_Vendidos_Modificar'  		: Cantidad_Minutos_Vendidos_Modificar,
-			'id_plan3'  								: id_plan3,
-			'cantidad_oculta'  							: cantidad_oculta,
-			'cantidad_minutos_restantes_plan_modificar' : cantidad_minutos_restantes_plan_modificar,
-			'Valor_Total_Minutos_Vendidosss' 			: Valor_Total_Minutos_Vendidosss,
-			'id_plan_minutos' 							: id_plan_minutos
-
-
-		},  
-		success:function(re){
-
-			if(!re.success){
-				$('#CuerpoMensaje').html('');
-				$("#ModalEditar_Registro_Minutos").modal('hide');  
-				$("#confirm-update2").modal('hide');         
-				$('#ModalConfirmacion').modal('show');
-				$('#TitleModal').html('<p>Se presentaron algunos erores al Modificar el registro de minutos.</p>');  
-				$.each(re.errors,function(index, error){       
-					$('#CuerpoMensaje').append('<p>'+error+'</p>');          
-				});              
-			}
-
-			if(re == 0){         
-				$('#CuerpoMensaje').html('');
-				$("#ModalEditar_Registro_Minutos").modal('hide');
-				$("#confirm-update2").modal('hide');      
-				$('#ModalConfirmacion').modal('show');
-				$('#TitleModal').html('<p>Registro Modificado.</p>');
-				$('#CuerpoMensaje').html('<p>El registro de minutos fue Modificado Exitosamente.</p>');            
-
-
-				Cargar_datos_en_cuadrado($('#fecha_oculta').val());
-				cargar_minutos_tabla();
-			}
-
-
-		},
-		error:function(re){
-			$('#CuerpoMensaje').html('');
-			$("#ModalEditar_Registro_Minutos").modal('hide');  
-			$("#confirm-update2").modal('hide');         
-			$('#ModalConfirmacion').modal('show');
-			$('#TitleModal').html('<p>Error al Modificar el Registro.</p>');  
-			$.each(re.errors,function(index, error){       
-				$('#CuerpoMensaje').append('<p>'+error+'</p>');          
-			});        
-		}
-	});
-});
-
-
-
-
-
-
-</script>
-
-
-
-
-
-<?php $__env->stopSection(); ?>
+						if(re == 0){         
+							$('#CuerpoMensaje').html('');
+							$("#ModalEditar_Registro_Minutos").modal('hide');
+							$("#confirm-update2").modal('hide');      
+							$('#ModalConfirmacion').modal('show');
+							$('#TitleModal').html('<p>Registro Modificado.</p>');
+							$('#CuerpoMensaje').html('<p>El registro de minutos fue Modificado Exitosamente.</p>'); 
+						}
+					},
+					error:function(re){
+						$('#CuerpoMensaje').html('');
+						$("#ModalEditar_Registro_Minutos").modal('hide');  
+						$("#confirm-update2").modal('hide');         
+						$('#ModalConfirmacion').modal('show');
+						$('#TitleModal').html('<p>Error al Modificar el Registro.</p>');  
+						$.each(re.errors,function(index, error){       
+							$('#CuerpoMensaje').append('<p>'+error+'</p>');          
+						});        
+					}
+				});
+			});
+		</script>
+		<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
