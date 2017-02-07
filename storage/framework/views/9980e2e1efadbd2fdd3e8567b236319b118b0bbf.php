@@ -74,17 +74,13 @@
 				</div>
 			</div>
 		</div>	
-	</div>
-	<div class="row" onmousemove="Validar_Seleccion_Plan_Ingres_Minutos()">
-		<div class="col-lg-4">
+	</div>	
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-5" onmousemove="Validar_Seleccion_Plan_Ingres_Minutos()">
 			<div class="panel panel-danger">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="form-group col-sm-8">
-							<h3 class="panel-title"><b><strong>Panel de Minutos</strong></b></h3>		
-						</div>																	
-					</div>
-				</div>
+				<div class="panel-heading">				
+					<h3 class="panel-title"><b><strong>Panel de Minutos</strong></b></h3>	
+				</div>					
 				<div class="panel-body">			
 					<div class="form-group ">
 						<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" id="_token">
@@ -95,548 +91,504 @@
 					<p></p>
 					<button type="button" class="btn btn-success RegistrarIngresoMinutos" data-toggle="modal" data-target="#ModalRegistrarMinutos" id="BtnIngresarMinutos" title="Ingresar Minutos">
 						<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Ingresar Minutos</span></font></strong>
-						<strong> <font size ="2", color ="#ffffff"><span class="fa fa-plus-square">
-						</button>
-					</div>	
+						<span class="fa fa-plus-square"></span></button>					
+					</div>
 				</div>
 			</div>
-			<form id="Formulario_Venta_Minutos">
-				<div class="col-sm-5 col-md-offset-3" id="cuadrado_valor_minutos" style="display:none">
-					<div class="table-responsive">
-						<table class="table" border="0">
-							<tr>
-								<td>
-									<div class="info-box bg-purple">
-										<span class="info-box-icon"><i class="fa fa-usd"></i></span>
-										<div class="info-box-content">
-											<span class="info-box-text">Valor Venta</span>
-
-											<b><strong><font size ="5", color="#ffffff" face="Arial"><label id="Valor_Venta_Minutos" name="Valor_Venta_Minutos">0</label></font></strong></b>
-											<div class="progress">
-												<div class="progress-bar"></div>
-											</div> 
-											<span class="progress-description">
-												Total Minutos Vendidos:<b><strong> <font size ="3", color="#ffffff" face="Arial Black"><label id="total_minutos_vendidos" name="total_minutos_vendidos">0</label></font></strong></b>
-											</span>       
-										</div>
-									</div>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</form>
 		</div>
-		<div class="row" onmousemove="Validar_Seleccion_Plan_Ingres_Minutos()">
-			<div class="col-lg-4">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-5" onmousemove="Validar_Seleccion_Plan_Ingres_Minutos()">
 				<div class="panel panel-success">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="form-group col-sm-8">								
-								<h3 class="panel-title"><b><strong>Panel del plan</strong></b></h3>				
-							</div>																	
-						</div>
-					</div>
+					<div class="panel-heading">							
+						<h3 class="panel-title"><b><strong>Panel del plan</strong></b></h3>		
+					</div>	
 					<div class="panel-body">
 						<p></p>
 						<button type="button" class="btn btn-success" id="BtnRegistrarPlan" title="Registrar Nuevo Plan" data-toggle="modal" data-target="#ModalRegistrar_NuevoPlan" data-backdrop="static" data-keyboard="false">
 							<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar</span></font></strong>
-							<strong> <font size ="2", color ="#ffffff"><span class="fa fa-plus-square">
-							</button>
-							<button type="button" class="btn btn-primary ModificarPlanMinutos" id="BtnModificarPlan" title="Modificar Plan" data-toggle="modal" data-target="#ModalEditarPlanMinutos" data-backdrop="static" data-keyboard="false">
-								<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Modificar</span></font></strong>
-								<strong> <font size ="2", color ="#ffffff"><span class="fa fa-pencil-square-o">
-								</button>
-								<button type="button" class="btn btn-danger" id="BtnEliminarPlan" title="Eliminar Plan" data-toggle="modal" data-target="#Eliminar_Plan" data-backdrop="static" data-keyboard="false">
-									<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Eliminar</span></font></strong>
-									<strong> <font size ="2", color ="#ffffff"><span class="fa fa-trash-o">
-									</button>							
-								</div>	
+							<strong> <font size ="2", color ="#ffffff"><span class="fa fa-plus-square"></span></font></strong>
+						</button>
+						<button type="button" class="btn btn-primary ModificarPlanMinutos" id="BtnModificarPlan" title="Modificar Plan" data-toggle="modal" data-target="#ModalEditarPlanMinutos" data-backdrop="static" data-keyboard="false">
+							<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Modificar</span></font></strong>
+							<strong> <font size ="2", color ="#ffffff"><span class="fa fa-pencil-square-o"></span></font></strong>
+						</button>
+						<button type="button" class="btn btn-danger" id="BtnEliminarPlan" title="Eliminar Plan" data-toggle="modal" data-target="#Eliminar_Plan" data-backdrop="static" data-keyboard="false">
+							<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Eliminar</span></font></strong>
+							<strong> <font size ="2", color ="#ffffff"><span class="fa fa-trash-o"></span></font></strong>
+						</button>							
+					</div>	
+				</div>
+			</div>
+		</div>		
+		<!-- MODAL REGISTRAR MINUTOS -->
+		<div class="panel-body" id="formulario_RegistrarMinutos">
+			<div class="modal fade" tabindex="-1" role="dialog" id="ModalRegistrarMinutos" onmousemove="Validar_Cantidad_Minutos_Ingresados()"data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">										<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Ingresar Minutos</font></strong></b></h4>
+						</div>
+						<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
+							<input type="hidden" name="comercio_id" id="comercio_id" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
+							<input type="hidden" name="id_plan2" id="id_plan2" class="form-control">
+							<!-- Fecha Registro -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black"><?php echo e(Form::label("Fecha Registro:")); ?></font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">						
+									<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
+										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Minutoss" id="Fecha_Ingreso_Minutoss"   placeholder="Fecha Registro" value="<?php echo e(Carbon::today()->toDateString()); ?>" readonly>
+										<span class="input-group-btn">
+											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+										</span>
+									</div>
+								</div>
+							</div> 
+							<!-- Fecha Registro -->
+
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="nombre_plan_registrar" id="nombre_plan_registrar"></label></font></strong></b>
+								</div>
 							</div>
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="cantidad_minutos_plan" id="cantidad_minutos_plan"></label></font></strong></b>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Restantes:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="cantidad_minutos_restantes_plan_registrar" id="cantidad_minutos_restantes_plan_registrar"></label></font></strong></b>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Minuto:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="valor_minuto_plan_registrar" id="valor_minuto_plan_registrar"></label></font></strong></b>
+								</div>
+							</div>
+							<!-- INPUT -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Vendidos:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input class="form-control" id="Cantidad_Minutos_Vendidos_Registrar" name="Cantidad_Minutos_Vendidos_Registrar" type="number">											
+									<div class="panel panel-danger" style="display:none" id="id_estilo3">
+										<div class="panel-heading" id="Validar_Cantidad_Minutos" style="display:none">
+										</div>															
+									</div>
+								</div>
+							</div>
+							<!-- INPUT -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Total:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text" name="pesos" id="pesos"></label></font></strong></b><b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text"  name="Valor_Total_Minutos_Vendidos" id="Valor_Total_Minutos_Vendidos"></label></font></strong></b>
+								</div>
+								<input type="hidden" class="form-control" name="Valor_Total_Minutos_Vendidoss" id="Valor_Total_Minutos_Vendidoss">
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm-update" id="BtnRegistrarMinutosVendidos">Guardar Registro</button>
+							<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
 						</div>
 					</div>
-					<!-- MODAL REGISTRAR MINUTOS -->
-					<div class="panel-body" id="formulario_RegistrarMinutos">
-						<div class="modal fade" tabindex="-1" role="dialog" id="ModalRegistrarMinutos" onmousemove="Validar_Cantidad_Minutos_Ingresados()"data-backdrop="static" data-keyboard="false">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">										<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Ingresar Minutos</font></strong></b></h4>
-									</div>
-									<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
-										<input type="hidden" name="comercio_id" id="comercio_id" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
-										<input type="hidden" name="id_plan2" id="id_plan2" class="form-control">
-										<!-- Fecha Registro -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black"><?php echo e(Form::label("Fecha Registro:")); ?></font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="text" name="birthdate" value="10/24/1984"  class="form-control" />																						
-											</div>
-										</div> 
-										<!-- Fecha Registro -->
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="confirm-update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
 
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="nombre_plan_registrar" id="nombre_plan_registrar"></label></font></strong></b>
-											</div>
-										</div>
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="cantidad_minutos_plan" id="cantidad_minutos_plan"></label></font></strong></b>
-											</div>
-										</div>
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Restantes:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="cantidad_minutos_restantes_plan_registrar" id="cantidad_minutos_restantes_plan_registrar"></label></font></strong></b>
-											</div>
-										</div>
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Minuto:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="valor_minuto_plan_registrar" id="valor_minuto_plan_registrar"></label></font></strong></b>
-											</div>
-										</div>
-										<!-- INPUT -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Vendidos:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input class="form-control" id="Cantidad_Minutos_Vendidos_Registrar" name="Cantidad_Minutos_Vendidos_Registrar" type="number">											
-												<div class="panel panel-danger" style="display:none" id="id_estilo3">
-													<div class="panel-heading" id="Validar_Cantidad_Minutos" style="display:none">
-													</div>															
-												</div>
-											</div>
-										</div>
-										<!-- INPUT -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Total:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text" name="pesos" id="pesos"></label></font></strong></b><b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text"  name="Valor_Total_Minutos_Vendidos" id="Valor_Total_Minutos_Vendidos"></label></font></strong></b>
-											</div>
-											<input type="hidden" class="form-control" name="Valor_Total_Minutos_Vendidoss" id="Valor_Total_Minutos_Vendidoss">
-										</div>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Registrar los minutos?</h4>
+					</div>
+					<div class="modal-footer">
+						<button  class="btn btn-primary RegistrarMinutos" data-toggle="modal" data-target="#confirm-update" type="button" id="confirmar_venta_manual">Si</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+					</div>
+				</div>
+			</div>     
+		</div>
 
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm-update" id="BtnRegistrarMinutosVendidos">Guardar</button>
-										<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
-									</div>
+		<!-- MODAL PARA EDITAR PLAN MINUTOS -->
+		<div class="panel-body" id="formulario_EditarPlanMinutos" data-backdrop="static" data-keyboard="false">
+			<div class="modal fade" tabindex="-1" role="dialog" id="ModalEditarPlanMinutos" onmousemove="Validar_editar_plan()">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Editar Plan Minutos</font></strong></b></h4>
+						</div>
+						<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
+							<input type="hidden" name="comercio_id_modificar" id="comercio_id_modificar" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
+
+							<input type="hidden" name="id_plan_modificar" id="id_plan_modificar" class="form-control">																	
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input type="text" name="nombre_plan_editar" id="nombre_plan_editar" class="form-control">
+								</div>
+							</div>									
+
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input type="number" name="cantidad_minutos_editar" id="cantidad_minutos_editar" class="form-control">
 								</div>
 							</div>
+
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Restantes:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">											
+									<input type="number" name="cantidad_minutos_restantes_plan_editar" id="cantidad_minutos_restantes_plan_editar" class="form-control">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Minuto:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input type="number" name="valor_minuto_plan_editar" id="valor_minuto_plan_editar" class="form-control">
+									<div class="panel panel-danger" style="display:none" id="id_estilo6">
+										<div class="panel-heading" id="mensaje_valida_editar" style="display:none">
+										</div>															
+									</div>
+								</div>
+
+							</div>							
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmar_editar_plan" id="Btn_modificar_plan_minutos">Guardar</button>
+							<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
 						</div>
 					</div>
-					<div class="modal fade" id="confirm-update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog">
-							<div class="modal-content">
-
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Registrar los minutos?</h4>
-								</div>
-								<div class="modal-footer">
-									<button  class="btn btn-primary RegistrarMinutos" data-toggle="modal" data-target="#confirm-update" type="button" id="confirmar_venta_manual">Si</button>
-									<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
-								</div>
-							</div>
-						</div>     
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="confirmar_editar_plan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Editar el Plan?</h4>
 					</div>
-
-					<!-- MODAL PARA EDITAR PLAN MINUTOS -->
-					<div class="panel-body" id="formulario_EditarPlanMinutos" data-backdrop="static" data-keyboard="false">
-						<div class="modal fade" tabindex="-1" role="dialog" id="ModalEditarPlanMinutos" onmousemove="Validar_editar_plan()">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Editar Plan Minutos</font></strong></b></h4>
-									</div>
-									<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
-										<input type="hidden" name="comercio_id_modificar" id="comercio_id_modificar" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
-
-										<input type="hidden" name="id_plan_modificar" id="id_plan_modificar" class="form-control">																	
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="text" name="nombre_plan_editar" id="nombre_plan_editar" class="form-control">
-											</div>
-										</div>									
-
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="number" name="cantidad_minutos_editar" id="cantidad_minutos_editar" class="form-control">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Restantes:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">											
-												<input type="number" name="cantidad_minutos_restantes_plan_editar" id="cantidad_minutos_restantes_plan_editar" class="form-control">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Minuto:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="number" name="valor_minuto_plan_editar" id="valor_minuto_plan_editar" class="form-control">
-												<div class="panel panel-danger" style="display:none" id="id_estilo6">
-													<div class="panel-heading" id="mensaje_valida_editar" style="display:none">
-													</div>															
-												</div>
-											</div>
-
-										</div>							
-
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmar_editar_plan" id="Btn_modificar_plan_minutos">Guardar</button>
-										<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
-									</div>
-								</div>
-							</div>
+					<div class="modal-footer">
+						<button  class="btn btn-primary Editar_Plan_Minutoss" data-toggle="modal" data-target="#confirmar_editar_plan" type="button" id="confirmar_venta_manual">Si</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+					</div>
+				</div>
+			</div>     
+		</div>
+		<!-- TERMINA MODAL EDITAR PLAN MINUTOS -->
+		<!-- MODAL PARA REGISTRAR NUEVO PLAN -->
+		<div class="panel-body" id="formulario_Registrar_NuevoPlan" data-backdrop="static" data-keyboard="false">
+			<div class="modal fade" tabindex="-1" role="dialog" id="ModalRegistrar_NuevoPlan" onmousemove="Validar_Datos_Nuevo_Plan()">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Registrar Nuevo Plan</font></strong></b></h4>
 						</div>
-					</div>
-					<div class="modal fade" id="confirmar_editar_plan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Editar el Plan?</h4>
+						<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
+							<input type="hidden" name="comercio_id_oculto_nuevo_Plan" id="comercio_id_oculto_nuevo_Plan" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">								
+							<!-- Fecha Registro -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black"><?php echo e(Form::label("Fecha Registro:")); ?></font></strong></b>
 								</div>
-								<div class="modal-footer">
-									<button  class="btn btn-primary Editar_Plan_Minutoss" data-toggle="modal" data-target="#confirmar_editar_plan" type="button" id="confirmar_venta_manual">Si</button>
-									<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+								<div class="form-group col-sm-8">
+									<input type="text" id="Fecha_Nuevo_Plan" name="Fecha_Nuevo_Plan" class="form-control" readonly>										
+								</div>
+							</div> 
+							<!-- Fecha Registro -->									
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input type="text" class="form-control" name="Nombre_Nuevo_Plan" id="Nombre_Nuevo_Plan">
 								</div>
 							</div>
-						</div>     
-					</div>
-					<!-- TERMINA MODAL EDITAR PLAN MINUTOS -->
-					<!-- MODAL PARA REGISTRAR NUEVO PLAN -->
-					<div class="panel-body" id="formulario_Registrar_NuevoPlan" data-backdrop="static" data-keyboard="false">
-						<div class="modal fade" tabindex="-1" role="dialog" id="ModalRegistrar_NuevoPlan" onmousemove="Validar_Datos_Nuevo_Plan()">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Registrar Nuevo Plan</font></strong></b></h4>
-									</div>
-									<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
-										<input type="hidden" name="comercio_id_oculto_nuevo_Plan" id="comercio_id_oculto_nuevo_Plan" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">								
-										<!-- Fecha Registro -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black"><?php echo e(Form::label("Fecha Registro:")); ?></font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="text" id="Fecha_Nuevo_Plan" name="Fecha_Nuevo_Plan" class="form-control" readonly>										
-											</div>
-										</div> 
-										<!-- Fecha Registro -->									
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="text" class="form-control" name="Nombre_Nuevo_Plan" id="Nombre_Nuevo_Plan">
-											</div>
-										</div>
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="number" class="form-control" name="Cantidad_Minutos_Nuevo_Plan" id="Cantidad_Minutos_Nuevo_Plan">
-											</div>
-										</div>
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input type="number" class="form-control" name="Cantidad_Minutos_Nuevo_Plan" id="Cantidad_Minutos_Nuevo_Plan">
+								</div>
+							</div>
 
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Venta Minuto:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="number" class="form-control" name="Valor_Venta_Minutos_Nuevo_Plan" id="Valor_Venta_Minutos_Nuevo_Plan">
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Venta Minuto:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input type="number" class="form-control" name="Valor_Venta_Minutos_Nuevo_Plan" id="Valor_Venta_Minutos_Nuevo_Plan">
 
-												<div class="panel panel-danger" style="display:none" id="id_estilo">
-													<div class="panel-heading" id="mensaje_valida_datos_nuevo_plan" style="display:none">														
-													</div>															
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#registrar_nuevo_plan" id="BtnConfirmarNuevoPlan">Guardar</button>
-										<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
+									<div class="panel panel-danger" style="display:none" id="id_estilo">
+										<div class="panel-heading" id="mensaje_valida_datos_nuevo_plan" style="display:none">														
+										</div>															
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="modal fade" id="registrar_nuevo_plan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Registrar el nuevo Plan?</h4>
-								</div>
-								<div class="modal-footer">
-									<button  class="btn btn-primary RegistrarNuevoPlan" data-toggle="modal" data-target="#registrar_nuevo_plan" type="button" id="confirmar_venta_manual">Si</button>
-									<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
-								</div>
-							</div>
-						</div>     
-					</div>
-					<!-- TERMINA MODAL REGISTRAR NUEVO PLAN -->
-					<!-- Confirmacion para eliminar Planes -->
-					<div class="modal fade" id="Eliminar_Plan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Eliminar el Plan?</h4>
-									<div class="modal-body">									
-										* Se borrará toda la información asociada al plan: <b><strong> <font size ="2", color="#ff3300" face="Arial Black"><label id="nombre_plan_eliminar" name="nombre_plan_eliminar"></label></font></strong></b>
-									</div>
-									<input type="hidden" name="id_plan_eliminar" id="id_plan_eliminar" class="form-control">
-									<input type="hidden" name="comercio_id_eliminar" id="comercio_id_eliminar" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
-								</div>
-								<div class="modal-footer">
-									<button  class="btn btn-primary EliminarPlan" data-toggle="modal" data-target="#Eliminar_Plan" type="button" id="confirmar_venta_manual">Si</button>
-									<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
-								</div>
-							</div>
-						</div>     
-					</div>
-					<!-- Termina Confirmacion Para eliminacion de planes -->
-
-					<!-- MODAL PARA EDITAR REGISTRO DE MINUTOS -->
-					<div class="panel-body" id="formulario_Editar_Registro_Minutos">
-						<div class="modal fade" tabindex="-1" role="dialog" id="ModalEditar_Registro_Minutos" onmousemove="Validar_Cantidad_Minutos_Modificar()">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Editar Ingreso Minutos</font></strong></b></h4>
-									</div>
-									<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
-										<input type="hidden" name="comercio_id_oculto" id="comercio_id_oculto" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
-
-										<input type="hidden" name="id_plan3" id="id_plan3" class="form-control">
-										<input type="hidden" name="cantidad_oculta" id="cantidad_oculta" class="form-control">
-										<input type="hidden" name="id_plan_minutos" id="id_plan_minutos" class="form-control">
-
-										<!-- Fecha Registro -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black"><?php echo e(Form::label("Fecha Registro:")); ?></font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input type="text" id="Fecha_Editar_Ingreso_Minutos" name="Fecha_Editar_Ingreso_Minutos" class="form-control" readonly>												
-											</div>
-										</div> 
-										<!-- Fecha Registro -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="Nombre_Plan_Editar" id="Nombre_Plan_Editar"></label></font></strong></b>
-											</div>
-										</div>
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="Cantidad_Minutos_Plan_Modificar" id="Cantidad_Minutos_Plan_Modificar"></label></font></strong></b>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Restantes:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="cantidad_minutos_restantes_plan_modificar" id="cantidad_minutos_restantes_plan_modificar"></label></font></strong></b>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Minuto:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="valor_minuto_plan_modificar" id="valor_minuto_plan_modificar"></label></font></strong></b>
-											</div>
-										</div>
-										<!-- INPUT -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Vendidos:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<input class="form-control" id="Cantidad_Minutos_Vendidos_Modificar" name="Cantidad_Minutos_Vendidos_Modificar" type="number">												
-												<div class="panel panel-danger" style="display:none" id="id_estilo2">
-													<div class="panel-heading" id="Validar_Cantidad_Minutos_Modificar" style="display:none">
-													</div>															
-												</div>
-											</div>
-										</div>
-										<!-- INPUT -->
-										<div class="row">
-											<div class="form-group col-sm-4">
-												<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Total:
-												</font></strong></b>
-											</div>
-											<div class="form-group col-sm-8">
-												<b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text" name="pesos" id="pesos"></label></font></strong></b><b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text"  name="Valor_Total_Minutos_Vendidos_Modificar" id="Valor_Total_Minutos_Vendidos_Modificar"></label></font></strong></b>
-											</div>
-											<input type="hidden" class="form-control" name="Valor_Total_Minutos_Vendidosss" id="Valor_Total_Minutos_Vendidosss">
-										</div>
-
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm-update2" id="BtnModificarMinutosVendidos">Guardar</button>
-										<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
-									</div>
-								</div>
-							</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#registrar_nuevo_plan" id="BtnConfirmarNuevoPlan">Guardar</button>
+							<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
 						</div>
 					</div>
-					<div class="modal fade" id="confirm-update2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Modificar los minutos?</h4>
-								</div>
-								<div class="modal-footer">
-									<button  class="btn btn-primary ModificarRegistroMinutos" type="button" id="confirmar_venta_manual">Si</button>
-									<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
-								</div>
-							</div>
-						</div>     
-					</div>
-					<!-- TERMINA MODAL PARA EDITAR REGISTRO DE MINUTOS -->
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="registrar_nuevo_plan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
 
-					<!-- Modal Para Confirmaciones -->
-					<div class="modal fade" tabindex="-1" role="dialog" id="ModalConfirmacion" data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="TitleModal"></h4>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Registrar el nuevo Plan?</h4>
+					</div>
+					<div class="modal-footer">
+						<button  class="btn btn-primary RegistrarNuevoPlan" data-toggle="modal" data-target="#registrar_nuevo_plan" type="button" id="confirmar_venta_manual">Si</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+					</div>
+				</div>
+			</div>     
+		</div>
+		<!-- TERMINA MODAL REGISTRAR NUEVO PLAN -->
+		<!-- Confirmacion para eliminar Planes -->
+		<div class="modal fade" id="Eliminar_Plan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Eliminar el Plan?</h4>
+						<div class="modal-body">									
+							* Se borrará toda la información asociada al plan: <b><strong> <font size ="2", color="#ff3300" face="Arial Black"><label id="nombre_plan_eliminar" name="nombre_plan_eliminar"></label></font></strong></b>
+						</div>
+						<input type="hidden" name="id_plan_eliminar" id="id_plan_eliminar" class="form-control">
+						<input type="hidden" name="comercio_id_eliminar" id="comercio_id_eliminar" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
+					</div>
+					<div class="modal-footer">
+						<button  class="btn btn-primary EliminarPlan" data-toggle="modal" data-target="#Eliminar_Plan" type="button" id="confirmar_venta_manual">Si</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+					</div>
+				</div>
+			</div>     
+		</div>
+		<!-- Termina Confirmacion Para eliminacion de planes -->
+
+		<!-- MODAL PARA EDITAR REGISTRO DE MINUTOS -->
+		<div class="panel-body" id="formulario_Editar_Registro_Minutos">
+			<div class="modal fade" tabindex="-1" role="dialog" id="ModalEditar_Registro_Minutos" onmousemove="Validar_Cantidad_Minutos_Modificar()">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Editar Ingreso Minutos</font></strong></b></h4>
+						</div>
+						<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
+							<input type="hidden" name="comercio_id_oculto" id="comercio_id_oculto" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
+
+							<input type="hidden" name="id_plan3" id="id_plan3" class="form-control">
+							<input type="hidden" name="cantidad_oculta" id="cantidad_oculta" class="form-control">
+							<input type="hidden" name="id_plan_minutos" id="id_plan_minutos" class="form-control">
+
+							<!-- Fecha Registro -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black"><?php echo e(Form::label("Fecha Registro:")); ?></font></strong></b>
 								</div>
-								<div class="modal-body" id="CuerpoMensaje">
-									<strong> <font size ="4", color ="#01080f" face="Lucida Sans"><p2></p2></font></strong>
+								<div class="form-group col-sm-8">
+									<input type="text" id="Fecha_Editar_Ingreso_Minutos" name="Fecha_Editar_Ingreso_Minutos" class="form-control" readonly>												
 								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
+							</div> 
+							<!-- Fecha Registro -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="Nombre_Plan_Editar" id="Nombre_Plan_Editar"></label></font></strong></b>
 								</div>
 							</div>
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="Cantidad_Minutos_Plan_Modificar" id="Cantidad_Minutos_Plan_Modificar"></label></font></strong></b>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Restantes:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="cantidad_minutos_restantes_plan_modificar" id="cantidad_minutos_restantes_plan_modificar"></label></font></strong></b>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Minuto:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="2", color="#000000" face="Arial Black"><label type="text"  name="valor_minuto_plan_modificar" id="valor_minuto_plan_modificar"></label></font></strong></b>
+								</div>
+							</div>
+							<!-- INPUT -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Vendidos:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<input class="form-control" id="Cantidad_Minutos_Vendidos_Modificar" name="Cantidad_Minutos_Vendidos_Modificar" type="number">												
+									<div class="panel panel-danger" style="display:none" id="id_estilo2">
+										<div class="panel-heading" id="Validar_Cantidad_Minutos_Modificar" style="display:none">
+										</div>															
+									</div>
+								</div>
+							</div>
+							<!-- INPUT -->
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Total:
+									</font></strong></b>
+								</div>
+								<div class="form-group col-sm-8">
+									<b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text" name="pesos" id="pesos"></label></font></strong></b><b><strong> <font size ="4", color="#ff0000" face="Arial Black"><label type="text"  name="Valor_Total_Minutos_Vendidos_Modificar" id="Valor_Total_Minutos_Vendidos_Modificar"></label></font></strong></b>
+								</div>
+								<input type="hidden" class="form-control" name="Valor_Total_Minutos_Vendidosss" id="Valor_Total_Minutos_Vendidosss">
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm-update2" id="BtnModificarMinutosVendidos">Guardar</button>
+							<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
 						</div>
 					</div>
-					<!-- Termina Modal Para Confirmaciones -->
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="confirm-update2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Modificar los minutos?</h4>
+					</div>
+					<div class="modal-footer">
+						<button  class="btn btn-primary ModificarRegistroMinutos" type="button" id="confirmar_venta_manual">Si</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+					</div>
+				</div>
+			</div>     
+		</div>
+		<!-- TERMINA MODAL PARA EDITAR REGISTRO DE MINUTOS -->
 
-					<script type="text/javascript">
-						$(function() {
-							$('input[name="birthdate"]').daterangepicker({
-								singleDatePicker: true,
-								showDropdowns: true
-							}, 
-							function(start, end, label) {
-								var years = moment().diff(start, 'years');
-								alert("You are " + years + " years old.");
-							});
-						});
-					</script>
+		<!-- Modal Para Confirmaciones -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="ModalConfirmacion" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="TitleModal"></h4>
+					</div>
+					<div class="modal-body" id="CuerpoMensaje">
+						<strong> <font size ="4", color ="#01080f" face="Lucida Sans"><p2></p2></font></strong>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Termina Modal Para Confirmaciones -->
 
-					<script type="text/javascript">
+		<script type="text/javascript">
+			$(function() {
+				$('input[name="birthdate"]').daterangepicker({
+					singleDatePicker: true,
+					showDropdowns: true
+				}, 
+				function(start, end, label) {
+					var years = moment().diff(start, 'years');
+					alert("You are " + years + " years old.");
+				});
+			});
+		</script>
 
-						cargar_combox();
-						document.getElementById('BtnIngresarMinutos').disabled=true;
-						document.getElementById('BtnModificarPlan').disabled=true;
-						document.getElementById('BtnEliminarPlan').disabled=true;				
+		<script type="text/javascript">
 
-
-						$('#fecha_oculta').val($('#fecha_actual').val());
-						$(function () {
-							$('#datetimepicker12').datetimepicker({
-
-								inline: true,
-
-								defaultDate: new Date()
-							}).on('dp.change',function(event){	
-
-								$('#fecha_oculta').val(event.date.format('YYYY-MM-DD'));
-								Cargar_datos_en_cuadrado($('#fecha_oculta').val());		
-
-							});	
-						});	
+			cargar_combox();
+			document.getElementById('BtnIngresarMinutos').disabled=true;
+			document.getElementById('BtnModificarPlan').disabled=true;
+			document.getElementById('BtnEliminarPlan').disabled=true;				
 
 
-			// $('#Fecha_Ingreso_Minutos').datepicker().on('changeDate', function (e) { 
-			// 	dateString = $.datepicker.formatDate('yy-mm-dd', new Date(e.target.value));				
+			$('#fecha_oculta').val($('#fecha_actual').val());
+			$(function () {
+				$('#datetimepicker12').datetimepicker({
 
-			// 	$('#Fecha_Ingreso_Minutos').val(dateString);
+					inline: true,
 
-			// });	
+					defaultDate: new Date()
+				}).on('dp.change',function(event){	
 
-			// $('#Fecha_Editar_Ingreso_Minutos').datepicker().on('changeDate', function (e) { 
-			// 	dateString = $.datepicker.formatDate('yy-mm-dd', new Date(e.target.value));					
+					$('#fecha_oculta').val(event.date.format('YYYY-MM-DD'));
+					Cargar_datos_en_cuadrado($('#fecha_oculta').val());		
 
-			// 	$('#Fecha_Editar_Ingreso_Minutos').val(dateString);
+				});	
+			});	
 
-			// });
 
-			// $('#Fecha_Nuevo_Plan').datepicker().on('changeDate', function (e) { 
-			// 	dateString = $.datepicker.formatDate('yy-mm-dd', new Date(e.target.value));					
+			
 
-			// 	$('#Fecha_Nuevo_Plan').val(dateString);
-
-			// });
 
 			function Validar_Datos_Nuevo_Plan(){
 				var Fecha_Nuevo_Plan 				= $('#Fecha_Nuevo_Plan').val();
@@ -951,7 +903,7 @@
 				var Cantidad_Minutos_Ingresar =parseInt($('#Cantidad_Minutos_Vendidos_Registrar').val());
 				var Cantidad_Minutos_Ingresar2 =$('#Cantidad_Minutos_Vendidos_Registrar').val();
 				var cantidad_minutos_restantes_plan_registrar =parseInt($('#cantidad_minutos_restantes_plan_registrar').text());
-				var Fecha_Ingreso_Minutos =$('#Fecha_Ingreso_Minutos').val();
+				var Fecha_Ingreso_Minutos =$('#Fecha_Ingreso_Minutoss').val();
 
 				var valor_minuto_plan_registrar =parseInt($('#valor_minuto_plan_registrar').text());
 
@@ -1061,13 +1013,11 @@ $.each(re.nombre_plan, function(key,value) {
 			}
 
 			$('.RegistrarIngresoMinutos').click(function(){
-
 				var plan_id = document.getElementById('plan_id').value;	
 
 				$('#Cantidad_Minutos_Vendidos_Registrar').val('');
-				$('#Fecha_Ingreso_Minutos').val('');
+				$('#Fecha_Ingreso_Minutoss').val('');
 				$('#Valor_Total_Minutos_Vendidos').text('0');
-
 
 				$.ajax({
 					type:'get',
@@ -1081,6 +1031,8 @@ $.each(re.nombre_plan, function(key,value) {
 						$('#cantidad_minutos_plan').empty().html(data.cantidad_minutos);
 						$('#cantidad_minutos_restantes_plan_registrar').empty().html(data.cantidad_minutos_restantes);
 						$('#valor_minuto_plan_registrar').empty().html(data.valor_venta_minutos);
+						$('#id_plan2').empty().val(plan_id);
+						
 
 					}
 				});
@@ -1173,8 +1125,7 @@ $.each(re.nombre_plan, function(key,value) {
 				});
 			});	
 
-			cargar_minutos_tabla();		
-
+			cargar_minutos_tabla();	
 
 			$('.RegistrarNuevoPlan').click(function(){
 
@@ -1193,18 +1144,15 @@ $.each(re.nombre_plan, function(key,value) {
 						'Nombre_Nuevo_Plan'             	: Nombre_Nuevo_Plan,
 						'Cantidad_Minutos_Nuevo_Plan'   	: Cantidad_Minutos_Nuevo_Plan,
 						'Valor_Venta_Minutos_Nuevo_Plan'    : Valor_Venta_Minutos_Nuevo_Plan,
-						'comercio_id'         				: comercio_id						
-
+						'comercio_id'         				: comercio_id
 					},  
 					success:function(re){
-
-
 						if(!re.success){					
 							$("#ModalRegistrar_NuevoPlan").modal('hide');	
 							$("#formulario_Registrar_NuevoPlan").modal('hide');						
 							$('#CuerpoMensaje').html('');				
 							$('#ModalConfirmacion').modal('show');					
-							$('#TitleModal').html('<p>Error al Registrar el nuevo plan de minutos.</p>');  
+							$('#TitleModal').html('<p>Error al Registrar el nuevo plan de minutos.</p>'); 
 							$.each(re.errors,function(index, error){       
 								$('#CuerpoMensaje').append('<p>'+error+'</p>');          
 							});     
@@ -1238,8 +1186,7 @@ $.each(re.nombre_plan, function(key,value) {
 
 			$('.RegistrarMinutos').click(function(){
 
-
-				var Fecha_Ingreso_Minutos 				=	$('#Fecha_Ingreso_Minutos').val();	
+				var Fecha_Ingreso_Minutos 				=	$('#Fecha_Ingreso_Minutoss').val();	
 				var id_plan2 							=	$('#id_plan2').val();
 				var Cantidad_Minutos_Vendidos_Registrar =	$('#Cantidad_Minutos_Vendidos_Registrar').val();
 				var Valor_Total_Minutos_Vendidoss 		=	$('#Valor_Total_Minutos_Vendidoss').val();	
@@ -1249,7 +1196,7 @@ $.each(re.nombre_plan, function(key,value) {
 
 				$.ajax({
 					url   : "<?= URL::to('Registrar_Ingreso_Minutos') ?>",
-					type  : "POST",
+					type  : "GET",
 					async : false,
 					data  :{
 						'Fecha_Ingreso_Minutos'             	: Fecha_Ingreso_Minutos,

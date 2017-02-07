@@ -19,6 +19,7 @@ use DB;
 use View;
 use Illuminate\Support\Facades\Input;
 use Response;
+use Illuminate\Support\Facades\Validator;
 
 
 class AdministrarPlanesMinutosController extends Controller{
@@ -63,6 +64,65 @@ class AdministrarPlanesMinutosController extends Controller{
 			'cantidad_minutos_restantes'=>$cantidad_minutos_restantes,
 			'valor_venta_minutos'=>$valor_venta_minutos		
 			]);
+	}
+
+	function Registrar_Ingreso_Minutos (){
+		$rules = array
+		(
+			'Fecha_Ingreso_Minutos'					=> 'required',
+			'id_plan2'								=> 'required',	
+			'Cantidad_Minutos_Vendidos_Registrar'	=> 'required|min:1|numeric',
+			'Valor_Total_Minutos_Vendidoss'			=> 'required|min:1|numeric',			
+			'comercio_id'							=> 'required'			
+			);
+
+		$message = array
+		(
+			'Fecha_Ingreso_Minutos.required' 				=> ' Se requiere la fecha de registro.',
+			'id_plan2.required' 							=> ' Se requiere un plan.',	
+			'Cantidad_Minutos_Vendidos_Registrar.required' 	=> ' Se requiere una cantidad de minutos.',
+			'Cantidad_Minutos_Vendidos_Registrar.min' 		=> ' Se requiere una cantidad de minutos.',
+			'Cantidad_Minutos_Vendidos_Registrar.numeric' 	=> ' La cantidad debe ser numerica.',
+
+			'Valor_Total_Minutos_Vendidoss.required' 		=> ' Se requiere el total de minutos.',
+			'Valor_Total_Minutos_Vendidoss.min' 			=> ' Se requiere el total de minutos.',
+			'Valor_Total_Minutos_Vendidoss.numeric' 		=> ' El valor total debe ser numerico.',	
+			'comercio_id.required' 	=> ' Porfavor Ingrese la fecha de la venta.'
+			);
+		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{
+			$plan = Input::all();
+			$Cantidad_Minutos_Restantes			=$plan['Cantidad_Minutos_Restantes'];
+			$Cantidad_Minutos_Vendidos 			=$plan['Cantidad_Minutos_Vendidos_Registrar'];
+			$Total 							 	=$Cantidad_Minutos_Restantes-$Cantidad_Minutos_Vendidos;
+			$datos_registro = array(
+				'cantidad_minutos_restantes' => $Total			
+				);	
+			$check = DB::table('minutos_planes')
+			->where('id',$plan['id_plan2'])
+			->where('id_comercio',$plan['comercio_id'])
+			->update($datos_registro);
+			$hora_venta_recarga= Carbon::today()->now();
+			$datos_registro = array(
+				'fecha_registro' 			 		=> $plan['Fecha_Ingreso_Minutos'],
+				'id_minutos_planes' 	 			=> $plan['id_plan2'],	
+				'cantidad_minutos_vendidos' 	 	=> $plan['Cantidad_Minutos_Vendidos_Registrar'],
+				'total_minutos_venta' 	   		 	=> $plan['Valor_Total_Minutos_Vendidoss'],
+				'hora_registro' 					=> $hora_venta_recarga,
+				'id_comercio' 	   		 			=> $plan['comercio_id'],	
+				);
+			$check = DB::table('detalle_plan_minutos')->insert($datos_registro );
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
+			return Response::json(['success' =>true]);
+		}
 	}
 
 }

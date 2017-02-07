@@ -9,7 +9,7 @@ use App\Models\Alimentos\Alimento;
 use App\Models\Productos\Producto;
 use App\Models\Productos\VentaProducto;
 use App\Models\Alimentos\VentaAlimento;
-use App\Models\MinutosCelular\DetallePlanMinutos;
+use App\Models\PlanesCelular\DetallePlanMinutos;
 use App\Models\Internet\VentaInternet;
 use App\Models\Recargas\VentaRecarga;
 use App\Models\Compras\Compra;

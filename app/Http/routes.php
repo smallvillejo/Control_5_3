@@ -233,6 +233,8 @@ Route::any('Cargar_Nombre_Planes', array('as'=>'Cargar_Nombre_Planes','uses'=>'C
 // Carga todos los datos del plan de minutos para ingresar los minutos vendidos
 Route::any('Consultar_Datos_PlanMinutos', array('as'=>'Consultar_Datos_PlanMinutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Consultar_Datos_PlanMinutos'))->middleware('auth');
 
+Route::any('Registrar_Ingreso_Minutos', array('as'=>'Registrar_Ingreso_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Registrar_Ingreso_Minutos'))->middleware('auth');
+
 // Terminan Ruta para todo de Minutos
 
 
