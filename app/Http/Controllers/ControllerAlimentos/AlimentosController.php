@@ -7,11 +7,9 @@ use App\Models\Productos\Producto;
 use App\Models\Alimentos\VentaAlimento;
 use App\Models\Usuarios\Empresa;
 use Control_5_3\Models\Cargo\Cargo;
-use Illuminate\Support\Facades\Input;
-use Response;
+
 use Illuminate\Support\Facades\Validator;
-use DB;
-use View;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
 use Carbon\Carbon;
@@ -20,6 +18,11 @@ use Excel;
 use PHPExcel_Style_Alignment;
 use App;
 use PDF;
+use DB;
+use View;
+use Illuminate\Support\Facades\Input;
+use Response;
+
 class AlimentosController extends Controller{
   public function __construct(){
     Carbon::setLocale('es');
