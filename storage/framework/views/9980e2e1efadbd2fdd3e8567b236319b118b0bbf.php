@@ -76,6 +76,8 @@
 		</div>	
 	</div>	
 	<div class="row">
+		<div id="tabla_id" class="col-xs-12 col-sm-12 col-md-8 col-lg-7">				
+		</div>
 		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-5" onmousemove="Validar_Seleccion_Plan_Ingres_Minutos()">
 			<div class="panel panel-danger">
 				<div class="panel-heading">				
@@ -94,11 +96,7 @@
 						<span class="fa fa-plus-square"></span></button>					
 					</div>
 				</div>
-			</div>
-			<div id="tabla_id" class="col-xs-12 col-sm-12 col-md-8 col-lg-7">				
-			</div>
-		</div>
-		<div class="row">
+			</div>			
 			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-5" onmousemove="Validar_Seleccion_Plan_Ingres_Minutos()">
 				<div class="panel panel-success">
 					<div class="panel-heading">							
@@ -120,7 +118,7 @@
 						</button>							
 					</div>	
 				</div>
-			</div>
+			</div>			
 		</div>		
 		<!-- MODAL REGISTRAR MINUTOS -->
 		<div class="panel-body" id="formulario_RegistrarMinutos">
@@ -584,7 +582,7 @@
 			});	
 
 
-			
+
 
 
 			function Validar_Datos_Nuevo_Plan(){
@@ -1023,7 +1021,7 @@ $.each(re.nombre_plan, function(key,value) {
 						$('#cantidad_minutos_restantes_plan_registrar').empty().html(data.cantidad_minutos_restantes);
 						$('#valor_minuto_plan_registrar').empty().html(data.valor_venta_minutos);
 						$('#id_plan2').empty().val(plan_id);
-						
+
 
 					}
 				});
@@ -1220,7 +1218,7 @@ $.each(re.nombre_plan, function(key,value) {
 					}
 				});
 			});
-			
+
 
 			$('.Eliminar_Registro').click(function(){
 

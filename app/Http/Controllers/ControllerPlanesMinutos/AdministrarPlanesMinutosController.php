@@ -132,8 +132,13 @@ class AdministrarPlanesMinutosController extends Controller{
 		$MinutosRegistrados=DetallePlanMinutos::Where('fecha_registro',$fecha)
 		->Where('id_comercio',$id_comercio)->paginate(5);
 
+		$valor_venta_minutos=DetallePlanMinutos::Where('fecha_registro',$fecha)
+		->Where('id_comercio',$id_comercio)
+		->sum('total_minutos_venta');
+
 		return view('AdministrarPlanes/Tablas.Tabla_Ingreso_Minutos')
-		->with('MinutosRegistrados',$MinutosRegistrados);
+		->with('MinutosRegistrados',$MinutosRegistrados)
+		->with('valor_venta_minutos',$valor_venta_minutos);
 	}
 
 }
