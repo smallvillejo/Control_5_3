@@ -155,6 +155,7 @@ class AdministrarPlanesMinutosController extends Controller{
 			$MinutosRestantes=$value->PlanMinutos->cantidad_minutos_restantes;
 			$MinutosVendidos=$value->cantidad_minutos_vendidos;
 			$TotalVenta=$value->total_minutos_venta;
+			$IdPlanMinutos=$value->PlanMinutos->id;
 		}
 
 		return Response::json([			
@@ -162,9 +163,48 @@ class AdministrarPlanesMinutosController extends Controller{
 			'ValorMinutoPlan'=>$ValorMinutoPlan,
 			'MinutosRestantes'=>$MinutosRestantes,
 			'MinutosVendidos'=>$MinutosVendidos,
-			'TotalVenta'=>$TotalVenta		
+			'TotalVenta'=>$TotalVenta,
+			'IdPlanMinutos'=>$IdPlanMinutos	
 			]);
 
+	}
+
+	public function Modificar_Registro_Minutos(){
+		$Minutos = Input::all();
+
+		$Cantidad_Minutos_Restantes			=$Minutos['MinutosRestantes_MinutosIngresados'];
+		$Cantidad_Minutos_Vendidos 			=$Minutos['MinutosVendidos_MinutosIngresados'];
+		$cantidad_oculta 					=$Minutos['cantidad_oculta'];
+		$Valor_Total_Minutos_Vendidosss		=$Minutos['Valor_Total_Minutos_Vendidosss'];
+		$id_plan_minutos					=$Minutos['id_plan_minutos'];
+		$id_detalle_plan_minutos			=$Minutos['id_detalle_plan_minutos'];
+
+		$Total=$Cantidad_Minutos_Restantes+$cantidad_oculta-$Cantidad_Minutos_Vendidos;	
+		
+
+		$datos_registro = array(
+			'cantidad_minutos_restantes' 			 		=> $Total
+			);
+		$datos_registro2 = array(			
+			
+			'cantidad_minutos_vendidos' 			 		=> $Cantidad_Minutos_Vendidos,
+			'total_minutos_venta' 			 				=> $Valor_Total_Minutos_Vendidosss
+			);
+		$check = DB::table('minutos_planes')
+		->where('id',$id_plan_minutos)
+		->where('id_comercio',$Minutos['comercio_id_oculto'])
+		->update($datos_registro);
+
+		$check = DB::table('detalle_plan_minutos')
+		->where('id_detalle_plan',$id_detalle_plan_minutos)
+		->where('id_comercio',$Minutos['comercio_id_oculto'])
+		->update($datos_registro2);
+
+		if($check >0){
+			return 0;
+		}else{
+			return 1;	
+		}
 	}
 
 }
