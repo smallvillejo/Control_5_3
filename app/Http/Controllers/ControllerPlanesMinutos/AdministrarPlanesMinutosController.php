@@ -39,7 +39,7 @@ class AdministrarPlanesMinutosController extends Controller{
 		$nombre_plan[0] = "";
 
 		foreach ($plan as $planes) {
-			$nombre_plan[$planes->id] = $planes->nombre_plan_minutos;
+			$nombre_plan[$planes->id] = strtoupper($planes->nombre_plan_minutos).' #'.$planes->NumeroPlan;
 		}
 
 		return Response::json(['success' =>true,			
@@ -139,6 +139,32 @@ class AdministrarPlanesMinutosController extends Controller{
 		return view('AdministrarPlanes/Tablas.Tabla_Ingreso_Minutos')
 		->with('MinutosRegistrados',$MinutosRegistrados)
 		->with('valor_venta_minutos',$valor_venta_minutos);
+	}
+
+	public function Cargar_datos_Minutos_Ingresados(){
+		$Id_Minutos_Ingresados=Input::get('id');
+		$id_comercio=Auth::user()->id_comercio; 
+
+		$MinutosRegistrados=DetallePlanMinutos::Where('id_detalle_plan',$Id_Minutos_Ingresados)
+		->Where('id_comercio',$id_comercio)->get();
+
+		foreach ($MinutosRegistrados as $key => $value) {
+
+			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  #'.$value->PlanMinutos->NumeroPlan;
+			$ValorMinutoPlan=$value->PlanMinutos->valor_venta_minutos;
+			$MinutosRestantes=$value->PlanMinutos->cantidad_minutos_restantes;
+			$MinutosVendidos=$value->cantidad_minutos_vendidos;
+			$TotalVenta=$value->total_minutos_venta;
+		}
+
+		return Response::json([			
+			'NombrePlanMinutos'=>$NombrePlanMinutos,
+			'ValorMinutoPlan'=>$ValorMinutoPlan,
+			'MinutosRestantes'=>$MinutosRestantes,
+			'MinutosVendidos'=>$MinutosVendidos,
+			'TotalVenta'=>$TotalVenta		
+			]);
+
 	}
 
 }

@@ -238,6 +238,10 @@ Route::any('Registrar_Ingreso_Minutos', array('as'=>'Registrar_Ingreso_Minutos',
 // Ruta Para registrar los minutos vendidos del plan seleccionado
 Route::any('Cargar_Tabla_Minutos_Ingresados', array('as'=>'Cargar_Tabla_Minutos_Ingresados','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Cargar_Tabla_Minutos_Ingresados'))->middleware('auth');
 
+// Ruta para cargar los datos por ajax para editar los minutos registrados anteriormente
+Route::any('Cargar_datos_Minutos_Ingresados', array('as'=>'Cargar_datos_Minutos_Ingresados','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Cargar_datos_Minutos_Ingresados'))->middleware('auth');
+
+
 // Terminan Ruta para todo de Minutos
 
 
