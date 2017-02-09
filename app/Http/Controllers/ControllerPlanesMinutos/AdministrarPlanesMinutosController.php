@@ -207,4 +207,40 @@ class AdministrarPlanesMinutosController extends Controller{
 		}
 	}
 
+	public function Eliminar_Registro_Minutos(){
+
+
+		$Minutos = Input::all();
+
+		dd($Minutos);
+
+		$Cantidad_Minutos_Plan		=$Minutos['Cantidad_Minutos'];
+		$Cantidad_Minutos_Vendidos 	=$Minutos['Cantidad_Minutos_Vendidos'];
+		$Total=$Cantidad_Minutos_Plan+$Cantidad_Minutos_Vendidos;
+
+
+		$datos_registro = array(
+
+			'cantidad_minutos_restantes' 			 		=> $Total			
+			);	
+
+		$check = DB::table('minutos_planes')
+		->where('id',$Minutos['id_plan'])
+		->where('id_comercio',$Minutos['comercio_id'])
+		->update($datos_registro);
+
+
+		$check = DB::table('detalle_plan_minutos')
+		->where('id_detalle_plan',$Minutos['id_registro_minutos'])
+		->where('id_comercio',$Minutos['comercio_id'])
+		->delete();
+
+		if($check >0){
+			return 0;
+		}else{
+
+			return 1;	
+		}
+	}
+
 }
