@@ -247,7 +247,7 @@
 
 			<!-- MODAL PARA EDITAR PLAN MINUTOS -->
 			<div class="panel-body" id="formulario_EditarPlanMinutos" data-backdrop="static" data-keyboard="false">
-				<div class="modal fade" tabindex="-1" role="dialog" id="ModalEditarPlanMinutos" onmousemove="Validar_editar_plan()">
+				<div class="modal fade" tabindex="-1" role="dialog" id="ModalEditarPlanMinutos">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">							
@@ -291,6 +291,7 @@
 												</td>
 												<td>
 													<input type="number" class="form-control" name="NumeroPlan_Editar" id="NumeroPlan_Editar">
+													<input type="text" name="NumeroPlan_Oculto_Editar" id="NumeroPlan_Oculto_Editar" class="form-control">
 												</td>
 											</tr>
 											<tr>
@@ -307,6 +308,22 @@
 												</td>
 												<td>
 													<input type="number" class="form-control" name="CantidadMinutosPlan_Editar" id="CantidadMinutosPlan_Editar">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span class="badge btn-md btn-success" style="background: #12aed1;">
+														<b>
+															<strong>
+																<font size ="2", color color="#000000" face="Tahoma">
+																	Cantidad Minutos Restantes Plan:
+																</font>
+															</strong>
+														</b>
+													</span>
+												</td>
+												<td>
+													<input type="number" class="form-control" name="CantidadMinutosRestantesPlan_Editar" id="CantidadMinutosRestantesPlan_Editar">
 												</td>
 											</tr>
 											<tr>
@@ -339,7 +356,7 @@
 								</table>											
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmar_editar_plan" id="Btn_modificar_plan_minutos">Guardar</button>
+								<button type="button" class="btn btn-success" id="Btn_modificar_plan_minutos">Guardar</button>
 								<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
 							</div>
 						</div>
@@ -354,7 +371,7 @@
 							<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Editar el Plan?</h4>
 						</div>
 						<div class="modal-footer">
-							<button  class="btn btn-primary Editar_Plan_Minutoss" data-toggle="modal" data-target="#confirmar_editar_plan" type="button" id="confirmar_venta_manual">Si</button>
+							<button  class="btn btn-primary Editar_Plan_Minutoss">Si</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
 						</div>
 					</div>
@@ -574,86 +591,91 @@
 												<div class="panel panel-danger" style="display:none" id="id_estilo2">
 													<div class="panel-heading" id="Validar_Cantidad_Minutos_Modificar" style="display:none">
 													</div>
-												</tr>
-												<tr>
-													<td>								
-														<b><strong><font size ="2", color color="#000000" face="Tahoma">Fecha Registro</font></strong></b>
-													</td>
-													<td>								
-														<div class="form-group col-sm-8">						
-															<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-																<input type="text" class="form-control form-filter input-sm" name="FechaMinutosVenta_Editar" id="FechaMinutosVenta_Editar"   placeholder="Fecha Registro" value="<?php echo e(Carbon::today()->toDateString()); ?>" readonly>
-																<span class="input-group-btn">
-																	<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-																</span>
-															</div>
+												</div>
+												<div class="panel panel-danger" style="display:none" id="id_estilo22">
+													<div class="panel-heading" id="Validar_Cantidad_Minutos_Modificar2" style="display:none">
+													</div>
+												</div>
+											</tr>
+											<tr>
+												<td>								
+													<b><strong><font size ="2", color color="#000000" face="Tahoma">Fecha Registro</font></strong></b>
+												</td>
+												<td>								
+													<div class="form-group col-sm-8">						
+														<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
+															<input type="text" class="form-control form-filter input-sm" name="FechaMinutosVenta_Editar" id="FechaMinutosVenta_Editar"   placeholder="Fecha Registro" value="<?php echo e(Carbon::today()->toDateString()); ?>" readonly>
+															<span class="input-group-btn">
+																<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+															</span>
 														</div>
-													</td>
-												</tr>										
-												<tr>
-													<td>								
-														<b><strong><font size ="2", color color="#000000" face="Tahoma">Valor Vendido:</font></strong></b>
-													</td>
-													<td>
-														<span class="badge btn-md btn-success" style="background: #dd5816;">
-															<b>
-																<strong>
-																	<font size ="2", color color="#000000" face="Tahoma">
-																		$<label type="text"  name="TotalVenta_MinutosIngresados" id="TotalVenta_MinutosIngresados"></label>
-																	</font>
-																</strong>
-															</b>
-														</span>								
-													</td>												
-												</tr>										
-											</tbody>
-										</div>
-									</table>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm-update2" id="BtnModificarMinutosVendidos">Guardar</button>
-									<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal fade" id="confirm-update2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Modificar los minutos?</h4>
+													</div>
+												</td>
+											</tr>										
+											<tr>
+												<td>								
+													<b><strong><font size ="2", color color="#000000" face="Tahoma">Valor Vendido:</font></strong></b>
+												</td>
+												<td>
+													<span class="badge btn-md btn-success" style="background: #dd5816;">
+														<b>
+															<strong>
+																<font size ="2", color color="#000000" face="Tahoma">
+																	$<label type="text"  name="TotalVenta_MinutosIngresados" id="TotalVenta_MinutosIngresados"></label>
+																</font>
+															</strong>
+														</b>
+													</span>								
+												</td>												
+											</tr>										
+										</tbody>
+									</div>
+								</table>
 							</div>
 							<div class="modal-footer">
-								<button  class="btn btn-primary ModificarRegistroMinutos" type="button" id="confirmar_venta_manual">Si</button>
-								<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
-							</div>
-						</div>
-					</div>     
-				</div>
-				<!-- TERMINA MODAL PARA EDITAR REGISTRO DE MINUTOS -->
-
-				<!-- Modal Para Confirmaciones -->
-				<div class="modal fade" tabindex="-1" role="dialog" id="ModalConfirmacion" data-backdrop="static" data-keyboard="false">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="TitleModal"></h4>
-							</div>
-							<div class="modal-body" id="CuerpoMensaje">
-								<strong> <font size ="4", color ="#01080f" face="Lucida Sans"><p2></p2></font></strong>
-							</div>
-							<div class="modal-footer">
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm-update2" id="BtnModificarMinutosVendidos">Guardar</button>
 								<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- Termina Modal Para Confirmaciones -->
-				<script type="text/javascript">
-					Cargar_Tabla_Minutos_Ingresados();
+			</div>
+			<div class="modal fade" id="confirm-update2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Modificar los minutos?</h4>
+						</div>
+						<div class="modal-footer">
+							<button  class="btn btn-primary ModificarRegistroMinutos" type="button" id="confirmar_venta_manual">Si</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+						</div>
+					</div>
+				</div>     
+			</div>
+			<!-- TERMINA MODAL PARA EDITAR REGISTRO DE MINUTOS -->
+
+			<!-- Modal Para Confirmaciones -->
+			<div class="modal fade" tabindex="-1" role="dialog" id="ModalConfirmacion" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close cerrarMensaje" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="TitleModal"></h4>
+						</div>
+						<div class="modal-body" id="CuerpoMensaje">
+							<strong> <font size ="4", color ="#01080f" face="Lucida Sans"><p2></p2></font></strong>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary cerrarMensaje" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Termina Modal Para Confirmaciones -->
+			<script type="text/javascript">
+				Cargar_Tabla_Minutos_Ingresados();
 // Carga todos los datos al modal modificar ngreso de minutos
 $('body').delegate('.Editar_Minutos_Registrados','click',function(){					
 	var id =($(this).attr('id_minuto_registrado'));
@@ -737,6 +759,7 @@ $('.cerrarMensaje').click(function(){
 	$('#id_estilo2').hide();
 	$('#id_estilo3').hide();
 	$('#id_estilo6').hide();
+	$('#id_estilo22').hide();	
 });
 
 function Cargar_Tabla_Minutos_Ingresados(){
@@ -822,65 +845,88 @@ function Validar_Datos_Nuevo_Plan(){
 	}
 }
 
+$('#Btn_modificar_plan_minutos').click(function(){
+	if(Validar_editar_plan()!=true){
+		$('#confirmar_editar_plan').modal('show');
+	}	
+});
+
+
 function Validar_editar_plan(){
 
+	var NombrePlan_Editar 						= $('#NombrePlan_Editar').val();
+	var NumeroPlan_Editar						= $('#NumeroPlan_Editar').val();
 	var id_plan_modificar						= $('#id_plan_modificar').val();
-	var nombre_plan_editar 						= $('#nombre_plan_editar').val();
-	var cantidad_minutos_editar 				= $('#cantidad_minutos_editar').val();
-	var cantidad_minutos_restantes_plan_editar 	= $('#cantidad_minutos_restantes_plan_editar').val();
-	var valor_minuto_plan_editar 				= $('#valor_minuto_plan_editar').val();
+	
+	var CantidadMinutosPlan_Editar 				= $('#CantidadMinutosPlan_Editar').val();
+	var CantidadMinutosRestantesPlan_Editar 	= $('#CantidadMinutosRestantesPlan_Editar').val();
+	var ValorVentaPlan_Editar 				= $('#ValorVentaPlan_Editar').val();
 
-	var cantidad_minutos_editar2				= parseInt($('#cantidad_minutos_editar').val());
-	var cantidad_minutos_restantes_plan_editar2	= parseInt($('#cantidad_minutos_restantes_plan_editar').val());
-	var valor_minuto_plan_editar2				= parseInt($('#valor_minuto_plan_editar').val());
+	var CantidadMinutosPlan_Editar2				= parseInt($('#CantidadMinutosPlan_Editar').val());
+	var CantidadMinutosRestantesPlan_Editar2	= parseInt($('#CantidadMinutosRestantesPlan_Editar').val());
+	var ValorVentaPlan_Editar2				= parseInt($('#ValorVentaPlan_Editar').val());
 
 
-	if(nombre_plan_editar==''){
-		document.getElementById('Btn_modificar_plan_minutos').disabled=true;
+	if(NombrePlan_Editar==''){		
 		$('#id_estilo6').show();								
 		document.getElementById("mensaje_valida_editar").innerText = "El nombre del plan no puede estar vacio.";
-		document.getElementById("mensaje_valida_editar").style.display = "block";	
+		document.getElementById("mensaje_valida_editar").style.display = "block";
+		document.getElementById("NombrePlan_Editar").focus();
+		return true;	
 	}else{
-		if(cantidad_minutos_editar==''){
-			document.getElementById('Btn_modificar_plan_minutos').disabled=true;
+		if(NumeroPlan_Editar==''){			
 			$('#id_estilo6').show();								
-			document.getElementById("mensaje_valida_editar").innerText = "La cantidad no puede estar vacia.";
+			document.getElementById("mensaje_valida_editar").innerText = "El número del plan no puede estar vacio.";
 			document.getElementById("mensaje_valida_editar").style.display = "block";	
+			document.getElementById("NumeroPlan_Editar").focus();
+			return true;
 		}else{
-			if(cantidad_minutos_editar2<0){
-				document.getElementById('Btn_modificar_plan_minutos').disabled=true;
+			if(CantidadMinutosPlan_Editar==''){				
 				$('#id_estilo6').show();								
-				document.getElementById("mensaje_valida_editar").innerText = "La cantidad no puede ser menor a 0.";
+				document.getElementById("mensaje_valida_editar").innerText = "La cantidad no puede estar vacia.";
 				document.getElementById("mensaje_valida_editar").style.display = "block";	
+				document.getElementById("CantidadMinutosPlan_Editar").focus();
+				return true;
 			}else{
-				if(cantidad_minutos_restantes_plan_editar==''){
-					document.getElementById('Btn_modificar_plan_minutos').disabled=true;
+				if(CantidadMinutosPlan_Editar2<0){					
 					$('#id_estilo6').show();								
-					document.getElementById("mensaje_valida_editar").innerText = "La cantidad de minutos restantes no puede estar vacio.";
+					document.getElementById("mensaje_valida_editar").innerText = "La cantidad no puede ser menor a 0.";
 					document.getElementById("mensaje_valida_editar").style.display = "block";	
+					document.getElementById("CantidadMinutosPlan_Editar").focus();
+					return true;
 				}else{
-					if(cantidad_minutos_restantes_plan_editar<0){
-						document.getElementById('Btn_modificar_plan_minutos').disabled=true;
+					if(CantidadMinutosRestantesPlan_Editar==''){						
 						$('#id_estilo6').show();								
-						document.getElementById("mensaje_valida_editar").innerText = "La cantidad de minutos restantes no puede ser menor a 0.";
-						document.getElementById("mensaje_valida_editar").style.display = "block";	
+						document.getElementById("mensaje_valida_editar").innerText = "La cantidad de minutos restantes no puede estar vacio.";
+						document.getElementById("mensaje_valida_editar").style.display = "block";
+						document.getElementById("CantidadMinutosRestantesPlan_Editar").focus();	
+						return true;
 					}else{
-						if(valor_minuto_plan_editar==''){
-							document.getElementById('Btn_modificar_plan_minutos').disabled=true;
+						if(CantidadMinutosRestantesPlan_Editar<0){							
 							$('#id_estilo6').show();								
-							document.getElementById("mensaje_valida_editar").innerText = "El valor de venta de minutos no puede estar vacio.";
-							document.getElementById("mensaje_valida_editar").style.display = "block";	
-						}else{	
-							if(valor_minuto_plan_editar<0){
-								document.getElementById('Btn_modificar_plan_minutos').disabled=true;
+							document.getElementById("mensaje_valida_editar").innerText = "La cantidad de minutos restantes no puede ser menor a 0.";
+							document.getElementById("mensaje_valida_editar").style.display = "block";
+							document.getElementById("CantidadMinutosRestantesPlan_Editar").focus();	
+							return true;
+						}else{
+							if(ValorVentaPlan_Editar==''){								
 								$('#id_estilo6').show();								
-								document.getElementById("mensaje_valida_editar").innerText = "El valor del minuto no puede ser menor a 0.";
-								document.getElementById("mensaje_valida_editar").style.display = "block";	
-							}else{										
-								document.getElementById('Btn_modificar_plan_minutos').disabled=false;
-								$('#id_estilo6').hide();								
-								document.getElementById("mensaje_valida_editar").innerText = "";
-
+								document.getElementById("mensaje_valida_editar").innerText = "El valor de venta de minutos no puede estar vacio.";
+								document.getElementById("mensaje_valida_editar").style.display = "block";
+								document.getElementById("ValorVentaPlan_Editar").focus();
+								return true;	
+							}else{	
+								if(ValorVentaPlan_Editar<0){									
+									$('#id_estilo6').show();								
+									document.getElementById("mensaje_valida_editar").innerText = "El valor del minuto no puede ser menor a 0.";
+									document.getElementById("mensaje_valida_editar").style.display = "block";
+									document.getElementById("ValorVentaPlan_Editar").focus();	
+									return true;
+								}else{										
+									$('#id_estilo6').hide();								
+									document.getElementById("mensaje_valida_editar").innerText = "";
+									return false;
+								}
 							}
 						}
 					}
@@ -889,7 +935,6 @@ function Validar_editar_plan(){
 		}
 	}
 }
-
 
 function Limpiar_data_Despues_de_Registrar_Plan(){
 	$('#Numero_Nuevo_Plan').val('');	
@@ -1204,44 +1249,43 @@ $('.RegistrarIngresoMinutos').click(function(){
 			$('#cantidad_minutos_plan').empty().html(data.cantidad_minutos);
 			$('#cantidad_minutos_restantes_plan_registrar').empty().html(data.cantidad_minutos_restantes);
 			$('#valor_minuto_plan_registrar').empty().html(data.valor_venta_minutos);
-			$('#id_plan2').empty().val(plan_id);
+			$('#id_plan_modificar').empty().val(plan_id);
 		}
 	});
 });
 
-
+// Carga los datos del plan para modificarlo
 $('.ModificarPlanMinutos').click(function(){
-
-	var plan_id = document.getElementById('plan_id').value;	
-	var faction = "<?php echo URL::to('consultar_datos_plan_minutos/data'); ?>";
-	var fdata = $('#plan_id').val(plan_id);								
-	$('#load').show();
-	$.post(faction, fdata, function(json) {
-		if (json.success) { 
-			$('#formulario_EditarPlanMinutos input[name="id_plan_modificar"]').val(json.id);
-			$('#formulario_EditarPlanMinutos input[name="nombre_plan_editar"]').val(json.nombre_plan_minutos);		
-			$('#formulario_EditarPlanMinutos input[name="cantidad_minutos_editar"]').val(json.cantidad_minutos);	
-			$('#formulario_EditarPlanMinutos input[name="cantidad_minutos_restantes_plan_editar"]').val(json.cantidad_minutos_restantes);	
-			$('#formulario_EditarPlanMinutos input[name="valor_minuto_plan_editar"]').val(json.valor_venta_minutos);
-
-		} else {
-			$('#errorMessage').html(json.message);
-			$('#errorMessage').show();
+	var plan_id  = document.getElementById('plan_id').value;
+	$.ajax({
+		type:'get',		
+		data:{
+			'plan_id' : plan_id
+		},
+		url:'<?php echo e(url('DatosPlanModificar')); ?>',
+		success: function(data){
+			$('#NombrePlan_Editar').empty().val(data.NombrePlan);
+			$('#NumeroPlan_Editar').empty().val(data.Numero_Nuevo_Plan);
+			$('#NumeroPlan_Oculto_Editar').empty().val(data.Numero_Nuevo_Plan);
+			$('#CantidadMinutosPlan_Editar').empty().val(data.cantidad_minutos);
+			$('#CantidadMinutosRestantesPlan_Editar').empty().val(data.cantidad_minutos_restantes);
+			$('#ValorVentaPlan_Editar').empty().val(data.valor_venta_minutos);
+			$('#id_plan_modificar').empty().val(plan_id);
 		}
-	});
+	});	
 
 });
 
 
 
 $('.Editar_Plan_Minutoss').click(function(){
-
-	var comercio_id_modificar 						=	$('#comercio_id_modificar').val();	
+	var comercio_id_modificar 					=	$('#comercio_id_modificar').val();	
 	var id_plan_modificar 						=	$('#id_plan_modificar').val();	
-	var nombre_plan_editar 							=	$('#nombre_plan_editar').val();	
-	var cantidad_minutos_editar 					=	$('#cantidad_minutos_editar').val();						
-	var cantidad_minutos_restantes_plan_editar 		=	$('#cantidad_minutos_restantes_plan_editar').val();					
-	var valor_minuto_plan_editar 					=	$('#valor_minuto_plan_editar').val();
+	var NombrePlan_Editar 						=	$('#NombrePlan_Editar').val();	
+	var NumeroPlan_Editar 						=	$('#NumeroPlan_Editar').val();	
+	var CantidadMinutosPlan_Editar 				=	$('#CantidadMinutosPlan_Editar').val();	
+	var CantidadMinutosRestantesPlan_Editar 	=	$('#CantidadMinutosRestantesPlan_Editar').val();
+	var ValorVentaPlan_Editar 					=	$('#ValorVentaPlan_Editar').val();
 
 	$.ajax({
 		url   : "<?= URL::to('Modificar_Plan_Minutos') ?>",
@@ -1250,15 +1294,14 @@ $('.Editar_Plan_Minutoss').click(function(){
 		data  :{
 			'comercio_id_modificar'             		: comercio_id_modificar,
 			'id_plan_modificar'             			: id_plan_modificar,
-			'nombre_plan_editar'             			: nombre_plan_editar,
-			'cantidad_minutos_editar'             		: cantidad_minutos_editar,								
+			'NombrePlan_Editar'             			: NombrePlan_Editar,
+			'NumeroPlan_Editar'             			: NumeroPlan_Editar,
+			'CantidadMinutosPlan_Editar'             	: CantidadMinutosPlan_Editar,
+			'CantidadMinutosRestantesPlan_Editar'       : CantidadMinutosRestantesPlan_Editar,
 			'cantidad_minutos_restantes_plan_editar'    : cantidad_minutos_restantes_plan_editar,
-			'valor_minuto_plan_editar'         			: valor_minuto_plan_editar						
-
+			'ValorVentaPlan_Editar'         			: ValorVentaPlan_Editar
 		},  
 		success:function(re){
-
-
 			if(!re.success){					
 				$("#ModalEditarPlanMinutos").modal('hide');	
 				$("#formulario_EditarPlanMinutos").modal('hide');						
@@ -1439,12 +1482,17 @@ $('.ModificarRegistroMinutos').click(function(){
 			}
 
 			if(re == 1){         
-				$('#CuerpoMensaje').html('');
-				$("#ModalEditar_Registro_Minutos").modal('hide');
-				$("#confirm-update2").modal('hide');      
-				$('#ModalConfirmacion').modal('show');
-				$('#TitleModal').html('<p>Se presentó el siguiente error:</p>');
-				$('#CuerpoMensaje').html('<p>No se encontró ningún cambio a modificar.</p>'); 
+				// $('#CuerpoMensaje').html('');
+				// $("#ModalEditar_Registro_Minutos").modal('hide');
+				// $("#confirm-update2").modal('hide');      
+				// $('#ModalConfirmacion').modal('show');
+				// $('#TitleModal').html('<p>Se presentó el siguiente error:</p>');
+				// $('#CuerpoMensaje').html('<p>No se encontró ningún cambio a modificar.</p>'); 
+				$("#confirm-update2").modal('hide');
+				$('#id_estilo22').show();
+				$('#Validar_Cantidad_Minutos_Modificar2').append('<p><strong>No se encontró ningún cambio a modificar.</strong></p>');    
+				document.getElementById("Validar_Cantidad_Minutos_Modificar2").style.display = "block";
+				
 			}
 		},
 		error:function(re){

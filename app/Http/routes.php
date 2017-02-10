@@ -246,6 +246,13 @@ Route::any('Modificar_Registro_Minutos', array('as'=>'Modificar_Registro_Minutos
 Route::any('Eliminar_Registro_Minutos', array('as'=>'Eliminar_Registro_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Eliminar_Registro_Minutos'))->middleware('auth');
 // Ruta para Registrar Nuevos Planes
 Route::any('Registrar_Nuevo_Plan', array('as'=>'Registrar_Nuevo_Plan','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Registrar_Nuevo_Plan'))->middleware('auth');
+// Ruta Para Cargar Los datos de plan a modificar
+Route::any('DatosPlanModificar', array('as'=>'DatosPlanModificar','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@DatosPlanModificar'))->middleware('auth');
+// Ruta Para Cargar Los datos de plan a modificar
+Route::any('DatosPlanModificar', array('as'=>'DatosPlanModificar','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@DatosPlanModificar'))->middleware('auth');
+// Ruta modificar un plan seleccionado
+Route::any('Modificar_Plan_Minutos', array('as'=>'Modificar_Plan_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Modificar_Plan_Minutos'))->middleware('auth');
+
 
 
 
