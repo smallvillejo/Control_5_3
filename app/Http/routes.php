@@ -244,6 +244,9 @@ Route::any('Cargar_datos_Minutos_Ingresados', array('as'=>'Cargar_datos_Minutos_
 Route::any('Modificar_Registro_Minutos', array('as'=>'Modificar_Registro_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Modificar_Registro_Minutos'))->middleware('auth');
 // Ruta para eliminar el registro de los minutos vendidos
 Route::any('Eliminar_Registro_Minutos', array('as'=>'Eliminar_Registro_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Eliminar_Registro_Minutos'))->middleware('auth');
+// Ruta para Registrar Nuevos Planes
+Route::any('Registrar_Nuevo_Plan', array('as'=>'Registrar_Nuevo_Plan','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Registrar_Nuevo_Plan'))->middleware('auth');
+
 
 
 // Terminan Ruta para todo de Minutos

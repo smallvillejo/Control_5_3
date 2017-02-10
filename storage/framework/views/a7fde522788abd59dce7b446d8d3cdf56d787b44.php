@@ -1,21 +1,23 @@
 <?php if($MinutosRegistrados->total()==0): ?>
 <script type="text/javascript">
-	$('#Panel_1').hide();
-	$('#Panel_2').hide();
+	$('#Panel_1').show();
+	$('#Panel_2').show();
 </script>
-<div class="panel panel-primary">
-	<div class="panel-heading">
-		<h3 class="panel-title">
-			<strong>ÚLTIMOS MINUTOS REGISTRADOS</strong>
-			<div class="pull-right">
-				<strong>Total Venta Minuto:</strong>
-				<label><font size ="3", color color="#000000" face="Tahoma"><strong>$<?php echo e(number_format($valor_venta_minutos)); ?></strong></font></label>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<strong>ÚLTIMOS MINUTOS REGISTRADOS</strong>
+				<div class="pull-right">
+					<strong>Total Venta Minuto:</strong>
+					<label><font size ="3", color color="#000000" face="Tahoma"><strong>$<?php echo e(number_format($valor_venta_minutos)); ?></strong></font></label>
+				</div>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<img src="global/images/Error_No_Found_Venta_Minutos.png" alt="logo" class="img-thumbnail img-responsive" >	
 			</div>
-		</h3>
-	</div>
-	<div class="panel-body">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<img src="global/images/Error_No_Found_Venta_Minutos.png" alt="logo" class="img-thumbnail img-responsive" >	
 		</div>
 	</div>
 </div>
@@ -128,7 +130,7 @@
 					<div class="pull-right">
 						<a href="#" data-toggle = 'modal' data-target="#ModalEditar_Registro_Minutos"  class="Editar_Minutos_Registrados" id_minuto_registrado="<?php echo e($value->id_detalle_plan); ?>"  data-backdrop="static" data-keyboard="false" title="Editar">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-pencil-square fa-2x"></span></font></strong>
 						</a>
-						<a href="#" data-toggle = 'modal' data-target="#Eliminar_Registro_VentaMinuto" id="<?php echo e($value->id_detalle_plan); ?>"  Cantidad_Minutos_Restantes_Plan="<?php echo e($value->PlanMinutos->cantidad_minutos_restantes); ?>" Cantidad_Minutos_Vendidos="<?php echo e($value->cantidad_minutos_vendidos); ?>" class="Eliminar_Venta_Minuto" data-backdrop="static" data-keyboard="false" title="Eliminar">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></strong>
+						<a href="#" data-toggle = 'modal' data-target="#Eliminar_Registro_VentaMinuto" id="<?php echo e($value->id_detalle_plan); ?>"  Cantidad_Minutos_Restantes_Plan="<?php echo e($value->PlanMinutos->cantidad_minutos_restantes); ?>" Cantidad_Minutos_Vendidos="<?php echo e($value->cantidad_minutos_vendidos); ?>" id_plan_reingresoMinuto="<?php echo e($value->PlanMinutos->id); ?>" class="Eliminar_Venta_Minuto" data-backdrop="static" data-keyboard="false" title="Eliminar">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></strong>
 						</a>	
 					</div>
 				</div>

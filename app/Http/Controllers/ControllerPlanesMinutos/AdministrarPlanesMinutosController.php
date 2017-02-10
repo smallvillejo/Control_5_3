@@ -209,37 +209,90 @@ class AdministrarPlanesMinutosController extends Controller{
 
 	public function Eliminar_Registro_Minutos(){
 
-
 		$Minutos = Input::all();
 
-		dd($Minutos);
+		$Cantidad_Minutos_Restantes_Plan	=$Minutos['Cantidad_Minutos_Restantes_Plan'];
+		$Cantidad_Minutos_Vendidos 			=$Minutos['Cantidad_Minutos_Vendidos'];
 
-		$Cantidad_Minutos_Plan		=$Minutos['Cantidad_Minutos'];
-		$Cantidad_Minutos_Vendidos 	=$Minutos['Cantidad_Minutos_Vendidos'];
-		$Total=$Cantidad_Minutos_Plan+$Cantidad_Minutos_Vendidos;
+		$Total=$Cantidad_Minutos_Restantes_Plan+$Cantidad_Minutos_Vendidos;
 
 
 		$datos_registro = array(
-
 			'cantidad_minutos_restantes' 			 		=> $Total			
 			);	
 
 		$check = DB::table('minutos_planes')
-		->where('id',$Minutos['id_plan'])
+		->where('id',$Minutos['id_plan_reingresoMinuto'])
 		->where('id_comercio',$Minutos['comercio_id'])
 		->update($datos_registro);
 
-
 		$check = DB::table('detalle_plan_minutos')
-		->where('id_detalle_plan',$Minutos['id_registro_minutos'])
+		->where('id_detalle_plan',$Minutos['Id_Registro_Minuto'])
 		->where('id_comercio',$Minutos['comercio_id'])
 		->delete();
 
 		if($check >0){
 			return 0;
 		}else{
-
 			return 1;	
+		}
+	}
+
+	public function Registrar_Nuevo_Plan(){
+		
+		$rules = array
+		(
+			'Nombre_Nuevo_Plan'						=> 'required|max:20',
+			'Numero_Nuevo_Plan'						=> 'required|min:10',	
+			'Cantidad_Minutos_Nuevo_Plan'			=> 'required|min:1|numeric',
+			'Valor_Venta_Minutos_Nuevo_Plan'		=> 'required|min:1|numeric'					
+			);
+
+		$message = array
+		(
+			'Nombre_Nuevo_Plan.required' 					=> ' Se requiere un plan.',
+			'Nombre_Nuevo_Plan.max' 						=> ' El nombre del plan no debe ser mayor a 20 caracteres.',
+			'Numero_Nuevo_Plan.required' 					=> ' Se requiere un plan.',
+			'Numero_Nuevo_Plan.min' 						=> ' El Numero del plan  debe ser igual a 10 caracteres.',
+			'Cantidad_Minutos_Nuevo_Plan.required' 			=> ' Se requiere una cantidad de minutos.',
+			'Cantidad_Minutos_Nuevo_Plan.min' 				=> ' La cantidad de numeros minimo son 1.',
+			'Cantidad_Minutos_Nuevo_Plan.numeric' 			=> ' La cantidad debe ser numerica.',
+
+			'Valor_Venta_Minutos_Nuevo_Plan.required' 		=> ' Se requiere el total de minutos.',
+			'Valor_Venta_Minutos_Nuevo_Plan.min' 			=> ' Se requiere el total de minutos.',
+			'Valor_Venta_Minutos_Nuevo_Plan.numeric' 		=> ' El valor total debe ser numerico.'				
+
+			);
+		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);
+		}else{
+
+			$Minutos = Input::all();
+			$FechaActual=Carbon::today()->toDateString();
+			$datos_registro = array(
+
+				'nombre_plan_minutos' 			 	=> $Minutos['Nombre_Nuevo_Plan'],
+				'NumeroPlan' 			 			=> $Minutos['Numero_Nuevo_Plan'],
+				'cantidad_minutos' 	 				=> $Minutos['Cantidad_Minutos_Nuevo_Plan'],	
+				'cantidad_minutos_restantes' 	 	=> $Minutos['Cantidad_Minutos_Nuevo_Plan'],
+				'valor_venta_minutos' 	   		 	=> $Minutos['Valor_Venta_Minutos_Nuevo_Plan'],
+				'fecha_registro' 					=> $FechaActual,
+				'id_comercio' 	   		 			=> $Minutos['comercio_id'],	
+				);			
+
+			$check = DB::table('minutos_planes')->insert($datos_registro);
+
+
+			if($check >0){
+				return 0;
+			}else{
+
+				return 1;	
+			}
 		}
 	}
 
