@@ -39,7 +39,7 @@ class AdministrarPlanesMinutosController extends Controller{
 		$nombre_plan[0] = "";
 
 		foreach ($plan as $planes) {
-			$nombre_plan[$planes->id] = strtoupper($planes->nombre_plan_minutos).' #'.$planes->NumeroPlan;
+			$nombre_plan[$planes->id] = strtoupper($planes->nombre_plan_minutos).' #'.$planes->Numero_Nuevo_Plan;
 		}
 
 		return Response::json(['success' =>true,			
@@ -150,7 +150,7 @@ class AdministrarPlanesMinutosController extends Controller{
 
 		foreach ($MinutosRegistrados as $key => $value) {
 
-			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  #'.$value->PlanMinutos->NumeroPlan;
+			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  #'.$value->PlanMinutos->Numero_Nuevo_Plan;
 			$ValorMinutoPlan=$value->PlanMinutos->valor_venta_minutos;
 			$MinutosRestantes=$value->PlanMinutos->cantidad_minutos_restantes;
 			$MinutosVendidos=$value->cantidad_minutos_vendidos;
@@ -243,7 +243,7 @@ class AdministrarPlanesMinutosController extends Controller{
 		$rules = array
 		(
 			'Nombre_Nuevo_Plan'						=> 'required|max:20',
-			'Numero_Nuevo_Plan'						=> 'required|min:10',	
+			'Numero_Nuevo_Plan'						=> 'required|unique:minutos_planes|min:10',	
 			'Cantidad_Minutos_Nuevo_Plan'			=> 'required|min:1|numeric',
 			'Valor_Venta_Minutos_Nuevo_Plan'		=> 'required|min:1|numeric'					
 			);
@@ -254,6 +254,7 @@ class AdministrarPlanesMinutosController extends Controller{
 			'Nombre_Nuevo_Plan.max' 						=> ' El nombre del plan no debe ser mayor a 20 caracteres.',
 			'Numero_Nuevo_Plan.required' 					=> ' Se requiere un plan.',
 			'Numero_Nuevo_Plan.min' 						=> ' El Numero del plan  debe ser igual a 10 caracteres.',
+			 'Numero_Nuevo_Plan.unique' 					=> 'El numero ingresado no esta disponible.',
 			'Cantidad_Minutos_Nuevo_Plan.required' 			=> ' Se requiere una cantidad de minutos.',
 			'Cantidad_Minutos_Nuevo_Plan.min' 				=> ' La cantidad de numeros minimo son 1.',
 			'Cantidad_Minutos_Nuevo_Plan.numeric' 			=> ' La cantidad debe ser numerica.',
@@ -276,7 +277,7 @@ class AdministrarPlanesMinutosController extends Controller{
 			$datos_registro = array(
 
 				'nombre_plan_minutos' 			 	=> $Minutos['Nombre_Nuevo_Plan'],
-				'NumeroPlan' 			 			=> $Minutos['Numero_Nuevo_Plan'],
+				'Numero_Nuevo_Plan' 			 			=> $Minutos['Numero_Nuevo_Plan'],
 				'cantidad_minutos' 	 				=> $Minutos['Cantidad_Minutos_Nuevo_Plan'],	
 				'cantidad_minutos_restantes' 	 	=> $Minutos['Cantidad_Minutos_Nuevo_Plan'],
 				'valor_venta_minutos' 	   		 	=> $Minutos['Valor_Venta_Minutos_Nuevo_Plan'],

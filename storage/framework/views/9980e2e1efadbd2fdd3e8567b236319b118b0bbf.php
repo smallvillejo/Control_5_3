@@ -63,8 +63,6 @@
 						<h3 class="panel-title"><b><strong>Panel del plan</strong></b></h3>		
 					</div>	
 					<div class="panel-body">
-						
-						
 						<center>
 							<button type="button" class="btn btn-succes" id="BtnRegistrarPlan" style="background-color: #317a2e" title="Registrar Nuevo Plan" data-toggle="modal" data-target="#ModalRegistrar_NuevoPlan" data-backdrop="static" data-keyboard="false">
 								<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar</span></font></strong>
@@ -246,55 +244,92 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">							
-								<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black">Editar Plan Minutos</font></strong></b></h4>
+								<h4 class="modal-title" id="TitleModal2"><b><strong> <font size ="4", color="#53a4ee" face="Arial Black"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>Editar Plan Minutos</font></strong></b></h4>
 							</div>
 							<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
 								<input type="hidden" name="comercio_id_modificar" id="comercio_id_modificar" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
 
-								<input type="hidden" name="id_plan_modificar" id="id_plan_modificar" class="form-control">																	
-								<div class="row">
-									<div class="form-group col-sm-4">
-										<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Nombre del Plan:
-										</font></strong></b>
-									</div>
-									<div class="form-group col-sm-8">
-										<input type="text" name="nombre_plan_editar" id="nombre_plan_editar" class="form-control">
-									</div>
-								</div>									
+								<input type="hidden" name="id_plan_modificar" id="id_plan_modificar" class="form-control">	
 
-								<div class="row">
-									<div class="form-group col-sm-4">
-										<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Plan:
-										</font></strong></b>
+								<table class="table table-user-information">
+									<div class="row">
+										<tbody>
+											<tr>
+												<td>
+													<span class="badge btn-md btn-success" style="background: #12aed1;">
+														<b>
+															<strong>
+																<font size ="2", color color="#000000" face="Tahoma">
+																	Nombre del Plan:
+																</font>
+															</strong>
+														</b>
+													</span>
+												</td>
+												<td>
+													<input type="text" class="form-control" name="NombrePlan_Editar" id="NombrePlan_Editar">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span class="badge btn-md btn-success" style="background: #12aed1;">
+														<b>
+															<strong>
+																<font size ="2", color color="#000000" face="Tahoma">
+																	Número del Plan:
+																</font>
+															</strong>
+														</b>
+													</span>
+												</td>
+												<td>
+													<input type="number" class="form-control" name="NumeroPlan_Editar" id="NumeroPlan_Editar">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span class="badge btn-md btn-success" style="background: #12aed1;">
+														<b>
+															<strong>
+																<font size ="2", color color="#000000" face="Tahoma">
+																	Cantidad Minutos Plan:
+																</font>
+															</strong>
+														</b>
+													</span>
+												</td>
+												<td>
+													<input type="number" class="form-control" name="CantidadMinutosPlan_Editar" id="CantidadMinutosPlan_Editar">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span class="badge btn-md btn-success" style="background: #12aed1;">
+														<b>
+															<strong>
+																<font size ="2", color color="#000000" face="Tahoma">
+																	Valor Venta Minuto:
+																</font>
+															</strong>
+														</b>
+													</span>
+												</td>
+												<td>
+													<input type="number" class="form-control" name="ValorVentaPlan_Editar" id="ValorVentaPlan_Editar">
+												</td>
+											</tr>											
+											<tr>
+												<td></td>
+												<td>
+													<div class="panel panel-danger" style="display:none" id="id_estilo6">
+														<div class="panel-heading" id="mensaje_valida_editar" style="display:none">
+														</div>
+													</div>
+												</td>
+											</tr>
+										</tbody>
 									</div>
-									<div class="form-group col-sm-8">
-										<input type="number" name="cantidad_minutos_editar" id="cantidad_minutos_editar" class="form-control">
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="form-group col-sm-4">
-										<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Cantidad Minutos Restantes:
-										</font></strong></b>
-									</div>
-									<div class="form-group col-sm-8">											
-										<input type="number" name="cantidad_minutos_restantes_plan_editar" id="cantidad_minutos_restantes_plan_editar" class="form-control">
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="form-group col-sm-4">
-										<b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Valor Minuto:
-										</font></strong></b>
-									</div>
-									<div class="form-group col-sm-8">
-										<input type="number" name="valor_minuto_plan_editar" id="valor_minuto_plan_editar" class="form-control">
-										<div class="panel panel-danger" style="display:none" id="id_estilo6">
-											<div class="panel-heading" id="mensaje_valida_editar" style="display:none">
-											</div>															
-										</div>
-									</div>
-								</div>
+								</table>											
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmar_editar_plan" id="Btn_modificar_plan_minutos">Guardar</button>
@@ -404,7 +439,7 @@
 														</div>
 													</div> 
 												</td>
-											</tr>
+											</tr>											
 										</tbody>
 									</div>
 								</table>											
@@ -690,6 +725,11 @@ $('.Eliminar_Registro').click(function(){
 $('.cerrarMensaje').click(function(){
 	Cargar_Tabla_Minutos_Ingresados();	
 	cargar_combox();	
+	$('#plan_id').val('').selectpicker('refresh');
+	$('#id_estilo').hide();
+	$('#id_estilo2').hide();
+	$('#id_estilo3').hide();
+	$('#id_estilo6').hide();
 });
 
 function Cargar_Tabla_Minutos_Ingresados(){
@@ -697,8 +737,7 @@ function Cargar_Tabla_Minutos_Ingresados(){
 		type:'get',
 		url:'<?php echo e(url('Cargar_Tabla_Minutos_Ingresados')); ?>',
 		success: function(data){      
-			$('#tabla_id').empty().html(data);
-			$('#plan_id').val('').selectpicker('refresh');
+			$('#tabla_id').empty().html(data);			
 		}
 	});	
 	
@@ -915,6 +954,7 @@ $('.EliminarPlan').click(function(){
 				$('#CuerpoMensaje').html('<p>El plan fue eliminado con Exito.!!</p>');
 				cargar_combox();
 				Validar_Seleccion_Plan_Ingres_Minutos();
+				$('#plan_id').val('').selectpicker('refresh');
 			}	
 		},
 		error:function(re){  
@@ -955,8 +995,7 @@ function Validar_Datos_Formulario_Editar_Ingreso_Minutos(){
 			document.getElementById("Validar_Cantidad_Minutos_Modificar").innerText = "La fecha no puede estar vacia.";
 			document.getElementById("Validar_Cantidad_Minutos_Modificar").style.display = "block";
 			$('#Valor_Total_Minutos_Vendidos_Modificar').text('0');
-			$('#TotalVenta_MinutosIngresados').val('0');
-			console.log('EA');
+			$('#TotalVenta_MinutosIngresados').val('0');			
 
 		}else{	
 			if(MinutosVendidos_MinutosIngresados>MinutosRestantes_MinutosIngresados){		
@@ -1157,10 +1196,7 @@ $('.RegistrarIngresoMinutos').click(function(){
 			$('#cantidad_minutos_plan').empty().html(data.cantidad_minutos);
 			$('#cantidad_minutos_restantes_plan_registrar').empty().html(data.cantidad_minutos_restantes);
 			$('#valor_minuto_plan_registrar').empty().html(data.valor_venta_minutos);
-			$('#id_plan2').empty().val(plan_id);			
-
-
-
+			$('#id_plan2').empty().val(plan_id);
 		}
 	});
 });
@@ -1234,6 +1270,7 @@ $('.Editar_Plan_Minutoss').click(function(){
 				$('#CuerpoMensaje').html('<p>El plan fue modificado con Exito.!!</p>');
 				cargar_combox();
 				Limpiar_data_Despues_de_Registrar_Plan();
+				$('#plan_id').val('').selectpicker('refresh');
 			}	
 		},
 		error:function(re){  
@@ -1272,18 +1309,16 @@ $('.RegistrarNuevoPlan').click(function(){
 			'Valor_Venta_Minutos_Nuevo_Plan'    : Valor_Venta_Minutos_Nuevo_Plan,
 			'comercio_id'         				: comercio_id
 		},  
-		success:function(re){
-			if(re.success==false){					
-				$("#ModalRegistrar_NuevoPlan").modal('hide');	
-				$("#formulario_Registrar_NuevoPlan").modal('hide');						
-				$('#CuerpoMensaje').html('');				
-				$('#ModalConfirmacion').modal('show');					
-				$('#TitleModal').html('<p>Error al Registrar el nuevo plan de minutos.</p>'); 
-				$.each(re.errors,function(index, error){       
-					$('#CuerpoMensaje').append('<p>'+error+'</p>');          
-				});     
+		success:function(data){
+			$('#mensaje_valida_datos_nuevo_plan').html('');
+			if(data.success==false){
+				$.each(data.errors,function(index, error){ 
+					$('#id_estilo').show();
+					$('#mensaje_valida_datos_nuevo_plan').append('<p><strong>'+error+'</strong></p>');    
+					document.getElementById("mensaje_valida_datos_nuevo_plan").style.display = "block";
+				});  
 			}
-			if(re == 0){
+			if(data == 0){
 				$("#ModalRegistrar_NuevoPlan").modal('hide');	
 				$("#formulario_Registrar_NuevoPlan").modal('hide');	 
 				$('#CuerpoMensaje').html('');					
@@ -1292,15 +1327,16 @@ $('.RegistrarNuevoPlan').click(function(){
 				$('#CuerpoMensaje').html('<p>El plan fue registrado con Exito.!!</p>');
 				cargar_combox();
 				Limpiar_data_Despues_de_Registrar_Plan();
+				$('#plan_id').val('').selectpicker('refresh');
 			}	
 		},
-		error:function(re){  
+		error:function(data){  
 			$("#ModalRegistrar_NuevoPlan").modal('hide');	
 			$("#formulario_Registrar_NuevoPlan").modal('hide');		
 			$('#CuerpoMensaje').html('');				
 			$('#ModalConfirmacion').modal('show');
 			$('#TitleModal').html('<p>Error</p>');
-			$('#CuerpoMensaje').html('<p>'+re+'</p>');
+			$('#CuerpoMensaje').html('<p>'+data+'</p>');
 		}
 	});
 });					
@@ -1346,6 +1382,7 @@ $('.RegistrarMinutos').click(function(){
 				$('#ModalConfirmacion').modal('show');
 				$('#TitleModal').html('<p>Minutos Registrados.</p>');
 				$('#CuerpoMensaje').html('<p>Los minutos fueron ingresados con Exito.!!</p>');
+				$('#plan_id').val('').selectpicker('refresh');
 			}	
 		},
 		error:function(re){  
@@ -1390,6 +1427,7 @@ $('.ModificarRegistroMinutos').click(function(){
 				$('#ModalConfirmacion').modal('show');
 				$('#TitleModal').html('<p>Registro Modificado.</p>');
 				$('#CuerpoMensaje').html('<p>El registro de minutos fue Modificado Exitosamente.</p>'); 
+				$('#plan_id').val('').selectpicker('refresh');
 			}
 
 			if(re == 1){         
