@@ -52,8 +52,9 @@ class AdministrarPlanesMinutosController extends Controller{
 
 		$plan = MinutosPlanes::where('id',$plan_id)->get();	
 
-		foreach ($plan as $key => $value) {
+		foreach ($plan as $key => $value) {			
 			$nombre_plan_minutos=strtoupper($value->nombre_plan_minutos);
+			$NumeroCelularPlan=$value->Numero_Nuevo_Plan;
 			$cantidad_minutos=strtoupper($value->cantidad_minutos);
 			$cantidad_minutos_restantes=strtoupper($value->cantidad_minutos_restantes);
 			$valor_venta_minutos=strtoupper($value->valor_venta_minutos);
@@ -63,7 +64,8 @@ class AdministrarPlanesMinutosController extends Controller{
 			'nombre_plan_minutos'=>$nombre_plan_minutos,
 			'cantidad_minutos'=>$cantidad_minutos,
 			'cantidad_minutos_restantes'=>$cantidad_minutos_restantes,
-			'valor_venta_minutos'=>$valor_venta_minutos		
+			'valor_venta_minutos'=>$valor_venta_minutos,
+			'NumeroCelularPlan'=>$NumeroCelularPlan	
 			]);
 	}
 
@@ -254,7 +256,7 @@ class AdministrarPlanesMinutosController extends Controller{
 			'Nombre_Nuevo_Plan.max' 						=> ' El nombre del plan no debe ser mayor a 20 caracteres.',
 			'Numero_Nuevo_Plan.required' 					=> ' Se requiere un plan.',
 			'Numero_Nuevo_Plan.min' 						=> ' El Numero del plan  debe ser igual a 10 caracteres.',
-			 'Numero_Nuevo_Plan.unique' 					=> 'El numero ingresado no esta disponible.',
+			'Numero_Nuevo_Plan.unique' 					=> 'El numero celular ingresado no esta disponible.',
 			'Cantidad_Minutos_Nuevo_Plan.required' 			=> ' Se requiere una cantidad de minutos.',
 			'Cantidad_Minutos_Nuevo_Plan.min' 				=> ' La cantidad de numeros minimo son 1.',
 			'Cantidad_Minutos_Nuevo_Plan.numeric' 			=> ' La cantidad debe ser numerica.',

@@ -94,6 +94,13 @@
 							<h4 class="modal-title" id="TitleModal2">
 								<b><strong> <font size ="4", color="#53a4ee" face="Arial Black">
 									<i class="fa fa-plus fa-2x" aria-hidden="true"></i>Ingresar Minutos</font></strong></b>
+									<div class="pull-right">	
+										<span class="badge btn-md btn-success" title="Número Plan">
+											<b><strong><font size ="2">								<i class="fa fa-phone-square" aria-hidden="true"></i>
+												<label id="NumeroCelularIngresoMinutos"></label>
+											</font></strong></b>
+										</span>
+									</div>
 								</h4>
 							</div>
 							<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
@@ -1192,6 +1199,7 @@ $('.RegistrarIngresoMinutos').click(function(){
 		url:'<?php echo e(url('Consultar_Datos_PlanMinutos')); ?>',
 
 		success: function(data){
+			$('#NumeroCelularIngresoMinutos').empty().html(data.NumeroCelularPlan);
 			$('#nombre_plan_registrar').empty().html(data.nombre_plan_minutos);
 			$('#cantidad_minutos_plan').empty().html(data.cantidad_minutos);
 			$('#cantidad_minutos_restantes_plan_registrar').empty().html(data.cantidad_minutos_restantes);

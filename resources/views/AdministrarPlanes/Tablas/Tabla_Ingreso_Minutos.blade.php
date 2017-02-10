@@ -44,7 +44,7 @@
 					<b>
 						<strong>
 							<font color ="#fff200">PLAN </font>{{strtoupper($value->PlanMinutos->nombre_plan_minutos)}} <label title="Minutos Plan">({{$value->PlanMinutos->cantidad_minutos}})</label><br>
-							<i class="fa fa-phone" aria-hidden="true"></i> # ({{$value->PlanMinutos->NumeroPlan}})
+							<i class="fa fa-phone" aria-hidden="true"></i> # ({{$value->PlanMinutos->Numero_Nuevo_Plan}})
 						</strong>
 					</b>
 				</h3>

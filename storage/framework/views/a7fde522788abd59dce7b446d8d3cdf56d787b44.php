@@ -44,7 +44,7 @@
 					<b>
 						<strong>
 							<font color ="#fff200">PLAN </font><?php echo e(strtoupper($value->PlanMinutos->nombre_plan_minutos)); ?> <label title="Minutos Plan">(<?php echo e($value->PlanMinutos->cantidad_minutos); ?>)</label><br>
-							<i class="fa fa-phone" aria-hidden="true"></i> # (<?php echo e($value->PlanMinutos->NumeroPlan); ?>)
+							<i class="fa fa-phone" aria-hidden="true"></i> # (<?php echo e($value->PlanMinutos->Numero_Nuevo_Plan); ?>)
 						</strong>
 					</b>
 				</h3>
