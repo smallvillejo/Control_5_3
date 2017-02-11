@@ -279,7 +279,7 @@ class AdministrarPlanesMinutosController extends Controller{
 			$datos_registro = array(
 
 				'nombre_plan_minutos' 			 	=> $Minutos['Nombre_Nuevo_Plan'],
-				'Numero_Nuevo_Plan' 			 			=> $Minutos['Numero_Nuevo_Plan'],
+				'Numero_Nuevo_Plan' 			 	=> $Minutos['Numero_Nuevo_Plan'],
 				'cantidad_minutos' 	 				=> $Minutos['Cantidad_Minutos_Nuevo_Plan'],	
 				'cantidad_minutos_restantes' 	 	=> $Minutos['Cantidad_Minutos_Nuevo_Plan'],
 				'valor_venta_minutos' 	   		 	=> $Minutos['Valor_Venta_Minutos_Nuevo_Plan'],
@@ -323,32 +323,31 @@ class AdministrarPlanesMinutosController extends Controller{
 	public function Modificar_Plan_Minutos(){
 
 		$NumeroPlan_Oculto_Editar=Input::get('NumeroPlan_Oculto_Editar');
-		$NumeroCelularPlan=Input::get('NumeroPlan_Editar');
+		$NumeroCelularPlan=Input::get('NumeroPlan_Editar');		
 
-		if($NumeroPlan_Oculto_Editar==$NumeroCelularPlan){
+		if($NumeroPlan_Oculto_Editar==$NumeroCelularPlan){			
 			$rules = array
 			(
-				'comercio_id_modificar'								=> 'required',
-				'NombrePlan_Editar'									=> 'required|max:20',
-				'NumeroPlan_Editar'									=> 'required|min:10',	
-				'CantidadMinutosRestantesPlan_Editar'				=> 'required|min:1|numeric',
-				'cantidad_minutos_restantes_plan_editar'			=> 'required|numeric',
-				'valor_minuto_plan_editar'							=> 'required|min:1|numeric'			
+				'comercio_id_modificar'							=> 'required',
+				'NombrePlan_Editar'								=> 'required|max:20',					
+				'CantidadMinutosRestantesPlan_Editar'			=> 'required|min:1|numeric',
+				'CantidadMinutosRestantesPlan_Editar'			=> 'required|numeric',
+				'ValorVentaPlan_Editar'							=> 'required|min:1|numeric'			
 				);
 			$message = array
 			(
 				'comercio_id_modificar.required' 					=> ' Se requiere id comercio.',
 				'NombrePlan_Editar.required' 						=> ' Se requiere un nombre de plan.',
-				'NombrePlan_Editar.max' 							=> ' El nombre del plan no debe ser mayor a 20 caracteres.',	
-				'CantidadMinutosRestantesPlan_Editar.required' 					=> ' Se requiere una cantidad de minutos.',
-				'CantidadMinutosRestantesPlan_Editar.min' 						=> ' La cantidad de numeros minimo son 1.',
-				'CantidadMinutosRestantesPlan_Editar.numeric' 					=> ' La cantidad debe ser numerica.',
+				'NombrePlan_Editar.max' 							=> ' El nombre del plan no debe ser mayor a 20 caracteres.',				
+				'CantidadMinutosRestantesPlan_Editar.required' 		=> ' Se requiere una cantidad de minutos.',
+				'CantidadMinutosRestantesPlan_Editar.min' 			=> ' La cantidad de numeros minimo son 1.',
+				'CantidadMinutosRestantesPlan_Editar.numeric' 		=> ' La cantidad debe ser numerica.',
 
-				'cantidad_minutos_restantes_plan_editar.required' 	=> ' Se requiere una cantidad de minutos restantes.',			
-				'cantidad_minutos_restantes_plan_editar.numeric' 	=> ' La cantidad de minutos restantes debe ser numerica.',
-				'valor_minuto_plan_editar.required' 				=> ' Se requiere el valor de minutos.',
-				'valor_minuto_plan_editar.min' 						=> ' El valor debe ser minimo 1.',
-				'valor_minuto_plan_editar.numeric' 					=> ' El valor total debe ser numerico.'
+				'CantidadMinutosRestantesPlan_Editar.required' 	=> ' Se requiere una cantidad de minutos restantes.',			
+				'CantidadMinutosRestantesPlan_Editar.numeric' 	=> ' La cantidad de minutos restantes debe ser numerica.',
+				'ValorVentaPlan_Editar.required' 				=> ' Se requiere el valor de minutos.',
+				'ValorVentaPlan_Editar.min' 						=> ' El valor debe ser minimo 1.',
+				'ValorVentaPlan_Editar.numeric' 					=> ' El valor total debe ser numerico.'
 				);
 
 			$validator = Validator::make(Input::All(), $rules, $message);
@@ -361,8 +360,8 @@ class AdministrarPlanesMinutosController extends Controller{
 				$datos_registro = array(
 					'nombre_plan_minutos' 			=> $Minutos['NombrePlan_Editar'],
 					'cantidad_minutos' 			 	=> $Minutos['CantidadMinutosRestantesPlan_Editar'],
-					'cantidad_minutos_restantes' 	=> $Minutos['cantidad_minutos_restantes_plan_editar'],
-					'valor_venta_minutos' 			=> $Minutos['valor_minuto_plan_editar']	
+					'cantidad_minutos_restantes' 	=> $Minutos['CantidadMinutosRestantesPlan_Editar'],
+					'valor_venta_minutos' 			=> $Minutos['ValorVentaPlan_Editar']	
 					);
 				$check = DB::table('minutos_planes')
 				->where('id',$Minutos['id_plan_modificar'])
@@ -377,8 +376,75 @@ class AdministrarPlanesMinutosController extends Controller{
 					return 1;	
 				}
 			}		
-		}else{
+		}else{			
+			$NumeroCelularPlan=Input::get('NumeroPlan_Editar');
 
+			$DatosPlan=MinutosPlanes::Where('Numero_Nuevo_Plan',$NumeroCelularPlan)->get();
+
+			
+
+			$NumeroCelularPlan="Libre";
+			
+			foreach ($DatosPlan as $key => $value) {
+				$NumeroCelularPlan=$value->Numero_Nuevo_Plan;
+			}
+
+			if($NumeroCelularPlan=="Libre"){
+				$rules = array
+				(
+					'comercio_id_modificar'							=> 'required',
+					'NombrePlan_Editar'								=> 'required|max:20',
+					'NumeroPlan_Editar'								=> 'required|min:10',	
+					'CantidadMinutosRestantesPlan_Editar'			=> 'required|min:1|numeric',
+					'CantidadMinutosRestantesPlan_Editar'			=> 'required|numeric',
+					'ValorVentaPlan_Editar'							=> 'required|min:1|numeric'			
+					);
+				$message = array
+				(
+					'comercio_id_modificar.required' 					=> ' Se requiere id comercio.',
+					'NombrePlan_Editar.required' 						=> ' Se requiere un nombre de plan.',
+					'NombrePlan_Editar.max' 							=> ' El nombre del plan no debe ser mayor a 20 caracteres.',
+					'NumeroPlan_Editar.required' 					=> ' Se requiere un plan.',
+					'NumeroPlan_Editar.min' 						=> ' El Numero del plan  debe ser igual a 10 caracteres.',	
+					'CantidadMinutosRestantesPlan_Editar.required' 		=> ' Se requiere una cantidad de minutos.',
+					'CantidadMinutosRestantesPlan_Editar.min' 			=> ' La cantidad de numeros minimo son 1.',
+					'CantidadMinutosRestantesPlan_Editar.numeric' 		=> ' La cantidad debe ser numerica.',
+
+					'CantidadMinutosRestantesPlan_Editar.required' 	=> ' Se requiere una cantidad de minutos restantes.',			
+					'CantidadMinutosRestantesPlan_Editar.numeric' 	=> ' La cantidad de minutos restantes debe ser numerica.',
+					'ValorVentaPlan_Editar.required' 				=> ' Se requiere el valor de minutos.',
+					'ValorVentaPlan_Editar.min' 						=> ' El valor debe ser minimo 1.',
+					'ValorVentaPlan_Editar.numeric' 					=> ' El valor total debe ser numerico.'
+					);
+
+				$validator = Validator::make(Input::All(), $rules, $message);
+				if ($validator->fails()) {
+
+					return Response::json(['success' =>false,
+						'errors'=>$validator->errors()->toArray()]);
+				}else{
+					$Minutos = Input::all();
+					$datos_registro = array(
+						'nombre_plan_minutos' 			=> $Minutos['NombrePlan_Editar'],
+						'Numero_Nuevo_Plan' 			=> $Minutos['NumeroPlan_Editar'],
+						'cantidad_minutos' 			 	=> $Minutos['CantidadMinutosRestantesPlan_Editar'],
+						'cantidad_minutos_restantes' 	=> $Minutos['CantidadMinutosRestantesPlan_Editar'],
+						'valor_venta_minutos' 			=> $Minutos['ValorVentaPlan_Editar']	
+						);
+					$check = DB::table('minutos_planes')
+					->where('id',$Minutos['id_plan_modificar'])
+					->where('id_comercio',$Minutos['comercio_id_modificar'])
+					->update($datos_registro);
+
+
+					if($check >0){
+						return 0;
+					}else{
+
+						return 1;	
+					}
+				}
+			}
 		}
 	}
 }

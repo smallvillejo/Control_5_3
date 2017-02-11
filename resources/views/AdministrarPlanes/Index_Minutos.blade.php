@@ -76,7 +76,7 @@
 							</button>
 							<br>
 							<br>
-							<button type="button" class="btn btn-danger" id="BtnEliminarPlan" style="background-color: #fc0521" title="Eliminar Plan" data-toggle="modal" data-target="#Eliminar_Plan" data-backdrop="static" data-keyboard="false">
+							<button type="button" class="btn btn-danger" id="BtnEliminarPlan" style="background-color: #fc0521" title="Eliminar Plan">
 								<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Eliminar</span></font></strong>
 								<strong> <font size ="2", color ="#ffffff"><span class="fa fa-trash-o"></span></font></strong>
 							</button>	
@@ -503,8 +503,8 @@
 							<div class="modal-body">									
 								* Se borrará toda la información asociada al plan: <b><strong> <font size ="2", color="#ff3300" face="Arial Black"><label id="nombre_plan_eliminar" name="nombre_plan_eliminar"></label></font></strong></b>
 							</div>
-							<input type="hidden" name="id_plan_eliminar" id="id_plan_eliminar" class="form-control">
-							<input type="hidden" name="comercio_id_eliminar" id="comercio_id_eliminar" value="{{Auth::user()->id_comercio}}" class="form-control">
+							<input type="text" name="id_plan_eliminar" id="id_plan_eliminar" class="form-control">
+							<input type="text" name="comercio_id_eliminar" id="comercio_id_eliminar" value="{{Auth::user()->id_comercio}}" class="form-control">
 						</div>
 						<div class="modal-footer">
 							<button  class="btn btn-primary EliminarPlan" data-toggle="modal" data-target="#Eliminar_Plan" type="button" id="confirmar_venta_manual">Si</button>
@@ -969,6 +969,53 @@ function Validar_Seleccion_Plan_Ingres_Minutos(){
 	}
 }
 
+$('#BtnEliminarPlan').click(function(){
+	var plan_id =$('#plan_id').val();	
+
+	$.ajax({
+		url   : "<?= URL::to('Consultar_Minutos_Ingresados') ?>",
+		type  : "GET",
+		async : false,
+		data  :{
+			'plan_id'             : plan_id			
+			},  
+		success:function(re){
+
+
+			if(!re.success){					
+				$("#ModalRegistrar_NuevoPlan").modal('hide');	
+				$("#formulario_Registrar_NuevoPlan").modal('hide');						
+				$('#CuerpoMensaje').html('');				
+				$('#ModalConfirmacion').modal('show');					
+				$('#TitleModal').html('<p>Error al Eliminar el plan de minutos.</p>');  
+				$.each(re.errors,function(index, error){       
+					$('#CuerpoMensaje').append('<p>'+error+'</p>');          
+				});     
+			}
+			if(re == 0){
+				$("#ModalRegistrar_NuevoPlan").modal('hide');	
+				$("#formulario_Registrar_NuevoPlan").modal('hide');	 
+				$('#CuerpoMensaje').html('');					
+				$('#ModalConfirmacion').modal('show');
+				$('#TitleModal').html('<p>Plan Eliminado.</p>');
+				$('#CuerpoMensaje').html('<p>El plan fue eliminado con Exito.!!</p>');
+				cargar_combox();
+				Validar_Seleccion_Plan_Ingres_Minutos();
+				$('#plan_id').val('').selectpicker('refresh');
+			}	
+		},
+		error:function(re){  
+			$("#ModalRegistrar_NuevoPlan").modal('hide');	
+			$("#formulario_Registrar_NuevoPlan").modal('hide');		
+			$('#CuerpoMensaje').html('');				
+			$('#ModalConfirmacion').modal('show');
+			$('#TitleModal').html('<p>Error</p>');
+			$('#CuerpoMensaje').html('<p>'+re+'</p>');
+		}
+	});
+
+});
+
 $('.EliminarPlan').click(function(){
 
 
@@ -1282,39 +1329,55 @@ $('.Editar_Plan_Minutoss').click(function(){
 	var comercio_id_modificar 					=	$('#comercio_id_modificar').val();	
 	var id_plan_modificar 						=	$('#id_plan_modificar').val();	
 	var NombrePlan_Editar 						=	$('#NombrePlan_Editar').val();	
-	var NumeroPlan_Editar 						=	$('#NumeroPlan_Editar').val();	
+	var NumeroPlan_Editar 						=	$('#NumeroPlan_Editar').val();
+	var NumeroPlan_Oculto_Editar 				=	$('#NumeroPlan_Oculto_Editar').val();	
 	var CantidadMinutosPlan_Editar 				=	$('#CantidadMinutosPlan_Editar').val();	
 	var CantidadMinutosRestantesPlan_Editar 	=	$('#CantidadMinutosRestantesPlan_Editar').val();
 	var ValorVentaPlan_Editar 					=	$('#ValorVentaPlan_Editar').val();
 
 	$.ajax({
 		url   : "<?= URL::to('Modificar_Plan_Minutos') ?>",
-		type  : "POST",
+		type  : "GET",
 		async : false,
 		data  :{
 			'comercio_id_modificar'             		: comercio_id_modificar,
 			'id_plan_modificar'             			: id_plan_modificar,
 			'NombrePlan_Editar'             			: NombrePlan_Editar,
 			'NumeroPlan_Editar'             			: NumeroPlan_Editar,
+			'NumeroPlan_Oculto_Editar'             		: NumeroPlan_Oculto_Editar,
 			'CantidadMinutosPlan_Editar'             	: CantidadMinutosPlan_Editar,
-			'CantidadMinutosRestantesPlan_Editar'       : CantidadMinutosRestantesPlan_Editar,
-			'cantidad_minutos_restantes_plan_editar'    : cantidad_minutos_restantes_plan_editar,
+			'CantidadMinutosRestantesPlan_Editar'       : CantidadMinutosRestantesPlan_Editar,			
 			'ValorVentaPlan_Editar'         			: ValorVentaPlan_Editar
 		},  
 		success:function(re){
-			if(!re.success){					
-				$("#ModalEditarPlanMinutos").modal('hide');	
-				$("#formulario_EditarPlanMinutos").modal('hide');						
-				$('#CuerpoMensaje').html('');				
-				$('#ModalConfirmacion').modal('show');					
-				$('#TitleModal').html('<p>Error al Modificar el nuevo plan de minutos.</p>');  
-				$.each(re.errors,function(index, error){       
-					$('#CuerpoMensaje').append('<p>'+error+'</p>');          
-				});     
+			// if(!re.success){					
+			// 	$("#ModalEditarPlanMinutos").modal('hide');	
+			// 	$("#formulario_EditarPlanMinutos").modal('hide');						
+			// 	$('#CuerpoMensaje').html('');				
+			// 	$('#ModalConfirmacion').modal('show');					
+			// 	$('#TitleModal').html('<p>Error al Modificar el nuevo plan de minutos.</p>');  
+			// 	$.each(re.errors,function(index, error){       
+			// 		$('#CuerpoMensaje').append('<p>'+error+'</p>');          
+			// 	});     
+			// }
+			if(re == 1){         
+				// $('#CuerpoMensaje').html('');
+				// $("#ModalEditar_Registro_Minutos").modal('hide');
+				// $("#confirm-update2").modal('hide');      
+				// $('#ModalConfirmacion').modal('show');
+				// $('#TitleModal').html('<p>Se presentó el siguiente error:</p>');
+				// $('#CuerpoMensaje').html('<p>No se encontró ningún cambio a modificar.</p>'); 
+				$("#confirmar_editar_plan").modal('hide');
+				$('#id_estilo6').show();
+				$('#mensaje_valida_editar').append('<p><strong>No se encontró ningún cambio a modificar.</strong></p>');    
+				document.getElementById("mensaje_valida_editar").style.display = "block";
+				
 			}
+
 			if(re == 0){
 				$("#ModalEditarPlanMinutos").modal('hide');	
-				$("#formulario_EditarPlanMinutos").modal('hide');	 
+				$("#formulario_EditarPlanMinutos").modal('hide');
+				$("#confirmar_editar_plan").modal('hide');	 
 				$('#CuerpoMensaje').html('');					
 				$('#ModalConfirmacion').modal('show');
 				$('#TitleModal').html('<p>Plan Modificado.</p>');
