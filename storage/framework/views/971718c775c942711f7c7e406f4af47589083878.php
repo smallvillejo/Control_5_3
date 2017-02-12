@@ -217,8 +217,8 @@ info2.slideDown();
                 'RegistrarVenta' => '',
                 'Administrar' => '',
                 'Consultas' => '',
-                'AdministrarPlanes' => ''                    
-
+                'AdministrarPlanes' => '',
+                'AdministrarRecargas' => ''
                 );
               if ($vista == '' || $vista == 'Index'){
                 $current['Index'] = 'active';
@@ -234,8 +234,10 @@ info2.slideDown();
               }  
               else if ($vista == '' || $vista == 'AdministrarPlanes'){
                 $current['AdministrarPlanes'] = 'active';
-              } 
-
+              }  
+              else if ($vista == '' || $vista == 'AdministrarRecargas'){
+                $current['AdministrarRecargas'] = 'active';
+              }
               ?>
               <li class="<?php echo e($current['Index']); ?>">
                 <a href="<?php echo e(URL::route('Index')); ?>">
@@ -281,129 +283,135 @@ info2.slideDown();
                       <i class="fa fa-phone-square" aria-hidden="true"></i>
                       <span class="title">Planes Celular</span>
                     </a>
-                  </li> 
-                  <li class="<?php echo e($current['Consultas']); ?>">
-                    <a href="javascript:;">
-                      <i class="fa fa-search" aria-hidden="true"></i>
-                      <span class="title">Consultas</span>
-                      <span class="arrow "></span>
-                    </a>
-                    <ul class="sub-menu">
-                      <li>
-                        <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
-                         <i class="fa fa-search" aria-hidden="true"></i>
-                         Venta Producto</a>
-                       </li> 
-                       <li>
-                        <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
-                         <i class="fa fa-search" aria-hidden="true"></i>
-                         Venta Alimento</a>
-                       </li>
-                       <li>
-                        <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
-                         <i class="fa fa-search" aria-hidden="true"></i>
-                         Venta Minutos</a>
-                       </li>
-                       <li>
-                        <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
-                         <i class="fa fa-search" aria-hidden="true"></i>
-                         Venta Recargas</a>
-                       </li>
-                       <li>
-                        <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
-                         <i class="fa fa-search" aria-hidden="true"></i>
-                         Venta Internet</a>
-                       </li>
-                       <li>
-                        <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
-                         <i class="fa fa-search" aria-hidden="true"></i>
-                         Compras</a>
-                       </li>
-                       <li>
-                        <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
-                         <i class="fa fa-search" aria-hidden="true"></i>
-                         Gastos&Inversiones</a>
-                       </li>
-                     </ul>
-                   </li>                    
-                 </div>
+                  </li>
+                  <li class="<?php echo e($current['AdministrarRecargas']); ?>">
+                    <a href="<?php echo e(URL::route('AdministrarRecargas')); ?>">
+                     <i class="fa fa-money" aria-hidden="true"></i> 
+                     <span class="title">Recargas</span>
+                   </a>
+                 </li>                  
+                 <li class="<?php echo e($current['Consultas']); ?>">
+                  <a href="javascript:;">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <span class="title">Consultas</span>
+                    <span class="arrow "></span>
+                  </a>
+                  <ul class="sub-menu">
+                    <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Producto</a>
+                     </li> 
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Alimento</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Minutos</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Recargas</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Venta Internet</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Compras</a>
+                     </li>
+                     <li>
+                      <a href="<?php echo e(URL::route('ConsultarVentaProducto')); ?>">
+                       <i class="fa fa-search" aria-hidden="true"></i>
+                       Gastos&Inversiones</a>
+                     </li>
+                   </ul>
+                 </li>                    
                </div>
-               <!-- END SIDEBAR -->
-               <!-- BEGIN CONTENT -->
-               <div class="page-content-wrapper">
-                <div class="page-content">
-                  <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-                  <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                          <h4 class="modal-title">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                          Widget settings form goes here
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn blue">Save changes</button>
-                          <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                        </div>
+             </div>
+             <!-- END SIDEBAR -->
+             <!-- BEGIN CONTENT -->
+             <div class="page-content-wrapper">
+              <div class="page-content">
+                <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+                <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Modal title</h4>
                       </div>
-                      <!-- /.modal-content -->
+                      <div class="modal-body">
+                        Widget settings form goes here
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn blue">Save changes</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                      </div>
                     </div>
-                    <!-- /.modal-dialog -->
-                  </div>                    
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                      <?php echo $__env->yieldContent('content'); ?>
-                    </div>
+                    <!-- /.modal-content -->
                   </div>
-                  <!-- END PAGE CONTENT-->
+                  <!-- /.modal-dialog -->
+                </div>                    
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <?php echo $__env->yieldContent('content'); ?>
+                  </div>
                 </div>
+                <!-- END PAGE CONTENT-->
               </div>
-              <!-- END CONTENT -->
-              <!-- BEGIN QUICK SIDEBAR -->
-              <!--Cooming Soon...-->
-              <!-- END QUICK SIDEBAR -->
             </div>
-            <!-- END CONTAINER -->
-            <!-- BEGIN FOOTER -->
-            <div class="page-footer">
-              <div class="page-footer-inner">
-                2016 &copy; Merchandise Control by Jorge Muñoz.
-              </div>
-              <div class="scroll-to-top">
-                <i class="icon-arrow-up"></i>
-              </div>
-            </div>              
-            <script src="global/plugins/jquery.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-            <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-            <script src="global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-            <script src="global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-            <script src="global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-            <!-- END CORE PLUGINS -->
-            <script src="global/scripts/metronic.js" type="text/javascript"></script>
-            <script src="global/admin/layout2/scripts/layout.js" type="text/javascript"></script>
-            <script src="global/admin/layout2/scripts/demo.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-            <script src="global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-            <script src="global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-            <script src="global/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
-            <script src="global/admin/pages/scripts/index.js" type="text/javascript"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-            <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-            <script type="text/javascript" src="global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
-            <script src="global/scripts/datatable.js"></script>
-            <script src="global/admin/pages/scripts/ecommerce-orders-view.js"></script>
-            <script>
-              jQuery(document).ready(function() {
+            <!-- END CONTENT -->
+            <!-- BEGIN QUICK SIDEBAR -->
+            <!--Cooming Soon...-->
+            <!-- END QUICK SIDEBAR -->
+          </div>
+          <!-- END CONTAINER -->
+          <!-- BEGIN FOOTER -->
+          <div class="page-footer">
+            <div class="page-footer-inner">
+              2016 &copy; Merchandise Control by Jorge Muñoz.
+            </div>
+            <div class="scroll-to-top">
+              <i class="icon-arrow-up"></i>
+            </div>
+          </div>              
+          <script src="global/plugins/jquery.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+          <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+          <script src="global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+          <script src="global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+          <script src="global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+          <!-- END CORE PLUGINS -->
+          <script src="global/scripts/metronic.js" type="text/javascript"></script>
+          <script src="global/admin/layout2/scripts/layout.js" type="text/javascript"></script>
+          <script src="global/admin/layout2/scripts/demo.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+          <script src="global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+          <script src="global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+          <script src="global/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
+          <script src="global/admin/pages/scripts/index.js" type="text/javascript"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+          <script type="text/javascript" src="global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+          <script type="text/javascript" src="global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+          <script src="global/scripts/datatable.js"></script>
+          <script src="global/admin/pages/scripts/ecommerce-orders-view.js"></script>
+          <script>
+            jQuery(document).ready(function() {
                                         Metronic.init(); // init metronic core componets
                                         Layout.init(); // init layout
                                         QuickSidebar.init(); // init quick sidebar

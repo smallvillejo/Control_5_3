@@ -258,10 +258,10 @@ Route::any('Consultar_Minutos_Ingresados', array('as'=>'Consultar_Minutos_Ingres
 Route::any('Eliminar_Plan_Minutos', array('as'=>'Eliminar_Plan_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Eliminar_Plan_Minutos'))->middleware('auth');
 // Ruta para consultar la venta de minutos si existe antes de ingresar una nueva.
 Route::any('Consultar_Venta_Minutos', array('as'=>'Consultar_Venta_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Consultar_Venta_Minutos'))->middleware('auth');
-
-
-
 // Terminan Ruta para todo de Minutos
+// Empienzan Rutas para Modulo de recargas
+Route::any('AdministrarRecargas', array('as'=>'AdministrarRecargas','uses'=>'ControllerRecargas\AdministrarRecargasController@AdministrarRecargas'))->middleware('auth');
+// Termina Modulo de Recargas
 
 
 
