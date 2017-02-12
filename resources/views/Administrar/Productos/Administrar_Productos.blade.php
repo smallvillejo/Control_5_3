@@ -519,11 +519,6 @@ $('.RegistrarProducto').click(function(){
 
 
 function subir() {
-	// if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
-	// 	document.body.scrollTop = 0;
-	// 	arriba = setTimeout('subir()', 10);
-	// }
-	// else clearTimeout(arriba);
 	$("html, body").animate({ scrollTop: 0 }, "slow");
 	return false;
 }

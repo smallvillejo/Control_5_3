@@ -73,7 +73,7 @@ class AdministrarPlanesMinutosController extends Controller{
 		$rules = array
 		(
 			'Fecha_Ingreso_Minutos'					=> 'required',
-			'id_plan2'								=> 'required',	
+			'id_oculto_ingreso_minutos'								=> 'required',	
 			'Cantidad_Minutos_Vendidos_Registrar'	=> 'required|min:1|numeric',
 			'Valor_Total_Minutos_Vendidoss'			=> 'required|min:1|numeric',			
 			'comercio_id'							=> 'required'			
@@ -82,11 +82,10 @@ class AdministrarPlanesMinutosController extends Controller{
 		$message = array
 		(
 			'Fecha_Ingreso_Minutos.required' 				=> ' Se requiere la fecha de registro.',
-			'id_plan2.required' 							=> ' Se requiere un plan.',	
+			'id_oculto_ingreso_minutos.required' 			=> ' Se requiere un plan.',	
 			'Cantidad_Minutos_Vendidos_Registrar.required' 	=> ' Se requiere una cantidad de minutos.',
 			'Cantidad_Minutos_Vendidos_Registrar.min' 		=> ' Se requiere una cantidad de minutos.',
 			'Cantidad_Minutos_Vendidos_Registrar.numeric' 	=> ' La cantidad debe ser numerica.',
-
 			'Valor_Total_Minutos_Vendidoss.required' 		=> ' Se requiere el total de minutos.',
 			'Valor_Total_Minutos_Vendidoss.min' 			=> ' Se requiere el total de minutos.',
 			'Valor_Total_Minutos_Vendidoss.numeric' 		=> ' El valor total debe ser numerico.',	
@@ -106,13 +105,13 @@ class AdministrarPlanesMinutosController extends Controller{
 				'cantidad_minutos_restantes' => $Total			
 				);	
 			$check = DB::table('minutos_planes')
-			->where('id',$plan['id_plan2'])
+			->where('id',$plan['id_oculto_ingreso_minutos'])
 			->where('id_comercio',$plan['comercio_id'])
 			->update($datos_registro);
 			$hora_venta_recarga= Carbon::today()->now();
 			$datos_registro = array(
 				'fecha_registro' 			 		=> $plan['Fecha_Ingreso_Minutos'],
-				'id_minutos_planes' 	 			=> $plan['id_plan2'],	
+				'id_minutos_planes' 	 			=> $plan['id_oculto_ingreso_minutos'],	
 				'cantidad_minutos_vendidos' 	 	=> $plan['Cantidad_Minutos_Vendidos_Registrar'],
 				'total_minutos_venta' 	   		 	=> $plan['Valor_Total_Minutos_Vendidoss'],
 				'hora_registro' 					=> $hora_venta_recarga,
@@ -329,7 +328,8 @@ class AdministrarPlanesMinutosController extends Controller{
 			$rules = array
 			(
 				'comercio_id_modificar'							=> 'required',
-				'NombrePlan_Editar'								=> 'required|max:20',					
+				'NombrePlan_Editar'								=> 'required|max:20',
+				'NumeroPlan_Editar'								=> 'required|min:10',					
 				'CantidadMinutosRestantesPlan_Editar'			=> 'required|min:1|numeric',
 				'CantidadMinutosRestantesPlan_Editar'			=> 'required|numeric',
 				'ValorVentaPlan_Editar'							=> 'required|min:1|numeric'			
@@ -339,6 +339,8 @@ class AdministrarPlanesMinutosController extends Controller{
 				'comercio_id_modificar.required' 					=> ' Se requiere id comercio.',
 				'NombrePlan_Editar.required' 						=> ' Se requiere un nombre de plan.',
 				'NombrePlan_Editar.max' 							=> ' El nombre del plan no debe ser mayor a 20 caracteres.',				
+				'NumeroPlan_Editar.required' 					=> ' Se requiere un plan.',
+				'NumeroPlan_Editar.min' 						=> ' El Numero del plan  debe ser igual a 10 caracteres.',	
 				'CantidadMinutosRestantesPlan_Editar.required' 		=> ' Se requiere una cantidad de minutos.',
 				'CantidadMinutosRestantesPlan_Editar.min' 			=> ' La cantidad de numeros minimo son 1.',
 				'CantidadMinutosRestantesPlan_Editar.numeric' 		=> ' La cantidad debe ser numerica.',
@@ -359,6 +361,7 @@ class AdministrarPlanesMinutosController extends Controller{
 				$Minutos = Input::all();
 				$datos_registro = array(
 					'nombre_plan_minutos' 			=> $Minutos['NombrePlan_Editar'],
+					'Numero_Nuevo_Plan' 			=> $Minutos['NumeroPlan_Editar'],
 					'cantidad_minutos' 			 	=> $Minutos['CantidadMinutosRestantesPlan_Editar'],
 					'cantidad_minutos_restantes' 	=> $Minutos['CantidadMinutosRestantesPlan_Editar'],
 					'valor_venta_minutos' 			=> $Minutos['ValorVentaPlan_Editar']	
@@ -389,7 +392,7 @@ class AdministrarPlanesMinutosController extends Controller{
 				$NumeroCelularPlan=$value->Numero_Nuevo_Plan;
 			}
 
-			if($NumeroCelularPlan=="Libre"){
+			if($NumeroCelularPlan=="Libre"){				
 				$rules = array
 				(
 					'comercio_id_modificar'							=> 'required',
@@ -444,7 +447,28 @@ class AdministrarPlanesMinutosController extends Controller{
 						return 1;	
 					}
 				}
+			}else{
+				return 2;
 			}
 		}
 	}
+
+	public function Consultar_Minutos_Ingresados(){
+		$Id_plan=Input::get('plan_id');
+
+		$DatosPlan=DetallePlanMinutos::Where('id_minutos_planes',$Id_plan)->get();
+		$total_minutos_venta=0;
+		foreach ($DatosPlan as $key => $value) {
+			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  #'.$value->PlanMinutos->Numero_Nuevo_Plan;
+			$total_minutos_venta=$value->total_minutos_venta;
+		}
+		if($total_minutos_venta!=0){
+			return Response::json([			
+				'NombrePlanMinutos'=>$NombrePlanMinutos,
+				'ErrorAlEliminar'=>"Tiene Ventas"				
+				]);
+		}
+	}
+
+
 }

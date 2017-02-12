@@ -12,6 +12,9 @@
 			</li>				
 		</ul>			
 	</div>
+	<div class="alert alert-danger" style="display: none;" id="Error_al_Eliminar">		
+		<h3><strong><label id="Id_Eliminar_Plan"></label></strong></h3>	
+	</div>
 	<!-- Modal Para Confirmacion al Eliminar -->
 	<div class="panel-body" data-backdrop="static" data-keyboard="false">      
 		<div class="modal fade" id="Eliminar_Registro_VentaMinuto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -105,7 +108,10 @@
 							</div>
 							<div class="modal-body" id="CuerpoMensaje_Venta_Manual">
 								<input type="hidden" name="comercio_id" id="comercio_id" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
-								<input type="hidden" name="id_plan2" id="id_plan2" class="form-control">
+								<input type="hidden" name="id_oculto_ingreso_minutos" id="id_oculto_ingreso_minutos">
+								<input type="hidden" name="
+								" id="
+								" class="form-control">
 								<input type="hidden" name="Valor_Total_Minutos_Vendidoss" id="Valor_Total_Minutos_Vendidoss" class="form-control">
 								<table class="table table-user-information">
 									<div class="row">
@@ -291,7 +297,7 @@
 												</td>
 												<td>
 													<input type="number" class="form-control" name="NumeroPlan_Editar" id="NumeroPlan_Editar">
-													<input type="text" name="NumeroPlan_Oculto_Editar" id="NumeroPlan_Oculto_Editar" class="form-control">
+													<input type="hidden" name="NumeroPlan_Oculto_Editar" id="NumeroPlan_Oculto_Editar" class="form-control">
 												</td>
 											</tr>
 											<tr>
@@ -343,13 +349,10 @@
 												</td>
 											</tr>											
 											<tr>
-												<td></td>
-												<td>
-													<div class="panel panel-danger" style="display:none" id="id_estilo6">
-														<div class="panel-heading" id="mensaje_valida_editar" style="display:none">
-														</div>
+												<div class="panel panel-danger" style="display:none" id="id_estilo6">
+													<div class="panel-heading" id="mensaje_valida_editar" style="display:none">
 													</div>
-												</td>
+												</div>
 											</tr>
 										</tbody>
 									</div>
@@ -970,7 +973,43 @@ function Validar_Seleccion_Plan_Ingres_Minutos(){
 }
 
 $('#BtnEliminarPlan').click(function(){
-alert('EA');
+	var plan_id =$('#plan_id').val();	
+
+	$.ajax({
+		url   : "<?= URL::to('Consultar_Minutos_Ingresados') ?>",
+		type  : "GET",
+		async : false,
+		data  :{
+			'plan_id'             : plan_id			
+		},  
+		success:function(respuesta){
+			$("#Error_al_Eliminar").hide();
+			if(respuesta.ErrorAlEliminar!="Tiene Ventas"){
+				$('#Eliminar_Plan').modal('show');
+			}else{
+				$('#Error_al_Eliminar').show();
+				$('#Id_Eliminar_Plan').html('<i class="fa fa-phone-square fa-2x" aria-hidden="true"></i> El plan: "'+respuesta.NombrePlanMinutos+'" tiene ventas asociadas, elimine sus ventas y intente de nuevo..'); 
+				$("#Id_Eliminar_Plan").css("fontSize", 18);								
+				$("#Id_Eliminar_Plan").css("font-weight","Bold"); 
+				subir();
+				$(document).ready (function(){                              
+					$("#Error_al_Eliminar").alert();						    
+					$("#Error_al_Eliminar").fadeTo(8000, 500).slideUp(500, function(){
+						$("#Error_al_Eliminar").hide();
+					});  
+				});
+			}	
+		},
+		error:function(respuesta){  
+			$("#ModalRegistrar_NuevoPlan").modal('hide');	
+			$("#formulario_Registrar_NuevoPlan").modal('hide');		
+			$('#CuerpoMensaje').html('');				
+			$('#ModalConfirmacion').modal('show');
+			$('#TitleModal').html('<p>Error</p>');
+			$('#CuerpoMensaje').html('<p>'+respuesta+'</p>');
+		}
+	});
+
 });
 
 $('.EliminarPlan').click(function(){
@@ -1253,7 +1292,8 @@ $('.RegistrarIngresoMinutos').click(function(){
 			$('#cantidad_minutos_plan').empty().html(data.cantidad_minutos);
 			$('#cantidad_minutos_restantes_plan_registrar').empty().html(data.cantidad_minutos_restantes);
 			$('#valor_minuto_plan_registrar').empty().html(data.valor_venta_minutos);
-			$('#id_plan_modificar').empty().val(plan_id);
+			$('#id_oculto_ingreso_minutos').empty().val(plan_id);
+
 		}
 	});
 });
@@ -1307,30 +1347,15 @@ $('.Editar_Plan_Minutoss').click(function(){
 			'ValorVentaPlan_Editar'         			: ValorVentaPlan_Editar
 		},  
 		success:function(re){
-			// if(!re.success){					
-			// 	$("#ModalEditarPlanMinutos").modal('hide');	
-			// 	$("#formulario_EditarPlanMinutos").modal('hide');						
-			// 	$('#CuerpoMensaje').html('');				
-			// 	$('#ModalConfirmacion').modal('show');					
-			// 	$('#TitleModal').html('<p>Error al Modificar el nuevo plan de minutos.</p>');  
-			// 	$.each(re.errors,function(index, error){       
-			// 		$('#CuerpoMensaje').append('<p>'+error+'</p>');          
-			// 	});     
-			// }
-			if(re == 1){         
-				// $('#CuerpoMensaje').html('');
-				// $("#ModalEditar_Registro_Minutos").modal('hide');
-				// $("#confirm-update2").modal('hide');      
-				// $('#ModalConfirmacion').modal('show');
-				// $('#TitleModal').html('<p>Se presentó el siguiente error:</p>');
-				// $('#CuerpoMensaje').html('<p>No se encontró ningún cambio a modificar.</p>'); 
-				$("#confirmar_editar_plan").modal('hide');
+			if(re.success==false){					
+				$("#confirmar_editar_plan").modal('hide');	
 				$('#id_estilo6').show();
-				$('#mensaje_valida_editar').append('<p><strong>No se encontró ningún cambio a modificar.</strong></p>');    
-				document.getElementById("mensaje_valida_editar").style.display = "block";
-				
-			}
+				$.each(re.errors,function(index, error){ 
+					$('#mensaje_valida_editar').append('<p><strong>'+error+'</strong></p>');  
+				});	  
+				document.getElementById("mensaje_valida_editar").style.display = "block";		
 
+			}
 			if(re == 0){
 				$("#ModalEditarPlanMinutos").modal('hide');	
 				$("#formulario_EditarPlanMinutos").modal('hide');
@@ -1342,7 +1367,21 @@ $('.Editar_Plan_Minutoss').click(function(){
 				cargar_combox();
 				Limpiar_data_Despues_de_Registrar_Plan();
 				$('#plan_id').val('').selectpicker('refresh');
-			}	
+			}
+
+			if(re == 1){         
+				$("#confirmar_editar_plan").modal('hide');
+				$('#id_estilo6').show();
+				$('#mensaje_valida_editar').append('<p><strong><i class="fa fa-exclamation-circle" aria-hidden="true"></i>ERROR: No se encontró ningún cambio a modificar.</strong></p>');    
+				document.getElementById("mensaje_valida_editar").style.display = "block";
+			}
+			if(re == 2){         
+				$("#confirmar_editar_plan").modal('hide');
+				$('#id_estilo6').show();
+				$('#mensaje_valida_editar').append('<p><strong><i class="fa fa-exclamation-circle" aria-hidden="true"></i>ERROR: El número ingresado esta asociado a otro plan.</strong></p>');    
+				document.getElementById("mensaje_valida_editar").style.display = "block";
+			}
+
 		},
 		error:function(re){  
 			$("#ModalEditarPlanMinutos").modal('hide');	
@@ -1415,7 +1454,7 @@ $('.RegistrarNuevoPlan').click(function(){
 $('.RegistrarMinutos').click(function(){
 
 	var Fecha_Ingreso_Minutos 				=	$('#Fecha_Ingreso_Minutoss').val();	
-	var id_plan2 							=	$('#id_plan2').val();
+	var id_oculto_ingreso_minutos 			=	$('#id_oculto_ingreso_minutos').val();
 	var Cantidad_Minutos_Vendidos_Registrar =	$('#Cantidad_Minutos_Vendidos_Registrar').val();
 	var Valor_Total_Minutos_Vendidoss 		=	$('#Valor_Total_Minutos_Vendidoss').val();	
 	var Cantidad_Minutos_Restantes			=	$('#cantidad_minutos_restantes_plan_registrar').text();
@@ -1428,7 +1467,7 @@ $('.RegistrarMinutos').click(function(){
 		async : false,
 		data  :{
 			'Fecha_Ingreso_Minutos'             	: Fecha_Ingreso_Minutos,
-			'id_plan2'             					: id_plan2,
+			'id_oculto_ingreso_minutos'             : id_oculto_ingreso_minutos,
 			'Cantidad_Minutos_Vendidos_Registrar'   : Cantidad_Minutos_Vendidos_Registrar,
 			'Valor_Total_Minutos_Vendidoss'         : Valor_Total_Minutos_Vendidoss,
 			'Cantidad_Minutos_Restantes'         	: Cantidad_Minutos_Restantes,
@@ -1490,7 +1529,6 @@ $('.ModificarRegistroMinutos').click(function(){
 			'Valor_Total_Minutos_Vendidosss' 			: Valor_Total_Minutos_Vendidosss
 		},  
 		success:function(re){
-
 			if(re == 0){         
 				$('#CuerpoMensaje').html('');
 				$("#ModalEditar_Registro_Minutos").modal('hide');
@@ -1501,18 +1539,11 @@ $('.ModificarRegistroMinutos').click(function(){
 				$('#plan_id').val('').selectpicker('refresh');
 			}
 
-			if(re == 1){         
-				// $('#CuerpoMensaje').html('');
-				// $("#ModalEditar_Registro_Minutos").modal('hide');
-				// $("#confirm-update2").modal('hide');      
-				// $('#ModalConfirmacion').modal('show');
-				// $('#TitleModal').html('<p>Se presentó el siguiente error:</p>');
-				// $('#CuerpoMensaje').html('<p>No se encontró ningún cambio a modificar.</p>'); 
+			if(re == 1){
 				$("#confirm-update2").modal('hide');
 				$('#id_estilo22').show();
 				$('#Validar_Cantidad_Minutos_Modificar2').append('<p><strong>No se encontró ningún cambio a modificar.</strong></p>');    
 				document.getElementById("Validar_Cantidad_Minutos_Modificar2").style.display = "block";
-				
 			}
 		},
 		error:function(re){
@@ -1527,6 +1558,10 @@ $('.ModificarRegistroMinutos').click(function(){
 		}
 	});
 });
+function subir() {
+	$("html, body").animate({ scrollTop: 0 }, "slow");
+	return false;
+}
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
