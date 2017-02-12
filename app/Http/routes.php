@@ -254,8 +254,10 @@ Route::any('DatosPlanModificar', array('as'=>'DatosPlanModificar','uses'=>'Contr
 Route::any('Modificar_Plan_Minutos', array('as'=>'Modificar_Plan_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Modificar_Plan_Minutos'))->middleware('auth');
 // Ruta para consultar si hay un venta de minutos registrada antes de eliminarla
 Route::any('Consultar_Minutos_Ingresados', array('as'=>'Consultar_Minutos_Ingresados','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Consultar_Minutos_Ingresados'))->middleware('auth');
-
-
+// Ruta para Eliminar un plan de minutos registrado
+Route::any('Eliminar_Plan_Minutos', array('as'=>'Eliminar_Plan_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Eliminar_Plan_Minutos'))->middleware('auth');
+// Ruta para consultar la venta de minutos si existe antes de ingresar una nueva.
+Route::any('Consultar_Venta_Minutos', array('as'=>'Consultar_Venta_Minutos','uses'=>'ControllerPlanesMinutos\AdministrarPlanesMinutosController@Consultar_Venta_Minutos'))->middleware('auth');
 
 
 

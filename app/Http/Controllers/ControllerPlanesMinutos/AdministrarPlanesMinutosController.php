@@ -470,5 +470,47 @@ class AdministrarPlanesMinutosController extends Controller{
 		}
 	}
 
+	public function Eliminar_Plan_Minutos(){
+
+		$Minutos=Input::all();
+
+		$check = DB::table('minutos_planes')
+		->where('id',$Minutos['id_plan_eliminar'])
+		->where('id_comercio',$Minutos['comercio_id_eliminar'])
+		->delete();
+
+		if($check >0){
+			return 0;
+		}else{
+
+			return 1;	
+		}
+	}
+
+
+	public function Consultar_Venta_Minutos(){
+		$plan_id=Input::get('plan_id');
+		$id_comercio=Auth::user()->id_comercio;
+		$fecha= Carbon::today()->toDateString();
+
+		$VentasMinutos = DetallePlanMinutos::where('id_minutos_planes',$plan_id)
+		->Where('id_comercio',$id_comercio)
+		->Where('fecha_registro',$fecha)
+		->get();	
+
+		$id_minutos_planes="0";
+
+		foreach ($VentasMinutos as $key => $value) {	
+			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  # '.$value->PlanMinutos->Numero_Nuevo_Plan;		
+			$id_minutos_planes=$value->id_minutos_planes;			
+		}
+		if($id_minutos_planes!=0){
+			return Response::json([			
+				'NombrePlanMinutos'=>$NombrePlanMinutos,
+				'ErrorAlngresar'=>"Tiene Registro"				
+				]);
+		}
+	}
+
 
 }
