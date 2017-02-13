@@ -12,4 +12,13 @@
 			</li>				
 		</ul>			
 	</div>
+	<div class="container">
+		<h2>Panels with Contextual Classes</h2>
+		<div class="panel-group">
+			<div class="panel panel-danger">
+				<div class="panel-heading">Panel with panel-danger class</div>
+				<div class="panel-body">Panel Content</div>
+			</div>
+		</div>
+	</div>
 	@stop
