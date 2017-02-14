@@ -261,6 +261,10 @@ Route::any('Consultar_Venta_Minutos', array('as'=>'Consultar_Venta_Minutos','use
 // Terminan Ruta para todo de Minutos
 // Empienzan Rutas para Modulo de recargas
 Route::any('AdministrarRecargas', array('as'=>'AdministrarRecargas','uses'=>'ControllerRecargas\AdministrarRecargasController@AdministrarRecargas'))->middleware('auth');
+// Ruta Para cargar el listado de recargas elaboradas del dia
+Route::any('Cargar_Tabla_Recargas_Ingresados', array('as'=>'Cargar_Tabla_Recargas_Ingresados','uses'=>'ControllerRecargas\AdministrarRecargasController@Cargar_Tabla_Recargas_Ingresados'))->middleware('auth');
+// Ruta Para cargar los nombres de las categorias de recargas
+Route::any('Listar_Categorias', array('as'=>'Listar_Categorias','uses'=>'ControllerRecargas\AdministrarRecargasController@Listar_Categorias'))->middleware('auth');
 // Termina Modulo de Recargas
 
 
