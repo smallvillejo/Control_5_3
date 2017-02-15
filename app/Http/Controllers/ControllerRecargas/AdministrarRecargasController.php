@@ -95,6 +95,71 @@ class AdministrarRecargasController extends Controller {
 			}
 		}
 	}
+
+	public function Consultar_Categoria(){
+		$Id_Categoria=Input::get('id_categoria_listar');
+
+		$Categorias=CategoriaRecarga::Where('id',$Id_Categoria)->get();
+
+		foreach ($Categorias as $key => $value) {
+			$NombreCategoria=strtoupper($value->nombre_categoria);
+		}
+		return Response::json(['success' =>true,			
+			'NombreCategoria'=>$NombreCategoria			
+			]);
+	}
+
+	public function Editar_Categoria(){
+		$Nombre_Editar_Categoria=Input::get('Nombre_Editar_Categoria');
+		$id_categoria_oculto_editar=Input::get('id_categoria_oculto_editar');
+
+		$rules = array
+		(
+			'Nombre_Editar_Categoria'			=> 'required|max:30'					
+			);
+
+		$message = array
+		(
+			'Nombre_Editar_Categoria.required' => ' Se requiere un nombre nuevo.',
+			'Nombre_Editar_Categoria.max' 	=> ' La Categoria debe ser maximo de 30 Caracteres.'
+			);		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{
+			$id_comercio=Auth::user()->id_comercio; 
+			$datos_registro = array(
+				'nombre_categoria' 	=> $Nombre_Editar_Categoria					
+				);
+			$check = DB::table('categoria_recargas')
+			->where('id',$id_categoria_oculto_editar)
+			->where('id_comercio',$id_comercio)
+			->update($datos_registro);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
+
+		}
+	}
+
+	public function Eliminar_Categoria(){
+		$Id_Categoria=Input::get('Id_Categoria_Eliminar');
+		$id_comercio=Auth::user()->id_comercio; 
+
+		$check = DB::table('categoria_recargas')
+		->where('id',$Id_Categoria)
+		->where('id_comercio',$id_comercio)
+		->delete();
+
+		if($check >0){
+			return 0;
+		}else{
+			return 1;	
+		}
+	}
+
 }
-
-

@@ -267,7 +267,12 @@ Route::any('Cargar_Tabla_Recargas_Ingresados', array('as'=>'Cargar_Tabla_Recarga
 Route::any('Listar_Categorias', array('as'=>'Listar_Categorias','uses'=>'ControllerRecargas\AdministrarRecargasController@Listar_Categorias'))->middleware('auth');
 // Ruta para registrar Nueva Categoria
 Route::any('Registrar_Nueva_Categoria', array('as'=>'Registrar_Nueva_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Registrar_Nueva_Categoria'))->middleware('auth');
-
+// Ruta para consultar el nombre de la categoria para modificarse
+Route::any('Consultar_Categoria', array('as'=>'Consultar_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Consultar_Categoria'))->middleware('auth');
+// Ruta para Editar una categoria
+Route::any('Editar_Categoria', array('as'=>'Editar_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Editar_Categoria'))->middleware('auth');
+// Ruta para Eliminar una categoria
+Route::any('Eliminar_Categoria', array('as'=>'Eliminar_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Eliminar_Categoria'))->middleware('auth');
 // Termina Modulo de Recargas
 
 
