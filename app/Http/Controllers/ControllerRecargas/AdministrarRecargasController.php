@@ -59,7 +59,42 @@ class AdministrarRecargasController extends Controller {
 			'Nombre_Categoria'=>$Nombre_Categoria			
 			]);
 	}
-}
 
+	public function Registrar_Nueva_Categoria(){
+		$rules = array
+		(
+			'Nombre_Nueva_Categoria'					=> 'required|max:30'					
+			);
+
+		$message = array
+		(
+			'Nombre_Nueva_Categoria.required' => ' Se requiere un nombre nuevo.',
+			'Nombre_Nueva_Categoria.max' 	=> ' La Categoria debe ser maximo de 30 Caracteres.'
+			);
+		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{
+			$Categorias = Input::all();
+			$id_comercio=Auth::user()->id_comercio;
+
+			$datos_registro = array(
+				'nombre_categoria' 	=> $Categorias['Nombre_Nueva_Categoria'],
+				'id_comercio' 		=> $id_comercio	
+				);
+			$check = DB::table('categoria_recargas')
+			->where('id_comercio',$id_comercio)
+			->insert($datos_registro);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
+		}
+	}
+}
 
 

@@ -265,7 +265,11 @@ Route::any('AdministrarRecargas', array('as'=>'AdministrarRecargas','uses'=>'Con
 Route::any('Cargar_Tabla_Recargas_Ingresados', array('as'=>'Cargar_Tabla_Recargas_Ingresados','uses'=>'ControllerRecargas\AdministrarRecargasController@Cargar_Tabla_Recargas_Ingresados'))->middleware('auth');
 // Ruta Para cargar los nombres de las categorias de recargas
 Route::any('Listar_Categorias', array('as'=>'Listar_Categorias','uses'=>'ControllerRecargas\AdministrarRecargasController@Listar_Categorias'))->middleware('auth');
+// Ruta para registrar Nueva Categoria
+Route::any('Registrar_Nueva_Categoria', array('as'=>'Registrar_Nueva_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Registrar_Nueva_Categoria'))->middleware('auth');
+
 // Termina Modulo de Recargas
+
 
 
 
