@@ -267,7 +267,7 @@
 							<td>								
 								<div class="form-group col-sm-8">					
 									<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Minutoss" id="Fecha_Ingreso_Minutoss"   placeholder="Fecha Registro" value="{{Carbon::today()->toDateString()}}" readonly>
+										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Venta_Recarga" id="Fecha_Ingreso_Venta_Recarga"   placeholder="Fecha Registro" value="{{Carbon::today()->toDateString()}}" readonly>
 										<span class="input-group-btn">
 											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
 										</span>
@@ -291,7 +291,9 @@
 						<td>								
 							<div class="form-group col-sm-8">					
 								<input type="number" name="ValorRecargaIngresar" id="ValorRecargaIngresar" class="form-control">
+								<input type="text" name="ValorRecargaIngresar_oculto" id="ValorRecargaIngresar_oculto" class="form-control" placeholder="Valor Oculto">
 							</div>
+							<input type="hidden" name="id_categoria_oculto" id="id_categoria_oculto" class="form-control">
 						</td>
 					</tr>
 				</tbody>
@@ -635,20 +637,25 @@ $('.EliminarCategoria').click(function(){
 function Limpiar_data_Despues_de_Registrar_Categoria(){
 	$('#Nombre_Nueva_Categoria').val('');							
 }
+function Limpiar_data_Despues_de_Registrar_Venta(){
+	$('#ValorRecargaIngresar_oculto').val('');							
+}
 
-$('#BtnIngresarRecarga').click(function(){
-	
-	
-	$('#Modal_Ingresar_VentaRecarga').modal('show');
-	// $('#Modal_Ingresar_VentaRecarga').on('shown.bs.modal', function() {
-		$('#ValorRecargaIngresar').val('');
-		$('#ValorRecargaIngresar').focus();
-		document.getElementById("ValorRecargaIngresar").focus();
-	});
+
+$('#BtnIngresarRecarga').click(function(){	
+	var id_categoria_listar = document.getElementById('id_categoria_listar').value;
+	$('#id_categoria_oculto').val(id_categoria_listar);
+	$('#Modal_Ingresar_VentaRecarga').modal('show');	
+	$('#ValorRecargaIngresar').val('');
+	$('#ValorRecargaIngresar').focus();
+	document.getElementById("ValorRecargaIngresar").focus();
+});
 
 function Validar_Registro_Venta_Recarga(){
 	var patron =/[0-9]/;
 	var ValorRecargaIngresar=$('#ValorRecargaIngresar').val();
+	var ValorRecargaIngresar2=parseInt($('#ValorRecargaIngresar').val());
+
 
 	if(!patron.test(ValorRecargaIngresar)){
 		$('#estilo3').show();
@@ -665,13 +672,9 @@ function Validar_Registro_Venta_Recarga(){
 			$('#ValorRecargaIngresar').val('');      
 			document.getElementById("ValorRecargaIngresar").focus();
 			return true;
-		}else{
-
-			var str = ValorRecargaIngresar;
-			str=str.replace(",","");
-			
-			// var ValorRecargaIngresar = ValorRecargaIngresar.replace("/./,/", "");			
-			$('#ValorRecargaIngresar').val(str);
+		}else{			
+			ValorRecargaIngresar=ValorRecargaIngresar.replace(".","");
+			$('#ValorRecargaIngresar_oculto').val(ValorRecargaIngresar);
 			
 			$('#estilo3').hide();
 			return false;
@@ -683,6 +686,43 @@ $('.Registrar_Venta_Recarga').click(function(){
 	if(Validar_Registro_Venta_Recarga()!=true){
 		$('#Confirmar_Venta_Recarga').modal('show');
 	}
+});
+
+$('.RegistrarVentaRecarga').click(function(){
+
+	var ValorRecargaIngresar_oculto =$('#ValorRecargaIngresar_oculto').val();
+	var id_categoria_oculto 		=$('#id_categoria_oculto').val();
+	var Fecha_Ingreso_Venta_Recarga =$('#Fecha_Ingreso_Venta_Recarga').val();
+
+	$.ajax({
+		url   : "<?= URL::to('Registrar_Venta_Recarga') ?>",
+		type  : "GET",
+		async : false,
+		data  :{				
+			'ValorRecargaIngresar_oculto'  : ValorRecargaIngresar_oculto,
+			'id_categoria_oculto'  		   : id_categoria_oculto,
+			'Fecha_Ingreso_Venta_Recarga'  : Fecha_Ingreso_Venta_Recarga			
+		},  
+		success:function(data){			
+			if(data == 0){
+				$("#Confirmar_Venta_Recarga").modal('hide');
+				$("#Modal_Ingresar_VentaRecarga").modal('hide');				
+				$('#CuerpoMensaje').html('');					
+				$('#ModalConfirmacion').modal('show');
+				$('#TitleModal').html('<p>Registro Exitoso.</p>');
+				$('#CuerpoMensaje').html('<p>La venta de recarga se registró con éxito..!!</p>');				
+				Limpiar_data_Despues_de_Registrar_Venta();
+				Cargar_Tabla_Recargas_Ingresados();
+			}
+			if(data.success==false){
+				$.each(data.errors,function(index, error){ 
+					$('#estilo3').show();
+					$('#mensaje3').append('<p><strong>'+error+'</strong></p>');    
+					document.getElementById("mensaje3").style.display = "block";
+				});  
+			}
+		}
+	});
 
 });
 

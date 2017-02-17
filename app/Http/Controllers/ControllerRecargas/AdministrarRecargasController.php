@@ -36,6 +36,8 @@ class AdministrarRecargasController extends Controller {
 		$VentaRecargas=VentaRecarga::Where('fecha_venta_recarga',$fecha)
 		->Where('id_comercio',$id_comercio)->paginate(5);
 
+		
+
 		$Valor_Venta_Recarga=VentaRecarga::Where('fecha_venta_recarga',$fecha)
 		->Where('id_comercio',$id_comercio)
 		->sum('valor_venta_recarga');
@@ -159,6 +161,48 @@ class AdministrarRecargasController extends Controller {
 			return 0;
 		}else{
 			return 1;	
+		}
+	}
+
+	public function Registrar_Venta_Recarga(){
+		$rules = array
+		(
+			'ValorRecargaIngresar_oculto'			=> 'required|max:30'					
+			);
+
+		$message = array
+		(
+			'ValorRecargaIngresar_oculto.required' => ' Se requiere el valor de la venta.',
+			'ValorRecargaIngresar_oculto.max' 	=> ' El valor de la venta debe ser maximo de 30 Caracteres.'
+			);
+		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{
+			$Categorias = Input::all();
+			$id_comercio=Auth::user()->id_comercio;
+			$Fecha_Registro=Input::get('Fecha_Ingreso_Venta_Recarga');
+
+			$HoraRegistro=Carbon::now()->toTimeString();
+			dd($HoraRegistro);
+					
+
+			$datos_registro = array(
+				'fk_categoria_recarga' 	=> $Categorias['id_categoria_oculto'],
+				'valor_venta_recarga' 	=> $Categorias['ValorRecargaIngresar_oculto'],
+				'fecha_venta_recarga' 	=> $Fecha_Registro.' '.$HoraRegistro,		
+				'id_comercio' 			=> $id_comercio			
+				);
+			$check = DB::table('venta_recarga')			
+			->insert($datos_registro);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
 		}
 	}
 
