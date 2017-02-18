@@ -22,7 +22,7 @@
   <div class="panel panel-default"> 
     <!-- style="background: #082f59"   -->
     <div class="panel-body">
-      <center><img id="profile-img" class="img-circle img-responsive" width="150" height="150" src="global/login/login/photo.jpg" /></center>     
+      <center><img id="profile-img" class="img-circle img-responsive" width="50%" height="50%" src="global/login/login/photo.jpg" /></center>     
       <center>
         <label id="NombreUser"></label><br>
         <label id="EmailUser"></label>

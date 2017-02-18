@@ -240,4 +240,43 @@ class AdministrarRecargasController extends Controller {
 		}
 	}
 
+	public function Modificar_Venta_Recarga(){
+		$rules = array
+		(
+			'Fecha_Ingreso_Venta_Recarga_editar'			=> 'required',
+			'ValorRecargaIngresar_editar_oculto'			=> 'required'					
+			);
+
+		$message = array
+		(
+			'Fecha_Ingreso_Venta_Recarga_editar.required' => ' Se requiere la fecha de venta de la  recarga.',
+			'ValorRecargaIngresar_editar_oculto.required' => ' Se requiere el valor de la venta de recarga.'		
+			);
+		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{		
+			$id_comercio=Auth::user()->id_comercio;	
+			$Fecha_Registro=Input::get('Fecha_Ingreso_Venta_Recarga_editar');
+			$HoraRegistro=Carbon::now()->toTimeString();
+
+			$datos_registro = array(
+				'valor_venta_recarga' 	=> Input::get('ValorRecargaIngresar_editar_oculto'),
+				'fecha_venta_recarga' 	=> Input::get('Fecha_Ingreso_Venta_Recarga_editar'),
+				'hora_venta_recarga' 	=> $Fecha_Registro.' '.$HoraRegistro,
+				);
+			$check = DB::table('venta_recarga')
+			->where('id_venta_recarga', Input::get('id_venta_recarga_editar_oculto'))
+			->where('id_comercio',$id_comercio)
+			->update($datos_registro);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
+		}
+	}
 }

@@ -347,6 +347,100 @@
 	</div>
 </div>
 <!-- Termina Modal Para Eliminar Venta Recarga -->
+<!-- Modal Editar Venta Recarga-->
+<div class="modal fade" id="Modal_Ingresar_VentaRecarga_Editar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">
+					<b><strong> <font size ="4", color="#53a4ee" face="Arial Black">
+						<i class="fa fa-money fa-2x" aria-hidden="true"></i> Editar Venta Recarga</font></strong>
+					</b>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="panel panel-danger" style="display:none" id="estilo4">
+					<div class="panel-heading" id="mensaje4" style="display:none">
+						<strong></strong>
+					</div>
+				</div>
+				<table class="table table-user-information">
+					<div class="row">
+						<tbody>
+							<tr>
+								<td>
+									<span class="badge btn-md btn-success" style="background: 
+									#0699d8;">
+									<b>
+										<strong>
+											<font size ="2", color color="#000000" face="Tahoma">
+												Fecha Registro:
+											</font>
+										</strong>
+									</b>
+								</span>
+							</td>
+							<td>								
+								<div class="form-group col-sm-8">					
+									<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
+										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Venta_Recarga_editar" id="Fecha_Ingreso_Venta_Recarga_editar"   placeholder="Fecha Registro" readonly>
+										<span class="input-group-btn">
+											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+										</span>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>								
+								<span class="badge btn-md btn-success" style="background: 
+								#0699d8;">
+								<b>
+									<strong>
+										<font size ="2", color color="#000000" face="Tahoma">
+											Valor Venta Recarga:
+										</font>
+									</strong>
+								</b>
+							</span>
+						</td>
+						<td>								
+							<div class="form-group col-sm-8">					
+								<input type="number" name="ValorRecargaIngresar_editar" id="ValorRecargaIngresar_editar" class="form-control">
+								<input type="hidden" name="ValorRecargaIngresar_editar_oculto" id="ValorRecargaIngresar_editar_oculto" class="form-control" placeholder="Valor Oculto">
+							</div>
+							<input type="hidden" name="id_venta_recarga_editar_oculto" id="id_venta_recarga_editar_oculto" class="form-control">
+						</td>
+					</tr>
+				</tbody>
+			</div>
+		</table>
+	</div>			
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default CerrarMensaje" data-dismiss="modal">Cerrar</button>
+		<button type="button" class="btn btn-primary Modificar_Venta_Recarga">Modificar</button>
+	</div>
+</div>
+</div>
+</div>
+<!-- Termina Modal Editar Venta Recarga -->
+<!-- Confirmar Modal Editar Venta Recarga  -->
+<div class="modal fade" id="Modal_Confirmar_Editar_Venta_Recarga" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">¿Está seguro de Registrar La venta de Recarga?</h4>
+			</div>
+			<div class="modal-footer">
+				<button  class="btn btn-primary EditarVentaRecarga" type="button" >Si</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+			</div>
+		</div>
+	</div>     
+</div>
+<!-- Termina Modal Editar Venta Recarga  -->
 <!-- Modal Para Confirmaciones -->
 <div class="modal fade" tabindex="-1" role="dialog" id="ModalConfirmacion" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
@@ -762,11 +856,11 @@ $('.RegistrarVentaRecarga').click(function(){
 
 $('body').delegate('.Eliminar_Venta_Recarga','click',function(){
 
-	var id_Categoria_Venta_Eliminar =($(this).attr('id_Categoria_Venta_Eliminar'));
+	var id_Venta_Recarga_Eliminar =($(this).attr('id_Venta_Recarga_Eliminar'));
 	var Nombre_Categoria_Venta_Eliminar =($(this).attr('Nombre_Categoria_Venta_Eliminar'));
 	
 	$('#Nombre_Categoria_Venta_Eliminar').text(Nombre_Categoria_Venta_Eliminar);	
-	$('#id_eliminar_venta_recarga').val(id_Categoria_Venta_Eliminar);
+	$('#id_eliminar_venta_recarga').val(id_Venta_Recarga_Eliminar);
 	$('#Eliminar_Registro_Venta_Recarga').modal('show');
 });
 
@@ -804,11 +898,97 @@ $('.Eliminar_Registro_Venta_Recarga').click(function(){
 });
 
 
+$('body').delegate('.Editar_Venta_Recarga','click',function(){
+
+	var id_Venta_Recarga_Editar =($(this).attr('id_Venta_Recarga_Editar'));
+	var Valor_Venta_Recarga =($(this).attr('Valor_Venta_Recarga'));
+	var Fecha_Venta_Recarga_editar =($(this).attr('Fecha_Venta_Recarga_editar'));	
+
+	$('#Fecha_Ingreso_Venta_Recarga_editar').val(Fecha_Venta_Recarga_editar);
+	$('#ValorRecargaIngresar_editar_oculto').val(Valor_Venta_Recarga);		
+	$('#ValorRecargaIngresar_editar').val(Valor_Venta_Recarga);		
+	$('#id_venta_recarga_editar_oculto').val(id_Venta_Recarga_Editar);
+	$('#Modal_Ingresar_VentaRecarga_Editar').modal('show');
+
+});
+
+function Validar_Editar_Venta_Recarga(){
+	var patron =/[0-9]/;
+	var ValorRecargaIngresar_editar=$('#ValorRecargaIngresar_editar').val();
+	var ValorRecargaIngresar_editar2=parseInt($('#ValorRecargaIngresar_editar').val());
 
 
+	if(!patron.test(ValorRecargaIngresar_editar)){
+		$('#estilo4').show();
+		document.getElementById("mensaje4").innerText = "El valor de la venta de recarga no puede estar vacio o contener caracteres.";
+		document.getElementById("mensaje4").style.display = "block";
+		$('#ValorRecargaIngresar_editar').val('');      
+		document.getElementById("ValorRecargaIngresar_editar").focus();
+		return true;
+	}else{
+		if(ValorRecargaIngresar_editar==""){
+			$('#estilo4').show();
+			document.getElementById("mensaje4").innerText = "El valor de la venta de recarga no puede estar vacio.";
+			document.getElementById("mensaje4").style.display = "block";
+			$('#ValorRecargaIngresar_editar').val('');      
+			document.getElementById("ValorRecargaIngresar_editar").focus();
+			return true;
+		}else{			
+			ValorRecargaIngresar_editar=ValorRecargaIngresar_editar.replace(".","");
+			$('#ValorRecargaIngresar_editar_oculto').val(ValorRecargaIngresar_editar);
+			
+			$('#estilo4').hide();
+			return false;
+		}
+	}
+}
 
+$('.Modificar_Venta_Recarga').click(function(){
 
+	if(Validar_Editar_Venta_Recarga()!=true){		
+		$('#Modal_Confirmar_Editar_Venta_Recarga').modal('show');
+	}
 
+});
+
+$('.EditarVentaRecarga').click(function(){
+	var Fecha_Ingreso_Venta_Recarga_editar = $('#Fecha_Ingreso_Venta_Recarga_editar').val();
+	var ValorRecargaIngresar_editar_oculto = $('#ValorRecargaIngresar_editar_oculto').val();
+	var id_venta_recarga_editar_oculto 	   = $('#id_venta_recarga_editar_oculto').val();
+
+	
+	$.ajax({
+		url   : "<?= URL::to('Modificar_Venta_Recarga') ?>",
+		type  : "GET",
+		async : false,
+		data  :{				
+			'Fecha_Ingreso_Venta_Recarga_editar'  : Fecha_Ingreso_Venta_Recarga_editar,		
+			'ValorRecargaIngresar_editar_oculto'  : ValorRecargaIngresar_editar_oculto,
+			'id_venta_recarga_editar_oculto'      : id_venta_recarga_editar_oculto 
+		},  
+		success:function(data){			
+			if(data == 0){
+				$("#Modal_Confirmar_Editar_Venta_Recarga").modal('hide');
+				$("#Modal_Ingresar_VentaRecarga_Editar").modal('hide');						
+				$('#CuerpoMensaje').html('');					
+				$('#ModalConfirmacion').modal('show');
+				$('#TitleModal').html('<p>Registro Modificado.</p>');
+				$('#CuerpoMensaje').html('<p>La venta de recarga se modifico con éxito..!!</p>');			
+				
+			}
+			if(data.success==false){
+				$.each(data.errors,function(index, error){ 
+					$("#Modal_Confirmar_Editar_Venta_Recarga").modal('hide');
+					$("#Modal_Ingresar_VentaRecarga_Editar").modal('hide');							
+					$('#CuerpoMensaje').html('');					
+					$('#ModalConfirmacion').modal('show');
+					$('#TitleModal').html('<p>Error al modificar.</p>');
+					$('#CuerpoMensaje').html('<p><strong>'+error+'</strong></p>');
+				});  
+			}
+		}
+	});
+});
 
 
 

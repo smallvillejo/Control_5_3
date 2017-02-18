@@ -7,7 +7,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading" style="background-color: #321a7c">
 			<h3 class="panel-title">
-				<strong>ÚLTIMAS RECARGAS REGISTRADOS</strong>
+				<strong>ÚLTIMAS RECARGAS</strong>
 				<div class="pull-right">
 					<strong>Total Venta Recarga:</strong>
 					<label><font size ="3", color color="#000000" face="Tahoma"><strong>${{number_format($Valor_Venta_Recarga)}}</strong></font></label>
@@ -29,7 +29,7 @@
 <div class="panel panel-primary">
 	<div class="panel-heading" style="background-color: #321a7c">
 		<h3 class="panel-title">
-			<strong>ÚLTIMAS RECARGAS REGISTRADAS</strong>
+			<strong>ÚLTIMAS RECARGAS</strong>
 			<div class="pull-right">
 				<strong>Total Venta Recarga:</strong>
 				<label><font size ="3", color color="#000000" face="Tahoma"><strong>${{number_format($Valor_Venta_Recarga)}}</strong></font></label>
@@ -99,12 +99,12 @@
 					</table>
 					<div class="panel-footer">Panel de opciones
 						<div class="pull-right">
-							<a href="#" data-toggle = 'modal' data-target="#ModalEditar_Registro_Recargas"  class="Editar_Minutos_Registrados" id_venta_recarga="{{$value->id}}"  title="Editar">  
+							<a href="#" class="Editar_Venta_Recarga" id_Venta_Recarga_Editar="{{$value->id_venta_recarga}}" Fecha_Venta_Recarga_editar="{{$value->fecha_venta_recarga}}" Valor_Venta_Recarga="{{$value->valor_venta_recarga}}"  title="Editar">  
 								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
 									<span class= "fa fa-pencil-square fa-2x"></span></font>
 								</strong>
 							</a>
-							<a href="#" class="Eliminar_Venta_Recarga" id_Categoria_Venta_Eliminar="{{$value->id_venta_recarga}}" Nombre_Categoria_Venta_Eliminar="{{$value->Recarga->nombre_categoria}}" title="Eliminar"> 
+							<a href="#" class="Eliminar_Venta_Recarga" id_Venta_Recarga_Eliminar="{{$value->id_venta_recarga}}" Nombre_Categoria_Venta_Eliminar="{{$value->Recarga->nombre_categoria}}" title="Eliminar"> 
 								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
 									<span class= "fa fa-trash-o fa-2x"></span></font>
 								</strong>

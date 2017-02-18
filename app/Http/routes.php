@@ -273,10 +273,12 @@ Route::any('Consultar_Categoria', array('as'=>'Consultar_Categoria','uses'=>'Con
 Route::any('Editar_Categoria', array('as'=>'Editar_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Editar_Categoria'))->middleware('auth');
 // Ruta para Eliminar una categoria
 Route::any('Eliminar_Categoria', array('as'=>'Eliminar_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Eliminar_Categoria'))->middleware('auth');
-// Ruta para Registrar Una venta de Recarga
+// Ruta para Registrar Una venta de Recargas
 Route::any('Registrar_Venta_Recarga', array('as'=>'Registrar_Venta_Recarga','uses'=>'ControllerRecargas\AdministrarRecargasController@Registrar_Venta_Recarga'))->middleware('auth');
-// Ruta Para eliminar una venta de Recargar
+// Ruta Para eliminar una venta de Recargas
 Route::any('Eliminar_Venta_Recarga', array('as'=>'Eliminar_Venta_Recarga','uses'=>'ControllerRecargas\AdministrarRecargasController@Eliminar_Venta_Recarga'))->middleware('auth');
+// Ruta para Modificar una venta de Recargas
+Route::any('Modificar_Venta_Recarga', array('as'=>'Modificar_Venta_Recarga','uses'=>'ControllerRecargas\AdministrarRecargasController@Modificar_Venta_Recarga'))->middleware('auth');
 // Termina Modulo de Recargas
 
 
