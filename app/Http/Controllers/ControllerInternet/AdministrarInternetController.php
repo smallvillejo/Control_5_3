@@ -8,8 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
-use App\Models\Recargas\VentaRecarga;
-use App\Models\Recargas\CategoriaRecarga;
+use App\Models\Internet\VentaInternet;
 use Carbon\Carbon;
 use File;
 use Excel;
@@ -32,6 +31,22 @@ class AdministrarInternetController extends Controller {
 
 	public function AdministrarInternet(){
 		return view('AdministrarInternet.Index_Internet');
+	}
+
+	public function Cargar_Tabla_Ventas_Internet(){
+		$fecha= Carbon::today()->toDateString();		
+		$id_comercio=Auth::user()->id_comercio; 
+
+		$VentaInternet=VentaInternet::Where('fecha_internet_venta',$fecha)
+		->Where('id_comercio',$id_comercio)->paginate(4);
+
+		$Valor_Venta_Internet=VentaInternet::Where('fecha_internet_venta',$fecha)
+		->Where('id_comercio',$id_comercio)
+		->sum('venta_total_dia');
+
+		return view('AdministrarInternet/Tablas.Tabla_Ingreso_Internet')
+		->with('VentaInternet',$VentaInternet)
+		->with('Valor_Venta_Internet',$Valor_Venta_Internet);
 	}
 
 	public function Cargar_Tabla_Recargas_Ingresados(){

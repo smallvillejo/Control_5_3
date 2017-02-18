@@ -93,7 +93,7 @@ Menú Principal
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-8 control-label"><i class="fa fa-desktop" aria-hidden="true"></i>
+								<label class="col-sm-8 control-label"><i class="fa fa-internet-explorer" aria-hidden="true"></i>
 									<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Internet:</font></strong></label>
 									<div class="col-sm-4">					
 										<strong>
@@ -126,7 +126,7 @@ Menú Principal
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-8 control-label"><i class="fa fa-hand-o-right" aria-hidden="true"></i>
+											<label class="col-sm-8 control-label"><i class="fa fa-balance-scale" aria-hidden="true"></i>
 												<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Gastos & Inversión:</font></strong></label>
 												<div class="col-sm-4">					
 													<strong>
