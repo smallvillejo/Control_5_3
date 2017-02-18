@@ -281,6 +281,10 @@ Route::any('Eliminar_Venta_Recarga', array('as'=>'Eliminar_Venta_Recarga','uses'
 Route::any('Modificar_Venta_Recarga', array('as'=>'Modificar_Venta_Recarga','uses'=>'ControllerRecargas\AdministrarRecargasController@Modificar_Venta_Recarga'))->middleware('auth');
 // Termina Modulo de Recargas
 
+// Empieza Modulo de Internet
+Route::any('AdministrarInternet', array('as'=>'AdministrarInternet','uses'=>'ControllerInternet\AdministrarInternetController@AdministrarInternet'))->middleware('auth');
+// Termina Modulo de Internet
+
 
 
 

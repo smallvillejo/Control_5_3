@@ -12,7 +12,12 @@
 			</li>				
 		</ul>			
 	</div>
-	
+	<br>
+	<br>
+	<br>
+	<div class="alert alert-danger" style="display: none;" id="Error_al_Eliminar">		
+		<h3><strong><label id="Id_Eliminar_Categoria"></label></strong></h3>	
+	</div>
 	<div class="row form-group">
 		<div class="panel-group">
 			<div id="tabla_id" class="col-xs-12 col-sm-12 col-md-8 col-lg-8">			
@@ -263,7 +268,7 @@
 										</strong>
 									</b>
 								</span>
-							</td>
+							</td>							
 							<td>								
 								<div class="form-group col-sm-8">					
 									<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
@@ -383,7 +388,7 @@
 							<td>								
 								<div class="form-group col-sm-8">					
 									<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Venta_Recarga_editar" id="Fecha_Ingreso_Venta_Recarga_editar"   placeholder="Fecha Registro" readonly>
+										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Venta_Recarga_editar" id="Fecha_Ingreso_Venta_Recarga_editar"   placeholder="Fecha Registro" value="<?php echo e(Carbon::today()->toDateString()); ?>" readonly>
 										<span class="input-group-btn">
 											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
 										</span>
@@ -746,8 +751,8 @@ $('.EliminarCategoria').click(function(){
 		data  :{				
 			'Id_Categoria_Eliminar'  : Id_Categoria_Eliminar
 		},  
-		success:function(data){			
-			if(data == 0){
+		success:function(respuesta){			
+			if(respuesta == 0){
 				$("#Confirmar_Eliminar_Categoria").modal('hide');				
 				$('#CuerpoMensaje').html('');					
 				$('#ModalConfirmacion').modal('show');
@@ -756,6 +761,23 @@ $('.EliminarCategoria').click(function(){
 				Listar_Categorias();
 				Limpiar_data_Despues_de_Registrar_Categoria();
 				$('#id_categoria_listar').val('').selectpicker('refresh');
+			}
+			$("#Error_al_Eliminar").hide();
+			if(respuesta.ErrorAlEliminar!="Tiene Ventas"){
+				$('#Eliminar_Plan').modal('show');
+			}else{
+				$("#Confirmar_Eliminar_Categoria").modal('hide');
+				$('#Error_al_Eliminar').show();
+				$('#Id_Eliminar_Categoria').html('ERROR AL ELIMINAR: La Categoria "'+respuesta.nombre_categoria+'" tiene ventas asociadas, elimine sus ventas y intente de nuevo..'); 
+				$("#Id_Eliminar_Categoria").css("fontSize", 18);								
+				$("#Id_Eliminar_Categoria").css("font-weight","Bold"); 
+				subir();
+				$(document).ready (function(){                              
+					$("#Error_al_Eliminar").alert();						    
+					$("#Error_al_Eliminar").fadeTo(8000, 500).slideUp(500, function(){
+						$("#Error_al_Eliminar").hide();
+					});  
+				});
 			}
 		}
 	});
@@ -766,17 +788,38 @@ function Limpiar_data_Despues_de_Registrar_Categoria(){
 	$('#Nombre_Nueva_Categoria').val('');							
 }
 function Limpiar_data_Despues_de_Registrar_Venta(){
-	$('#ValorRecargaIngresar_oculto').val('');							
+	$('#ValorRecargaIngresar_oculto').val('');	
+	$('#Fecha_Ingreso_Venta_Recarga').datepicker('setDate', null);
+	// $('#Fecha_Ingreso_Venta_Recarga').datepicker('setDate','');	
+
+
+	queryDate = '<?php echo e(Carbon::today()->toDateString()); ?>';
+
+	var parsedDate = $.datepicker.parseDate('yyyy-mm-dd', queryDate);
+
+	$('#Fecha_Ingreso_Venta_Recarga').datepicker('setDate', parsedDate);
 }
 
 
 $('#BtnIngresarRecarga').click(function(){	
 	var id_categoria_listar = document.getElementById('id_categoria_listar').value;
 	$('#id_categoria_oculto').val(id_categoria_listar);
-	$('#Modal_Ingresar_VentaRecarga').modal('show');	
+
 	$('#ValorRecargaIngresar').val('');
 	$('#ValorRecargaIngresar').focus();
-	document.getElementById("ValorRecargaIngresar").focus();
+	document.getElementById("ValorRecargaIngresar").focus();	
+
+	$("#Fecha_Ingreso_Venta_Recarga").datepicker("destroy");
+
+	
+	$('#Fecha_Ingreso_Venta_Recarga').val('<?php echo e(Carbon::today()->toDateString()); ?>');
+
+	// $('#Fecha_Ingreso_Venta_Recarga').val('<?php echo e(Carbon::today()->toDateString()); ?>').datepicker("refresh");
+	// $('#Fecha_Ingreso_Venta_Recarga').val('').datepicker('update');
+	// $('#Fecha_Ingreso_Venta_Recarga').datepicker({ dateFormat: 'yy-mm-dd',minDate: null,maxDate: null }).val('<?php echo e(Carbon::today()->toDateString()); ?>');
+	$("#Fecha_Ingreso_Venta_Recarga").datepicker("refresh");
+	
+	$('#Modal_Ingresar_VentaRecarga').modal('show');
 });
 
 function Validar_Registro_Venta_Recarga(){
@@ -841,6 +884,14 @@ $('.RegistrarVentaRecarga').click(function(){
 				$('#CuerpoMensaje').html('<p>La venta de recarga se registró con éxito..!!</p>');				
 				Limpiar_data_Despues_de_Registrar_Venta();				
 			}
+
+			if(data == 3){
+				$("#Confirmar_Venta_Recarga").modal('hide');								
+				$('#estilo3').show();
+				$('#mensaje3').html('');
+				$('#mensaje3').append('<p><strong>ERROR AL REGISTRAR: Se encontró una venta ya realizada con la misma fecha.</strong></p>');    
+				document.getElementById("mensaje3").style.display = "block";		
+			}
 			if(data.success==false){
 				$.each(data.errors,function(index, error){ 
 					$('#estilo3').show();
@@ -884,6 +935,7 @@ $('.Eliminar_Registro_Venta_Recarga').click(function(){
 				$('#CuerpoMensaje').html('<p>La venta de recarga se elimino con éxito..!!</p>');			
 				
 			}
+			
 			if(data.success==false){
 				$.each(data.errors,function(index, error){ 
 					$("#Eliminar_Registro_Venta_Recarga").modal('hide');					
@@ -902,7 +954,10 @@ $('body').delegate('.Editar_Venta_Recarga','click',function(){
 
 	var id_Venta_Recarga_Editar =($(this).attr('id_Venta_Recarga_Editar'));
 	var Valor_Venta_Recarga =($(this).attr('Valor_Venta_Recarga'));
-	var Fecha_Venta_Recarga_editar =($(this).attr('Fecha_Venta_Recarga_editar'));	
+	var Fecha_Venta_Recarga_editar =($(this).attr('Fecha_Venta_Recarga_editar'));
+
+	// $('#Fecha_Ingreso_Venta_Recarga_editar').datepicker('setDate', Fecha_Venta_Recarga_editar);
+	// $('#Fecha_Ingreso_Venta_Recarga_editar').datepicker("setDate", new Date(Fecha_Venta_Recarga_editar).trigger('change'));	
 
 	$('#Fecha_Ingreso_Venta_Recarga_editar').val(Fecha_Venta_Recarga_editar);
 	$('#ValorRecargaIngresar_editar_oculto').val(Valor_Venta_Recarga);		
@@ -990,7 +1045,10 @@ $('.EditarVentaRecarga').click(function(){
 	});
 });
 
-
+function subir() {
+	$("html, body").animate({ scrollTop: 0 }, "slow");
+	return false;
+}
 
 </script>
 <?php $__env->stopSection(); ?>

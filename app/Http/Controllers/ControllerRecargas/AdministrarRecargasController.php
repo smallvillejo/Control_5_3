@@ -156,58 +156,90 @@ class AdministrarRecargasController extends Controller {
 	}
 
 	public function Eliminar_Categoria(){
+
 		$Id_Categoria=Input::get('Id_Categoria_Eliminar');
 		$id_comercio=Auth::user()->id_comercio; 
 
-		$check = DB::table('categoria_recargas')
-		->where('id',$Id_Categoria)
-		->where('id_comercio',$id_comercio)
-		->delete();
+		$ConsultarVentaRecarga=VentaRecarga::Where('fk_categoria_recarga', $Id_Categoria)
+		->Where('id_comercio',$id_comercio)
+		->get();
 
-		if($check >0){
-			return 0;
-		}else{
-			return 1;	
+		$valor_venta_recarga=0;
+
+		foreach ($ConsultarVentaRecarga as $key => $value) {
+			$valor_venta_recarga=$value->valor_venta_recarga;
+			$nombre_categoria=strtoupper($value->Recarga->nombre_categoria);
 		}
-	}
 
-	public function Registrar_Venta_Recarga(){
-		$rules = array
-		(
-			'ValorRecargaIngresar_oculto'			=> 'required|max:30'					
-			);
-
-		$message = array
-		(
-			'ValorRecargaIngresar_oculto.required' => ' Se requiere el valor de la venta.',
-			'ValorRecargaIngresar_oculto.max' 	=> ' El valor de la venta debe ser maximo de 30 Caracteres.'
-			);
-		
-		$validator = Validator::make(Input::All(), $rules, $message);
-		if ($validator->fails()) {
-			return Response::json(['success' =>false,
-				'errors'=>$validator->errors()->toArray()]);		
+		if($valor_venta_recarga!=0){
+			return Response::json(['ErrorAlEliminar'=>"Tiene Ventas",'nombre_categoria'=>$nombre_categoria			
+				]);
 		}else{
-			$Categorias = Input::all();
-			$id_comercio=Auth::user()->id_comercio;
-			$Fecha_Registro=Input::get('Fecha_Ingreso_Venta_Recarga');
-
-			$HoraRegistro=Carbon::now()->toTimeString();
-
-			$datos_registro = array(
-				'fk_categoria_recarga' 	=> $Categorias['id_categoria_oculto'],
-				'valor_venta_recarga' 	=> $Categorias['ValorRecargaIngresar_oculto'],
-				'fecha_venta_recarga' 	=> $Fecha_Registro,
-				'hora_venta_recarga' 	=> $Fecha_Registro.' '.$HoraRegistro,				
-				'id_comercio' 			=> $id_comercio			
-				);
-			$check = DB::table('venta_recarga')			
-			->insert($datos_registro);
+			$check = DB::table('categoria_recargas')
+			->where('id',$Id_Categoria)
+			->where('id_comercio',$id_comercio)
+			->delete();
 
 			if($check >0){
 				return 0;
 			}else{
 				return 1;	
+			}
+		}
+	}
+
+	public function Registrar_Venta_Recarga(){
+		$Categorias = Input::all();
+		$Fecha_Registro=Input::get('Fecha_Ingreso_Venta_Recarga');
+
+		$ConsultarVentaRecarga=VentaRecarga::Where('fk_categoria_recarga', $Categorias['id_categoria_oculto'])
+		->Where('fecha_venta_recarga',$Fecha_Registro)
+		->get();
+
+		$valor_venta_recarga=0;
+		foreach ($ConsultarVentaRecarga as $key => $value) {
+			$valor_venta_recarga=$value->valor_venta_recarga;
+		}
+
+		if($valor_venta_recarga!=0){
+			return 3;
+		}else{
+			$rules = array
+			(
+				'ValorRecargaIngresar_oculto'			=> 'required|max:30'					
+				);
+
+			$message = array
+			(
+				'ValorRecargaIngresar_oculto.required' => ' Se requiere el valor de la venta.',
+				'ValorRecargaIngresar_oculto.max' 	=> ' El valor de la venta debe ser maximo de 30 Caracteres.'
+				);
+
+			$validator = Validator::make(Input::All(), $rules, $message);
+			if ($validator->fails()) {
+				return Response::json(['success' =>false,
+					'errors'=>$validator->errors()->toArray()]);		
+			}else{
+
+				$id_comercio=Auth::user()->id_comercio;				
+
+				$HoraRegistro=Carbon::now()->toTimeString();
+
+				$datos_registro = array(
+					'fk_categoria_recarga' 	=> $Categorias['id_categoria_oculto'],
+					'valor_venta_recarga' 	=> $Categorias['ValorRecargaIngresar_oculto'],
+					'fecha_venta_recarga' 	=> $Fecha_Registro,
+					'hora_venta_recarga' 	=> $Fecha_Registro.' '.$HoraRegistro,				
+					'id_comercio' 			=> $id_comercio			
+					);
+				$check = DB::table('venta_recarga')			
+				->insert($datos_registro);
+
+				if($check >0){
+					return 0;
+				}else{
+					return 1;	
+				}
 			}
 		}
 	}

@@ -80,7 +80,7 @@
 												<b>
 													<strong>
 														<font size ="2">					
-															<?php echo e(Carbon::parse($value->hora_venta_recarga)->diffForHumans()); ?>			
+															<?php echo e(Carbon::parse($value->hora_venta_recarga)->diffForHumans()); ?> (<?php echo e($value->fecha_venta_recarga); ?>)			
 														</font>
 													</strong>
 												</b>

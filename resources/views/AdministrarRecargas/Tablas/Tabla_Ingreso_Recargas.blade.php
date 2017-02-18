@@ -79,7 +79,7 @@
 												<b>
 													<strong>
 														<font size ="2">					
-															{{Carbon::parse($value->hora_venta_recarga)->diffForHumans()}}			
+															{{Carbon::parse($value->hora_venta_recarga)->diffForHumans()}} ({{$value->fecha_venta_recarga}})			
 														</font>
 													</strong>
 												</b>

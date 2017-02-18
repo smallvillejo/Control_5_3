@@ -218,7 +218,8 @@ info2.slideDown();
                 'Administrar' => '',
                 'Consultas' => '',
                 'AdministrarPlanes' => '',
-                'AdministrarRecargas' => ''
+                'AdministrarRecargas' => '',
+                'AdministrarInternet' => ''
                 );
               if ($vista == '' || $vista == 'Index'){
                 $current['Index'] = 'active';
@@ -237,6 +238,9 @@ info2.slideDown();
               }  
               else if ($vista == '' || $vista == 'AdministrarRecargas'){
                 $current['AdministrarRecargas'] = 'active';
+              }
+              else if ($vista == '' || $vista == 'AdministrarInternet'){
+                $current['AdministrarInternet'] = 'active';
               }
               ?>
               <li class="<?php echo e($current['Index']); ?>">
@@ -289,8 +293,14 @@ info2.slideDown();
                      <i class="fa fa-money" aria-hidden="true"></i> 
                      <span class="title">Recargas</span>
                    </a>
-                 </li>                  
-                 <li class="<?php echo e($current['Consultas']); ?>">
+                 </li>
+                 <li class="<?php echo e($current['AdministrarInternet']); ?>">
+                  <a href="<?php echo e(URL::route('AdministrarInternet')); ?>">
+                    <i class="fa fa-internet-explorer" aria-hidden="true"></i>
+                    <span class="title">Internet</span>
+                  </a>
+                </li>                                   
+                <li class="<?php echo e($current['Consultas']); ?>">
                   <a href="javascript:;">
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <span class="title">Consultas</span>
