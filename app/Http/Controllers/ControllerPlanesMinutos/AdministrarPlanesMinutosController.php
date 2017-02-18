@@ -25,6 +25,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AdministrarPlanesMinutosController extends Controller{
 
+	public function __construct(){
+		Carbon::setLocale('es');
+
+	}
+
 	public function AdministrarPlanes(){
 		return view('AdministrarPlanes.Index_Minutos');
 	}
@@ -131,7 +136,7 @@ class AdministrarPlanesMinutosController extends Controller{
 		$id_comercio=Auth::user()->id_comercio; 
 
 		$MinutosRegistrados=DetallePlanMinutos::Where('fecha_registro',$fecha)
-		->Where('id_comercio',$id_comercio)->paginate(5);
+		->Where('id_comercio',$id_comercio)->paginate(4);
 
 		$valor_venta_minutos=DetallePlanMinutos::Where('fecha_registro',$fecha)
 		->Where('id_comercio',$id_comercio)

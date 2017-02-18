@@ -275,7 +275,8 @@ Route::any('Editar_Categoria', array('as'=>'Editar_Categoria','uses'=>'Controlle
 Route::any('Eliminar_Categoria', array('as'=>'Eliminar_Categoria','uses'=>'ControllerRecargas\AdministrarRecargasController@Eliminar_Categoria'))->middleware('auth');
 // Ruta para Registrar Una venta de Recarga
 Route::any('Registrar_Venta_Recarga', array('as'=>'Registrar_Venta_Recarga','uses'=>'ControllerRecargas\AdministrarRecargasController@Registrar_Venta_Recarga'))->middleware('auth');
-
+// Ruta Para eliminar una venta de Recargar
+Route::any('Eliminar_Venta_Recarga', array('as'=>'Eliminar_Venta_Recarga','uses'=>'ControllerRecargas\AdministrarRecargasController@Eliminar_Venta_Recarga'))->middleware('auth');
 // Termina Modulo de Recargas
 
 

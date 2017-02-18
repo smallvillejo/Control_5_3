@@ -5,7 +5,7 @@
 </script>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="panel panel-primary">
-		<div class="panel-heading">
+		<div class="panel-heading" style="background-color: #321a7c">
 			<h3 class="panel-title">
 				<strong>ÚLTIMAS RECARGAS REGISTRADOS</strong>
 				<div class="pull-right">
@@ -27,7 +27,7 @@
 	$('#Panel_2').show();
 </script>
 <div class="panel panel-primary">
-	<div class="panel-heading">
+	<div class="panel-heading" style="background-color: #321a7c">
 		<h3 class="panel-title">
 			<strong>ÚLTIMAS RECARGAS REGISTRADAS</strong>
 			<div class="pull-right">
@@ -37,11 +37,11 @@
 		</h3>
 	</div>
 	<div class="panel-body">
+		<center>{{$VentaRecargas->links()}}</center>
 		@foreach($VentaRecargas as $value)	
-
 		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
 			<div class="panel panel-primary">
-				<div class="panel-heading">					
+				<div class="panel-heading" style="background-color: #321a7c">					
 					<h3 class="panel-title">
 						<b>
 							<strong>
@@ -59,7 +59,7 @@
 										<b><strong><font size ="2", color color="#000000" face="Tahoma">Venta Recarga:</font></strong></b>
 									</td>
 									<td>								
-										<span class="badge btn-md btn-success">
+										<span class="badge btn-md btn-success" style="background: #dd5816;">
 											<b>
 												<strong>
 													<font size ="2">						
@@ -69,6 +69,24 @@
 											</b>
 										</span>
 									</td>
+									<tr>
+										<td>
+											<b><strong><font size ="2", color color="#000000" face="Tahoma"><i class="fa fa-clock-o" aria-hidden="true"></i>Hora Venta:</font></strong></b>
+
+										</td>
+										<td>
+											<span class="badge btn-md btn-success">
+												<b>
+													<strong>
+														<font size ="2">					
+															{{Carbon::parse($value->hora_venta_recarga)->diffForHumans()}}			
+														</font>
+													</strong>
+												</b>
+											</span>
+											
+										</td>
+									</tr>
 								</tr>
 								<tr>
 									<td>									
@@ -81,13 +99,22 @@
 					</table>
 					<div class="panel-footer">Panel de opciones
 						<div class="pull-right">
-
+							<a href="#" data-toggle = 'modal' data-target="#ModalEditar_Registro_Recargas"  class="Editar_Minutos_Registrados" id_venta_recarga="{{$value->id}}"  title="Editar">  
+								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
+									<span class= "fa fa-pencil-square fa-2x"></span></font>
+								</strong>
+							</a>
+							<a href="#" class="Eliminar_Venta_Recarga" id_Categoria_Venta_Eliminar="{{$value->id_venta_recarga}}" Nombre_Categoria_Venta_Eliminar="{{$value->Recarga->nombre_categoria}}" title="Eliminar"> 
+								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
+									<span class= "fa fa-trash-o fa-2x"></span></font>
+								</strong>
+							</a>	
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>		
 		@endforeach	
-	</div>	
+	</div>		
 </div>
 @endif

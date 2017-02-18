@@ -777,6 +777,17 @@ function Cargar_Tabla_Minutos_Ingresados(){
 			$('#tabla_id').empty().html(data);			
 		}
 	});	
+	$(document).on("click",".pagination li a",function(e) {
+		e.preventDefault();		
+		var url = $(this).attr("href");
+		$.ajax({
+			type:'get',
+			url:url,			
+			success: function(data){
+				$('#tabla_id').empty().html(data);				
+			}
+		});
+	});	
 	
 }
 

@@ -25,16 +25,23 @@ use Illuminate\Support\Facades\Validator;
 
 class AdministrarRecargasController extends Controller {
 
+	public function __construct(){
+		Carbon::setLocale('es');
+
+	}
+
 	public function AdministrarRecargas(){
 		return view('AdministrarRecargas.Index_Recargas');
 	}
 
 	public function Cargar_Tabla_Recargas_Ingresados(){
 		$fecha= Carbon::today()->toDateString();
+		// $fecha= Carbon::today();
+		
 		$id_comercio=Auth::user()->id_comercio; 
 
 		$VentaRecargas=VentaRecarga::Where('fecha_venta_recarga',$fecha)
-		->Where('id_comercio',$id_comercio)->paginate(5);
+		->Where('id_comercio',$id_comercio)->paginate(4);
 
 		
 
@@ -186,17 +193,44 @@ class AdministrarRecargasController extends Controller {
 			$Fecha_Registro=Input::get('Fecha_Ingreso_Venta_Recarga');
 
 			$HoraRegistro=Carbon::now()->toTimeString();
-			dd($HoraRegistro);
-					
 
 			$datos_registro = array(
 				'fk_categoria_recarga' 	=> $Categorias['id_categoria_oculto'],
 				'valor_venta_recarga' 	=> $Categorias['ValorRecargaIngresar_oculto'],
-				'fecha_venta_recarga' 	=> $Fecha_Registro.' '.$HoraRegistro,		
+				'fecha_venta_recarga' 	=> $Fecha_Registro,
+				'hora_venta_recarga' 	=> $Fecha_Registro.' '.$HoraRegistro,				
 				'id_comercio' 			=> $id_comercio			
 				);
 			$check = DB::table('venta_recarga')			
 			->insert($datos_registro);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
+		}
+	}
+
+	public function Eliminar_Venta_Recarga(){
+		$rules = array
+		(
+			'id_eliminar_venta_recarga'			=> 'required'					
+			);
+
+		$message = array
+		(
+			'id_eliminar_venta_recarga.required' => ' Se requiere el id de la venta de recarga.'		
+			);
+		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{			
+			$check = DB::table('venta_recarga')
+			->Where('id_venta_recarga',Input::get('id_eliminar_venta_recarga'))
+			->delete();
 
 			if($check >0){
 				return 0;

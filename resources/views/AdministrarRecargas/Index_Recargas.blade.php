@@ -291,7 +291,7 @@
 						<td>								
 							<div class="form-group col-sm-8">					
 								<input type="number" name="ValorRecargaIngresar" id="ValorRecargaIngresar" class="form-control">
-								<input type="text" name="ValorRecargaIngresar_oculto" id="ValorRecargaIngresar_oculto" class="form-control" placeholder="Valor Oculto">
+								<input type="hidden" name="ValorRecargaIngresar_oculto" id="ValorRecargaIngresar_oculto" class="form-control" placeholder="Valor Oculto">
 							</div>
 							<input type="hidden" name="id_categoria_oculto" id="id_categoria_oculto" class="form-control">
 						</td>
@@ -325,6 +325,28 @@
 	</div>     
 </div>
 <!-- Termina Modal Confirmar Venta Recarga -->
+<!-- Modal Para Confirmacion al Eliminar Venta Recarga -->
+<div class="panel-body" data-backdrop="static" data-keyboard="false">      
+	<div class="modal fade" id="Eliminar_Registro_Venta_Recarga" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">¿Esta Seguro de Eliminar el Registro?</h4>										
+				</div>	
+				<div class="modal-body">									
+					* Se borrará la venta de Recarga de: 
+					<b><strong> <font size ="2", color="#ff3300" face="Arial Black"><label id="Nombre_Categoria_Venta_Eliminar" name="Nombre_Categoria_Venta_Eliminar"></label></font></strong></b>
+					<input type="hidden" name="id_eliminar_venta_recarga" id="id_eliminar_venta_recarga">
+				</div>			
+				<div class="modal-footer">
+					<button  class="btn btn-primary Eliminar_Registro_Venta_Recarga" type="button">Si</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" type="button">No</button>
+				</div>
+			</div>
+		</div>     
+	</div>
+</div>
+<!-- Termina Modal Para Eliminar Venta Recarga -->
 <!-- Modal Para Confirmaciones -->
 <div class="modal fade" tabindex="-1" role="dialog" id="ModalConfirmacion" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
@@ -353,7 +375,8 @@
 		document.getElementById('BtnIngresarRecarga').disabled=true;			
 		document.getElementById('BtnModificarCategoria').disabled=true;
 		document.getElementById('BtnEliminarCategoria').disabled=true;	
-		$('#id_categoria_listar').val('').selectpicker('refresh');	
+		$('#id_categoria_listar').val('').selectpicker('refresh');		
+		Cargar_Tabla_Recargas_Ingresados();	
 	});
 	
 	document.getElementById('BtnIngresarRecarga').disabled=true;
@@ -369,8 +392,19 @@
 				$('#tabla_id').empty().html(data);			
 			}
 		});	
-
+		$(document).on("click",".pagination li a",function(e) {
+			e.preventDefault();		
+			var url = $(this).attr("href");
+			$.ajax({
+				type:'get',
+				url:url,			
+				success: function(data){
+					$('#tabla_id').empty().html(data);					
+				}
+			});
+		});	
 	}
+
 	function Listar_Categorias(){
 		$el =$('#id_categoria_listar');
 		$.ajax({
@@ -711,8 +745,7 @@ $('.RegistrarVentaRecarga').click(function(){
 				$('#ModalConfirmacion').modal('show');
 				$('#TitleModal').html('<p>Registro Exitoso.</p>');
 				$('#CuerpoMensaje').html('<p>La venta de recarga se registró con éxito..!!</p>');				
-				Limpiar_data_Despues_de_Registrar_Venta();
-				Cargar_Tabla_Recargas_Ingresados();
+				Limpiar_data_Despues_de_Registrar_Venta();				
 			}
 			if(data.success==false){
 				$.each(data.errors,function(index, error){ 
@@ -724,6 +757,50 @@ $('.RegistrarVentaRecarga').click(function(){
 		}
 	});
 
+});
+
+
+$('body').delegate('.Eliminar_Venta_Recarga','click',function(){
+
+	var id_Categoria_Venta_Eliminar =($(this).attr('id_Categoria_Venta_Eliminar'));
+	var Nombre_Categoria_Venta_Eliminar =($(this).attr('Nombre_Categoria_Venta_Eliminar'));
+	
+	$('#Nombre_Categoria_Venta_Eliminar').text(Nombre_Categoria_Venta_Eliminar);	
+	$('#id_eliminar_venta_recarga').val(id_Categoria_Venta_Eliminar);
+	$('#Eliminar_Registro_Venta_Recarga').modal('show');
+});
+
+$('.Eliminar_Registro_Venta_Recarga').click(function(){
+	
+	var id_eliminar_venta_recarga 		=$('#id_eliminar_venta_recarga').val();
+	
+	$.ajax({
+		url   : "<?= URL::to('Eliminar_Venta_Recarga') ?>",
+		type  : "GET",
+		async : false,
+		data  :{				
+			'id_eliminar_venta_recarga'  : id_eliminar_venta_recarga					
+		},  
+		success:function(data){			
+			if(data == 0){
+				$("#Eliminar_Registro_Venta_Recarga").modal('hide');						
+				$('#CuerpoMensaje').html('');					
+				$('#ModalConfirmacion').modal('show');
+				$('#TitleModal').html('<p>Registro Eliminado.</p>');
+				$('#CuerpoMensaje').html('<p>La venta de recarga se elimino con éxito..!!</p>');			
+				
+			}
+			if(data.success==false){
+				$.each(data.errors,function(index, error){ 
+					$("#Eliminar_Registro_Venta_Recarga").modal('hide');					
+					$('#CuerpoMensaje').html('');					
+					$('#ModalConfirmacion').modal('show');
+					$('#TitleModal').html('<p>Error al eliminar.</p>');
+					$('#CuerpoMensaje').html('<p><strong>'+error+'</strong></p>');
+				});  
+			}
+		}
+	});
 });
 
 
