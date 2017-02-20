@@ -287,6 +287,10 @@ Route::any('AdministrarInternet', array('as'=>'AdministrarInternet','uses'=>'Con
 Route::any('Cargar_Tabla_Ventas_Internet', array('as'=>'Cargar_Tabla_Ventas_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Cargar_Tabla_Ventas_Internet'))->middleware('auth');
 // Ruta para registrar Venta de Internet
 Route::any('Registrar_Venta_Internet', array('as'=>'Registrar_Venta_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Registrar_Venta_Internet'))->middleware('auth');
+// Ruta para Eliminar Venta de Internet
+Route::any('Eliminar_Venta_Internet', array('as'=>'Eliminar_Venta_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Eliminar_Venta_Internet'))->middleware('auth');
+// Ruta Para Editar Venta de Internet
+Route::any('Editar_Venta_Internet', array('as'=>'Editar_Venta_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Editar_Venta_Internet'))->middleware('auth');
 
 // Termina Modulo de Internet
 

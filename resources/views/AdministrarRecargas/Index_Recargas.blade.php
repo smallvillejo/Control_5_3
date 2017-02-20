@@ -789,15 +789,9 @@ function Limpiar_data_Despues_de_Registrar_Categoria(){
 }
 function Limpiar_data_Despues_de_Registrar_Venta(){
 	$('#ValorRecargaIngresar_oculto').val('');	
-	$('#Fecha_Ingreso_Venta_Recarga').datepicker('setDate', null);
-	// $('#Fecha_Ingreso_Venta_Recarga').datepicker('setDate','');	
-
-
-	queryDate = '{{Carbon::today()->toDateString()}}';
-
-	var parsedDate = $.datepicker.parseDate('yyyy-mm-dd', queryDate);
-
-	$('#Fecha_Ingreso_Venta_Recarga').datepicker('setDate', parsedDate);
+	$("#Fecha_Ingreso_Venta_Recarga").datepicker("destroy");	
+	$('#Fecha_Ingreso_Venta_Recarga').val('{{Carbon::today()->toDateString()}}');	
+	$("#Fecha_Ingreso_Venta_Recarga").datepicker("refresh");	
 }
 
 
@@ -807,18 +801,10 @@ $('#BtnIngresarRecarga').click(function(){
 
 	$('#ValorRecargaIngresar').val('');
 	$('#ValorRecargaIngresar').focus();
-	document.getElementById("ValorRecargaIngresar").focus();	
-
-	$("#Fecha_Ingreso_Venta_Recarga").datepicker("destroy");
-
-	
-	$('#Fecha_Ingreso_Venta_Recarga').val('{{Carbon::today()->toDateString()}}');
-
-	// $('#Fecha_Ingreso_Venta_Recarga').val('{{Carbon::today()->toDateString()}}').datepicker("refresh");
-	// $('#Fecha_Ingreso_Venta_Recarga').val('').datepicker('update');
-	// $('#Fecha_Ingreso_Venta_Recarga').datepicker({ dateFormat: 'yy-mm-dd',minDate: null,maxDate: null }).val('{{Carbon::today()->toDateString()}}');
-	$("#Fecha_Ingreso_Venta_Recarga").datepicker("refresh");
-	
+	document.getElementById("ValorRecargaIngresar").focus();
+	$("#Fecha_Ingreso_Venta_Recarga").datepicker("destroy");	
+	$('#Fecha_Ingreso_Venta_Recarga').val('{{Carbon::today()->toDateString()}}');	
+	$("#Fecha_Ingreso_Venta_Recarga").datepicker("refresh");	
 	$('#Modal_Ingresar_VentaRecarga').modal('show');
 });
 

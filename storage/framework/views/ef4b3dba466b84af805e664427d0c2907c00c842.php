@@ -5,7 +5,7 @@
 </script>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="panel panel-primary">
-		<div class="panel-heading" style="background-color: #1292da">
+		<div class="panel-heading" style="background-color: #321a7c">
 			<h3 class="panel-title">
 				<strong>ÚLTIMAS VENTAS INTERNET</strong>
 				<div class="pull-right">
@@ -56,7 +56,7 @@
 							<tbody>
 								<tr>
 									<td>								
-										<b><strong><font size ="2", color color="#000000" face="Tahoma">Venta Internet:</font></strong></b>
+										<b><strong><font size ="2", color color="#000000" face="Tahoma">Valor Venta:</font></strong></b>
 									</td>
 									<td>								
 										<span class="badge btn-md btn-success" style="background: #dd5816;">
@@ -98,7 +98,7 @@
 					</table>
 					<div class="panel-footer">Panel de opciones
 						<div class="pull-right">
-							<a href="#" class="Editar_Venta_Recarga" id_Venta_Internet_Editar="<?php echo e($value->id_venta_internet); ?>" title="Editar">  
+							<a href="#" class="Editar_Venta_Recarga" id_Venta_Internet_Editar="<?php echo e($value->id_venta_internet); ?>" Valor_Venta_Internet_Editar="<?php echo e($value->venta_total_dia); ?>" Fecha_Venta_Internet_Editar="<?php echo e($value->fecha_internet_venta); ?>" title="Editar">  
 								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
 									<span class= "fa fa-pencil-square fa-2x"></span></font>
 								</strong>
