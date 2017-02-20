@@ -285,6 +285,9 @@ Route::any('Modificar_Venta_Recarga', array('as'=>'Modificar_Venta_Recarga','use
 Route::any('AdministrarInternet', array('as'=>'AdministrarInternet','uses'=>'ControllerInternet\AdministrarInternetController@AdministrarInternet'))->middleware('auth');
 // Ruta para cargar las ventas del dia de internet en tabla
 Route::any('Cargar_Tabla_Ventas_Internet', array('as'=>'Cargar_Tabla_Ventas_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Cargar_Tabla_Ventas_Internet'))->middleware('auth');
+// Ruta para registrar Venta de Internet
+Route::any('Registrar_Venta_Internet', array('as'=>'Registrar_Venta_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Registrar_Venta_Internet'))->middleware('auth');
+
 // Termina Modulo de Internet
 
 

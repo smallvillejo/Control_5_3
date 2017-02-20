@@ -49,6 +49,49 @@ class AdministrarInternetController extends Controller {
 		->with('Valor_Venta_Internet',$Valor_Venta_Internet);
 	}
 
+	public function Registrar_Venta_Internet(){
+
+		$rules = array
+		(
+			'Valor_Venta_Ingresar_Internet_oculto'		=> 'required',
+			'Fecha_Ingreso_Venta_Recarga'				=> 'required'					
+			);
+
+		$message = array
+		(
+			'Valor_Venta_Ingresar_Internet_oculto.required' => ' Se requiere Valor Venta.',	
+			'Fecha_Ingreso_Venta_Recarga.required' => ' Se requiere la fecha de la venta.',
+			);
+		
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{
+			$VentaInternet = Input::all();
+			$id_comercio=Auth::user()->id_comercio;
+
+			$Fecha_Registro=Input::get('Fecha_Ingreso_Venta_Recarga');
+			$HoraRegistro=Carbon::now()->toTimeString();
+
+			$datos_registro = array(
+				'fecha_internet_venta' 	=> $VentaInternet['Fecha_Ingreso_Venta_Recarga'],
+				'venta_total_dia' 		=> $VentaInternet['Valor_Venta_Ingresar_Internet_oculto'],
+				'id_comercio' 			=> $id_comercio,
+				'hora_venta_internet' 	=> $Fecha_Registro.' '.$HoraRegistro				
+				);
+			$check = DB::table('venta_internet')			
+			->insert($datos_registro);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
+		}
+
+	}
+
 	public function Cargar_Tabla_Recargas_Ingresados(){
 		$fecha= Carbon::today()->toDateString();
 		// $fecha= Carbon::today();
