@@ -291,11 +291,11 @@ Route::any('Registrar_Venta_Internet', array('as'=>'Registrar_Venta_Internet','u
 Route::any('Eliminar_Venta_Internet', array('as'=>'Eliminar_Venta_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Eliminar_Venta_Internet'))->middleware('auth');
 // Ruta Para Editar Venta de Internet
 Route::any('Editar_Venta_Internet', array('as'=>'Editar_Venta_Internet','uses'=>'ControllerInternet\AdministrarInternetController@Editar_Venta_Internet'))->middleware('auth');
-
 // Termina Modulo de Internet
+// Empieza Modulo de Compras
+Route::any('AdministrarCompras', array('as'=>'AdministrarCompras','uses'=>'ControllerCompras\AdministrarComprasController@AdministrarCompras'))->middleware('auth');
 
-
-
+// Termina Modulo De Compras
 
 
 

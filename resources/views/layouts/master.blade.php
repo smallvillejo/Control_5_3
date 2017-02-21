@@ -219,7 +219,8 @@ info2.slideDown();
                 'Consultas' => '',
                 'AdministrarPlanes' => '',
                 'AdministrarRecargas' => '',
-                'AdministrarInternet' => ''
+                'AdministrarInternet' => '',
+                'AdministrarCompras' => ''
                 );
               if ($vista == '' || $vista == 'Index'){
                 $current['Index'] = 'active';
@@ -241,6 +242,9 @@ info2.slideDown();
               }
               else if ($vista == '' || $vista == 'AdministrarInternet'){
                 $current['AdministrarInternet'] = 'active';
+              }
+              else if ($vista == '' || $vista == 'AdministrarCompras'){
+                $current['AdministrarCompras'] = 'active';
               }
               ?>
               <li class="{{$current['Index']}}">
@@ -290,7 +294,7 @@ info2.slideDown();
                   </li>
                   <li class="{{$current['AdministrarRecargas']}}">
                     <a href="{{URL::route('AdministrarRecargas')}}">
-                     <i class="fa fa-money" aria-hidden="true"></i> 
+                     <i class="fa fa-mobile" aria-hidden="true"></i>
                      <span class="title">Recargas</span>
                    </a>
                  </li>
@@ -299,7 +303,13 @@ info2.slideDown();
                     <i class="fa fa-internet-explorer" aria-hidden="true"></i>
                     <span class="title">Internet</span>
                   </a>
-                </li>                                   
+                </li> 
+                 <li class="{{$current['AdministrarCompras']}}">
+                  <a href="{{URL::route('AdministrarCompras')}}">
+                    <i class="fa fa-money" aria-hidden="true"></i> 
+                    <span class="title">Compras</span>
+                  </a>
+                </li>                                  
                 <li class="{{$current['Consultas']}}">
                   <a href="javascript:;">
                     <i class="fa fa-search" aria-hidden="true"></i>
