@@ -49,6 +49,50 @@ class AdministrarComprasController extends Controller {
 		->with('Valor_Compras',$Valor_Compras);
 	}
 
+	public function Registrar_Compra(){
+
+		$id_comercio=Auth::user()->id_comercio;
+		$rules = array
+		(
+			'Fecha_Ingreso_Compra'			=> 'required',
+			'Valor_Ingreso_Compra_oculto'	=> 'required',
+			'Descripcion_Ingreso_Compra'	=> 'required'					
+			);
+
+		$message = array
+		(
+			'Fecha_Ingreso_Compra.required' => ' Se requiere Fecha de Compra.',	
+			'Valor_Ingreso_Compra_oculto.required' => ' Se Requiere Valor de la Compra.',
+			'Descripcion_Ingreso_Compra.required' => ' Se requiere descripción de la Compra.',
+			);
+
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
+		}else{
+			$Compras = Input::all();
+			$Fecha_Registro=Input::get('Fecha_Ingreso_Compra');
+			$HoraRegistro=Carbon::now()->toTimeString();
+
+			$datos_registro = array(
+				'fecha_compra' 			=> $Compras['Fecha_Ingreso_Compra'],
+				'descripcion_compra' 	=> $Compras['Descripcion_Ingreso_Compra'],
+				'valor_total_compra' 	=> $Compras['Valor_Ingreso_Compra_oculto'],
+				'id_comercio' 			=> $id_comercio,
+				'hora_compra' 			=> $Fecha_Registro.' '.$HoraRegistro	
+				);
+			$check = DB::table('compras')			
+			->insert($datos_registro);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
+		}
+	}
+
 	public function Registrar_Venta_Internet(){
 		$fecha= Input::get('Fecha_Ingreso_Venta_Internet');
 		$id_comercio=Auth::user()->id_comercio;

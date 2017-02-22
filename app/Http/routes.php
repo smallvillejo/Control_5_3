@@ -296,6 +296,9 @@ Route::any('Editar_Venta_Internet', array('as'=>'Editar_Venta_Internet','uses'=>
 Route::any('AdministrarCompras', array('as'=>'AdministrarCompras','uses'=>'ControllerCompras\AdministrarComprasController@AdministrarCompras'))->middleware('auth');
 // Ruta para cargar todas las compras del dia en una tabla
 Route::any('Cargar_Tabla_Compras', array('as'=>'Cargar_Tabla_Compras','uses'=>'ControllerCompras\AdministrarComprasController@Cargar_Tabla_Compras'))->middleware('auth');
+// Ruta para registrar compra
+Route::any('Registrar_Compra', array('as'=>'Registrar_Compra','uses'=>'ControllerCompras\AdministrarComprasController@Registrar_Compra'))->middleware('auth');
+
 
 // Termina Modulo De Compras
 
