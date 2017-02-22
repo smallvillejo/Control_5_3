@@ -1,4 +1,4 @@
-@if($Compras->total()==0)
+<?php if($Compras->total()==0): ?>
 <script type="text/javascript">
 	$('#Panel_1').show();
 	$('#Panel_2').show();
@@ -10,7 +10,7 @@
 				<strong>ÚLTIMAS COMPRAS</strong>
 				<div class="pull-right">
 					<strong>Total Compras:</strong>
-					<label><font size ="3", color color="#000000" face="Tahoma"><strong>${{number_format($Valor_Compras)}}</strong></font></label>
+					<label><font size ="3", color color="#000000" face="Tahoma"><strong>$<?php echo e(number_format($Valor_Compras)); ?></strong></font></label>
 				</div>
 			</h3>
 		</div>
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 </div>
-@else
+<?php else: ?>
 <script type="text/javascript">
 	$('#Panel_1').show();
 	$('#Panel_2').show();
@@ -32,13 +32,13 @@
 			<strong>ÚLTIMAS VENTAS</strong>
 			<div class="pull-right">
 				<strong>Total Venta Internet:</strong>
-				<label><font size ="3", color color="#000000" face="Tahoma"><strong>${{number_format($Valor_Venta_Internet)}}</strong></font></label>
+				<label><font size ="3", color color="#000000" face="Tahoma"><strong>$<?php echo e(number_format($Valor_Venta_Internet)); ?></strong></font></label>
 			</div>
 		</h3>
 	</div>
 	<div class="panel-body">
-		<center>{{$VentaInternet->links()}}</center>
-		@foreach($VentaInternet as $value)	
+		<center><?php echo e($VentaInternet->links()); ?></center>
+		<?php foreach($VentaInternet as $value): ?>	
 		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading" style="background-color: #321a7c">					
@@ -63,7 +63,7 @@
 											<b>
 												<strong>
 													<font size ="2">						
-														$ {{number_format($value->venta_total_dia)}}		
+														$ <?php echo e(number_format($value->venta_total_dia)); ?>		
 													</font>
 												</strong>
 											</b>
@@ -79,7 +79,7 @@
 												<b>
 													<strong>
 														<font size ="2">					
-															{{Carbon::parse($value->hora_venta_internet)->diffForHumans()}} ({{$value->	fecha_internet_venta}})			
+															<?php echo e(Carbon::parse($value->hora_venta_internet)->diffForHumans()); ?> (<?php echo e($value->	fecha_internet_venta); ?>)			
 														</font>
 													</strong>
 												</b>
@@ -98,12 +98,12 @@
 					</table>
 					<div class="panel-footer">Panel de opciones
 						<div class="pull-right">
-							<a href="#" class="Editar_Venta_Recarga" id_Venta_Internet_Editar="{{$value->id_venta_internet}}" Valor_Venta_Internet_Editar="{{$value->venta_total_dia}}" Fecha_Venta_Internet_Editar="{{$value->fecha_internet_venta}}" title="Editar">  
+							<a href="#" class="Editar_Venta_Recarga" id_Venta_Internet_Editar="<?php echo e($value->id_venta_internet); ?>" Valor_Venta_Internet_Editar="<?php echo e($value->venta_total_dia); ?>" Fecha_Venta_Internet_Editar="<?php echo e($value->fecha_internet_venta); ?>" title="Editar">  
 								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
 									<span class= "fa fa-pencil-square fa-2x"></span></font>
 								</strong>
 							</a>
-							<a href="#" class="Eliminar_Venta_Recarga" id_Venta_Internet_Eliminar="{{$value->id_venta_internet}}"  title="Eliminar"> 
+							<a href="#" class="Eliminar_Venta_Recarga" id_Venta_Internet_Eliminar="<?php echo e($value->id_venta_internet); ?>"  title="Eliminar"> 
 								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
 									<span class= "fa fa-trash-o fa-2x"></span></font>
 								</strong>
@@ -113,7 +113,7 @@
 				</div>
 			</div>
 		</div>		
-		@endforeach	
+		<?php endforeach; ?>	
 	</div>		
 </div>
-@endif
+<?php endif; ?>

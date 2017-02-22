@@ -12,7 +12,7 @@ use App\Models\Alimentos\VentaAlimento;
 use App\Models\PlanesCelular\DetallePlanMinutos;
 use App\Models\Internet\VentaInternet;
 use App\Models\Recargas\VentaRecarga;
-use App\Models\Compras\Compra;
+use App\Models\Compras\Compras;
 use App\Models\Gastos\Gasto;
 use App\Models\Empresa\Empresa;
 use Control_5_3\Models\Cargo\Cargo;
@@ -81,7 +81,7 @@ class IndexController extends Controller{
 		->sum('valor_venta_recarga');
 
 
-		$TotalCompra=Compra::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
+		$TotalCompra=Compras::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
 		->Where('id_comercio',$id_comercio)
 		->sum('valor_total_compra');
 
@@ -165,7 +165,7 @@ class IndexController extends Controller{
 		->sum('valor_venta_recarga');
 
 
-		$TotalCompra=Compra::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
+		$TotalCompra=Compras::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
 		->Where('id_comercio',$id_comercio)
 		->sum('valor_total_compra');
 
@@ -202,6 +202,9 @@ class IndexController extends Controller{
 	}
 
 	public function ExportarReportBalancePdf(){
+		$ruta_imagen = 'exports';
+		File::makeDirectory($ruta_imagen, $mode = 0777, true, true);
+
 		$id_comercio=Auth::user()->id_comercio; 
 		// $nombreArchivo='Comercio_ID:'.$id_comercio.'-Balance General';
 
@@ -243,7 +246,7 @@ class IndexController extends Controller{
 		->sum('valor_venta_recarga');
 
 
-		$TotalCompra=Compra::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
+		$TotalCompra=Compras::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
 		->Where('id_comercio',$id_comercio)
 		->sum('valor_total_compra');
 
@@ -309,7 +312,7 @@ class IndexController extends Controller{
 	}
 
 	public function ExportarReportBalanceExcel(){
-	
+
 		$nombreArchivo='Laravel_Excel';
 		$id_comercio=Auth::user()->id_comercio;
 		$Fecha_Inicial=Input::get('Fecha_Inicial');
@@ -351,7 +354,7 @@ class IndexController extends Controller{
 		->sum('valor_venta_recarga');
 
 
-		$TotalCompra=Compra::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
+		$TotalCompra=Compras::whereBetween('fecha_compra', array($Fecha_Inicial, $Fecha_Final))
 		->Where('id_comercio',$id_comercio)
 		->sum('valor_total_compra');
 

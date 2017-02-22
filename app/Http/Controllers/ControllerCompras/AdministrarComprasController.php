@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
-use App\Models\Internet\VentaInternet;
+use App\Models\Compras\Compras;
 use Carbon\Carbon;
 use File;
 use Excel;
@@ -33,20 +33,20 @@ class AdministrarComprasController extends Controller {
 		return view('AdministrarCompras.Index_Compras');
 	}
 
-	public function Cargar_Tabla_Ventas_Internet(){
+	public function Cargar_Tabla_Compras(){
 		$fecha= Carbon::today()->toDateString();		
 		$id_comercio=Auth::user()->id_comercio; 
 
-		$VentaInternet=VentaInternet::Where('fecha_internet_venta',$fecha)
-		->Where('id_comercio',$id_comercio)->paginate(4);
+		$Compras=Compras::Where('fecha_compra',$fecha)
+		->Where('id_comercio',$id_comercio)->paginate(2);
 
-		$Valor_Venta_Internet=VentaInternet::Where('fecha_internet_venta',$fecha)
+		$Valor_Compras=Compras::Where('fecha_compra',$fecha)
 		->Where('id_comercio',$id_comercio)
-		->sum('venta_total_dia');
+		->sum('valor_total_compra');
 
-		return view('AdministrarInternet/Tablas.Tabla_Ingreso_Internet')
-		->with('VentaInternet',$VentaInternet)
-		->with('Valor_Venta_Internet',$Valor_Venta_Internet);
+		return view('AdministrarCompras/Tablas.Tabla_Ingreso_Compras')
+		->with('Compras',$Compras)
+		->with('Valor_Compras',$Valor_Compras);
 	}
 
 	public function Registrar_Venta_Internet(){

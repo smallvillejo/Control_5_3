@@ -15,7 +15,6 @@
 	<br>
 	<br>
 	<br>
-
 	<div class="row form-group">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" id="Panel_2">
 			<div class="panel panel-primary">
@@ -51,8 +50,6 @@
 										</div>
 									</div>
 								</td>
-							</tr>
-							<tr>
 								<td>
 									<div class="form-group">
 										<span class="badge btn-md btn-success" style="background: 
@@ -66,45 +63,43 @@
 										</b>
 									</span>
 								</div>
-								<input type="number" name="Valor_Venta_Ingresar_Internet" id="Valor_Venta_Ingresar_Internet" class="form-control" placeholder="Ingrese el valor venta de internet" autofocus>
+								<input type="number" name="Valor_Venta_Ingresar_Internet" id="Valor_Venta_Ingresar_Internet" class="form-control" placeholder="Valor Compra" autofocus>
 								<input type="hidden" name="Valor_Venta_Ingresar_Internet_oculto" id="Valor_Venta_Ingresar_Internet_oculto" class="form-control">
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<div class="form-group">
-									<span class="badge btn-md btn-success" style="background: 
-									#0270f7;">
-									<b>
-										<strong>
-											<font size ="2", color color="#000000" face="Tahoma">
-												Descripción Compra:
-											</font>
-										</strong>
-									</b>
-								</span>
-							</div>
-							<textarea name="descripcion_compra_ingreso" id="descripcion_compra_ingreso" class="form-control">
-							</textarea>
-						</td>
-					</tr>
-					<tr>
-
-					</tr>						
-				</tbody>
-			</div>
-		</table>
-		<div class="panel panel-danger" style="display:none" id="estilo">
-			<div class="panel-heading" id="mensaje" style="display:none">
-				<strong></strong>
-			</div>
+							<td></td>
+							<td></td>
+						</tr>						
+					</tbody>
+				</div>
+			</table>
+			<div class="form-group">
+				<span class="badge btn-md btn-success" style="background: 
+				#0270f7;">
+				<b>
+					<strong>
+						<font size ="2", color color="#000000" face="Tahoma">
+							Descripción Compra:
+						</font>
+					</strong>
+				</b>
+			</span>
+		</div>	
+		<div class="form-group">						
+			<textarea name="descripcion_compra_ingreso" id="descripcion_compra_ingreso" class="form-control" style="overflow:auto;resize:none;" >
+			</textarea>
+		</div><div class="panel panel-danger" style="display:none" id="estilo">
+		<div class="panel-heading" id="mensaje" style="display:none">
+			<strong></strong>
 		</div>
-		<button type="button" class="btn btn-circle RegistrarIngresoInternet"  style="background-color:#0270f7"
-		id="BtnIngresarRecarga" title="Ingresar Recargas">
-		<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar Venta</span>
-			<span class="fa fa-plus-square"></span>
-		</font></strong>
-	</button>
+	</div>
+	<button type="button" class="btn btn-circle RegistrarIngresoInternet"  style="background-color:#0270f7"
+	id="BtnIngresarRecarga" title="Ingresar Recargas">
+	<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar Compra</span>
+		<span class="fa fa-plus-square"></span>
+	</font></strong>
+</button>
 </div>
 </div>
 </div>
@@ -271,18 +266,18 @@
 
 
 <script type="text/javascript">
-	Cargar_Tabla_Ventas_Internet();	
+	Cargar_Tabla_Compras();	
 
 
 
 	$('#descripcion_compra_ingreso').val('');	
-	$('#descripcion_compra_ingreso').css("height",200);
-	$('#descripcion_compra_ingreso').css("width",350);
+	// $('#descripcion_compra_ingreso').css("height",200);
+	// $('#descripcion_compra_ingreso').css("width",410);
 
 	$('.CerrarMensaje').click(function(){
 		$('#estilo').hide();
 		$('#estilo2').hide();
-		Cargar_Tabla_Ventas_Internet();
+		Cargar_Tabla_Compras();
 		$('#Valor_Venta_Ingresar_Internet').val('');
 		$('#Valor_Venta_Ingresar_Internet_oculto').val('');		
 		document.getElementById("Valor_Venta_Ingresar_Internet").focus();
@@ -292,10 +287,10 @@
 
 	});
 
-	function Cargar_Tabla_Ventas_Internet(){
+	function Cargar_Tabla_Compras(){
 		$.ajax({
 			type:'get',
-			url:'<?php echo e(url('Cargar_Tabla_Ventas_Internet')); ?>',
+			url:'<?php echo e(url('Cargar_Tabla_Compras')); ?>',
 			success: function(data){      
 				$('#tabla_id').empty().html(data);			
 			}
