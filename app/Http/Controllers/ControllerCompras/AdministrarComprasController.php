@@ -94,67 +94,62 @@ class AdministrarComprasController extends Controller {
 		}
 	}
 
-	public function Registrar_Venta_Internet(){
-		$fecha= Input::get('Fecha_Ingreso_Venta_Internet');
-		$id_comercio=Auth::user()->id_comercio;
-
-		$VentaInternet=VentaInternet::Where('fecha_internet_venta',$fecha)
-		->Where('id_comercio',$id_comercio)->get();
-		$venta_total_dia=0;		
+	public function Editar_Compra(){
+		$Id_Compra_Editar=Input::get('Id_Compra_Editar');
+		$Fecha_Ingreso_Compra_Editar=Input::get('Fecha_Ingreso_Compra_Editar');
+		$Valor_Ingreso_Compra_Oculto_Editar=Input::get('Valor_Ingreso_Compra_Oculto_Editar');
+		$Descripcion_Ingreso_Compra_Editar=Input::get('Descripcion_Ingreso_Compra_Editar');
+		$id_comercio=Auth::user()->id_comercio; 
 		
-		foreach ($VentaInternet as $key => $value) {
-			$venta_total_dia=$value->venta_total_dia;
-		}
+		$rules = array
+		(
+			'Valor_Ingreso_Compra_Oculto_Editar'	=> 'required',
+			'Fecha_Ingreso_Compra_Editar'			=> 'required',
+			'Descripcion_Ingreso_Compra_Editar'		=> 'required|max:300'				
+			);
 
-		if($venta_total_dia!=0){
-			return Response::json(['ErrorAlRegistrar'=>"Tiene Ventas"]);
+		$message = array
+		(
+			'Fecha_Ingreso_Compra_Editar.required' => ' Se requiere Fecha de Compra.',	
+			'Valor_Ingreso_Compra_Oculto_Editar.required' => ' Se Requiere Valor de la Compra.',
+			'Descripcion_Ingreso_Compra_Editar.required' => ' Se requiere descripción de la Compra.',
+			'Descripcion_Ingreso_Compra_Editar.max' => ' Son 300 Caracteres Máximo Permitidos para la descripción de la compra.'
+			);
+
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);		
 		}else{
-			$rules = array
-			(
-				'Valor_Venta_Ingresar_Internet_oculto'		=> 'required',
-				'Fecha_Ingreso_Venta_Internet'				=> 'required'					
-				);
+			$Fecha_Registro=Input::get('Fecha_Ingreso_Compra_Editar');
+			$HoraRegistro=Carbon::now()->toTimeString();
 
-			$message = array
-			(
-				'Valor_Venta_Ingresar_Internet_oculto.required' => ' Se requiere Valor Venta.',	
-				'Fecha_Ingreso_Venta_Internet.required' => ' Se requiere la fecha de la venta.',
+			$datos_registro = array(
+				'fecha_compra' 		   => $Fecha_Registro,
+				'descripcion_compra'   => $Descripcion_Ingreso_Compra_Editar,
+				'valor_total_compra'   => $Valor_Ingreso_Compra_Oculto_Editar,
+				'hora_compra' 		   => $Fecha_Registro.' '.$HoraRegistro
 				);
+			$check = DB::table('compras')
+			->Where('id_compra',$Id_Compra_Editar)
+			->Where('id_comercio',$id_comercio)
+			->update($datos_registro);
 
-			$validator = Validator::make(Input::All(), $rules, $message);
-			if ($validator->fails()) {
-				return Response::json(['success' =>false,
-					'errors'=>$validator->errors()->toArray()]);		
+			
+			if($check >0){
+				return 0;
 			}else{
-				$VentaInternet = Input::all();
-
-
-				$Fecha_Registro=Input::get('Fecha_Ingreso_Venta_Internet');
-				$HoraRegistro=Carbon::now()->toTimeString();
-
-				$datos_registro = array(
-					'fecha_internet_venta' 	=> $VentaInternet['Fecha_Ingreso_Venta_Internet'],
-					'venta_total_dia' 		=> $VentaInternet['Valor_Venta_Ingresar_Internet_oculto'],
-					'id_comercio' 			=> $id_comercio,
-					'hora_venta_internet' 	=> $Fecha_Registro.' '.$HoraRegistro				
-					);
-				$check = DB::table('venta_internet')			
-				->insert($datos_registro);
-
-				if($check >0){
-					return 0;
-				}else{
-					return 1;	
-				}
+				return 1;	
 			}
 		}
 	}
 
-	public function Eliminar_Venta_Internet(){
-		$id_venta_internet_eliminar=Input::get('id_venta_internet_eliminar');
+
+	public function Eliminar_Compra(){
+		$id_compra_eliminar=Input::get('id_compra_eliminar');
 		$id_comercio=Auth::user()->id_comercio; 
-		$check = DB::table('venta_internet')
-		->where('id_venta_internet',$id_venta_internet_eliminar)
+		$check = DB::table('compras')
+		->where('id_compra',$id_compra_eliminar)
 		->where('id_comercio',$id_comercio)
 		->delete();
 
@@ -170,7 +165,7 @@ class AdministrarComprasController extends Controller {
 		$valor_venta_internet_editar_oculto=Input::get('valor_venta_internet_editar_oculto');
 		$Fecha_Ingreso_Venta_Internet_editar=Input::get('Fecha_Ingreso_Venta_Internet_editar');
 		$id_comercio=Auth::user()->id_comercio; 
-		
+
 		$rules = array
 		(
 			'valor_venta_internet_editar_oculto'		=> 'required',
@@ -201,7 +196,7 @@ class AdministrarComprasController extends Controller {
 			->Where('id_comercio',$id_comercio)
 			->update($datos_registro);
 
-			
+
 			if($check >0){
 				return 0;
 			}else{

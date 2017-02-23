@@ -27,7 +27,7 @@
 	$('#Panel_2').show();	
 </script>
 <div class="panel panel-primary">
-	<div class="panel-heading" style="background-color: #321a7c">
+	<div class="panel-heading" style="background-color: #1c6a9e">
 		<h3 class="panel-title">
 			<strong>ÚLTIMAS COMPRAS</strong>
 			<div class="pull-right">
@@ -100,7 +100,7 @@
 					</table>
 					<div class="panel-footer">Panel de opciones
 						<div class="pull-right">
-							<a href="#" class="Editar_Compra" Id_Compra_Editar="{{$value->id_compra}}" Valor_Compra_Editar="{{$value->valor_total_compra}}" Fecha_Compra_Editar="{{$value->fecha_compra}}" title="Editar">  
+							<a href="#" class="Editar_Compra" Id_Compra_Editar="{{$value->id_compra}}" Valor_Compra_Editar="{{$value->valor_total_compra}}" Fecha_Compra_Editar="{{$value->fecha_compra}}" Descripcion_Compra_Editar="{{$value->descripcion_compra}}" title="Editar">  
 								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
 									<span class= "fa fa-pencil-square fa-2x"></span></font>
 								</strong>

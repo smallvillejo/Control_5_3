@@ -298,7 +298,10 @@ Route::any('AdministrarCompras', array('as'=>'AdministrarCompras','uses'=>'Contr
 Route::any('Cargar_Tabla_Compras', array('as'=>'Cargar_Tabla_Compras','uses'=>'ControllerCompras\AdministrarComprasController@Cargar_Tabla_Compras'))->middleware('auth');
 // Ruta para registrar compra
 Route::any('Registrar_Compra', array('as'=>'Registrar_Compra','uses'=>'ControllerCompras\AdministrarComprasController@Registrar_Compra'))->middleware('auth');
-
+// Ruta para Editar Compra
+Route::any('Editar_Compra', array('as'=>'Editar_Compra','uses'=>'ControllerCompras\AdministrarComprasController@Editar_Compra'))->middleware('auth');
+// Ruta para Eliminar Compra
+Route::any('Eliminar_Compra', array('as'=>'Eliminar_Compra','uses'=>'ControllerCompras\AdministrarComprasController@Eliminar_Compra'))->middleware('auth');
 
 // Termina Modulo De Compras
 
