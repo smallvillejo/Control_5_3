@@ -89,17 +89,18 @@
 		<div class="form-group">						
 			<textarea name="Descripcion_Ingreso_Compra" id="Descripcion_Ingreso_Compra" class="form-control" style="overflow:auto;resize:none;" rows="5" placeholder="Ingresa Descripción de la Compra">
 			</textarea>
-		</div><div class="panel panel-danger" style="display:none" id="estilo">
-		<div class="panel-heading" id="mensaje" style="display:none">
-			<strong></strong>
 		</div>
-	</div>
-	<button type="button" class="btn btn-circle Registrar_Ingreso_Compra"  style="background-color:#0270f7"
-	id="BtnIngresarRecarga" title="Ingresar Recargas">
-	<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar Compra</span>
-		<span class="fa fa-plus-square"></span>
-	</font></strong>
-</button>
+		<div class="panel panel-danger" style="display:none" id="estilo">
+			<div class="panel-heading" id="mensaje" style="display:none">
+				<strong></strong>
+			</div>
+		</div>
+		<button type="button" class="btn btn-circle Registrar_Ingreso_Compra"  style="background-color:#0270f7"
+		id="BtnIngresarRecarga" title="Ingresar Recargas">
+		<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar Compra</span>
+			<span class="fa fa-plus-square"></span>
+		</font></strong>
+	</button>
 </div>
 </div>
 </div>
@@ -114,7 +115,7 @@
 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">¿Está seguro de registrar la venta de internet?</h4>
+				<h4 class="modal-title" id="myModalLabel">¿Está seguro de registrar la compra?</h4>
 			</div>
 			<div class="modal-footer">
 				<button  class="btn btn-primary RegistrarIngresoCompra" type="button" id="confirmar_venta_manual">Si</button>
@@ -125,14 +126,14 @@
 </div>
 <!-- Termina Confirmar Registro de Compra -->
 
-<!-- Modal Editar Venta Internet -->
-<div class="modal fade" id="Modal_Editar_Venta_Internet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"data-backdrop="static" data-keyboard="false">
+<!-- Modal Editar Compra -->
+<div class="modal fade" id="Modal_Editar_Compra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">
 					<b><strong> <font size ="4", color="#53a4ee" face="Arial Black">
-						<i class="fa fa-internet-explorer fa-2x" aria-hidden="true"></i> Editar Venta Internet</font></strong>
+						<i class="fa fa-internet-explorer fa-2x" aria-hidden="true"></i> Editar Compra</font></strong>
 					</b>
 				</h4>
 			</div>
@@ -149,60 +150,73 @@
 								<td>
 									<div class="form-group">
 										<span class="badge btn-md btn-success" style="background: 
-										#0699d8;">
+										#0270f7;">
 										<b>
 											<strong>
 												<font size ="2", color color="#000000" face="Tahoma">
-													Fecha Venta:
+													Fecha Compra:
 												</font>
 											</strong>
 										</b>
 									</span>
 								</div>
-							</td>
-							<td>
-								<div class="form-group">
+								<div class="form-group">				
 									<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Venta_Internet_editar" id="Fecha_Ingreso_Venta_Internet_editar"   placeholder="Fecha Registro" value="<?php echo e(Carbon::today()->toDateString()); ?>" readonly>
+										<input type="text" class="form-control form-filter input-sm" name="Fecha_Ingreso_Compra_Editar" id="Fecha_Ingreso_Compra_Editar"   placeholder="Fecha Registro" value="<?php echo e(Carbon::today()->toDateString()); ?>" readonly>
 										<span class="input-group-btn">
 											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
 										</span>
 									</div>
 								</div>
 							</td>
-						</tr>
-						<tr>
 							<td>
 								<div class="form-group">
 									<span class="badge btn-md btn-success" style="background: 
-									#0699d8;">
+									#0270f7;">
 									<b>
 										<strong>
 											<font size ="2", color color="#000000" face="Tahoma">
-												Valor Venta:
+												Valor Compra:
 											</font>
 										</strong>
 									</b>
 								</span>
 							</div>
+							<input type="number" name="Valor_Ingreso_Compra" id="Valor_Ingreso_Compra" class="form-control" placeholder="Valor Compra" autofocus>
+							<input type="hidden" name="Valor_Ingreso_Compra_oculto_Editar" id="Valor_Ingreso_Compra_oculto_Editar" class="form-control">
 						</td>
+					</tr>
+					<tr>
 						<td>
 							<div class="form-group">
-								<input type="number" name="valor_venta_internet_editar" id="valor_venta_internet_editar" class="form-control">
-								<input type="hidden" name="valor_venta_internet_editar_oculto" id="valor_venta_internet_editar_oculto" class="form-control">
-								<input type="hidden" name="id_venta_internet_oculto" id="id_venta_internet_oculto" class="form-control">
-							</div>
-						</td>
-					</tr>	
-					<tr><td></td><td></td></tr>					
-				</tbody>
-			</div>
-		</table>
-	</div>			
-	<div class="modal-footer">
-		<button type="button" class="btn btn-default CerrarMensaje" data-dismiss="modal">Cerrar</button>
-		<button type="button" class="btn btn-primary Editar_Venta_Internet">Editar</button>
-	</div>
+								<span class="badge btn-md btn-success" style="background: 
+								#0270f7;">
+								<b>
+									<strong>
+										<font size ="2", color color="#000000" face="Tahoma">
+											Descripción Compra:
+										</font>
+									</strong>
+								</b>
+							</span>
+						</div>
+					</td>
+					<td>	
+						<div class="form-group">						
+							<textarea name="Descripcion_Ingreso_Compra_Editar" id="Descripcion_Ingreso_Compra_Editar" class="form-control" style="overflow:auto;resize:none;" rows="5" placeholder="Ingresa Descripción de la Compra">
+							</textarea>
+						</div>
+					</td>
+				</tr>	
+				<tr><td></td><td></td></tr>					
+			</tbody>
+		</div>
+	</table>
+</div>			
+<div class="modal-footer">
+	<button type="button" class="btn btn-default CerrarMensaje" data-dismiss="modal">Cerrar</button>
+	<button type="button" class="btn btn-primary Editar_Venta_Internet">Editar</button>
+</div>
 </div>
 </div>
 </div>
@@ -335,6 +349,10 @@
 		var Descripcion_Ingreso_Compra=$('#Descripcion_Ingreso_Compra').val();
 		var Valor_Ingreso_Compra_oculto=parseInt($('#Valor_Ingreso_Compra_oculto').val());
 
+		$("#estilo").fadeTo(5000, 500).slideUp(500, function(){
+			$("#estilo").hide();
+		});
+
 
 		if(!patron.test(Valor_Ingreso_Compra)){
 			$('#estilo').show();
@@ -375,8 +393,9 @@
 					}
 				}
 			}
-		}
+		}		
 	}
+
 	$('.Registrar_Ingreso_Compra').click(function(){
 		if(Validar_Ingreso_Compra()!=true){
 			$('#Modal_Confirmar_Ingreso_Compra').modal('show');	
@@ -414,7 +433,7 @@
 					$('#TitleModal').html('<p>Compra Registrada.</p>');
 					$('#CuerpoMensaje').html('<p>La Compra se registro con Exito.!!</p>');					
 				}
-					
+
 			},
 			error:function(data){  
 				$("#Modal_Confirmar_Ingreso_Compra").modal('hide');				
@@ -470,7 +489,7 @@
 		});
 
 	});
-	$('body').delegate('.Editar_Venta_Recarga','click',function(){
+	$('body').delegate('.Editar_Compra','click',function(){
 		var id_Venta_Internet_Editar =($(this).attr('id_Venta_Internet_Editar'));
 		var Valor_Venta_Internet_Editar =($(this).attr('Valor_Venta_Internet_Editar'));
 		var Fecha_Venta_Internet_Editar =($(this).attr('Fecha_Venta_Internet_Editar'));
@@ -480,7 +499,7 @@
 		$('#valor_venta_internet_editar_oculto').val(Valor_Venta_Internet_Editar);
 		$('#id_venta_internet_oculto').val(id_Venta_Internet_Editar);
 
-		$('#Modal_Editar_Venta_Internet').modal('show');		
+		$('#Modal_Editar_Compra').modal('show');		
 	});
 
 	function Validar_Editar_Venta_Internet(){
@@ -511,6 +530,7 @@
 				return false;
 			}
 		}
+
 	}
 
 	$('.Editar_Venta_Internet').click(function(){

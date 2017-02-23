@@ -24,7 +24,7 @@
 @else
 <script type="text/javascript">
 	$('#Panel_1').show();
-	$('#Panel_2').show();
+	$('#Panel_2').show();	
 </script>
 <div class="panel panel-primary">
 	<div class="panel-heading" style="background-color: #321a7c">
@@ -36,16 +36,16 @@
 			</div>
 		</h3>
 	</div>
-	<div class="panel-body">
-		<center>{{$Compras->links()}}</center>
-		@foreach($Compras as $value)	
+	<div class="panel-body">		
+		@foreach($Compras as $value)
 		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
 			<div class="panel panel-primary">
 				<div class="panel-heading" style="background-color: #321a7c">		<h3 class="panel-title">
 					<b>
 						<strong>
-							<font color ="#fff200">COMPRAS</font>
-						</strong>
+							<font color ="#fff200">COMPRA</font>
+						</strong>						
+						<font size ="3", color color="#000000" face="Tahoma"><strong>#{{$value->id_compra}}</strong></font>
 					</b>
 				</h3>
 			</div>
@@ -57,15 +57,12 @@
 								<td>
 									<b><strong><font size ="2", color color="#000000" face="Tahoma">Descripción Compra:</font></strong></b>
 								</td>
-								<td>
-									<span class="badge btn-md btn-success" style="background-color: #0270f7">
-										<b>
-											<strong>
-												<font size ="2">{{$value->	descripcion_compra}}
-												</font>
-											</strong>
-										</b>
-									</span>									
+								<td> 
+									<div style="width: auto;">
+										<span style="background-color: #0270f7">
+											<h4>{{$value->descripcion_compra}}</h4>
+										</span>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -88,7 +85,7 @@
 										<b><strong><font size ="2", color color="#000000" face="Tahoma"><i class="fa fa-clock-o" aria-hidden="true"></i>Hora Compra:</font></strong></b>
 									</td>
 									<td>
-										<span class="badge btn-md btn-success">
+										<span class="badge btn-md btn-success" style="background-color: #0270f7">
 											<b>
 												<strong>
 													<font size ="2">{{Carbon::parse($value->hora_compra)->diffForHumans()}} ({{$value->	fecha_compra}})
@@ -96,36 +93,30 @@
 												</strong>
 											</b>
 										</span>									
-									</td>
-								</tr>
-							</tr>
-							<tr>
-								<td>									
-								</td>
-								<td>
-								</td>
-							</tr>
-						</tbody>
-					</div>
-				</table>
-				<div class="panel-footer">Panel de opciones
-					<div class="pull-right">
-						<a href="#" class="Editar_Venta_Recarga" Id_Compra_Editar="{{$value->id_compra}}" Valor_Compra_Editar="{{$value->valor_total_compra}}" Fecha_Compra_Editar="{{$value->fecha_compra}}" title="Editar">  
-							<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
-								<span class= "fa fa-pencil-square fa-2x"></span></font>
-							</strong>
-						</a>
-						<a href="#" class="Eliminar_Compra" Id_Compra_Eliminar="{{$value->id_compra}}"  title="Eliminar"> 
-							<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
-								<span class= "fa fa-trash-o fa-2x"></span></font>
-							</strong>
-						</a>	
+									</td>								
+								</tr>								
+							</tbody>
+						</div>
+					</table>
+					<div class="panel-footer">Panel de opciones
+						<div class="pull-right">
+							<a href="#" class="Editar_Compra" Id_Compra_Editar="{{$value->id_compra}}" Valor_Compra_Editar="{{$value->valor_total_compra}}" Fecha_Compra_Editar="{{$value->fecha_compra}}" title="Editar">  
+								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
+									<span class= "fa fa-pencil-square fa-2x"></span></font>
+								</strong>
+							</a>
+							<a href="#" class="Eliminar_Compra" Id_Compra_Eliminar="{{$value->id_compra}}"  title="Eliminar"> 
+								<strong> <font size ="3", color ="#0d96ea" face="Lucida Sans">
+									<span class= "fa fa-trash-o fa-2x"></span></font>
+								</strong>
+							</a>	
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>		
-	@endforeach	
-</div>		
+		</div>		
+		@endforeach	
+		<center>{{$Compras->links()}}</center>
+	</div>	
 </div>
 @endif

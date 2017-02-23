@@ -56,7 +56,7 @@ class AdministrarComprasController extends Controller {
 		(
 			'Fecha_Ingreso_Compra'			=> 'required',
 			'Valor_Ingreso_Compra_oculto'	=> 'required',
-			'Descripcion_Ingreso_Compra'	=> 'required'					
+			'Descripcion_Ingreso_Compra'	=> 'required|max:300'					
 			);
 
 		$message = array
@@ -64,6 +64,7 @@ class AdministrarComprasController extends Controller {
 			'Fecha_Ingreso_Compra.required' => ' Se requiere Fecha de Compra.',	
 			'Valor_Ingreso_Compra_oculto.required' => ' Se Requiere Valor de la Compra.',
 			'Descripcion_Ingreso_Compra.required' => ' Se requiere descripción de la Compra.',
+			'Descripcion_Ingreso_Compra.max' => ' Son 300 Caracteres Máximo Permitidos para la descripción de la compra.'
 			);
 
 		$validator = Validator::make(Input::All(), $rules, $message);
