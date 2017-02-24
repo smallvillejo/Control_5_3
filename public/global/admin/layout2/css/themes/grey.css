@@ -229,7 +229,8 @@ Page Header
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > i,
 .page-sidebar .page-sidebar-menu > li.active > a > i,
 .page-sidebar .page-sidebar-menu > li.active.open > a > i {
-  color: #15c1df;
+  color: #10ff3a;
+  /*color: #15c1df;*/
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > .arrow.open:before,
 .page-sidebar .page-sidebar-menu > li.active > a > .arrow:before,

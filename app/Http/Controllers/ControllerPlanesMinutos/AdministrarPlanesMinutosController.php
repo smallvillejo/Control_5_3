@@ -75,59 +75,83 @@ class AdministrarPlanesMinutosController extends Controller{
 	}
 
 	function Registrar_Ingreso_Minutos (){
-		$rules = array
-		(
-			'Fecha_Ingreso_Minutos'					=> 'required',
-			'id_oculto_ingreso_minutos'								=> 'required',	
-			'Cantidad_Minutos_Vendidos_Registrar'	=> 'required|min:1|numeric',
-			'Valor_Total_Minutos_Vendidoss'			=> 'required|min:1|numeric',			
-			'comercio_id'							=> 'required'			
-			);
 
-		$message = array
-		(
-			'Fecha_Ingreso_Minutos.required' 				=> ' Se requiere la fecha de registro.',
-			'id_oculto_ingreso_minutos.required' 			=> ' Se requiere un plan.',	
-			'Cantidad_Minutos_Vendidos_Registrar.required' 	=> ' Se requiere una cantidad de minutos.',
-			'Cantidad_Minutos_Vendidos_Registrar.min' 		=> ' Se requiere una cantidad de minutos.',
-			'Cantidad_Minutos_Vendidos_Registrar.numeric' 	=> ' La cantidad debe ser numerica.',
-			'Valor_Total_Minutos_Vendidoss.required' 		=> ' Se requiere el total de minutos.',
-			'Valor_Total_Minutos_Vendidoss.min' 			=> ' Se requiere el total de minutos.',
-			'Valor_Total_Minutos_Vendidoss.numeric' 		=> ' El valor total debe ser numerico.',	
-			'comercio_id.required' 	=> ' Porfavor Ingrese la fecha de la venta.'
-			);
-		
-		$validator = Validator::make(Input::All(), $rules, $message);
-		if ($validator->fails()) {
-			return Response::json(['success' =>false,
-				'errors'=>$validator->errors()->toArray()]);		
-		}else{
-			$plan = Input::all();
-			$Cantidad_Minutos_Restantes			=$plan['Cantidad_Minutos_Restantes'];
-			$Cantidad_Minutos_Vendidos 			=$plan['Cantidad_Minutos_Vendidos_Registrar'];
-			$Total 							 	=$Cantidad_Minutos_Restantes-$Cantidad_Minutos_Vendidos;
-			$datos_registro = array(
-				'cantidad_minutos_restantes' => $Total			
-				);	
-			$check = DB::table('minutos_planes')
-			->where('id',$plan['id_oculto_ingreso_minutos'])
-			->where('id_comercio',$plan['comercio_id'])
-			->update($datos_registro);
-			$hora_venta_recarga= Carbon::today()->now();
-			$datos_registro = array(
-				'fecha_registro' 			 		=> $plan['Fecha_Ingreso_Minutos'],
-				'id_minutos_planes' 	 			=> $plan['id_oculto_ingreso_minutos'],	
-				'cantidad_minutos_vendidos' 	 	=> $plan['Cantidad_Minutos_Vendidos_Registrar'],
-				'total_minutos_venta' 	   		 	=> $plan['Valor_Total_Minutos_Vendidoss'],
-				'hora_registro' 					=> $hora_venta_recarga,
-				'id_comercio' 	   		 			=> $plan['comercio_id'],	
+		$plan_id=Input::get('id_oculto_ingreso_minutos');
+		$id_comercio=Auth::user()->id_comercio;
+		$fecha=Input::get('Fecha_Ingreso_Minutos');
+
+		$VentasMinutos = DetallePlanMinutos::where('id_minutos_planes',$plan_id)
+		->Where('id_comercio',$id_comercio)
+		->Where('fecha_registro',$fecha)
+		->get();	
+
+		$id_minutos_planes="0";
+
+		foreach ($VentasMinutos as $key => $value) {	
+			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  # '.$value->PlanMinutos->Numero_Nuevo_Plan;		
+			$id_minutos_planes=$value->id_minutos_planes;			
+		}
+		if($id_minutos_planes!=0){
+			return Response::json([			
+				'NombrePlanMinutos'=>$NombrePlanMinutos,
+				'ErrorAlngresar'=>"Tiene Registro"				
+				]);
+		}else{	
+
+			$rules = array
+			(
+				'Fecha_Ingreso_Minutos'					=> 'required',
+				'id_oculto_ingreso_minutos'								=> 'required',	
+				'Cantidad_Minutos_Vendidos_Registrar'	=> 'required|min:1|numeric',
+				'Valor_Total_Minutos_Vendidoss'			=> 'required|min:1|numeric',			
+				'comercio_id'							=> 'required'			
 				);
-			$check = DB::table('detalle_plan_minutos')->insert($datos_registro );
-			if($check >0){
-				return 0;
+
+			$message = array
+			(
+				'Fecha_Ingreso_Minutos.required' 				=> ' Se requiere la fecha de registro.',
+				'id_oculto_ingreso_minutos.required' 			=> ' Se requiere un plan.',	
+				'Cantidad_Minutos_Vendidos_Registrar.required' 	=> ' Se requiere una cantidad de minutos.',
+				'Cantidad_Minutos_Vendidos_Registrar.min' 		=> ' Se requiere una cantidad de minutos.',
+				'Cantidad_Minutos_Vendidos_Registrar.numeric' 	=> ' La cantidad debe ser numerica.',
+				'Valor_Total_Minutos_Vendidoss.required' 		=> ' Se requiere el total de minutos.',
+				'Valor_Total_Minutos_Vendidoss.min' 			=> ' Se requiere el total de minutos.',
+				'Valor_Total_Minutos_Vendidoss.numeric' 		=> ' El valor total debe ser numerico.',	
+				'comercio_id.required' 	=> ' Porfavor Ingrese la fecha de la venta.'
+				);
+
+			$validator = Validator::make(Input::All(), $rules, $message);
+			if ($validator->fails()) {
+				return Response::json(['success' =>false,
+					'errors'=>$validator->errors()->toArray()]);		
 			}else{
-				return 1;	
-			}			
+				$plan = Input::all();
+				$Cantidad_Minutos_Restantes			=$plan['Cantidad_Minutos_Restantes'];
+				$Cantidad_Minutos_Vendidos 			=$plan['Cantidad_Minutos_Vendidos_Registrar'];
+				$Total 							 	=$Cantidad_Minutos_Restantes-$Cantidad_Minutos_Vendidos;
+				$datos_registro = array(
+					'cantidad_minutos_restantes' => $Total			
+					);	
+				$check = DB::table('minutos_planes')
+				->where('id',$plan['id_oculto_ingreso_minutos'])
+				->where('id_comercio',$plan['comercio_id'])
+				->update($datos_registro);
+				$hora_venta_recarga= Carbon::today()->now();
+				$datos_registro = array(
+					'fecha_registro' 			 		=> $plan['Fecha_Ingreso_Minutos'],
+					'id_minutos_planes' 	 			=> $plan['id_oculto_ingreso_minutos'],	
+					'cantidad_minutos_vendidos' 	 	=> $plan['Cantidad_Minutos_Vendidos_Registrar'],
+					'total_minutos_venta' 	   		 	=> $plan['Valor_Total_Minutos_Vendidoss'],
+					'hora_registro' 					=> $hora_venta_recarga,
+					'id_comercio' 	   		 			=> $plan['comercio_id'],	
+					);
+				$check = DB::table('detalle_plan_minutos')->insert($datos_registro );
+				if($check >0){
+					return 0;
+				}else{
+					return 1;	
+				}			
+			}
 		}
 	}
 
@@ -178,38 +202,101 @@ class AdministrarPlanesMinutosController extends Controller{
 	public function Modificar_Registro_Minutos(){
 		$Minutos = Input::all();
 
-		$Cantidad_Minutos_Restantes			=$Minutos['MinutosRestantes_MinutosIngresados'];
-		$Cantidad_Minutos_Vendidos 			=$Minutos['MinutosVendidos_MinutosIngresados'];
-		$cantidad_oculta 					=$Minutos['cantidad_oculta'];
-		$Valor_Total_Minutos_Vendidosss		=$Minutos['Valor_Total_Minutos_Vendidosss'];
-		$id_plan_minutos					=$Minutos['id_plan_minutos'];
-		$id_detalle_plan_minutos			=$Minutos['id_detalle_plan_minutos'];
+		$plan_id=Input::get('id_plan_minutos');
+		$id_comercio=Auth::user()->id_comercio;
+		$fecha=Input::get('FechaMinutosVenta_Editar');
+		$fecha2= Carbon::today()->toDateString();
 
-		$Total=$Cantidad_Minutos_Restantes+$cantidad_oculta-$Cantidad_Minutos_Vendidos;	
-		
+		if($fecha==$fecha2){
+			$FechaMinutosVenta_Editar			=$Minutos['FechaMinutosVenta_Editar'];
+			$Cantidad_Minutos_Restantes			=$Minutos['MinutosRestantes_MinutosIngresados'];
+			$Cantidad_Minutos_Vendidos 			=$Minutos['MinutosVendidos_MinutosIngresados'];
+			$cantidad_oculta 					=$Minutos['cantidad_oculta'];
+			$Valor_Total_Minutos_Vendidosss		=$Minutos['Valor_Total_Minutos_Vendidosss'];
+			$id_plan_minutos					=$Minutos['id_plan_minutos'];
+			$id_detalle_plan_minutos			=$Minutos['id_detalle_plan_minutos'];
 
-		$datos_registro = array(
-			'cantidad_minutos_restantes' 			 		=> $Total
-			);
-		$datos_registro2 = array(			
-			
-			'cantidad_minutos_vendidos' 			 		=> $Cantidad_Minutos_Vendidos,
-			'total_minutos_venta' 			 				=> $Valor_Total_Minutos_Vendidosss
-			);
-		$check = DB::table('minutos_planes')
-		->where('id',$id_plan_minutos)
-		->where('id_comercio',$Minutos['comercio_id_oculto'])
-		->update($datos_registro);
+			$Total=$Cantidad_Minutos_Restantes+$cantidad_oculta-$Cantidad_Minutos_Vendidos;	
 
-		$check = DB::table('detalle_plan_minutos')
-		->where('id_detalle_plan',$id_detalle_plan_minutos)
-		->where('id_comercio',$Minutos['comercio_id_oculto'])
-		->update($datos_registro2);
 
-		if($check >0){
-			return 0;
+			$datos_registro = array(
+				'cantidad_minutos_restantes' 			 		=> $Total
+				);
+			$datos_registro2 = array(			
+
+				'fecha_registro' 			 					=> $FechaMinutosVenta_Editar,
+				'cantidad_minutos_vendidos' 			 		=> $Cantidad_Minutos_Vendidos,
+				'total_minutos_venta' 			 				=> $Valor_Total_Minutos_Vendidosss
+				);
+			$check = DB::table('minutos_planes')
+			->where('id',$id_plan_minutos)
+			->where('id_comercio',$Minutos['comercio_id_oculto'])
+			->update($datos_registro);
+
+			$check = DB::table('detalle_plan_minutos')
+			->where('id_detalle_plan',$id_detalle_plan_minutos)
+			->where('id_comercio',$Minutos['comercio_id_oculto'])
+			->update($datos_registro2);
+
+			if($check >0){
+				return 0;
+			}else{
+				return 1;	
+			}
 		}else{
-			return 1;	
+			$VentasMinutos = DetallePlanMinutos::where('id_minutos_planes',$plan_id)
+			->Where('id_comercio',$id_comercio)
+			->Where('fecha_registro',$fecha)
+			->get();	
+
+			$id_minutos_planes="0";
+
+			foreach ($VentasMinutos as $key => $value) {	
+				$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  # '.$value->PlanMinutos->Numero_Nuevo_Plan;		
+				$id_minutos_planes=$value->id_minutos_planes;			
+			}
+			if($id_minutos_planes!=0){
+				return Response::json([			
+					'NombrePlanMinutos'=>$NombrePlanMinutos,
+					'ErrorAlngresar'=>"Tiene Registro"				
+					]);
+			}else{
+				$FechaMinutosVenta_Editar			=$Minutos['FechaMinutosVenta_Editar'];
+				$Cantidad_Minutos_Restantes			=$Minutos['MinutosRestantes_MinutosIngresados'];
+				$Cantidad_Minutos_Vendidos 			=$Minutos['MinutosVendidos_MinutosIngresados'];
+				$cantidad_oculta 					=$Minutos['cantidad_oculta'];
+				$Valor_Total_Minutos_Vendidosss		=$Minutos['Valor_Total_Minutos_Vendidosss'];
+				$id_plan_minutos					=$Minutos['id_plan_minutos'];
+				$id_detalle_plan_minutos			=$Minutos['id_detalle_plan_minutos'];
+
+				$Total=$Cantidad_Minutos_Restantes+$cantidad_oculta-$Cantidad_Minutos_Vendidos;	
+
+
+				$datos_registro = array(
+					'cantidad_minutos_restantes' 			 		=> $Total
+					);
+				$datos_registro2 = array(			
+
+					'fecha_registro' 			 					=> $FechaMinutosVenta_Editar,
+					'cantidad_minutos_vendidos' 			 		=> $Cantidad_Minutos_Vendidos,
+					'total_minutos_venta' 			 				=> $Valor_Total_Minutos_Vendidosss
+					);
+				$check = DB::table('minutos_planes')
+				->where('id',$id_plan_minutos)
+				->where('id_comercio',$Minutos['comercio_id_oculto'])
+				->update($datos_registro);
+
+				$check = DB::table('detalle_plan_minutos')
+				->where('id_detalle_plan',$id_detalle_plan_minutos)
+				->where('id_comercio',$Minutos['comercio_id_oculto'])
+				->update($datos_registro2);
+
+				if($check >0){
+					return 0;
+				}else{
+					return 1;	
+				}
+			}
 		}
 	}
 
@@ -245,7 +332,7 @@ class AdministrarPlanesMinutosController extends Controller{
 	}
 
 	public function Registrar_Nuevo_Plan(){
-		
+
 		$rules = array
 		(
 			'Nombre_Nuevo_Plan'						=> 'required|max:20',
@@ -270,7 +357,7 @@ class AdministrarPlanesMinutosController extends Controller{
 			'Valor_Venta_Minutos_Nuevo_Plan.numeric' 		=> ' El valor total debe ser numerico.'				
 
 			);
-		
+
 		$validator = Validator::make(Input::All(), $rules, $message);
 		if ($validator->fails()) {
 
@@ -389,10 +476,10 @@ class AdministrarPlanesMinutosController extends Controller{
 
 			$DatosPlan=MinutosPlanes::Where('Numero_Nuevo_Plan',$NumeroCelularPlan)->get();
 
-			
+
 
 			$NumeroCelularPlan="Libre";
-			
+
 			foreach ($DatosPlan as $key => $value) {
 				$NumeroCelularPlan=$value->Numero_Nuevo_Plan;
 			}
@@ -458,22 +545,22 @@ class AdministrarPlanesMinutosController extends Controller{
 		}
 	}
 
-	public function Consultar_Minutos_Ingresados(){
-		$Id_plan=Input::get('plan_id');
+	// public function Consultar_Minutos_Ingresados(){
+	// 	$Id_plan=Input::get('plan_id');
 
-		$DatosPlan=DetallePlanMinutos::Where('id_minutos_planes',$Id_plan)->get();
-		$total_minutos_venta=0;
-		foreach ($DatosPlan as $key => $value) {
-			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  #'.$value->PlanMinutos->Numero_Nuevo_Plan;
-			$total_minutos_venta=$value->total_minutos_venta;
-		}
-		if($total_minutos_venta!=0){
-			return Response::json([			
-				'NombrePlanMinutos'=>$NombrePlanMinutos,
-				'ErrorAlEliminar'=>"Tiene Ventas"				
-				]);
-		}
-	}
+	// 	$DatosPlan=DetallePlanMinutos::Where('id_minutos_planes',$Id_plan)->get();
+	// 	$total_minutos_venta=0;
+	// 	foreach ($DatosPlan as $key => $value) {
+	// 		$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  #'.$value->PlanMinutos->Numero_Nuevo_Plan;
+	// 		$total_minutos_venta=$value->total_minutos_venta;
+	// 	}
+	// 	if($total_minutos_venta!=0){
+	// 		return Response::json([			
+	// 			'NombrePlanMinutos'=>$NombrePlanMinutos,
+	// 			'ErrorAlEliminar'=>"Tiene Ventas"				
+	// 			]);
+	// 	}
+	// }
 
 	public function Eliminar_Plan_Minutos(){
 
@@ -489,31 +576,6 @@ class AdministrarPlanesMinutosController extends Controller{
 		}else{
 
 			return 1;	
-		}
-	}
-
-
-	public function Consultar_Venta_Minutos(){
-		$plan_id=Input::get('plan_id');
-		$id_comercio=Auth::user()->id_comercio;
-		$fecha= Carbon::today()->toDateString();
-
-		$VentasMinutos = DetallePlanMinutos::where('id_minutos_planes',$plan_id)
-		->Where('id_comercio',$id_comercio)
-		->Where('fecha_registro',$fecha)
-		->get();	
-
-		$id_minutos_planes="0";
-
-		foreach ($VentasMinutos as $key => $value) {	
-			$NombrePlanMinutos=strtoupper($value->PlanMinutos->nombre_plan_minutos).'  # '.$value->PlanMinutos->Numero_Nuevo_Plan;		
-			$id_minutos_planes=$value->id_minutos_planes;			
-		}
-		if($id_minutos_planes!=0){
-			return Response::json([			
-				'NombrePlanMinutos'=>$NombrePlanMinutos,
-				'ErrorAlngresar'=>"Tiene Registro"				
-				]);
 		}
 	}
 

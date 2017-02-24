@@ -74,19 +74,25 @@
           <ul class="dropdown-menu dropdown-menu-default">
             <li>
               <a href="<?php echo e(URL::route('perfil_user')); ?>">
-                <i class="icon-user"></i> Mi Perfil </a>
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i> Mi Perfil </a>
               </li>
-                <li class="divider">
-                </li>               
-                  <li>
-                    <a href="<?php echo e(URL::route('Salir')); ?>">
-                      <i class="icon-key"></i> Cerrar Sesión </a>
-                    </li>
-                  </ul>
+              <li class="divider">
+              </li> 
+              <li>
+                <a href="<?php echo e(URL::route('account')); ?>">
+                <i class="fa fa-key" aria-hidden="true"></i> Mi Cuenta </a>
                 </li>
-                <!-- END USER LOGIN DROPDOWN -->
-              </ul>
+                <li class="divider">
+                </li>              
+                <li>
+                  <a href="<?php echo e(URL::route('Salir')); ?>">
+                    <i class="fa fa-power-off" aria-hidden="true"></i> Cerrar Sesión </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- END USER LOGIN DROPDOWN -->
+            </ul>
 
-              <script type="text/javascript">
-                Notificaciones_PocoStock();  
-              </script>
+            <script type="text/javascript">
+              Notificaciones_PocoStock();  
+            </script>

@@ -14,6 +14,8 @@ Route::any('Cerrar_Sesion_X_Tiempo', array('as'=>'Cerrar_Sesion_X_Tiempo','uses'
 Route::any('ConsultarEmail', array('as'=>'ConsultarEmail','uses'=>'ControllerUsuarios\UsuariosController@Consultar_email_Usuario_Logueo'));
 // Carga las notificaciones, ultimas ventas y perfil de usuario en div
 Route::any('cargar_div', array('as'=>'cargar_div','uses'=>'ControllerIndex\IndexController@CargarBarNotificaciones'));
+// Ruta Para Configuracion de la cuenta de usuario
+Route::any('account', array('as'=>'account','uses'=>'ControllerUsuarios\UsuariosController@account'))->middleware('auth');
 // Rutas del Sistema
 
 // Rutas Index - Menú Principal
@@ -302,8 +304,19 @@ Route::any('Registrar_Compra', array('as'=>'Registrar_Compra','uses'=>'Controlle
 Route::any('Editar_Compra', array('as'=>'Editar_Compra','uses'=>'ControllerCompras\AdministrarComprasController@Editar_Compra'))->middleware('auth');
 // Ruta para Eliminar Compra
 Route::any('Eliminar_Compra', array('as'=>'Eliminar_Compra','uses'=>'ControllerCompras\AdministrarComprasController@Eliminar_Compra'))->middleware('auth');
-
 // Termina Modulo De Compras
+// EMPIEZA MODULO GASTOS & INVERSION
+// Ruta para cargar Index Gastos & Inversion
+Route::any('AdministrarGastosInversion', array('as'=>'AdministrarGastosInversion','uses'=>'ControllerGastosInversion\AdministrarGastosInversionController@AdministrarGastos'))->middleware('auth');
+// Ruta para cargar Gastos en Tabla
+Route::any('Cargar_Tabla_Gastos', array('as'=>'Cargar_Tabla_Gastos','uses'=>'ControllerGastosInversion\AdministrarGastosInversionController@Cargar_Tabla_Gastos'))->middleware('auth');
+// Ruta Para Registrar Gasto
+Route::any('Registrar_Gasto', array('as'=>'Registrar_Gasto','uses'=>'ControllerGastosInversion\AdministrarGastosInversionController@Registrar_Gasto'))->middleware('auth');
+// Ruta Para Eliminar Gasto
+Route::any('Eliminar_Gasto', array('as'=>'Eliminar_Gasto','uses'=>'ControllerGastosInversion\AdministrarGastosInversionController@Eliminar_Gasto'))->middleware('auth');
+// Ruta Para Editar Gasto
+Route::any('Editar_Gasto', array('as'=>'Editar_Gasto','uses'=>'ControllerGastosInversion\AdministrarGastosInversionController@Editar_Gasto'))->middleware('auth');
+// TERMINA MODULO GASTO INVERSION
 
 
 

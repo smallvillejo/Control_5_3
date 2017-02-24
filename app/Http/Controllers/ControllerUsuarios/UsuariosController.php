@@ -146,12 +146,12 @@ class UsuariosController extends Controller {
 		}
 	}
 
-
-
-
-
 	public function Cargar_Perfil_Usuario(){		
 		return View('Usuarios.Perfil_Usuario');
+	}
+
+	public function account(){
+		return View('Usuarios.Account');
 	}
 
 

@@ -83,7 +83,8 @@ Menú Principal
 					<div class="panel-heading"><h4><strong>Balance General</strong></h4></div>
 					<div class="panel-body">
 						<div class="form-group">
-							<label class="col-sm-8 control-label"><i class="fa fa-mobile" title="Titulo" aria-hidden="true"></i>
+							<label class="col-sm-8 control-label">
+								<i class="fa fa-phone-square" aria-hidden="true"></i>
 								<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Minutos:</font></strong></label>
 								<div class="col-sm-4">					
 									<strong>
@@ -94,45 +95,49 @@ Menú Principal
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-8 control-label"><i class="fa fa-internet-explorer" aria-hidden="true"></i>
-									<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Internet:</font></strong></label>
+								<label class="col-sm-8 control-label">
+									<i class="fa fa-mobile" title="Titulo" aria-hidden="true"></i>
+									<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Recargas:</font></strong></label>
 									<div class="col-sm-4">					
 										<strong>
 											<font size ="3", color ="#f72900" face="Tahoma">
-												$ <label id="TotalVentaInternet"></label>
+												$ <label id="TotalVentaRecargas"></label>
 											</font>
 										</strong>			
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-8 control-label"><i class="fa fa-usd" title="Titulo" aria-hidden="true"></i>
-										<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Recargas:</font></strong></label>
+									<label class="col-sm-8 control-label">
+										<i class="fa fa-internet-explorer" aria-hidden="true"></i>
+										<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Venta Internet:</font></strong></label>
 										<div class="col-sm-4">					
 											<strong>
 												<font size ="3", color ="#f72900" face="Tahoma">
-													$ <label id="TotalVentaRecargas"></label>
+													$ <label id="TotalVentaInternet"></label>
 												</font>
 											</strong>			
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-8 control-label"><i class="fa fa-shopping-cart" title="Titulo" aria-hidden="true"></i>
+										<label class="col-sm-8 control-label">
+											<i class="fa fa-money" aria-hidden="true"></i> 
 											<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Compras:</font></strong></label>
 											<div class="col-sm-4">					
 												<strong>
 													<font size ="3", color ="#f72900" face="Tahoma">
-														$ <label id="TotalCompras"></label>
+														$ -<label id="TotalCompras"></label>
 													</font>
 												</strong>			
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-8 control-label"><i class="fa fa-balance-scale" aria-hidden="true"></i>
+											<label class="col-sm-8 control-label">
+												<i class="fa fa-handshake-o" aria-hidden="true"></i>
 												<strong> <font size ="2", color ="#151aaf" face="Tahoma">Total Gastos & Inversión:</font></strong></label>
 												<div class="col-sm-4">					
 													<strong>
 														<font size ="3", color ="#f72900" face="Tahoma">
-															$ <label id="TotalGastos"></label>									
+															$ -<label id="TotalGastos"></label>
 														</font>
 													</strong>	
 													<br>
@@ -264,12 +269,24 @@ Menú Principal
 												$('#CantidadVendidaProductos').empty().html(data.TotalProductos);
 												$('#CantidadVendidaAlimentos').empty().html(data.TotalAlimentos);
 												$('#TotalVentaMinutos').empty().html(data.TotalVentaMinutos);
+												$("#TotalVentaMinutos").css("fontSize", 15);		
+												$("#TotalVentaMinutos").css("font-weight","Bold");
 												$('#TotalVentaRecargas').empty().html(data.TotalVentaRecarga);
+												$("#TotalVentaRecargas").css("fontSize", 15);		
+												$("#TotalVentaRecargas").css("font-weight","Bold");
 												$('#TotalVentaInternet').empty().html(data.TotalVentaInternet);
+												$("#TotalVentaInternet").css("fontSize", 15);		
+												$("#TotalVentaInternet").css("font-weight","Bold");
 												$('#TotalCompras').empty().html(data.TotalCompra);
+												$("#TotalCompras").css("fontSize", 15);			
+												$("#TotalCompras").css("font-weight","Bold");
 												$('#TotalGastos').empty().html(data.TotalGasto);
+												$("#TotalGastos").css("fontSize", 15);			
+												$("#TotalGastos").css("font-weight","Bold");
+
+
 												$('#TotalGanancia').empty().html(data.TotalGanancia);
-												$("#TotalGanancia").css("fontSize", 23);						
+												$("#TotalGanancia").css("fontSize", 23);			
 												$("#TotalGanancia").css("font-weight","Bold");
 												console.clear();					
 

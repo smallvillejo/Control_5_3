@@ -220,7 +220,8 @@ info2.slideDown();
                 'AdministrarPlanes' => '',
                 'AdministrarRecargas' => '',
                 'AdministrarInternet' => '',
-                'AdministrarCompras' => ''
+                'AdministrarCompras' => '',
+                'AdministrarGastosInversion' => ''
                 );
               if ($vista == '' || $vista == 'Index'){
                 $current['Index'] = 'active';
@@ -245,6 +246,9 @@ info2.slideDown();
               }
               else if ($vista == '' || $vista == 'AdministrarCompras'){
                 $current['AdministrarCompras'] = 'active';
+              }
+              else if ($vista == '' || $vista == 'AdministrarGastosInversion'){
+                $current['AdministrarGastosInversion'] = 'active';
               }
               ?>
               <li class="<?php echo e($current['Index']); ?>">
@@ -304,12 +308,19 @@ info2.slideDown();
                     <span class="title">Internet</span>
                   </a>
                 </li> 
-                 <li class="<?php echo e($current['AdministrarCompras']); ?>">
+                <li class="<?php echo e($current['AdministrarCompras']); ?>">
                   <a href="<?php echo e(URL::route('AdministrarCompras')); ?>">
                     <i class="fa fa-money" aria-hidden="true"></i> 
                     <span class="title">Compras</span>
                   </a>
-                </li>                                  
+                </li>  
+                <li class="<?php echo e($current['AdministrarGastosInversion']); ?>">
+                  <a href="<?php echo e(URL::route('AdministrarGastosInversion')); ?>">
+                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                    <span class="title">Gastos & Inversion</span>
+                  </a>
+                </li>
+
                 <li class="<?php echo e($current['Consultas']); ?>">
                   <a href="javascript:;">
                     <i class="fa fa-search" aria-hidden="true"></i>
