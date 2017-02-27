@@ -7,7 +7,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Configuración</title>
 <br>
-<div class="panel panel-primary  col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
+<div class="panel panel-primary  col-xs-12 col-sm-12 col-md-6 col-md-offset-3" onmousemove="Valida_Registro2();" onchange="Valida_Registro2();">
 	<div class="panel-heading" style="background-color:#32045e">
 		<h2 class="panel-title">
 			<strong>Configuración Cuenta</strong> 			
@@ -15,7 +15,15 @@
 	</div>
 	<div class="panel-body"> 		
 		<h4>Antes de continuar al sistema, por primera vez debes configurar los siguientes parámetros:</h4>
-		<br> 		
+		<br> 	
+		<div class="row">
+			<div class="form-group col-sm-12">
+				<div class="panel panel-danger" style="display:none" id="estilo_mensaje">
+					<div class="panel-heading" id="id_validacion" style="display:none">
+					</div>
+				</div>		
+			</div>
+		</div>	
 		<div class="row">
 			<div class="form-group col-sm-4">
 				<i class="fa fa-desktop" aria-hidden="true" title="Nombre Empresa"></i> Nombre Empresa
@@ -77,26 +85,7 @@
 					<label class="col-sm control-label" id="totalPeso"></label>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-12">
-				<div class="panel panel-danger" style="display:none" id="estilo_mensaje">
-					<div class="panel-heading" id="id_validacion" style="display:none">
-					</div>
-				</div>		
-			</div>
-		</div>
-	<!-- 	<div class="row">
-			<div class="form-group col-sm-4">
-				<i class="fa fa-wrench" aria-hidden="true"></i>
-				Ruta Carpeta Descarga:
-				<a href="#" data-toggle="popover" data-placement="top" title="Se recomienda seleccionar un lugar seguro como DROPBOX donde pueda almacenar datos de su empresa como imágenes de sus mercancías y copias de seguridad del sistema. ">?</a>
-			</div>
-			<div class="form-group col-sm-8">				
-				<input type="file" name="RutaArchivo" class="form-control" id="catagry_logo" webkitdirectory directory multiple placeholder="Selcciona Ruta de Archivos" style="background-color: #32045e; color:#ffffff; " />					        
-			</div>								
-		</div> -->
-
+		</div>		
 		<div class="row">
 			<div class="form-group col-sm-8 col-md-offset-4">
 				<button type="button" class="btn btn-succes BtnRegistrar" style="background-color: #32045e" title="Guardar Cambios">
@@ -107,8 +96,8 @@
 		</div> 	
 	</div>		
 	<div class="progress">
-		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 55%; background-color: #32045e" >
-			<span >55% Completado</span>
+		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: #32045e" >
+			<span id="NumeroPorcentaje"></span>
 		</div>
 	</div>
 </div>
@@ -190,8 +179,10 @@
 				document.getElementById("id_validacion").style.display = "block";
 				document.getElementById("NombreEmpresa").focus();
 				$('#NombreEmpresa').val('');  
-				return true;
-			}else{
+				return true;				
+			}else{	
+				$('.progress-bar').css('width', '' + (20+ '%'));
+				$('#NumeroPorcentaje').text('20% Completado');							
 				if(DireccionEmpresa==""){
 					$('#estilo_mensaje').show();
 					document.getElementById("id_validacion").innerText = "La dirección de la empresa no puede estar vacio.";
@@ -205,8 +196,10 @@
 						document.getElementById("id_validacion").style.display = "block";
 						document.getElementById("DireccionEmpresa").focus();
 						$('#DireccionEmpresa').val('');
-						return true;
+						return true;						
 					}else{
+						$('.progress-bar').css('width', '' + (40+ '%'));
+						$('#NumeroPorcentaje').text('40% Completado');
 						if(TelefonoEmpresa==""){
 							$('#estilo_mensaje').show();
 							document.getElementById("id_validacion").innerText = "El telefono de la empresa no puede estar vacio.";
@@ -220,8 +213,10 @@
 								document.getElementById("id_validacion").style.display = "block";
 								document.getElementById("TelefonoEmpresa").focus();
 								$('#TelefonoEmpresa').val('');
-								return true;
+								return true;								
 							}else{
+								$('.progress-bar').css('width', '' + (60+ '%'));
+								$('#NumeroPorcentaje').text('60% Completado');
 								if(EmailEmpresa==""){
 									$('#estilo_mensaje').show();
 									document.getElementById("id_validacion").innerText = "El email de la empresa no puede estar vacio.";
@@ -234,6 +229,7 @@
 										document.getElementById("id_validacion").innerText = "El email ingresado esta mal escrito. Ejempo@ejemplo.com";
 										document.getElementById("id_validacion").style.display = "block";
 										document.getElementById("EmailEmpresa").focus();
+										return true;
 									}else{
 										if(!espacio_blanco.test(EmailEmpresa)){
 											$('#estilo_mensaje').show();
@@ -242,16 +238,21 @@
 											document.getElementById("EmailEmpresa").focus();
 											$('#EmailEmpresa').val('');
 											return true;
+											
 										}else{
+											$('.progress-bar').css('width', '' + (80+ '%'));
+											$('#NumeroPorcentaje').text('80% Completado');
 											if(src==""){
 												$('#estilo_mensaje').show();
 												document.getElementById("id_validacion").innerText = "Debes seleccionar una imagen.";
 												document.getElementById("id_validacion").style.display = "block";
 												return true;
 											}else{
+												$('.progress-bar').css('width', '' + (100+ '%'));
+												$('#NumeroPorcentaje').text('100% Completado')
 												$('#estilo_mensaje').hide();
 												document.getElementById("id_validacion").innerText = "";	
-												return false;
+												return false;												
 											}
 										}
 									}
@@ -263,6 +264,42 @@
 			}
 		}
 	}
+
+	function Valida_Registro2(){
+		var espacio_blanco    = /[a-z]/i;  //Expresión regular
+		var espacio_blanco2   = /[0-9]/i;  //Expresión regular
+		var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;   
+		var src= $('input[type=file]').val()
+		var NombreEmpresa= $('#NombreEmpresa').val();
+		var DireccionEmpresa= $('#DireccionEmpresa').val();
+		var TelefonoEmpresa= $('#TelefonoEmpresa').val();
+		var EmailEmpresa= $('#EmailEmpresa').val();
+		
+		var campos=0;
+
+		if(espacio_blanco.test(NombreEmpresa)){
+			campos++;
+		}
+		if(espacio_blanco.test(DireccionEmpresa)){
+			campos++;
+		}
+		if(espacio_blanco2.test(TelefonoEmpresa)){
+			campos++;
+		}		
+		if(emailRegex.test(EmailEmpresa)){
+			campos++;
+		}		
+		if(espacio_blanco.test(src)){
+			campos++;
+		}		
+
+		x=100/5*campos;
+
+		$('.progress-bar').css('width', '' + (x+ '%'));
+		$('#NumeroPorcentaje').text(x+'% Completado');
+
+	}
+
 
 	$('.BtnRegistrar').click(function(){
 		if(Valida_Registro()!=true){
