@@ -866,111 +866,112 @@ $('#btn_cancelar_formulario_productos').click(function(){
 					</div>
 					<div class="form-group" id="div_peso_imagen_editar" style="display: none">    
 						<label class="col-sm-3 control-label">Peso Imagen:</label> 
-						<label class="col-sm control-label" id="totalPeso_editar"></label></div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary Editar_Producto addbtn" id="btn_modificar_producto">Modificar</button>
-					<button type="button" class="btn btn-danger" id="btn_cancelar_formulario_productos" data-dismiss="modal">Cancelar</button>
-				</div>
+						<label class="col-sm control-label" id="totalPeso_editar"></label>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary Editar_Producto addbtn" id="btn_modificar_producto">Modificar</button>
+				<button type="button" class="btn btn-danger" id="btn_cancelar_formulario_productos" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>
 	</div>
-	<!-- Modal Modificar Producto -->
-	<!-- Modal Confirmacion Editar Producto -->
-	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="ModalConfirmacion3" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">        
-					<center><b><strong> <font size ="3", color="#fb0c48" face="Arial Black"><label id="TitleModal3"></label></font></strong></b></center>
-				</div>
-				<div class="modal-body">
-					<b><strong> <font size ="3", color="#000000" face="Arial Black"><label id="CuerpoMensaje3"></label></font></strong></b>     
-				</div>
-				<div class="modal-footer">        
-					<button type="button" class="btn btn-primary ModificarProducto" data-dismiss="modal">Si</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-				</div>
+</div>
+<!-- Modal Modificar Producto -->
+<!-- Modal Confirmacion Editar Producto -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="ModalConfirmacion3" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">        
+				<center><b><strong> <font size ="3", color="#fb0c48" face="Arial Black"><label id="TitleModal3"></label></font></strong></b></center>
+			</div>
+			<div class="modal-body">
+				<b><strong> <font size ="3", color="#000000" face="Arial Black"><label id="CuerpoMensaje3"></label></font></strong></b>     
+			</div>
+			<div class="modal-footer">        
+				<button type="button" class="btn btn-primary ModificarProducto" data-dismiss="modal">Si</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>
 	</div>
-	<!-- Termina Modal Confirmacion Editar Producto -->
-	<!-- Validaciones Modificar Producto -->
-	<script type="text/javascript">
+</div>
+<!-- Termina Modal Confirmacion Editar Producto -->
+<!-- Validaciones Modificar Producto -->
+<script type="text/javascript">
 
-		
+	
 
-		function readURL(input) {
-			var size=2097152;
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				var file_size=document.getElementById('catagry_logo_editar').files[0].size;
-				if(file_size>=size){
-					$('#estilo_mensaje_editar').show();
-					document.getElementById("id_validacion_editar").innerText = "La imagen que intentas subir es muy pesada.";
-					document.getElementById("id_validacion_editar").style.display = "block";
-					$('#Modal_Modificar_Productos').scrollTop(0);					
-					document.getElementById('btn_modificar_producto').disabled=true;
-					$('#catagry_logo_editar').val('');	
-					$('#div_photo_producto_editar').hide();
-					$('#div_peso_imagen_editar').hide();				
-					return false;
-				}
-				document.getElementById('btn_modificar_producto').disabled=false;
-				$('#estilo_mensaje_editar').hide();
-				document.getElementById("id_validacion_editar").innerText = "";			reader.onload = function (e) {
-					$('#img_destino_editar').attr('src', e.target.result);
-					$('#totalPeso_editar').text(Math.round(e.loaded/1024/1024) + "MB");
-				}
-				reader.readAsDataURL(input.files[0]);
-			}else{
-				$('#div_photo_producto').hide();
-				$('#div_peso_imagen').hide();
+	function readURL(input) {
+		var size=2097152;
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			var file_size=document.getElementById('catagry_logo_editar').files[0].size;
+			if(file_size>=size){
+				$('#estilo_mensaje_editar').show();
+				document.getElementById("id_validacion_editar").innerText = "La imagen que intentas subir es muy pesada.";
+				document.getElementById("id_validacion_editar").style.display = "block";
+				$('#Modal_Modificar_Productos').scrollTop(0);					
+				document.getElementById('btn_modificar_producto').disabled=true;
+				$('#catagry_logo_editar').val('');	
+				$('#div_photo_producto_editar').hide();
+				$('#div_peso_imagen_editar').hide();				
+				return false;
 			}
+			document.getElementById('btn_modificar_producto').disabled=false;
+			$('#estilo_mensaje_editar').hide();
+			document.getElementById("id_validacion_editar").innerText = "";			reader.onload = function (e) {
+				$('#img_destino_editar').attr('src', e.target.result);
+				$('#totalPeso_editar').text(Math.round(e.loaded/1024/1024) + "MB");
+			}
+			reader.readAsDataURL(input.files[0]);
+		}else{
+			$('#div_photo_producto').hide();
+			$('#div_peso_imagen').hide();
+		}
+	}
+
+	$("#catagry_logo_editar").change(function(){
+		$('#div_photo_producto_editar').show();
+		$('#div_peso_imagen_editar').show();
+		readURL(this);
+	});
+
+
+
+
+
+	$("#valor_inversion_producto_editar").change(function(){
+		var valor_inversion_productoo =$('#valor_inversion_producto_editar').val();
+		valor_inversion_productoo=valor_inversion_productoo.replace(".","");	
+		$('#valor_inversion_producto_editar').val(valor_inversion_productoo);
+	});
+
+
+
+	$("#valor_inversion_producto_editar").change(function(){
+		var cantidad_productoo =$('#cantidad_producto_editar').val();
+		var valor_inversion_productoo =$('#valor_inversion_producto_editar').val();    
+		var cantidad_producto =parseInt($('#cantidad_producto_editar').val());
+		var valor_inversion_producto =parseInt($('#valor_inversion_producto_editar').val());
+		var valor_venta_productoo =parseInt($('#valor_venta_producto_editar').val());
+		var total;			 
+
+
+
+
+		total=(cantidad_producto*valor_inversion_producto);
+		$('#valor_total_inversion_editar').val(ConvertirDecimales(total));   
+		if(valor_inversion_productoo==""){
+			$('#valor_total_inversion_editar').val('0');
+		} 
+
+		if(valor_inversion_productoo==""){
+			$('#valor_inversion_producto_editar').val('0');
 		}
 
-		$("#catagry_logo_editar").change(function(){
-			$('#div_photo_producto_editar').show();
-			$('#div_peso_imagen_editar').show();
-			readURL(this);
-		});
-
-
-
-
-
-		$("#valor_inversion_producto_editar").change(function(){
-			var valor_inversion_productoo =$('#valor_inversion_producto_editar').val();
-			valor_inversion_productoo=valor_inversion_productoo.replace(".","");	
-			$('#valor_inversion_producto_editar').val(valor_inversion_productoo);
-		});
-
-
-
-		$("#valor_inversion_producto_editar").change(function(){
-			var cantidad_productoo =$('#cantidad_producto_editar').val();
-			var valor_inversion_productoo =$('#valor_inversion_producto_editar').val();    
-			var cantidad_producto =parseInt($('#cantidad_producto_editar').val());
-			var valor_inversion_producto =parseInt($('#valor_inversion_producto_editar').val());
-			var valor_venta_productoo =parseInt($('#valor_venta_producto_editar').val());
-			var total;			 
-
-
-
-
-			total=(cantidad_producto*valor_inversion_producto);
-			$('#valor_total_inversion_editar').val(ConvertirDecimales(total));   
-			if(valor_inversion_productoo==""){
-				$('#valor_total_inversion_editar').val('0');
-			} 
-
-			if(valor_inversion_productoo==""){
-				$('#valor_inversion_producto_editar').val('0');
-			}
-
-			if(valor_total_inversion=="NaN"){
-				$('#valor_total_inversion_editar').val('0');
-			}
+		if(valor_total_inversion=="NaN"){
+			$('#valor_total_inversion_editar').val('0');
+		}
 
 
 				// if(valor_inversion_producto>=valor_venta_productoo){
@@ -985,63 +986,63 @@ $('#btn_cancelar_formulario_productos').click(function(){
 
 			});
 
-		$("#cantidad_producto_editar").change(function(){    
-			var cantidad_productoo =$('#cantidad_producto_editar').val();    
-			var cantidad_producto =parseInt($('#cantidad_producto_editar').val());
-			var valor_inversion_producto =parseInt($('#valor_inversion_producto_editar').val());
-			var valor_total_inversion =$('#valor_total_inversion_editar').val();   
-			var total;
+	$("#cantidad_producto_editar").change(function(){    
+		var cantidad_productoo =$('#cantidad_producto_editar').val();    
+		var cantidad_producto =parseInt($('#cantidad_producto_editar').val());
+		var valor_inversion_producto =parseInt($('#valor_inversion_producto_editar').val());
+		var valor_total_inversion =$('#valor_total_inversion_editar').val();   
+		var total;
 
 
-			cantidad_productoo=cantidad_productoo.replace(".","");	
-			$('#cantidad_producto_editar').val(cantidad_productoo);  
+		cantidad_productoo=cantidad_productoo.replace(".","");	
+		$('#cantidad_producto_editar').val(cantidad_productoo);  
 
-			total=(cantidad_producto*valor_inversion_producto);
-			$('#valor_total_inversion_editar').val(ConvertirDecimales(total));   
-			if(cantidad_productoo==""){
-				$('#valor_total_inversion_editar').val('0');
-			}
-			if(valor_total_inversion==""){
-				$('#valor_total_inversion_editar').val('0');
-			} 
+		total=(cantidad_producto*valor_inversion_producto);
+		$('#valor_total_inversion_editar').val(ConvertirDecimales(total));   
+		if(cantidad_productoo==""){
+			$('#valor_total_inversion_editar').val('0');
+		}
+		if(valor_total_inversion==""){
+			$('#valor_total_inversion_editar').val('0');
+		} 
 
-			if(valor_total_inversion=="NaN"){
-				$('#valor_total_inversion_editar').val('0');
-			}
-			if(cantidad_productoo=="0"){
-				$('#valor_total_inversion_editar').val('0');
-			}
+		if(valor_total_inversion=="NaN"){
+			$('#valor_total_inversion_editar').val('0');
+		}
+		if(cantidad_productoo=="0"){
+			$('#valor_total_inversion_editar').val('0');
+		}
 
-			if(cantidad_producto<0){
-				$('#estilo_mensaje_editar').show();
-				document.getElementById("id_validacion_editar").innerText = "El stock del producto no puede ser negativo.";
-				document.getElementById("id_validacion_editar").style.display = "block";
-			}
-		});
-		$("#valor_total_inversion_editar").change(function(){
-			var valor_total_inversion =$('#valor_total_inversion_editar').val();		
+		if(cantidad_producto<0){
+			$('#estilo_mensaje_editar').show();
+			document.getElementById("id_validacion_editar").innerText = "El stock del producto no puede ser negativo.";
+			document.getElementById("id_validacion_editar").style.display = "block";
+		}
+	});
+	$("#valor_total_inversion_editar").change(function(){
+		var valor_total_inversion =$('#valor_total_inversion_editar').val();		
 
-			if(valor_total_inversion==""){
-				$('#valor_total_inversion_editar').val('0');
-			}   
-		});
+		if(valor_total_inversion==""){
+			$('#valor_total_inversion_editar').val('0');
+		}   
+	});
 
-		$("#valor_venta_producto_editar").change(function(){
-			var valor_venta_producto =$('#valor_venta_producto_editar').val();
-			valor_venta_producto=valor_venta_producto.replace(".","");	
-			$('#valor_venta_producto_editar').val(valor_venta_producto);
-		});
-
-
-		$("#valor_venta_producto_editar").change(function(){
-			var valor_venta_producto =$('#valor_venta_producto_editar').val();			
-			if(valor_venta_producto==""){
-				$('#valor_venta_producto_editar').val('0');
-			}
-		});
+	$("#valor_venta_producto_editar").change(function(){
+		var valor_venta_producto =$('#valor_venta_producto_editar').val();
+		valor_venta_producto=valor_venta_producto.replace(".","");	
+		$('#valor_venta_producto_editar').val(valor_venta_producto);
+	});
 
 
-		function Validacion_Modificar_Producto(){
+	$("#valor_venta_producto_editar").change(function(){
+		var valor_venta_producto =$('#valor_venta_producto_editar').val();			
+		if(valor_venta_producto==""){
+			$('#valor_venta_producto_editar').val('0');
+		}
+	});
+
+
+	function Validacion_Modificar_Producto(){
     var espacio_blanco    = /[a-z]/i;  //Expresión regular
     var nombre_producto =$('#nombre_producto_editar').val(); 
 
