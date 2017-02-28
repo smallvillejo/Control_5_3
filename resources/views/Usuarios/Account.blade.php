@@ -7,101 +7,97 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Configuración</title>
 <br>
-<div class="panel panel-primary  col-xs-12 col-sm-12 col-md-6 col-md-offset-3" onmousemove="Valida_Registro2();" onchange="Valida_Registro2();">
+
+<div class="panel panel-primary  col-xs-12 col-sm-12 col-md-10 col-md-offset-1" onmousemove="Valida_Registro2();" onchange="Valida_Registro2();">
 	<div class="panel-heading" style="background-color:#32045e">
 		<h2 class="panel-title">
-			<strong>Configuración Cuenta</strong> 			
+			<strong>Configuración Cuenta</strong>
+			<div class="btn-group pull-right">		
+				<div class="form-group col-sm-2">
+					<button type="button" class="btn btn-succes BtnRegistrar" style="background-color: #d65314" title="Guardar Cambios">
+						<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar</span></font></strong>
+						<strong> <font size ="2", color ="#ffffff"><span class="fa fa-plus-square"></span></font></strong>
+					</button> 
+				</div> 
+			</div>			
 		</h2>
 	</div>
-	<div class="panel-body"> 		
+	<div class="panel-body">
 		<h4>Antes de continuar al sistema, por primera vez debes configurar los siguientes parámetros:</h4>
-		<br> 	
-		<div class="row">
-			<div class="form-group col-sm-12">
+		<br>
+		<div class="col-xs-12 col-sm-12 col-md-12"> 	
+			<div class="row">				
 				<div class="panel panel-danger" style="display:none" id="estilo_mensaje">
 					<div class="panel-heading" id="id_validacion" style="display:none">
-					</div>
-				</div>		
-			</div>
-		</div>	
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<i class="fa fa-desktop" aria-hidden="true" title="Nombre Empresa"></i> Nombre Empresa
-			</div>
-			<div class="form-group col-sm-8">
-				<input type="text" name="NombreEmpresa" id="NombreEmpresa" class="form-control" placeholder="Ingresa el nombre de la empresa">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<i class="fa fa-address-card-o" aria-hidden="true"></i> Dirección Empresa:
-			</div>
-			<div class="form-group col-sm-8">
-				<input type="text" name="DireccionEmpresa" id="DireccionEmpresa" class="form-control" placeholder="Ingresa la dirección de la empresa">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<i class="fa fa-phone-square" aria-hidden="true"></i> Telefono Empresa:
-			</div>
-			<div class="form-group col-sm-8">
-				<input type="number" name="TelefonoEmpresa" id="TelefonoEmpresa" class="form-control" placeholder="Ingresa el número telefónico de la empresa">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<i class="fa fa-envelope" aria-hidden="true"></i> Correo Empresa:
-			</div>
-			<div class="form-group col-sm-8">
-				<input type="text" name="EmailEmpresa" id="EmailEmpresa" class="form-control" placeholder="Ingresa el email de la empresa">
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<i class="fa fa-picture-o" aria-hidden="true"></i> Logo Empresa:
-			</div>
-			<div class="form-group col-sm-8">
-				<input type="file" name="imagenProducto" class="form-control" id="catagry_logo" accept="image/jpeg, image/jpg,image/png" placeholder="Ingresa logo de la empresa" style="background-color: #32045e; color:#ffffff; " />
-				<span class="help-block">Solo se permiten formatos: JPG,JPEG y PNG.</span>        
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4">
-				<div class="form-group" id="div_photo_producto" style="display: none">    
-					<i class="fa fa-picture-o" aria-hidden="true"></i> Vista Previa:
-				</div> 
-			</div>
-			<div class="form-group col-sm-8" style="display: none" id="id_img_destino">
-				<img id="img_destino" name="img_destino" height="200" width="300"> 
-				<span class="help-block">Capacidad Máxima 1 MB.</span>    
-			</div>
-		</div>
-		<div class="row">
-			<div class="form-group col-sm-4" style="display: none" id="PesoImagen">
-				<i class="fa fa-balance-scale" aria-hidden="true"></i> Peso Imagen:
-			</div>
-			<div class="form-group col-sm-8">
-				<div class="form-group" id="div_peso_imagen" style="display: none" id="TotalPeso">
-					<label class="col-sm control-label" id="totalPeso"></label>
+					</div>					
 				</div>
+				<div class="row">	
+					<div class="form-group col-sm-2">
+						<i class="fa fa-desktop" aria-hidden="true" title="Nombre Empresa"></i> Nombre Empresa
+					</div>
+					<div class="form-group col-sm-4">
+						<input type="text" name="NombreEmpresa" id="NombreEmpresa" class="form-control" placeholder="Ingresa el nombre de la empresa" autofocus>
+					</div>				
+
+					<div class="form-group col-sm-2">
+						<i class="fa fa-address-card-o" aria-hidden="true"></i> Dirección Empresa:
+					</div>
+					<div class="form-group col-sm-4">
+						<input type="text" name="DireccionEmpresa" id="DireccionEmpresa" class="form-control" placeholder="Ingresa la dirección de la empresa">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-sm-2">
+						<i class="fa fa-phone-square" aria-hidden="true"></i> Telefono Empresa:
+					</div>
+					<div class="form-group col-sm-4">
+						<input type="number" name="TelefonoEmpresa" id="TelefonoEmpresa" class="form-control" placeholder="Ingresa el número telefónico de la empresa">
+					</div>
+					<div class="form-group col-sm-2">
+						<i class="fa fa-envelope" aria-hidden="true"></i> Correo Empresa:
+					</div>
+					<div class="form-group col-sm-4">
+						<input type="email" name="EmailEmpresa" id="EmailEmpresa" class="form-control" placeholder="Ingresa el email de la empresa">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-sm-2">
+						<i class="fa fa-picture-o" aria-hidden="true"></i> Logo Empresa:
+					</div>
+					<div class="form-group col-sm-4">
+						<input type="file" name="imagenProducto" class="form-control" id="catagry_logo" accept="image/jpeg, image/jpg,image/png" placeholder="Ingresa logo de la empresa" style="background-color: #32045e; color:#ffffff; " />
+						<span class="help-block">Solo se permiten formatos: JPG,JPEG y PNG.</span>        
+					</div>
+				</div>	
+				<div class="row">			
+					<div class="form-group col-sm-2">
+						<div class="form-group" id="div_photo_producto" style="display: none">    
+							<i class="fa fa-picture-o" aria-hidden="true"></i> Vista Previa:
+						</div> 
+					</div>
+					<div class="form-group col-sm-4" style="display: none" id="id_img_destino">
+						<img id="img_destino" name="img_destino" height="200" width="300"> 
+						<span class="help-block">Capacidad Máxima 1 MB.</span>    
+					</div>
+					<div class="row" style="display: none" id="id_porcentaje_configuracion">
+						<div class="form-group col-sm-3">
+							<i class="fa fa-cog" aria-hidden="true"></i> Porcentaje Configuración 
+						</div>
+						<div class="form-group col-sm-3">
+							<div class="progress">
+								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: #32045e" >
+									<span id="NumeroPorcentaje"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>				
 			</div>
-		</div>		
-		<div class="row">
-			<div class="form-group col-sm-8 col-md-offset-4">
-				<button type="button" class="btn btn-succes BtnRegistrar" style="background-color: #32045e" title="Guardar Cambios">
-					<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar</span></font></strong>
-					<strong> <font size ="2", color ="#ffffff"><span class="fa fa-plus-square"></span></font></strong>
-				</button> 
-			</div>
-		</div> 	
-	</div>		
-	<div class="progress">
-		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: #32045e" >
-			<span id="NumeroPorcentaje"></span>
 		</div>
 	</div>
 </div>
-</div>
+
+
 
 <script>
 	$(document).ready(function(){
@@ -110,9 +106,8 @@
 
 	$("#catagry_logo").change(function(){
 		$('#div_photo_producto').show();
-		$('#div_peso_imagen').show();
-		$('#PesoImagen').show();
-		$('#TotalPeso').show();
+		$('#div_peso_imagen').show();		
+		// $('#TotalPeso').show();
 		$('#id_img_destino').show();
 		Obtener_Imagen_Registro_Producto(this);
 	});
@@ -131,8 +126,8 @@
 				$('#catagry_logo').val('');	
 				$('#div_photo_producto').hide();
 				$('#div_peso_imagen').hide();
-				$('#PesoImagen').hide();
-				$('#TotalPeso').hide();	
+				// $('#PesoImagen').hide();
+				// $('#TotalPeso').hide();	
 				$('#id_img_destino').hide();				
 				return false;
 			}
@@ -141,14 +136,13 @@
 			document.getElementById("id_validacion").innerText = "";			
 			reader.onload = function (e) {
 				$('#img_destino').attr('src', e.target.result);
-				$('#totalPeso').text(Math.round(e.loaded/1024/1024) + "MB");
+				// $('#totalPeso').text(Math.round(e.loaded/1024/1024) + "MB");
 			}
 			reader.readAsDataURL(input.files[0]);
 		}else{
 			$('#div_photo_producto').hide();
-			$('#div_peso_imagen').hide();
-			$('#PesoImagen').hide();
-			$('#TotalPeso').hide();	
+			$('#div_peso_imagen').hide();		
+			// $('#TotalPeso').hide();	
 			$('#id_img_destino').hide();	
 
 			
@@ -278,7 +272,7 @@
 		var campos=0;
 
 		if(espacio_blanco.test(NombreEmpresa)){
-			campos++;
+			campos++;			
 		}
 		if(espacio_blanco.test(DireccionEmpresa)){
 			campos++;
@@ -296,7 +290,13 @@
 		x=100/5*campos;
 
 		$('.progress-bar').css('width', '' + (x+ '%'));
-		$('#NumeroPorcentaje').text(x+'% Completado');
+		$('#NumeroPorcentaje').text(x+'% Completado');		
+
+		if(x!=0){
+			$('#id_porcentaje_configuracion').show();
+		}else{
+			$('#id_porcentaje_configuracion').hide();
+		}
 
 	}
 
