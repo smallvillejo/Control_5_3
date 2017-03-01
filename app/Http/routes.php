@@ -16,6 +16,10 @@ Route::any('ConsultarEmail', array('as'=>'ConsultarEmail','uses'=>'ControllerUsu
 Route::any('cargar_div', array('as'=>'cargar_div','uses'=>'ControllerIndex\IndexController@CargarBarNotificaciones'));
 // Ruta Para Configuracion de la cuenta de usuario
 Route::any('account', array('as'=>'account','uses'=>'ControllerUsuarios\UsuariosController@account'))->middleware('auth');
+// Ruta para configuracion de la cuenta de usuario
+Route::any('ConfiguracionCuentaComercio', array('as'=>'ConfiguracionCuentaComercio','uses'=>'ControllerUsuarios\UsuariosController@ConfiguracionCuentaComercio'))->middleware('auth');
+
+
 // Rutas del Sistema
 
 // Rutas Index - Menú Principal

@@ -31,67 +31,70 @@
 					<div class="panel-heading" id="id_validacion" style="display:none">
 					</div>					
 				</div>
-				<div class="row">	
-					<div class="form-group col-sm-2">
-						<i class="fa fa-desktop" aria-hidden="true" title="Nombre Empresa"></i> Nombre Empresa
-					</div>
-					<div class="form-group col-sm-4">
-						<input type="text" name="NombreEmpresa" id="NombreEmpresa" class="form-control" placeholder="Ingresa el nombre de la empresa" autofocus>
-					</div>				
-
-					<div class="form-group col-sm-2">
-						<i class="fa fa-address-card-o" aria-hidden="true"></i> Dirección Empresa:
-					</div>
-					<div class="form-group col-sm-4">
-						<input type="text" name="DireccionEmpresa" id="DireccionEmpresa" class="form-control" placeholder="Ingresa la dirección de la empresa">
-					</div>
-				</div>
-				<div class="row">
-					<div class="form-group col-sm-2">
-						<i class="fa fa-phone-square" aria-hidden="true"></i> Telefono Empresa:
-					</div>
-					<div class="form-group col-sm-4">
-						<input type="number" name="TelefonoEmpresa" id="TelefonoEmpresa" class="form-control" placeholder="Ingresa el número telefónico de la empresa">
-					</div>
-					<div class="form-group col-sm-2">
-						<i class="fa fa-envelope" aria-hidden="true"></i> Correo Empresa:
-					</div>
-					<div class="form-group col-sm-4">
-						<input type="email" name="EmailEmpresa" id="EmailEmpresa" class="form-control" placeholder="Ingresa el email de la empresa">
-					</div>
-				</div>
-				<div class="row">
-					<div class="form-group col-sm-2">
-						<i class="fa fa-picture-o" aria-hidden="true"></i> Logo Empresa:
-					</div>
-					<div class="form-group col-sm-4">
-						<input type="file" name="imagenProducto" class="form-control" id="catagry_logo" accept="image/jpeg, image/jpg,image/png" placeholder="Ingresa logo de la empresa" style="background-color: #32045e; color:#ffffff; " />
-						<span class="help-block">Solo se permiten formatos: JPG,JPEG y PNG.</span>        
-					</div>
-				</div>	
-				<div class="row">			
-					<div class="form-group col-sm-2">
-						<div class="form-group" id="div_photo_producto" style="display: none">    
-							<i class="fa fa-picture-o" aria-hidden="true"></i> Vista Previa:
-						</div> 
-					</div>
-					<div class="form-group col-sm-4" style="display: none" id="id_img_destino">
-						<img id="img_destino" name="img_destino" height="200" width="300"> 
-						<span class="help-block">Capacidad Máxima 1 MB.</span>    
-					</div>
-					<div class="row" style="display: none" id="id_porcentaje_configuracion">
-						<div class="form-group col-sm-3">
-							<i class="fa fa-cog" aria-hidden="true"></i> Porcentaje Configuración 
+				<form class="form-horizontal" enctype="multipart/form-data" id="FormularioRegistroCuenta" role="form" method="POST" action="" >
+					<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">  
+					<div class="row">	
+						<div class="form-group col-sm-2">
+							<i class="fa fa-desktop" aria-hidden="true" title="Nombre Empresa"></i> Nombre Empresa
 						</div>
-						<div class="form-group col-sm-3">
-							<div class="progress">
-								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: #32045e" >
-									<span id="NumeroPorcentaje"></span>
+						<div class="form-group col-sm-4">
+							<input type="text" name="NombreEmpresa" id="NombreEmpresa" class="form-control" placeholder="Ingresa el nombre de la empresa" autofocus>
+						</div>				
+
+						<div class="form-group col-sm-2">
+							<i class="fa fa-address-card-o" aria-hidden="true"></i> Dirección Empresa:
+						</div>
+						<div class="form-group col-sm-4">
+							<input type="text" name="DireccionEmpresa" id="DireccionEmpresa" class="form-control" placeholder="Ingresa la dirección de la empresa">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-2">
+							<i class="fa fa-phone-square" aria-hidden="true"></i> Telefono Empresa:
+						</div>
+						<div class="form-group col-sm-4">
+							<input type="number" name="TelefonoEmpresa" id="TelefonoEmpresa" class="form-control" placeholder="Ingresa el número telefónico de la empresa">
+						</div>
+						<div class="form-group col-sm-2">
+							<i class="fa fa-envelope" aria-hidden="true"></i> Correo Empresa:
+						</div>
+						<div class="form-group col-sm-4">
+							<input type="email" name="EmailEmpresa" id="EmailEmpresa" class="form-control" placeholder="Ingresa el email de la empresa">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-2">
+							<i class="fa fa-picture-o" aria-hidden="true"></i> Logo Empresa:
+						</div>
+						<div class="form-group col-sm-4">
+							<input type="file" name="imagenProducto" class="form-control" id="catagry_logo" accept="image/jpeg, image/jpg,image/png" placeholder="Ingresa logo de la empresa" style="background-color: #32045e; color:#ffffff; " />
+							<span class="help-block">Solo se permiten formatos: JPG,JPEG y PNG.</span>        
+						</div>
+					</div>	
+					<div class="row">			
+						<div class="form-group col-sm-2">
+							<div class="form-group" id="div_photo_producto" style="display: none">    
+								<i class="fa fa-picture-o" aria-hidden="true"></i> Vista Previa:
+							</div> 
+						</div>
+						<div class="form-group col-sm-4" style="display: none" id="id_img_destino">
+							<img id="img_destino" name="img_destino" height="200" width="300"> 
+							<span class="help-block">Capacidad Máxima 1 MB.</span>    
+						</div>
+						<div class="row" style="display: none" id="id_porcentaje_configuracion">
+							<div class="form-group col-sm-3">
+								<i class="fa fa-cog" aria-hidden="true"></i> Porcentaje Configuración 
+							</div>
+							<div class="form-group col-sm-3">
+								<div class="progress">
+									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: #32045e" >
+										<span id="NumeroPorcentaje"></span>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>				
+				</form>
 			</div>
 		</div>
 	</div>
@@ -99,7 +102,79 @@
 
 
 
+
+<div class="modal fade" id="Modal_Registro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">						
+				<h4 class="modal-title" id="myModalLabel">Esperando Confirmación</h4>
+			</div>
+			<div class="modal-body">
+				¿ Esta seguro de Registrar la información Ingresada ?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary RegistrarInformacion" id="btn_registrar_producto">Registrar</button>
+				<button type="button" class="btn btn-danger" id="btn_cancelar_formulario_productos" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <script>
+	$('.RegistrarInformacion').click(function(){
+		$.ajax({
+			url:'ConfiguracionCuentaComercio',
+			data:new FormData($("#FormularioRegistroCuenta")[0]),
+			dataType:'json',
+			async:false,
+			type:'POST',
+			processData: false,
+			contentType: false,
+			success:function(respuesta){
+				if(respuesta==0){        
+					$('#success-alerta1').show();        
+					Listar_Productos();				
+					$(document).ready (function(){  
+						$('#Modal_Registro_Productos').modal('hide');                             
+						$("#success-alerta1").hide(); 
+						$("#success-alerta1").alert();     
+						$("#success-alerta1").fadeTo(4500, 500).slideUp(500, function(){
+							$("#success-alerta1").hide();
+						});  
+					});
+					LimpiarModal();
+				}
+
+				if(respuesta==1){				 
+					$('#estilo_mensaje').show();
+					document.getElementById("id_validacion").innerText = 'ERROR: La imagen ingresada ya esta asociada a otro producto.';
+					document.getElementById("id_validacion").style.display = "block";
+					$('#Modal_Registro_Productos').scrollTop(0);
+				}
+
+				if(respuesta.error==false){
+					$.each(respuesta.errors,function(index, error){  
+						$('#estilo_mensaje').show();
+						document.getElementById("id_validacion").innerText = 'ERROR: '+error;
+						document.getElementById("id_validacion").style.display = "block";   
+					}); 
+					$('#Modal_Registro_Productos').scrollTop(0);
+				}
+				Listar_Productos();
+				cargar_nombres_productos();
+			},
+			error:function(respuesta){
+			// console.log(respuesta);
+		}
+	});
+	});
+
+
+
+
+
+
 	$(document).ready(function(){
 		$('[data-toggle="popover"]').popover();   
 	});
@@ -137,6 +212,7 @@
 			reader.onload = function (e) {
 				$('#img_destino').attr('src', e.target.result);
 				// $('#totalPeso').text(Math.round(e.loaded/1024/1024) + "MB");
+				subir();
 			}
 			reader.readAsDataURL(input.files[0]);
 		}else{
@@ -303,8 +379,13 @@
 
 	$('.BtnRegistrar').click(function(){
 		if(Valida_Registro()!=true){
-
+			$('#Modal_Registro').modal('show');
 		}
 	});
+
+	function subir() {
+		$("html, body").animate({ scrollTop: 0 }, "slow");
+		return false;
+	}
 
 </script>
