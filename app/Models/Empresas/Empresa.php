@@ -1,8 +1,6 @@
 <?php
 
-
-namespace App\Models\Empresa;
-
+namespace App\Models\Empresas;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +8,6 @@ class Empresa extends Model{
 	
 	protected $table = 'empresa';
 
-	public $timestamps = false;
-	
+	public $timestamps = false;	
 
 }

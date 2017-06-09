@@ -764,10 +764,6 @@ $('#btn_cancelar_formulario_productos').click(function(){
 					console.clear();
 					$('#img_destino_editar').attr("src",$NoDisponible);
 				})
-
-
-
-
 			}
 
 		});

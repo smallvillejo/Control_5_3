@@ -9,7 +9,11 @@ use App\Models\Usuarios\Usuario;
 use App\Models\Productos\Producto;
 use App\Models\Alimentos\Alimento;
 use App\Models\Perfiles\Perfil;
-use Control_5_3\Models\Cargo\Cargo;
+use App\Models\Models\Cargo\Cargo;
+
+use App\Models\Empresas\Empresa;
+
+
 use Illuminate\Support\Facades\Input;
 use Response;
 use Illuminate\Support\Facades\Validator;
@@ -151,7 +155,23 @@ class UsuariosController extends Controller {
 	}
 
 	public function account(){
-		return View('Usuarios.Account');
+		$Empresa=Empresa::all();
+
+		$NombreEmpresa="";
+
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;
+			$direccion_empresa=$value->direccion_empresa;
+			$telefono_empresa=$value->telefono_empresa;
+			$correo_empresa=$value->correo_empresa;
+			$logo_empresa=$value->logo_empresa;
+		}
+		return View('Usuarios.Account')
+		->with('NombreEmpresa',$NombreEmpresa)
+		->with('direccion_empresa',$direccion_empresa)
+		->with('telefono_empresa',$telefono_empresa)
+		->with('correo_empresa',$correo_empresa)
+		->with('logo_empresa',$logo_empresa);
 	}
 
 	public function ConfiguracionCuentaComercio(){
@@ -192,7 +212,7 @@ class UsuariosController extends Controller {
 
 			if ($src["size"] > 0){				     
 
-				$ruta_imagen = 'global/directorio/Comercio_'.$id_comercio.'/images/Productos/';
+				$ruta_imagen = 'global/directorio/Comercio_'.$id_comercio.'/images/Empresa/';
 				File::makeDirectory($ruta_imagen, $mode = 0777, true, true);
 
 				$imagen=rand(1000,999)."-".$src["name"];
@@ -238,428 +258,408 @@ class UsuariosController extends Controller {
 				}
 
 			}
+		}
+	}
 
 
+	public function IndexUsuarios() { 
 
+		$Rol_Usuario_Logueado=Auth::user()->get()->perfil_id;
 
+		$correo = htmlspecialchars(Input::get("buscar"));
 
+		if($Rol_Usuario_Logueado==1){				
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			public function IndexUsuarios() { 
-
-				$Rol_Usuario_Logueado=Auth::user()->get()->perfil_id;
-
-				$correo = htmlspecialchars(Input::get("buscar"));
-
-				if($Rol_Usuario_Logueado==1){				
-
-					if (isset($_GET["buscar"]))		{
-						$buscar = htmlspecialchars(Input::get("buscar"));
-						$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')
-						->where("perfil_id", 2)		
-						->orderby("id", "asc")
-						->paginate(10);
-					}
-					else
-					{
-						$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')	
-						->where("perfil_id", 2)		
-						->orderby("id", "asc")
-						->paginate(10);
-					}
-
-					return View::make('HomeController.Usuarios')
-					->with('paginacion',$paginacion);
-				}else{
-
-					if (isset($_GET["buscar"]))		{
-						$buscar = htmlspecialchars(Input::get("buscar"));
-						$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')
-						->where("perfil_id", 3)		
-						->orderby("id", "asc")
-						->paginate(10);
-					}
-					else
-					{
-						$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')	
-						->where("perfil_id", 3)		
-						->orderby("id", "asc")
-						->paginate(10);
-					}
-					return View::make('HomeController.Empleados')
-					->with('paginacion',$paginacion);
-				}
-
-
+			if (isset($_GET["buscar"]))		{
+				$buscar = htmlspecialchars(Input::get("buscar"));
+				$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')
+				->where("perfil_id", 2)		
+				->orderby("id", "asc")
+				->paginate(10);
+			}
+			else
+			{
+				$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')	
+				->where("perfil_id", 2)		
+				->orderby("id", "asc")
+				->paginate(10);
 			}
 
+			return View::make('HomeController.Usuarios')
+			->with('paginacion',$paginacion);
+		}else{
 
-			function Cargar_Rangos_Usuarios(){
+			if (isset($_GET["buscar"]))		{
+				$buscar = htmlspecialchars(Input::get("buscar"));
+				$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')
+				->where("perfil_id", 3)		
+				->orderby("id", "asc")
+				->paginate(10);
+			}
+			else
+			{
+				$paginacion =User::where('correo', 'LIKE', '%'.$correo.'%')	
+				->where("perfil_id", 3)		
+				->orderby("id", "asc")
+				->paginate(10);
+			}
+			return View::make('HomeController.Empleados')
+			->with('paginacion',$paginacion);
+		}
+
+
+	}
+
+
+	function Cargar_Rangos_Usuarios(){
 
 		// $id_comercio=Auth::user()->get()->id_comercio;
 
-				$Periles = Perfil::all();
+		$Periles = Perfil::all();
 
 
-				$Nombre_Perfil=[];
-				$Nombre_Perfil[0] = "";
+		$Nombre_Perfil=[];
+		$Nombre_Perfil[0] = "";
 
-				foreach ($Periles as $perfil) {
-					$Nombre_Perfil[$perfil->id] = $perfil->nombre_perfil;
-				}
+		foreach ($Periles as $perfil) {
+			$Nombre_Perfil[$perfil->id] = $perfil->nombre_perfil;
+		}
 
-				return Response::json(['success' =>true,			
-					'Nombre_Perfil'=>$Nombre_Perfil			
-					]);
-			}
+		return Response::json(['success' =>true,			
+			'Nombre_Perfil'=>$Nombre_Perfil			
+			]);
+	}
 
-			function Cargar_Ultimo_Registro_Comercio_ID(){
+	function Cargar_Ultimo_Registro_Comercio_ID(){
 
 		// $id_comercio=Auth::user()->get()->id_comercio;
 
 		// $Usuarios = User::orderBy('created_at', 'desc')->first();
 		// $Usuarios = User::all()->last()->pluck('id_comercio');
-				$Usuarios = User::all()->last()->get();
+		$Usuarios = User::all()->last()->get();
 
 
-				foreach ($Usuarios as $value) {
+		foreach ($Usuarios as $value) {
 
-					$id_comercio=$value->id_comercio;
+			$id_comercio=$value->id_comercio;
 
-				}		
-				return Response::json(['success' =>true,			
-					'id_comercio'=>$id_comercio			
-					]);
-			}
+		}		
+		return Response::json(['success' =>true,			
+			'id_comercio'=>$id_comercio			
+			]);
+	}
 
-			function consultar_email_usuario(){
+	function consultar_email_usuario(){
 
-				$usuario = Input::all();
-				$correo="Disponible";
+		$usuario = Input::all();
+		$correo="Disponible";
 
-				$Usuarios = User::where('correo',$usuario['email'])->get();
+		$Usuarios = User::where('correo',$usuario['email'])->get();
 
-				foreach ($Usuarios as $value) {
-					$correo=$value->correo;
-				}			
-				return Response::json(['success' =>true,			
-					'correo'=>$correo			
-					]);
-			}
-
-
-			function contar_clientes(){
-				$Periles = Perfil::all();
-
-				$Usuarios =User::where('perfil_id',2)				
-				->count('perfil_id');
-
-				return Response::json(['success' =>true,			
-					'Usuarios'=>$Usuarios			
-					]);
-			}
+		foreach ($Usuarios as $value) {
+			$correo=$value->correo;
+		}			
+		return Response::json(['success' =>true,			
+			'correo'=>$correo			
+			]);
+	}
 
 
-			function cargar_tabla_usuarios(){
+	function contar_clientes(){
+		$Periles = Perfil::all();
 
-			}
+		$Usuarios =User::where('perfil_id',2)				
+		->count('perfil_id');
 
-
-
-			function Registrar_Nuevo_Usuario(){
-
-				$usuario = Input::all();
-
-				$rules = array
-				(
-					'email'					=> 'required',
-					'rol_usuario'			=> 'required|numeric'
-					);
-
-				$message = array
-				(
-					'email.required' 		=> ' Se requiere un email',			
-					'rol_usuario.required' 	=> ' Seleccione un rol de Usuario.',					
-					'rol_usuario.numeric' 	=> ' Seleccione un rol de Usuario.'
-					);
-
-				$validator = Validator::make(Input::All(), $rules, $message);
-				if ($validator->fails()) {
-
-					return Response::json(['success' =>false,
-						'errors'=>$validator->errors()->toArray()]);
-				}else{
-
-					$Usuario = Input::all();
-					$Nombre="";	
-					$Apellido="";	
-					$Telefono="";
-					$Estado="Inactivo";	
-					$Token="aabbcc";
-					$email=$Usuario['email'];
-
-					$password =$Usuario['password'];
+		return Response::json(['success' =>true,			
+			'Usuarios'=>$Usuarios			
+			]);
+	}
 
 
-					$confirmation_code = str_random(30);			
+	function cargar_tabla_usuarios(){
 
-					Cookie::queue('email', $email, 60*24);
+	}
+
+
+
+	function Registrar_Nuevo_Usuario(){
+
+		$usuario = Input::all();
+
+		$rules = array
+		(
+			'email'					=> 'required',
+			'rol_usuario'			=> 'required|numeric'
+			);
+
+		$message = array
+		(
+			'email.required' 		=> ' Se requiere un email',			
+			'rol_usuario.required' 	=> ' Seleccione un rol de Usuario.',					
+			'rol_usuario.numeric' 	=> ' Seleccione un rol de Usuario.'
+			);
+
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);
+		}else{
+
+			$Usuario = Input::all();
+			$Nombre="";	
+			$Apellido="";	
+			$Telefono="";
+			$Estado="Inactivo";	
+			$Token="aabbcc";
+			$email=$Usuario['email'];
+
+			$password =$Usuario['password'];
+
+
+			$confirmation_code = str_random(30);			
+
+			Cookie::queue('email', $email, 60*24);
 
         // Crear la url de confirmación para el mensaje del email
-					$msg = "<a href='".URL::to("/confirmregister/$email/$confirmation_code")."'>Confirmar Registro</a>";			
+			$msg = "<a href='".URL::to("/confirmregister/$email/$confirmation_code")."'>Confirmar Registro</a>";			
 
         //Enviar email para confirmar el registro
-					$data = array(
-						'user' 		=> $email,
-						'msg' 		=> $msg,
-						'password'  => $password,
-						);
+			$data = array(
+				'user' 		=> $email,
+				'msg' 		=> $msg,
+				'password'  => $password,
+				);
 
-					$fromEmail = 'InfoMerchandiseControl@gmail.com';
-					$fromName = 'Confirmar Registro en Merchandise Control.';
+			$fromEmail = 'InfoMerchandiseControl@gmail.com';
+			$fromName = 'Confirmar Registro en Merchandise Control.';
 
-					Mail::send('emails.register', $data, function($message) use ($fromName, $fromEmail, $email)
-					{
-						$message->to($email, $email);
-						$message->from($fromEmail, $fromName);
-						$message->subject('Confirmar registro en Merchandise Control');
-					});
+			Mail::send('emails.register', $data, function($message) use ($fromName, $fromEmail, $email)
+			{
+				$message->to($email, $email);
+				$message->from($fromEmail, $fromName);
+				$message->subject('Confirmar registro en Merchandise Control');
+			});
 
-					$password = Hash::make($Usuario['password']);
+			$password = Hash::make($Usuario['password']);
 
-					$hora_registro= Carbon::today()->now();
-
-
-					$Datos = array(
-
-						'correo' 	 		 	=> $Usuario['email'],
-						'password' 	 		 	=> $password,	
-						'nombre' 	 		 	=> $Nombre,
-						'apellido' 	   		 	=> $Apellido,
-						'telefono' 	   		 	=> $Telefono,
-						'estado' 	   		 	=> $Estado,			
-						'remember_token' 	 	=> $Token,
-						'created_at' 		 	=> $hora_registro,
-						'updated_at' 	 	 	=> $hora_registro,				
-						'id_comercio' 	     	=> $Usuario['comercio_id'],
-						'perfil_id' 	   	 	=> $Usuario['rol_usuario'],
-						'confirmation_code'  	=> $confirmation_code,
-						'Actualizacion_Datos'   => 'Si'
-
-						);			
-
-					$check = DB::table('usuarios')->insert($Datos);	
-
-					if($check >0){
-						return 0;
-					}else{
-
-						return 1;	
-					}
-
-					return Response::json(['success' =>true]);
-				}
+			$hora_registro= Carbon::today()->now();
 
 
+			$Datos = array(
+
+				'correo' 	 		 	=> $Usuario['email'],
+				'password' 	 		 	=> $password,	
+				'nombre' 	 		 	=> $Nombre,
+				'apellido' 	   		 	=> $Apellido,
+				'telefono' 	   		 	=> $Telefono,
+				'estado' 	   		 	=> $Estado,			
+				'remember_token' 	 	=> $Token,
+				'created_at' 		 	=> $hora_registro,
+				'updated_at' 	 	 	=> $hora_registro,				
+				'id_comercio' 	     	=> $Usuario['comercio_id'],
+				'perfil_id' 	   	 	=> $Usuario['rol_usuario'],
+				'confirmation_code'  	=> $confirmation_code,
+				'Actualizacion_Datos'   => 'Si'
+
+				);			
+
+			$check = DB::table('usuarios')->insert($Datos);	
+
+			if($check >0){
+				return 0;
+			}else{
+
+				return 1;	
 			}
 
-			function Confirmar_Email($email, $confirmation_code){
+			return Response::json(['success' =>true]);
+		}
+
+
+	}
+
+	function Confirmar_Email($email, $confirmation_code){
 		// if (urldecode($email) == Cookie::get("email") && urldecode($key) == Cookie::get("key"))		{
 			// $conn = DB::connection("mysql");
 			// $sql = "UPDATE users SET active=1 WHERE email=?";
 			// $conn->update($sql, array($email));
 
-				$Usuarios =User::where('correo',$email)->get();
-				$Estado="Activo";	
+		$Usuarios =User::where('correo',$email)->get();
+		$Estado="Activo";	
 
-				foreach ($Usuarios as $value) {
+		foreach ($Usuarios as $value) {
 
-					$codigo_confirmacion=$value->confirmation_code;
+			$codigo_confirmacion=$value->confirmation_code;
 
-				}	
-				if($confirmation_code==$codigo_confirmacion){
+		}	
+		if($confirmation_code==$codigo_confirmacion){
 
-					$confirmation_code = str_random(30);	
+			$confirmation_code = str_random(30);	
 
-					$Datos = array(
+			$Datos = array(
 
-						'confirmation_code' 	=> $confirmation_code,
-						'estado' 				=> $Estado
-						);	
-
-
-					$check = DB::table('usuarios')
-					->where('correo',$email)			
-					->update($Datos);
-
-					$mensaje = 'La cuenta fue verificada con éxito. Inicia sesión y disfruta de nuestros servicios.';
-
-					return Redirect::to('/')->with("mensaje", $mensaje);
+				'confirmation_code' 	=> $confirmation_code,
+				'estado' 				=> $Estado
+				);	
 
 
-				}else{
-					$mensaje2 = 'Esta cuenta ya fue verificada anteriormente, Inicia sesión y disfruta de nuestros servicios.';
+			$check = DB::table('usuarios')
+			->where('correo',$email)			
+			->update($Datos);
 
-					return Redirect::to('/')->with("mensaje2", $mensaje2);
-				}
+			$mensaje = 'La cuenta fue verificada con éxito. Inicia sesión y disfruta de nuestros servicios.';
 
-			}
-
-			function Recuperar_Password_Email(){
-				$Usuario= Input::all();
-
-				$email=$Usuario['email'];
-				$password =$Usuario['password'];
-				$confirmation_code = str_random(30);
-
-				$rules = array
-				(
-					'email'					=> 'required'			
-					);
-
-				$message = array
-				(
-					'email.required' 		=> ' Se requiere un email'		
-					);
-
-				$validator = Validator::make(Input::All(), $rules, $message);
-				if ($validator->fails()) {
-
-					return Response::json(['success' =>false,
-						'errors'=>$validator->errors()->toArray()]);
-				}else{
-
-					$msg = "<a href='".URL::to("/recoverpassword/$email/$confirmation_code")."'>Recuperar Password</a>";			
+			return Redirect::to('/')->with("mensaje", $mensaje);
 
 
-        //Enviar email para confirmar el registro
-					$data = array(
-						'user' 		=> $email,
-						'msg' 		=> $msg,
-						'password'  => $password,
-						);
+		}else{
+			$mensaje2 = 'Esta cuenta ya fue verificada anteriormente, Inicia sesión y disfruta de nuestros servicios.';
 
-					$fromEmail = 'InfoMerchandiseControl@gmail.com';
-					$fromName = 'Recuperar Contraseña en Merchandise Control.';
+			return Redirect::to('/')->with("mensaje2", $mensaje2);
+		}
 
-					Mail::send('emails.recover_password', $data, function($message) use ($fromName, $fromEmail, $email)
-					{
-						$message->to($email, $email);
-						$message->from($fromEmail, $fromName);
-						$message->subject('Recuperar Contraseña Merchandise Control');
-					});
+	}
 
+	function Recuperar_Password_Email(){
+		$Usuario= Input::all();
 
+		$email=$Usuario['email'];
+		$password =$Usuario['password'];
+		$confirmation_code = str_random(30);
 
-					$password = Hash::make($Usuario['password']);		
+		$rules = array
+		(
+			'email'					=> 'required'			
+			);
 
+		$message = array
+		(
+			'email.required' 		=> ' Se requiere un email'		
+			);
 
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
 
-					$Datos = array(				
-						'password' 	 		 => $password,				
-						'confirmation_code'  => $confirmation_code
-						);
+			return Response::json(['success' =>false,
+				'errors'=>$validator->errors()->toArray()]);
+		}else{
+
+			$msg = "<a href='".URL::to("/recoverpassword/$email/$confirmation_code")."'>Recuperar Password</a>";			
 
 
         //Enviar email para confirmar el registro
-					$data = array(
-						'user' 		=> $email,
-						'msg' 		=> $msg,
-						'password'  => $password,
-						);
+			$data = array(
+				'user' 		=> $email,
+				'msg' 		=> $msg,
+				'password'  => $password,
+				);
 
-					$fromEmail = 'InfoMerchandiseControl@gmail.com';
-					$fromName = 'Recuperar Contraseña en Merchandise Control.';
+			$fromEmail = 'InfoMerchandiseControl@gmail.com';
+			$fromName = 'Recuperar Contraseña en Merchandise Control.';
 
-					Mail::send('emails.recover_password', $data, function($message) use ($fromName, $fromEmail, $email)
-					{
-						$message->to($email, $email);
-						$message->from($fromEmail, $fromName);
-						$message->subject('Recuperar Contraseña Merchandise Control');
-					});
-
-
-
-					$password = Hash::make($Usuario['password']);		
+			Mail::send('emails.recover_password', $data, function($message) use ($fromName, $fromEmail, $email)
+			{
+				$message->to($email, $email);
+				$message->from($fromEmail, $fromName);
+				$message->subject('Recuperar Contraseña Merchandise Control');
+			});
 
 
 
-					$Datos = array(				
-						'password' 	 		 => $password,				
-						'confirmation_code'  => $confirmation_code
-						);
+			$password = Hash::make($Usuario['password']);		
 
 
-					$check = DB::table('usuarios')
-					->where('correo',$email)			
-					->update($Datos);
+
+			$Datos = array(				
+				'password' 	 		 => $password,				
+				'confirmation_code'  => $confirmation_code
+				);
 
 
-					if($check >0){
-						return 0;
-					}else{
+        //Enviar email para confirmar el registro
+			$data = array(
+				'user' 		=> $email,
+				'msg' 		=> $msg,
+				'password'  => $password,
+				);
 
-						return 1;	
-					}
+			$fromEmail = 'InfoMerchandiseControl@gmail.com';
+			$fromName = 'Recuperar Contraseña en Merchandise Control.';
+
+			Mail::send('emails.recover_password', $data, function($message) use ($fromName, $fromEmail, $email)
+			{
+				$message->to($email, $email);
+				$message->from($fromEmail, $fromName);
+				$message->subject('Recuperar Contraseña Merchandise Control');
+			});
 
 
-					return Response::json(['success' =>true]);
 
-				}	
+			$password = Hash::make($Usuario['password']);		
 
 
+
+			$Datos = array(				
+				'password' 	 		 => $password,				
+				'confirmation_code'  => $confirmation_code
+				);
+
+
+			$check = DB::table('usuarios')
+			->where('correo',$email)			
+			->update($Datos);
+
+
+			if($check >0){
+				return 0;
+			}else{
+
+				return 1;	
 			}
 
-			function Confirmar_Password($email, $confirmation_code){		
 
-				$Usuarios =User::where('correo',$email)->get();
+			return Response::json(['success' =>true]);
 
-				foreach ($Usuarios as $value) {
-
-					$codigo_confirmacion=$value->confirmation_code;
-
-				}	
-				if($confirmation_code==$codigo_confirmacion){
-
-					$confirmation_code = str_random(30);	
-
-					$Datos = array(
-						'confirmation_code' 	=> $confirmation_code				
-						);	
-					$check = DB::table('usuarios')
-					->where('correo',$email)			
-					->update($Datos);
-
-					$mensaje = 'Enhorabuenaue, Tu Contraseña ha sido cambiada, ya puedes Iniciar Sesión y disfruta de nuestros servicios.';
-
-					return Redirect::to('/')->with("mensaje", $mensaje);
+		}	
 
 
-				}else{
+	}
 
-					$mensaje2 = 'El enlace de recuperar ya fue verificado, Inicia sesión y disfruta de nuestros servicios.';
+	function Confirmar_Password($email, $confirmation_code){		
 
-					return Redirect::to('/')->with("mensaje2", $mensaje2);
-				}
+		$Usuarios =User::where('correo',$email)->get();
 
-			}
+		foreach ($Usuarios as $value) {
+
+			$codigo_confirmacion=$value->confirmation_code;
+
+		}	
+		if($confirmation_code==$codigo_confirmacion){
+
+			$confirmation_code = str_random(30);	
+
+			$Datos = array(
+				'confirmation_code' 	=> $confirmation_code				
+				);	
+			$check = DB::table('usuarios')
+			->where('correo',$email)			
+			->update($Datos);
+
+			$mensaje = 'Enhorabuenaue, Tu Contraseña ha sido cambiada, ya puedes Iniciar Sesión y disfruta de nuestros servicios.';
+
+			return Redirect::to('/')->with("mensaje", $mensaje);
+
+
+		}else{
+
+			$mensaje2 = 'El enlace de recuperar ya fue verificado, Inicia sesión y disfruta de nuestros servicios.';
+
+			return Redirect::to('/')->with("mensaje2", $mensaje2);
+		}
+
+	}
 
 
 	// public function EditarPerfil(){
@@ -808,192 +808,192 @@ class UsuariosController extends Controller {
 
 
 
-			function Modificar_Usuario(){
-				$Usuarios = Input::all();
+	function Modificar_Usuario(){
+		$Usuarios = Input::all();
 
-				$passwordUsuario=$Usuarios['checkbox_password'];
-				$correoEditar=$Usuarios['Correo_Editar'];
-				$correo_oculto=$Usuarios['correo_oculto'];	
-				$checkbox_cuenta=$Usuarios['checkbox_cuenta'];	
-
-
-				$password=$Usuarios['password_modificar'];
+		$passwordUsuario=$Usuarios['checkbox_password'];
+		$correoEditar=$Usuarios['Correo_Editar'];
+		$correo_oculto=$Usuarios['correo_oculto'];	
+		$checkbox_cuenta=$Usuarios['checkbox_cuenta'];	
 
 
-				$confirmation_code = str_random(30);	
-
-				$Nueva_Contraseña = Hash::make($password);
+		$password=$Usuarios['password_modificar'];
 
 
-				if($passwordUsuario=='Si'){			
+		$confirmation_code = str_random(30);	
 
-					$msg = "<a href='".URL::to("/recoverpassword/$correoEditar/$confirmation_code")."'>Confirmar Cambio de Contraseña.</a>";			
+		$Nueva_Contraseña = Hash::make($password);
+
+
+		if($passwordUsuario=='Si'){			
+
+			$msg = "<a href='".URL::to("/recoverpassword/$correoEditar/$confirmation_code")."'>Confirmar Cambio de Contraseña.</a>";			
 
         //Enviar email para cambiar password
-					$data = array(
-						'user' 		=> $correoEditar,
-						'msg' 		=> $msg,
-						'password'  => $password,
-						);
+			$data = array(
+				'user' 		=> $correoEditar,
+				'msg' 		=> $msg,
+				'password'  => $password,
+				);
 
-					$fromEmail = 'InfoMerchandiseControl@gmail.com';
-					$fromName = 'Nueva Contraseña en Merchandise Control.';
+			$fromEmail = 'InfoMerchandiseControl@gmail.com';
+			$fromName = 'Nueva Contraseña en Merchandise Control.';
 
-					Mail::send('emails.reset_password', $data, function($message) use ($fromName, $fromEmail, $correoEditar)
-					{
-						$message->to($correoEditar, $correoEditar);
-						$message->from($fromEmail, $fromName);
-						$message->subject('El Administrador ha generado una nueva Contraseña en Merchandise Control.');
-					});
-
-
-					$Datos = array(				
-						'password' 	 		 =>$Nueva_Contraseña,				
-						'confirmation_code'  => $confirmation_code								
-						);
-
-					$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
-
-					if($check >0){
-						return 0;
-					}else{
-
-						return 1;	
-					}
-					return Response::json(['success' =>true]);	
+			Mail::send('emails.reset_password', $data, function($message) use ($fromName, $fromEmail, $correoEditar)
+			{
+				$message->to($correoEditar, $correoEditar);
+				$message->from($fromEmail, $fromName);
+				$message->subject('El Administrador ha generado una nueva Contraseña en Merchandise Control.');
+			});
 
 
-				}else{
-					if($correoEditar!==$correo_oculto){
+			$Datos = array(				
+				'password' 	 		 =>$Nueva_Contraseña,				
+				'confirmation_code'  => $confirmation_code								
+				);
 
-						$Datos = array(
-							'correo' 					=> $Usuarios['Correo_Editar']					
-							);
-						$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
+			$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
 
-					}
-				}
+			if($check >0){
+				return 0;
+			}else{
+
+				return 1;	
+			}
+			return Response::json(['success' =>true]);	
+
+
+		}else{
+			if($correoEditar!==$correo_oculto){
+
+				$Datos = array(
+					'correo' 					=> $Usuarios['Correo_Editar']					
+					);
+				$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
 
 			}
-			public function EditarPerfil(){
-
-				$perfil = Input::all();
-
-				$correo_escrito=$perfil['correo'];
-
-				$correo_logueado=Auth::user()->get()->correo;
-				$hora_actualizacion= Carbon::today()->now();
-
-
-				if($correo_escrito!==$correo_logueado){
-
-					$rules = array
-					(
-						'nombre_user'			=> 'required|min:3',
-						'apellido_user'			=> 'required|min:3',
-						'telefono_user' 		=> 'required|numeric',
-						'correo' 				=> 'required|email|unique:usuarios|between:3,80',
-						'password' 				=> 'required|regex:/^[a-z0-9]+$/i|min:7|max:16',
-						'confipassword' 		=> 'required|same:password',
-						'terminos' 				=> 'required|numeric'
-						);
-
-					$message = array
-					(
-						'nombre_user.required' 		=> ' Porfavor Ingrese un nombre.',
-						'nombre_user.min' 			=> ' El campo Nombre es de minimo 3 caracteres.',
-						'apellido_user.required' 	=> ' Porfavor Ingrese un apellido.',
-						'apellido_user.min' 		=> ' El campo apellido es de minimo 3 caracteres.',
-						'telefono_user.numeric' 	=> ' Ingresa un numer de telefono.',
-						'telefono_user.required' 	=> ' Ingresa un numer de telefono.',
-						'email.required' 			=> ' Porfavor Ingrese un email.',
-						'correo.email' 		    	=> ' El formato Email esta incorrecto.',
-						'correo.unique' 			=> ' El email ingresado ya se encuentra registrado.',
-						'correo.between' 			=> ' El email debe contener entre 3 y 80 caracteres.',
-						'password.required' 		=> ' El campo password es requerido.',
-						'password.regex' 			=> ' El campo password sólo acepta letras y números.',
-						'password.min' 				=> ' El campo password es de mínimo 7 caracteres.',
-						'password.max' 				=> ' El campo password es de maximo 16 caracteres.',
-						'confipassword.required' 	=> ' Confirme el password.',
-						'confipassword.same'		=> ' Los passwords no coinciden.',
-						'terminos.numeric' 			=> ' Tienes que aceptar los términos.',
-						'terminos.required' 		=> ' Tienes que aceptar los términos.'
-						);
-					$validator = Validator::make(Input::All(), $rules, $message);
-					if ($validator->fails()) {
-
-						return Response::json(['success' =>false,
-							'errors'=>$validator->errors()->toArray()]);
-					}else{
-
-
-						$password = Hash::make(input::get('password'));
-
-
-						$perfil_user = array(
-							'nombre' 					=> $perfil['nombre_user'],
-							'apellido'					=> $perfil['apellido_user'],
-							'telefono' 	    			=> $perfil['telefono_user'],
-							'correo' 	    			=> $perfil['correo'],
-							'Actualizacion_Datos' 	    => 'No',
-							'password' 					=> $password,
-							'updated_at'				=> $hora_actualizacion
-							);
-						$check = DB::table('usuarios')->where('id',$perfil['id_usuario'])->update($perfil_user);
-
-						if($check >0){
-							return 0;
-						}else{
-
-							return 1;	
-						}
-
-						return Response::json(['success' =>true]);	
-
-					}
-				}
-
-				if($checkbox_cuenta=='Si'){
-
-					$Datos = array(			
-
-						'estado'  			 => 'Activo'				
-						);
-
-					$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
-
-					if($check >0){
-						return 0;
-					}else{
-
-						return 1;	
-					}
-					return Response::json(['success' =>true]);
-
-				}else{
-					$Datos = array(			
-
-						'estado'  			 => 'Inactivo'				
-						);
-
-					$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
-
-					if($check >0){
-						return 0;
-					}else{
-
-						return 1;	
-					}
-					return Response::json(['success' =>true]);
-				}
-
-
-			}
-
-
-			function PerfilUser(){
-				return View::make('HomeController.Perfil');
-
-			}
-
 		}
+
+	}
+	public function EditarPerfil(){
+
+		$perfil = Input::all();
+
+		$correo_escrito=$perfil['correo'];
+
+		$correo_logueado=Auth::user()->get()->correo;
+		$hora_actualizacion= Carbon::today()->now();
+
+
+		if($correo_escrito!==$correo_logueado){
+
+			$rules = array
+			(
+				'nombre_user'			=> 'required|min:3',
+				'apellido_user'			=> 'required|min:3',
+				'telefono_user' 		=> 'required|numeric',
+				'correo' 				=> 'required|email|unique:usuarios|between:3,80',
+				'password' 				=> 'required|regex:/^[a-z0-9]+$/i|min:7|max:16',
+				'confipassword' 		=> 'required|same:password',
+				'terminos' 				=> 'required|numeric'
+				);
+
+			$message = array
+			(
+				'nombre_user.required' 		=> ' Porfavor Ingrese un nombre.',
+				'nombre_user.min' 			=> ' El campo Nombre es de minimo 3 caracteres.',
+				'apellido_user.required' 	=> ' Porfavor Ingrese un apellido.',
+				'apellido_user.min' 		=> ' El campo apellido es de minimo 3 caracteres.',
+				'telefono_user.numeric' 	=> ' Ingresa un numer de telefono.',
+				'telefono_user.required' 	=> ' Ingresa un numer de telefono.',
+				'email.required' 			=> ' Porfavor Ingrese un email.',
+				'correo.email' 		    	=> ' El formato Email esta incorrecto.',
+				'correo.unique' 			=> ' El email ingresado ya se encuentra registrado.',
+				'correo.between' 			=> ' El email debe contener entre 3 y 80 caracteres.',
+				'password.required' 		=> ' El campo password es requerido.',
+				'password.regex' 			=> ' El campo password sólo acepta letras y números.',
+				'password.min' 				=> ' El campo password es de mínimo 7 caracteres.',
+				'password.max' 				=> ' El campo password es de maximo 16 caracteres.',
+				'confipassword.required' 	=> ' Confirme el password.',
+				'confipassword.same'		=> ' Los passwords no coinciden.',
+				'terminos.numeric' 			=> ' Tienes que aceptar los términos.',
+				'terminos.required' 		=> ' Tienes que aceptar los términos.'
+				);
+			$validator = Validator::make(Input::All(), $rules, $message);
+			if ($validator->fails()) {
+
+				return Response::json(['success' =>false,
+					'errors'=>$validator->errors()->toArray()]);
+			}else{
+
+
+				$password = Hash::make(input::get('password'));
+
+
+				$perfil_user = array(
+					'nombre' 					=> $perfil['nombre_user'],
+					'apellido'					=> $perfil['apellido_user'],
+					'telefono' 	    			=> $perfil['telefono_user'],
+					'correo' 	    			=> $perfil['correo'],
+					'Actualizacion_Datos' 	    => 'No',
+					'password' 					=> $password,
+					'updated_at'				=> $hora_actualizacion
+					);
+				$check = DB::table('usuarios')->where('id',$perfil['id_usuario'])->update($perfil_user);
+
+				if($check >0){
+					return 0;
+				}else{
+
+					return 1;	
+				}
+
+				return Response::json(['success' =>true]);	
+
+			}
+		}
+
+		if($checkbox_cuenta=='Si'){
+
+			$Datos = array(			
+
+				'estado'  			 => 'Activo'				
+				);
+
+			$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
+
+			if($check >0){
+				return 0;
+			}else{
+
+				return 1;	
+			}
+			return Response::json(['success' =>true]);
+
+		}else{
+			$Datos = array(			
+
+				'estado'  			 => 'Inactivo'				
+				);
+
+			$check = DB::table('usuarios')->where('id',$Usuarios['usuario_id'])->update($Datos);
+
+			if($check >0){
+				return 0;
+			}else{
+
+				return 1;	
+			}
+			return Response::json(['success' =>true]);
+		}
+
+
+	}
+
+
+	function PerfilUser(){
+		return View::make('HomeController.Perfil');
+
+	}
+
+}
