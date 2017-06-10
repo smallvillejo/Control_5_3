@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
 use App\Models\Recargas\VentaRecarga;
 use App\Models\Recargas\CategoriaRecarga;
+use App\Models\Empresas\Empresa;
 use Carbon\Carbon;
 use File;
 use Excel;
@@ -31,7 +32,16 @@ class AdministrarRecargasController extends Controller {
 	}
 
 	public function AdministrarRecargas(){
-		return view('AdministrarRecargas.Index_Recargas');
+		$Empresa=Empresa::all();
+		$NombreEmpresa="";
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;      
+		}
+		if($NombreEmpresa!=""){
+			return view('AdministrarRecargas.Index_Recargas');
+		}else{
+			return View('Usuarios.Account');
+		}		
 	}
 
 	public function Cargar_Tabla_Recargas_Ingresados(){

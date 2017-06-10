@@ -16,9 +16,13 @@ Route::any('ConsultarEmail', array('as'=>'ConsultarEmail','uses'=>'ControllerUsu
 Route::any('cargar_div', array('as'=>'cargar_div','uses'=>'ControllerIndex\IndexController@CargarBarNotificaciones'));
 // Ruta Para Configuracion de la cuenta de usuario
 Route::any('account', array('as'=>'account','uses'=>'ControllerUsuarios\UsuariosController@account'))->middleware('auth');
+// Ruta consulta los datos de la empresa con Ajax
+Route::any('Consultar_Datos_Empresa', array('as'=>'Consultar_Datos_Empresa','uses'=>'ControllerUsuarios\UsuariosController@Consultar_Datos_Empresa'))->middleware('auth');
 // Ruta para configuracion de la cuenta de usuario
 Route::any('ConfiguracionCuentaComercio', array('as'=>'ConfiguracionCuentaComercio','uses'=>'ControllerUsuarios\UsuariosController@ConfiguracionCuentaComercio'))->middleware('auth');
 
+// Ruta para configuracion de la cuenta de usuario
+Route::any('ActualizacionCuentaComercio', array('as'=>'ActualizacionCuentaComercio','uses'=>'ControllerUsuarios\UsuariosController@ActualizacionCuentaComercio'))->middleware('auth');
 
 // Rutas del Sistema
 

@@ -8,23 +8,30 @@
 <title>Configuración</title>
 <br>
 
-
-@if($NombreEmpresa=="")
 <div class="panel panel-primary  col-xs-12 col-sm-12 col-md-10 col-md-offset-1" onmousemove="Valida_Registro2();" onchange="Valida_Registro2();">
 	<div class="panel-heading" style="background-color:#32045e">
 		<h2 class="panel-title">
 			<strong>Configuración Cuenta</strong>
 			<div class="btn-group pull-right">		
-				<div class="form-group col-sm-2">
-					<button type="button" class="btn btn-succes BtnRegistrar" style="background-color: #d65314" title="Guardar Cambios">
+				<div class="form-group col-sm-12">
+					<button type="button" class="btn btn-succes BtnRegistrar" style="background-color: #d65314; display: none;" title="Registrar Cambios">
 						<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar</span></font></strong>
 						<strong> <font size ="2", color ="#ffffff"><span class="fa fa-plus-square"></span></font></strong>
 					</button> 
+					<button type="button" class="btn btn-succes BtnActualizar" style="background-color: #d65314;display: none;" title="Guardar Cambios">
+						<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Actualizar</span></font></strong>
+						<strong> <font size ="2", color ="#ffffff"><span class="fa fa-pencil-square-o"></span></font></strong>
+					</button>
+					<button type="button" class="btn btn-succes BtnCancelar" style="background-color: #d65314;display: none;" title="Cancelar">
+						<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Cancelar</span></font></strong>
+						<strong> <font size ="2", color ="#ffffff"><span class="fa fa-times"></span></font></strong>
+					</button>
 				</div> 
 			</div>			
 		</h2>
 	</div>
 	<div class="panel-body">
+		<input type="hidden" name="haylogo" id="haylogo">
 		<h4>Antes de continuar al sistema, por primera vez debes configurar los siguientes parámetros:</h4>
 		<br>
 		<div class="col-xs-12 col-sm-12 col-md-12"> 	
@@ -118,143 +125,71 @@
 	</div>
 </div>
 
-@else
-<script type="text/javascript">
-	var NoDisponible= 'global/images/ProductoNoDisponible.png';
-	var ImagenLogo="{{$logo_empresa}};"
-
-	console.log(ImagenLogo);
-
-	if(ImagenLogo!=""){
-		$('#imagen_destino_editar').attr('src', ImagenLogo);
-		$('#div_photo_logo_editar').show();	
-		$('#imagen_destino_editar').show();	
-		
-	}else{
-		$('#imagen_destino_editar').attr("src",NoDisponible);
-	}
-
-
-
-	// $("#catagry_logo").change(function(){
-	// 	$('#div_photo_producto').show();
-	// 	$('#div_peso_imagen').show();		
-	// 	// $('#TotalPeso').show();
-	// 	$('#id_img_destino').show();
-	// 	Obtener_Imagen_Registro_Producto(this);
-	// });
-</script>
-<div class="panel panel-primary  col-xs-12 col-sm-12 col-md-10 col-md-offset-1" onmousemove="Valida_Registro2();" onchange="Valida_Registro2();">
-	<div class="panel-heading" style="background-color:#32045e">
-		<h2 class="panel-title">
-			<strong>Configuración Cuenta</strong>
-			<div class="btn-group pull-right">		
-				<div class="form-group col-sm-2">
-					<button type="button" class="btn btn-succes BtnRegistrar" style="background-color: #d65314" title="Guardar Cambios">
-						<strong> <font size ="2", color ="#ffffff" face="Lucida Sans"><span>Registrar</span></font></strong>
-						<strong> <font size ="2", color ="#ffffff"><span class="fa fa-plus-square"></span></font></strong>
-					</button> 
-				</div> 
-			</div>			
-		</h2>
-	</div>
-	<div class="panel-body">
-		<h4>Antes de continuar al sistema, por primera vez debes configurar los siguientes parámetros:</h4>
-		<br>
-		<div class="col-xs-12 col-sm-12 col-md-12"> 	
-			<div class="row">				
-				<div class="panel panel-danger" style="display:none" id="estilo_mensaje">
-					<div class="panel-heading" id="id_validacion" style="display:none">
-					</div>					
-				</div>
-				<form class="form-horizontal" enctype="multipart/form-data" id="FormularioRegistroCuenta" role="form" method="POST" action="" >
-					<input type="hidden" name="_token" value="{{ csrf_token()}}">  
-					<div class="row">	
-						<div class="form-group col-sm-2">
-							<i class="fa fa-desktop" aria-hidden="true" title="Nombre Empresa"></i> Nombre Empresa
-						</div>
-						<div class="form-group col-sm-4">
-							<input type="text" name="NombreEmpresa" id="NombreEmpresa" class="form-control" placeholder="Ingresa el nombre de la empresa" value="{{$NombreEmpresa}}" autofocus>
-						</div>				
-
-						<div class="form-group col-sm-2">
-							<i class="fa fa-address-card-o" aria-hidden="true"></i> Dirección Empresa:
-						</div>
-						<div class="form-group col-sm-4">
-							<input type="text" name="DireccionEmpresa" id="DireccionEmpresa" class="form-control" placeholder="Ingresa la dirección de la empresa" value="{{$direccion_empresa}}">
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-2">
-							<i class="fa fa-phone-square" aria-hidden="true"></i> Telefono Empresa:
-						</div>
-						<div class="form-group col-sm-4">
-							<input type="number" name="TelefonoEmpresa" id="TelefonoEmpresa" class="form-control" placeholder="Ingresa el número telefónico de la empresa" value="{{$telefono_empresa}}">
-						</div>
-						<div class="form-group col-sm-2">
-							<i class="fa fa-envelope" aria-hidden="true"></i> Correo Empresa:
-						</div>
-						<div class="form-group col-sm-4">
-							<input type="email" name="EmailEmpresa" id="EmailEmpresa" class="form-control" placeholder="Ingresa el email de la empresa" value="{{$correo_empresa}}">
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-2">
-							<i class="fa fa-picture-o" aria-hidden="true"></i> Logo Empresa:
-						</div>
-						<div class="form-group col-sm-4">
-							<input type="file" name="ImagenLogoEmpresa_Editar" class="form-control" id="ImagenLogoEmpresa_Editar" accept="image/jpeg, image/jpg,image/png" placeholder="Ingresa logo de la empresa" style="background-color: #32045e; color:#ffffff; " />
-							<span class="help-block">Solo se permiten formatos: JPG,JPEG y PNG.</span>        
-						</div>
-					</div>	
-					<div class="row">			
-						<div class="form-group col-sm-2">
-							<div class="form-group" id="div_photo_logo_editar" style="display: none">    
-								<i class="fa fa-picture-o" aria-hidden="true"></i> Vista Previa:
-							</div> 
-						</div>
-						<div class="form-group col-sm-4" style="display: none" id="id_img_destino">
-							<img id="imagen_destino_editar" name="imagen_destino_editar" height="200" width="300"> 
-							<span class="help-block">Capacidad Máxima 1 MB.</span>    
-						</div>
-						<div class="row" style="display: none" id="id_porcentaje_configuracion">
-							<div class="form-group col-sm-3">
-								<i class="fa fa-cog" aria-hidden="true"></i> Porcentaje Configuración 
-							</div>
-							<div class="form-group col-sm-3">
-								<div class="progress">
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: #32045e" >
-										<span id="NumeroPorcentaje"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal fade" id="Modal_Registro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="Modal_Actualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">						
 				<h4 class="modal-title" id="myModalLabel">Esperando Confirmación</h4>
 			</div>
 			<div class="modal-body">
-				¿ Esta seguro de Registrar la información Ingresada ?
+				¿ Esta seguro de Actualizar la información Ingresada ?
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary RegistrarInformacion" id="btn_registrar_producto">Registrar</button>
+				<button type="button" class="btn btn-primary ActualizarInformacion" id="btn_registrar_producto">Actualizar</button>
 				<button type="button" class="btn btn-danger" id="btn_cancelar_formulario_productos" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>
 	</div>
 </div>
-@endif
-
 
 <script>
+	Cargar_Datos_Empresa();
+
+	function Cargar_Datos_Empresa(){
+
+		var src= $('input[type=file]').val();
+		$.ajax({
+			type:'GET',
+			// data: {
+			// 	'id_maquina' 	: id_maquina,
+			// 	'Fecha_Inicial' : Fecha_Inicial,
+			// 	'Fecha_Final' 	: Fecha_Final	
+			// },
+			url:'{{ url('Consultar_Datos_Empresa')}}',
+			success: function(respuesta){      
+				if(respuesta.NombreEmpresa!=""){ 				 
+					$('#NombreEmpresa').val(respuesta.NombreEmpresa);
+					$('#DireccionEmpresa').val(respuesta.direccion_empresa);
+					$('#TelefonoEmpresa').val(respuesta.telefono_empresa);
+					$('#EmailEmpresa').val(respuesta.correo_empresa);	
+					src=respuesta.logo_empresa;
+					$('#ImagenLogoEmpresa').val(respuesta.logo_empresa);
+					$('#img_destino').attr('src', respuesta.logo_empresa);	
+					$('#div_photo_producto').show();
+					$('#div_peso_imagen').show();		
+					$('#id_img_destino').show();
+					$('#haylogo').val(respuesta.Valida);
+					$('.BtnRegistrar').hide();
+					$('.BtnActualizar').show();
+					$('.BtnCancelar').show();
+					Valida_Registro();	
+
+				}else{
+					$('#NombreEmpresa').val("");
+					$('#DireccionEmpresa').val("");
+					$('#TelefonoEmpresa').val("");
+					$('#EmailEmpresa').val("");	
+					$('#img_destino').val("");
+					$('.BtnRegistrar').show();
+					$('.BtnActualizar').hide();
+					$('.BtnCancelar').hide();
+					$("#NombreEmpresa").focus();
+					$('#haylogo').val(respuesta.Valida);
+				}
+			}	
+		});
+	}
+
 	$('.RegistrarInformacion').click(function(){
 		$.ajax({
 			url:'ConfiguracionCuentaComercio',
@@ -266,41 +201,67 @@
 			contentType: false,
 			success:function(respuesta){
 				if(respuesta==0){        
-					$('#success-alerta1').show();        
-					Listar_Productos();				
-					$(document).ready (function(){  
-						$('#Modal_Registro_Productos').modal('hide');                             
-						$("#success-alerta1").hide(); 
-						$("#success-alerta1").alert();     
-						$("#success-alerta1").fadeTo(4500, 500).slideUp(500, function(){
-							$("#success-alerta1").hide();
-						});  
-					});
-					LimpiarModal();
-				}
-
-				if(respuesta==1){				 
-					$('#estilo_mensaje').show();
-					document.getElementById("id_validacion").innerText = 'ERROR: La imagen ingresada ya esta asociada a otro producto.';
-					document.getElementById("id_validacion").style.display = "block";
-					$('#Modal_Registro_Productos').scrollTop(0);
-				}
+					$("#estilo_mensaje").attr("class", "panel panel-success");
+					$("#id_validacion").css("fontSize", 15);						
+					$("#id_validacion").css("font-weight","Bold"); 	
+					$('#estilo_mensaje').show();			
+					$('#id_validacion').html('<center> Datos registrados con Éxito.</center>');	
+					$('#id_validacion').show();
+					$('#Modal_Registro').modal('hide');
+					setTimeout('document.location.href = "{{ route('Index')}}"',2000);
+				}				
 
 				if(respuesta.error==false){
-					$.each(respuesta.errors,function(index, error){  
-						$('#estilo_mensaje').show();
-						document.getElementById("id_validacion").innerText = 'ERROR: '+error;
-						document.getElementById("id_validacion").style.display = "block";   
+					$.each(respuesta.errors,function(index, error){ 
+						$("#estilo_mensaje").attr("class", "panel panel-danger");
+						$("#id_validacion").css("fontSize", 15);						
+						$("#id_validacion").css("font-weight","Bold"); 	
+						$('#estilo_mensaje').show();			
+						$('#id_validacion').html('<center> ERROR: '+error+'</center>');	
+						$('#id_validacion').show();
 					}); 
 					$('#Modal_Registro_Productos').scrollTop(0);
 				}
-				Listar_Productos();
-				cargar_nombres_productos();
-			},
-			error:function(respuesta){
-			// console.log(respuesta);
-		}
+				
+			}
+		});
 	});
+
+	$('.ActualizarInformacion').click(function(){
+		$.ajax({
+			url:'ConfiguracionCuentaComercio',
+			data:new FormData($("#FormularioRegistroCuenta")[0]),
+			dataType:'json',
+			async:false,
+			type:'POST',
+			processData: false,
+			contentType: false,
+			success:function(respuesta){
+				if(respuesta==0){        
+					$("#estilo_mensaje").attr("class", "panel panel-success");
+					$("#id_validacion").css("fontSize", 15);						
+					$("#id_validacion").css("font-weight","Bold"); 	
+					$('#estilo_mensaje').show();			
+					$('#id_validacion').html('<center> Datos actualizados con Éxito.</center>');	
+					$('#id_validacion').show();
+					$('#Modal_Actualizar').modal('hide');
+					setTimeout('document.location.href = "{{ route('Index')}}"',2000);
+				}				
+
+				if(respuesta.error==false){
+					$.each(respuesta.errors,function(index, error){ 
+						$("#estilo_mensaje").attr("class", "panel panel-danger");
+						$("#id_validacion").css("fontSize", 15);						
+						$("#id_validacion").css("font-weight","Bold"); 	
+						$('#estilo_mensaje').show();			
+						$('#id_validacion').html('<center> ERROR: '+error+'</center>');	
+						$('#id_validacion').show();
+					}); 
+					$('#Modal_Registro_Productos').scrollTop(0);
+				}
+				
+			}
+		});
 	});
 
 
@@ -356,7 +317,10 @@
 
 			
 		}
-	}
+	}	
+
+
+
 
 	function Valida_Registro(){
 		var espacio_blanco    = /[a-z]/i;  //Expresión regular
@@ -366,8 +330,9 @@
 		var NombreEmpresa= $('#NombreEmpresa').val();
 		var DireccionEmpresa= $('#DireccionEmpresa').val();
 		var TelefonoEmpresa= $('#TelefonoEmpresa').val();
-		var EmailEmpresa= $('#EmailEmpresa').val();
-		
+		var EmailEmpresa= $('#EmailEmpresa').val();		
+		var haylogo= $('#haylogo').val();
+
 		
 		if(NombreEmpresa==""){
 			$('#estilo_mensaje').show();
@@ -445,7 +410,9 @@
 										}else{
 											$('.progress-bar').css('width', '' + (80+ '%'));
 											$('#NumeroPorcentaje').text('80% Completado');
-											if(src==""){
+											
+
+											if(haylogo=="no" && src==""){
 												$('#estilo_mensaje').show();
 												document.getElementById("id_validacion").innerText = "Debes seleccionar una imagen.";
 												document.getElementById("id_validacion").style.display = "block";
@@ -477,7 +444,7 @@
 		var DireccionEmpresa= $('#DireccionEmpresa').val();
 		var TelefonoEmpresa= $('#TelefonoEmpresa').val();
 		var EmailEmpresa= $('#EmailEmpresa').val();
-		
+		var haylogo= $('#haylogo').val();
 		var campos=0;
 
 		if(espacio_blanco.test(NombreEmpresa)){
@@ -492,10 +459,13 @@
 		if(emailRegex.test(EmailEmpresa)){
 			campos++;
 		}		
-		if(espacio_blanco.test(src)){
+		if(haylogo=="no" && espacio_blanco.test(src)){
 			campos++;
-		}		
-
+		}else{
+			if(haylogo=="si"){
+				campos++;
+			}		
+		}
 		x=100/5*campos;
 
 		$('.progress-bar').css('width', '' + (x+ '%'));
@@ -515,6 +485,18 @@
 			$('#Modal_Registro').modal('show');
 		}
 	});
+
+	$('.BtnActualizar').click(function(){
+		if(Valida_Registro()!=true){
+			$('#Modal_Actualizar').modal('show');
+		}
+	});
+
+
+	$('.BtnCancelar').click(function(){
+		setTimeout('document.location.href = "{{ route('Index')}}"',1);
+	});
+
 
 	function subir() {
 		$("html, body").animate({ scrollTop: 0 }, "slow");

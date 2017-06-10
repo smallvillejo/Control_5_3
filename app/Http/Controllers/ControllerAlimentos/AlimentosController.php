@@ -109,7 +109,17 @@ public function CargarCantidadStockAcabarseAlimento(){
   return $NotificacionAlimentos;
 }
 public function AdministrarAlimentos(){
-  return view('Administrar/Alimentos/Administrar_Alimentos');
+  $Empresa=Empresa::all();
+  $NombreEmpresa="";
+  foreach ($Empresa as $key => $value) {
+    $NombreEmpresa=$value->nombre_empresa;      
+  }
+  if($NombreEmpresa!=""){
+   return view('Administrar/Alimentos/Administrar_Alimentos');
+ }else{
+  return View('Usuarios.Account');
+}
+
 }
 public function Cargar_Alimentos_En_Administrar(){
   $this->Actualizar_Total_Inversion_Alimentos();
@@ -127,7 +137,17 @@ public function AlimentosConPocoStock(){
   return view('Administrar/Alimentos/Tablas.Tabla_Administrar_Alimentos_Poco_Stock')->with('Alimentos',$Alimentos);
 }
 public function Cargar_AlimentosConPocoStock(){    
-  return view('Administrar/Alimentos/Poco_Stock/Poco_Stock_Alimentos');    
+  $Empresa=Empresa::all();
+  $NombreEmpresa="";
+  foreach ($Empresa as $key => $value) {
+    $NombreEmpresa=$value->nombre_empresa;      
+  }
+  if($NombreEmpresa!=""){
+   return view('Administrar/Alimentos/Poco_Stock/Poco_Stock_Alimentos');    
+ }else{
+  return View('Usuarios.Account');
+}
+
 }
 public function  Exportar_PDF_Total_Alimentos(){
   $id_comercio=Auth::user()->id_comercio;
@@ -432,7 +452,16 @@ public function RegistrarNewAlimento(){
   }
 }
 public function Formulario_Venta_Alimentos(){
-  return view('Ventas/Alimentos/Formularios.Registrar_Venta_Alimentos');
+ $Empresa=Empresa::all();
+ $NombreEmpresa="";
+ foreach ($Empresa as $key => $value) {
+  $NombreEmpresa=$value->nombre_empresa;      
+}
+if($NombreEmpresa!=""){
+  return view('Ventas/Alimentos/Formularios.Registrar_Venta_Alimentos');   
+}else{
+  return View('Usuarios.Account');
+}
 }
 public function Ultimas_Ventas_Alimentos(){    
   return view('Ventas/Alimentos/Consultas/Ultimas_Ventas_Alimentos');

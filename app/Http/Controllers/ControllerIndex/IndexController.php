@@ -14,7 +14,7 @@ use App\Models\Internet\VentaInternet;
 use App\Models\Recargas\VentaRecarga;
 use App\Models\Compras\Compras;
 use App\Models\Gastos\Gasto;
-use App\Models\Empresa\Empresa;
+use App\Models\Empresas\Empresa;
 use Control_5_3\Models\Cargo\Cargo;
 use Illuminate\Support\Facades\Input;
 use Response;
@@ -40,11 +40,30 @@ PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
 class IndexController extends Controller{
 
 	public function Index(){
-		return view('Index.index');
+		$Empresa=Empresa::all();
+		$NombreEmpresa="";
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;			
+		}
+		if($NombreEmpresa!=""){
+			return view('Index.index');
+		}else{
+			return View('Usuarios.Account');
+		}
 	}
 
-	public function Cargar_Ventas(){	
-		return view('Ventas.Cargar_Ventas');
+	public function Cargar_Ventas(){
+		$Empresa=Empresa::all();
+		$NombreEmpresa="";
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;			
+		}
+		if($NombreEmpresa!=""){
+			return view('Ventas.Cargar_Ventas');
+		}else{
+			return View('Usuarios.Account');
+		}	
+		
 	}
 	public function CargarBarNotificaciones(){	
 		return view('Notificaciones.Notificacion_Poco_Stock');

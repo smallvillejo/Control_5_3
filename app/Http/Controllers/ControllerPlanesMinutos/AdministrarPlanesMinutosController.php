@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
 use App\Models\PlanesCelular\MinutosPlanes;
 use App\Models\PlanesCelular\DetallePlanMinutos;
+use App\Models\Empresas\Empresa;
 use Carbon\Carbon;
 use File;
 use Excel;
@@ -31,7 +32,17 @@ class AdministrarPlanesMinutosController extends Controller{
 	}
 
 	public function AdministrarPlanes(){
-		return view('AdministrarPlanes.Index_Minutos');
+		$Empresa=Empresa::all();
+		$NombreEmpresa="";
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;      
+		}
+		if($NombreEmpresa!=""){
+			return view('AdministrarPlanes.Index_Minutos');
+		}else{
+			return View('Usuarios.Account');
+		}
+		
 	}
 // Cargan los nombres de todos los planes Registrados
 	function cargar_nombres_planes_combox(){

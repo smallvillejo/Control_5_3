@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
 use App\Models\Compras\Compras;
+use App\Models\Empresas\Empresa;
 use Carbon\Carbon;
 use File;
 use Excel;
@@ -30,7 +31,17 @@ class AdministrarComprasController extends Controller {
 	}
 
 	public function AdministrarCompras(){
-		return view('AdministrarCompras.Index_Compras');
+		$Empresa=Empresa::all();
+		$NombreEmpresa="";
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;      
+		}
+		if($NombreEmpresa!=""){
+			return view('AdministrarCompras.Index_Compras');
+		}else{
+			return View('Usuarios.Account');
+		}
+		
 	}
 
 	public function Cargar_Tabla_Compras(){

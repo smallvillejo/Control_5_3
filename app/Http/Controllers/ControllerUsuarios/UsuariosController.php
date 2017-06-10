@@ -21,6 +21,7 @@ use DB;
 use View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
+use File;
 
 use Redirect;
 
@@ -150,14 +151,34 @@ class UsuariosController extends Controller {
 		}
 	}
 
-	public function Cargar_Perfil_Usuario(){		
-		return View('Usuarios.Perfil_Usuario');
+	public function Cargar_Perfil_Usuario(){
+		$Empresa=Empresa::all();
+		$NombreEmpresa="";
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;			
+		}
+		if($NombreEmpresa!=""){
+			return View('Usuarios.Perfil_Usuario');
+		}else{
+			return View('Usuarios.Account');
+		}		
+		
 	}
 
 	public function account(){
+		return View('Usuarios.Account');	
+	}
+
+	public function Consultar_Datos_Empresa(){
 		$Empresa=Empresa::all();
 
 		$NombreEmpresa="";
+		$Valida="si";		
+		$telefono_empresa="";
+		$direccion_empresa="";
+		$correo_empresa="";
+		$logo_empresa="";
+
 
 		foreach ($Empresa as $key => $value) {
 			$NombreEmpresa=$value->nombre_empresa;
@@ -166,14 +187,21 @@ class UsuariosController extends Controller {
 			$correo_empresa=$value->correo_empresa;
 			$logo_empresa=$value->logo_empresa;
 		}
-		return View('Usuarios.Account')
-		->with('NombreEmpresa',$NombreEmpresa)
-		->with('direccion_empresa',$direccion_empresa)
-		->with('telefono_empresa',$telefono_empresa)
-		->with('correo_empresa',$correo_empresa)
-		->with('logo_empresa',$logo_empresa);
-	}
 
+		if($logo_empresa==""){
+			$Valida="no";
+		}
+
+		return Response::json([
+			'NombreEmpresa'=>$NombreEmpresa,
+			'direccion_empresa'=>$direccion_empresa,
+			'telefono_empresa'=>$telefono_empresa,
+			'correo_empresa'=>$correo_empresa,
+			'logo_empresa'=>$logo_empresa,
+			'Valida'=>$Valida		
+			]);
+
+	}
 	public function ConfiguracionCuentaComercio(){
 		$rules = array
 		(
@@ -208,50 +236,98 @@ class UsuariosController extends Controller {
 
 			$id_comercio=Auth::user()->id_comercio;  
 			$src = $_FILES['ImagenLogoEmpresa'];
-			$producto=Input::all();
+			$datos=Input::all();
 
 			if ($src["size"] > 0){				     
-
+				$fechaActual =Carbon::now()->toDateString(); 
 				$ruta_imagen = 'global/directorio/Comercio_'.$id_comercio.'/images/Empresa/';
 				File::makeDirectory($ruta_imagen, $mode = 0777, true, true);
 
 				$imagen=rand(1000,999)."-".$src["name"];
 
-				$Productos=Producto::Where('ruta_imagen_producto',$ruta_imagen.$imagen)
-				->where('id_comercio',$id_comercio)->get();
-				$DireccionURLFoto_Consultada="";
-				foreach ($Productos as $key => $value) {
-					$DireccionURLFoto_Consultada=$value->ruta_imagen_producto;       
+				move_uploaded_file($src["tmp_name"], $ruta_imagen.$imagen);
+
+
+				$daticos = array(
+					'comercio_id'            => $id_comercio,
+					'nombre_empresa'         => $datos['NombreEmpresa'],
+					'direccion_empresa'      => $datos['DireccionEmpresa'],
+					'telefono_empresa'       => $datos['TelefonoEmpresa'],
+					'correo_empresa'  		 => $datos['EmailEmpresa'],
+					'fecha_registro'    	 => $fechaActual,
+					'logo_empresa'      	 => $ruta_imagen.$imagen     
+					);			
+
+				$check = DB::table('empresa')->insert($daticos);				
+
+				if($check >0){
+					return 0;
 				}
 
-				if($DireccionURLFoto!==$ruta_imagen.$imagen){
-					if (File::exists($DireccionURLFoto_Consultada)) {
-						return 2;
-					}
-				}
+			}
+		}
+	}
 
-				if (File::exists($DireccionURLFoto)) {
-					File::delete($DireccionURLFoto);
-				}
+	public function ActualizacionCuentaComercio(){
+		$rules = array
+		(
+			'NombreEmpresa'   	 => 'required|min:6',
+			'DireccionEmpresa'   => 'required|min:6',
+			'TelefonoEmpresa'    => 'required|min:6',
+			'EmailEmpresa' 		 => 'required|email',
+			'ImagenLogoEmpresa'  => 'max:2000|mimes:jpg,jpeg,png'	  
+			);
 
+		$message = array
+		(
+			'NombreEmpresa.required'  => 'Porfavor Ingrese el nombre de la empresa.',
+			'NombreEmpresa.min' => ' Minimo son 6 caracteres para el nombre de la empresa',
+			'DireccionEmpresa.required'  => 'Porfavor Ingrese la drección de la empresa.',
+			'DireccionEmpresa.min' => 'Minimo son 6 caracteres para dirección de la empresa',
+			'TelefonoEmpresa.required'  => 'Porfavor Ingrese la drección de la empresa.',
+			'TelefonoEmpresa.min'		 => 'Minimo son 6 caracteres para el nombre de la empresa',
+			'EmailEmpresa.required'  	=> 'Porfavor Ingrese la drección de la empresa.',
+			'EmailEmpresa.email' 		=> 'El correo ingresado no esta correcto',
+			'ImagenLogoEmpresa.max'     => 'El tamaño maximo debe la imagen es de 1 MB.',
+			'ImagenLogoEmpresa.mimes'   => 'El archivo que pretendes subir, no es una imagen.',
+			);
+
+
+		$validator = Validator::make(Input::All(), $rules, $message);
+		if ($validator->fails()) {
+
+			return Response::json(['error' =>false,
+				'errors'=>$validator->errors()->toArray()]);
+		}else{
+
+			$id_comercio=Auth::user()->id_comercio;  
+			$src = $_FILES['ImagenLogoEmpresa'];
+			$datos=Input::all();
+
+			if ($src["size"] > 0){				     
+				$fechaActual =Carbon::now()->toDateString(); 
+				$ruta_imagen = 'global/directorio/Comercio_'.$id_comercio.'/images/Empresa/';
+				File::makeDirectory($ruta_imagen, $mode = 0777, true, true);
+
+				$imagen=rand(1000,999)."-".$src["name"];
 
 				move_uploaded_file($src["tmp_name"], $ruta_imagen.$imagen);
 
 
-				$productos = array(
-					'id_comercio'               => $id_comercio,
-					'nombre_producto'           => $producto['nombre_producto_editar'],
-					'cantidad_producto'         => $producto['cantidad_producto_editar'],
-					'valor_venta_producto'      => $producto['valor_venta_producto_editar'],
-					'valor_inversion_producto'  => $producto['valor_inversion_producto_editar'],
-					'valor_total_inversion'     => $producto['valor_total_inversion_editar'],
-					'ruta_imagen_producto'      => $ruta_imagen.$imagen     
-					);
+				$daticos = array(
+					'comercio_id'            => $id_comercio,
+					'nombre_empresa'         => $datos['NombreEmpresa'],
+					'direccion_empresa'      => $datos['DireccionEmpresa'],
+					'telefono_empresa'       => $datos['TelefonoEmpresa'],
+					'correo_empresa'  		 => $datos['EmailEmpresa'],
+					'fecha_registro'    	 => $fechaActual,
+					'logo_empresa'      	 => $ruta_imagen.$imagen     
+					);	
 
-				$check = DB::table('producto_producto')
-				->where('id',$producto['id_producto_editarr'])
-				->where('id_comercio',$id_comercio)
-				->update($productos);
+
+				$check = DB::table('empresa')
+				->where('comercio_id',$id_comercio)			
+				->update($daticos);								
 
 				if($check >0){
 					return 0;
@@ -332,13 +408,7 @@ class UsuariosController extends Controller {
 
 	function Cargar_Ultimo_Registro_Comercio_ID(){
 
-		// $id_comercio=Auth::user()->get()->id_comercio;
-
-		// $Usuarios = User::orderBy('created_at', 'desc')->first();
-		// $Usuarios = User::all()->last()->pluck('id_comercio');
 		$Usuarios = User::all()->last()->get();
-
-
 		foreach ($Usuarios as $value) {
 
 			$id_comercio=$value->id_comercio;
@@ -472,20 +542,11 @@ class UsuariosController extends Controller {
 			}else{
 
 				return 1;	
-			}
-
-			return Response::json(['success' =>true]);
+			}			
 		}
-
-
 	}
 
 	function Confirmar_Email($email, $confirmation_code){
-		// if (urldecode($email) == Cookie::get("email") && urldecode($key) == Cookie::get("key"))		{
-			// $conn = DB::connection("mysql");
-			// $sql = "UPDATE users SET active=1 WHERE email=?";
-			// $conn->update($sql, array($email));
-
 		$Usuarios =User::where('correo',$email)->get();
 		$Estado="Activo";	
 
@@ -618,13 +679,7 @@ class UsuariosController extends Controller {
 
 				return 1;	
 			}
-
-
-			return Response::json(['success' =>true]);
-
-		}	
-
-
+		}
 	}
 
 	function Confirmar_Password($email, $confirmation_code){		
@@ -947,9 +1002,6 @@ class UsuariosController extends Controller {
 
 					return 1;	
 				}
-
-				return Response::json(['success' =>true]);	
-
 			}
 		}
 
@@ -984,16 +1036,14 @@ class UsuariosController extends Controller {
 
 				return 1;	
 			}
-			return Response::json(['success' =>true]);
 		}
 
-
 	}
 
 
-	function PerfilUser(){
-		return View::make('HomeController.Perfil');
+	// function PerfilUser(){
+	// 	return View::make('HomeController.Perfil');
 
-	}
+	// }
 
 }

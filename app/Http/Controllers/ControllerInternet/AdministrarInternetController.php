@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\UserTrait;
 use App\Models\Internet\VentaInternet;
+use App\Models\Empresas\Empresa;
 use Carbon\Carbon;
 use File;
 use Excel;
@@ -30,7 +31,17 @@ class AdministrarInternetController extends Controller {
 	}
 
 	public function AdministrarInternet(){
-		return view('AdministrarInternet.Index_Internet');
+		$Empresa=Empresa::all();
+		$NombreEmpresa="";
+		foreach ($Empresa as $key => $value) {
+			$NombreEmpresa=$value->nombre_empresa;      
+		}
+		if($NombreEmpresa!=""){
+			return view('AdministrarInternet.Index_Internet');
+		}else{
+			return View('Usuarios.Account');
+		}
+		
 	}
 
 	public function Cargar_Tabla_Ventas_Internet(){

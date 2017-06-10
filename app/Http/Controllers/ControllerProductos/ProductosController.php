@@ -508,7 +508,16 @@ public function RegistrarNewProducto(){
 
 public function Formulario_Venta_Productos(){
 
-  return view('Ventas/Productos/Formularios.Registrar_Venta_Productos');
+  $Empresa=Empresa::all();
+  $NombreEmpresa="";
+  foreach ($Empresa as $key => $value) {
+    $NombreEmpresa=$value->nombre_empresa;      
+  }
+  if($NombreEmpresa!=""){
+   return view('Ventas/Productos/Formularios.Registrar_Venta_Productos');  
+ }else{
+  return View('Usuarios.Account');
+}
 }
 
 public function RegistrarProducto(){
@@ -800,7 +809,16 @@ public function Eliminar_Venta_Producto_X_Fecha_Calendario(){
 
 public function Ultimas_Ventas_Productos(){  
 
-  return view('Ventas/Productos/Consultas/Ultimas_Ventas_Productos');
+  $Empresa=Empresa::all();
+  $NombreEmpresa="";
+  foreach ($Empresa as $key => $value) {
+    $NombreEmpresa=$value->nombre_empresa;      
+  }
+  if($NombreEmpresa!=""){
+    return view('Ventas/Productos/Consultas/Ultimas_Ventas_Productos'); 
+  }else{
+    return View('Usuarios.Account');
+  }
 }
 
 public function Tabla_Venta_Productos_X_Fecha(){
@@ -1093,7 +1111,17 @@ function Editar_Venta_Producto(){
 }
 
 public function AdministrarProductos(){
-  return view('Administrar/Productos/Administrar_Productos');
+  $Empresa=Empresa::all();
+  $NombreEmpresa="";
+  foreach ($Empresa as $key => $value) {
+    $NombreEmpresa=$value->nombre_empresa;      
+  }
+  if($NombreEmpresa!=""){
+    return view('Administrar/Productos/Administrar_Productos');
+  }else{
+    return View('Usuarios.Account');
+  }
+  
 }
 
 public function Cargar_Productos_En_Administrar(){
@@ -1116,24 +1144,18 @@ public function Consultar_Producto_Por_ID(){
 // Carga la vista - Consultas de Ventas de Productos
 
 public function ConsultarVentaProducto(){  
-  return view('Administrar/Productos/ConsultasVentasProductos.Consulta_Ventas_Productos');
+ $Empresa=Empresa::all();
+ $NombreEmpresa="";
+ foreach ($Empresa as $key => $value) {
+  $NombreEmpresa=$value->nombre_empresa;      
+}
+if($NombreEmpresa!=""){
+ return view('Administrar/Productos/ConsultasVentasProductos.Consulta_Ventas_Productos');
+}else{
+  return View('Usuarios.Account');
+}
 }
 // Termina  la vista - Consultas de Ventas de Productos
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 public function Cargar_Ventas_Productos(){
