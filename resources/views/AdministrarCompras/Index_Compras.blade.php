@@ -34,7 +34,7 @@
 											#0270f7;">
 											<b>
 												<strong>
-													<font size ="2", color color="#000000" face="Tahoma">
+													<font size ="2", color="#000000" face="Tahoma">
 														Fecha Compra:
 													</font>
 												</strong>
@@ -56,7 +56,7 @@
 										#0270f7;">
 										<b>
 											<strong>
-												<font size ="2", color color="#000000" face="Tahoma">
+												<font size ="2", color="#000000" face="Tahoma">
 													Valor Compra:
 												</font>
 											</strong>
@@ -79,7 +79,7 @@
 				#0270f7;">
 				<b>
 					<strong>
-						<font size ="2", color color="#000000" face="Tahoma">
+						<font size ="2", color="#000000" face="Tahoma">
 							Descripción Compra:
 						</font>
 					</strong>
@@ -154,7 +154,7 @@
 										#0270f7;">
 										<b>
 											<strong>
-												<font size ="2", color color="#000000" face="Tahoma">
+												<font size ="2", color="#000000" face="Tahoma">
 													Fecha Compra:
 												</font>
 											</strong>
@@ -176,7 +176,7 @@
 									#0270f7;">
 									<b>
 										<strong>
-											<font size ="2", color color="#000000" face="Tahoma">
+											<font size ="2", color="#000000" face="Tahoma">
 												Valor Compra:
 											</font>
 										</strong>
@@ -197,7 +197,7 @@
 				#0270f7;">
 				<b>
 					<strong>
-						<font size ="2", color color="#000000" face="Tahoma">
+						<font size ="2", color="#000000" face="Tahoma">
 							Descripción Compra:
 						</font>
 					</strong>

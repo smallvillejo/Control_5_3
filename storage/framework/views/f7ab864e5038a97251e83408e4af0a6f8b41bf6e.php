@@ -1,15 +1,15 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-@if($VentaProducto->total()==0)
+<?php if($VentaProducto->total()==0): ?>
 <div class="col-md-10">
-	<img src="global/images/Error_No_Foundd_producto_seleccionado.png" alt="logo" class="img-thumbnail img-responsive" >
+	<img src="global/images/Error_No_Foundd.png" alt="logo" class="img-thumbnail img-responsive" >
 	<script type="text/javascript">
-		// $('#id_div_venta_producto').hide();	
-		// $('#idBuscarProducto').hide();
-		// $('#id_div_venta_producto').hide();
-		// $('#idTotalProductoVendido').hide();
+		$('#id_div_venta_producto').hide();	
+		$('#idBuscarProducto').hide();
+		$('#id_div_venta_producto').hide();
+		$('#idTotalProductoVendido').hide();
 	</script>
 </div>
-@else
+<?php else: ?>
 <script type="text/javascript">
 	$('#id_div_venta_producto').show();	
 	$('#idBuscarProducto').show();
@@ -18,25 +18,26 @@
 </script>
 <!-- Diseño Panels Para ver el producto en el panel -->
 <img src="global/images/ImagenVacio.png" alt="logo" height="0" width="0" >
-<center>{{$VentaProducto->links()}}</center>
-@foreach ($VentaProducto as $value)
+<center><?php echo e($VentaProducto->links()); ?></center>
+<?php foreach($VentaProducto as $value): ?>
 <div class="col-xs-12 col-sm-6 col col-md-6 col-lg-4">
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<span class="badge btn-md btn-danger" title="{{strtoupper($nombre_producto=$value->Producto->nombre_producto)}}">
-				<b><strong> <font size ="2">{{strtoupper($nombre_producto=$value->Producto->nombre_producto)}}
+			<span class="badge btn-md btn-danger" title="<?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>">
+				<b><strong> <font size ="2"><?php echo e(strtoupper($nombre_producto=$value->Producto->nombre_producto)); ?>
+
 				</font></strong></b></span>
 			</div>
 			<div class="panel-body">
-				@if($value->Producto->ruta_imagen_producto==null)
+				<?php if($value->Producto->ruta_imagen_producto==null): ?>
 				<center><img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="80px" height="80px"/></center>
-				@else
-				@if(File::exists($value->Producto->ruta_imagen_producto))
-				<center><img class="cuadradoFoto FotoGrande" src="{{$value->Producto->ruta_imagen_producto}}" Imagen="{{$value->Producto->ruta_imagen_producto}}" width="80px" height="80px"/></center>	
-				@else		
+				<?php else: ?>
+				<?php if(File::exists($value->Producto->ruta_imagen_producto)): ?>
+				<center><img class="cuadradoFoto FotoGrande" src="<?php echo e($value->Producto->ruta_imagen_producto); ?>" Imagen="<?php echo e($value->Producto->ruta_imagen_producto); ?>" width="80px" height="80px"/></center>	
+				<?php else: ?>		
 				<center><img class="cuadradoFoto" src="global/images/ProductoNoDisponible.png" width="80px" height="80px"/></center>
-				@endif
-				@endif
+				<?php endif; ?>
+				<?php endif; ?>
 				<h4><p class="text-muted credit"></p></h4>
 				<div class="panel panel-info">
 					<div class="panel-heading"></div>				
@@ -49,7 +50,7 @@
 									</td>
 									<td>								
 										<span class="badge btn-md btn-success">
-											<b><strong> <font size ="2">{{$value->cantidad_producto_venta}}</font></strong></b>
+											<b><strong> <font size ="2"><?php echo e($value->cantidad_producto_venta); ?></font></strong></b>
 										</span>
 									</td>
 								</tr>
@@ -60,7 +61,7 @@
 									</td>
 									<td>
 										<span class="badge btn-md btn-success"><b><strong> <font size ="2">
-											$ {{$value->precio_producto_venta}} 
+											$ <?php echo e($value->precio_producto_venta); ?> 
 										</font></strong></b>
 									</span>
 								</td>								
@@ -71,7 +72,7 @@
 								</td>
 								<td>
 									<span class="badge btn-md btn-success"><b><strong><font size ="2">
-										$ {{number_format($value->total_producto_venta)}} 
+										$ <?php echo e(number_format($value->total_producto_venta)); ?> 
 									</font></strong></b>
 								</span>
 							</td>
@@ -88,9 +89,9 @@
 			<div class="panel-footer">Panel de opciones
 				<div class="pull-right">				
 					
-					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" id="{{$value->id}}" class="Eliminar_Venta" data-backdrop="static" data-keyboard="false" title="Eliminar" Producto_Venta="{{$value->Producto->nombre_producto}}" id_venta="{{$value->id}}" canti_vendido="{{$value->cantidad_producto_venta}}" id_producto_venta="{{$value->producto_id}}">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></strong>
+					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Delete" id="<?php echo e($value->id); ?>" class="Eliminar_Venta" data-backdrop="static" data-keyboard="false" title="Eliminar" Producto_Venta="<?php echo e($value->Producto->nombre_producto); ?>" id_venta="<?php echo e($value->id); ?>" canti_vendido="<?php echo e($value->cantidad_producto_venta); ?>" id_producto_venta="<?php echo e($value->producto_id); ?>">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-trash-o fa-2x"></span></font></strong>
 					</a>						|
-					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Editar" id="{{$value->id}}" class="Editar_Venta" data-backdrop="static" data-keyboard="false" title="Editar" Producto_Venta="{{$value->Producto->nombre_producto}}" id_venta="{{$value->id}}" canti_vendido="{{$value->cantidad_producto_venta}}" id_producto_venta="{{$value->producto_id}}">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-pencil-square fa-2x"></span></font></strong>
+					<a href="#" data-toggle = 'modal' data-target="#Modal_Confirmacion_Editar" id="<?php echo e($value->id); ?>" class="Editar_Venta" data-backdrop="static" data-keyboard="false" title="Editar" Producto_Venta="<?php echo e($value->Producto->nombre_producto); ?>" id_venta="<?php echo e($value->id); ?>" canti_vendido="<?php echo e($value->cantidad_producto_venta); ?>" id_producto_venta="<?php echo e($value->producto_id); ?>">  <strong> <font size ="3", color ="#0d96ea" face="Lucida Sans"><span class= "fa fa-pencil-square fa-2x"></span></font></strong>
 					</a>		
 
 				</div>
@@ -98,14 +99,15 @@
 		</div>
 	</div>
 	<div class="panel-footer">
-		Venta Registrada Por: <strong>{{ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)}}</strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i></strong> {{Carbon::parse($value->hora_venta_producto)->diffForHumans()}}
+		Venta Registrada Por: <strong><?php echo e(ucwords($value->NombreUsuario->nombre).' '.ucwords($value->NombreUsuario->apellido)); ?></strong><br><i class="fa fa-clock-o" title="Hora Venta" aria-hidden="true"></i><?php echo e(Carbon::parse($value->hora_venta_producto)->diffForHumans()); ?>
+
 	</div>
 </div>
 
 
 </div>
-@endforeach		
-@endif
+<?php endforeach; ?>		
+<?php endif; ?>
 <!-- Termina Diseño Panel Producto -->
 <script type="text/javascript">
 	$('body').delegate('.FotoGrande','click',function(){
@@ -174,9 +176,9 @@
 				</div>
 				<div class="modal-body">
 					<div class="col-md-7">
-						<input type="hidden" name="comercio_id" id="comercio_id" value="{{Auth::user()->id_comercio}}" class="form-control">
-						<input type="hidden" name="Fecha_Actual" id="Fecha_Actual" value="{{$today = Carbon::today()->toDateString()}}" class="form-control">
-						<input type="hidden" name="Hora_Venta" id="Hora_Venta" value="{{$today = Carbon::today()->now()}}" class="form-control">
+						<input type="hidden" name="comercio_id" id="comercio_id" value="<?php echo e(Auth::user()->id_comercio); ?>" class="form-control">
+						<input type="hidden" name="Fecha_Actual" id="Fecha_Actual" value="<?php echo e($today = Carbon::today()->toDateString()); ?>" class="form-control">
+						<input type="hidden" name="Hora_Venta" id="Hora_Venta" value="<?php echo e($today = Carbon::today()->now()); ?>" class="form-control">
 						<div class="form-group">
 							<label><b><strong> <font size ="2", color="#53a4ee" face="Arial Black">Seleccione un Producto</font></strong></b></label>
 							<div class="input-icon right">

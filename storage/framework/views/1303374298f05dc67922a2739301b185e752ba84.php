@@ -1,8 +1,7 @@
-@extends('layouts.master')
-@section('title')
+<?php $__env->startSection('title'); ?>
 Últimas Ventas - Productos
-@stop
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <div class="panel panel-primary">
 	<div class="panel-heading"><b><strong><font size ="3", color="#ffffff" face="Arial Black">Últimas Ventas - Productos</font></strong></b>
 		<div class="btn-group pull-right" style="display: none;" id="idTotalProductoVendido">		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -17,13 +16,13 @@
 		</select>
 		<button type="button" style="display: none;" class="btn btn-danger" id="btn_cancelar_busqueda">Cancelar</button>
 	</font></strong></b>
-	@if(Auth::user()->perfil_id==2)
+	<?php if(Auth::user()->perfil_id==2): ?>
 	Ventas por Usuario:<b><strong><font size ="3", color="#ea0000" face="Arial Black">
 	<select class="selectpicker" data-live-search="true" id="producto_id_venta_consulta_usuario" onchange="Seleccion_Busqueda_X_Usuario()">
 		<option></option>
 	</select>
 </font></strong></b>
-@endif
+<?php endif; ?>
 <button type="button" class="btn btn-danger" id="btnBuscarProducto" style="display: none;" onclick="refresPagina()">Limpiar<i class="fa fa-eraser" aria-hidden="true"></i></button>
 </div>
 </div>
@@ -33,7 +32,7 @@
 	<div id="Tabla_Venta_Productos_X_Fecha"></div>
 </div>
 </div>
-<input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token">
+<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" id="_token">
 <!-- <button onclick="funcionea();">CLICKO</button> -->
 <script type="text/javascript">
 
@@ -123,10 +122,10 @@
 	function  Listar_Venta_Productos(){
 		Cargar_Valor_Vendido_Productos_Cuadrado();
 		Cargar_Cantidad_Vendido_Productos();
-		var Hora_Venta = "{{Carbon::today()->toDateString()}}";
+		var Hora_Venta = "<?php echo e(Carbon::today()->toDateString()); ?>";
 		$.ajax({
 			type:'get',
-			url:'{{ url('Tabla_Venta_Productos_X_Fecha')}}',
+			url:'<?php echo e(url('Tabla_Venta_Productos_X_Fecha')); ?>',
 			data:{
 				'Hora_Venta' : Hora_Venta
 			},
@@ -138,7 +137,7 @@
 	}
 	$(document).on("click",".pagination li a",function(e) {
 		e.preventDefault();
-		var Hora_Venta = "{{$today = Carbon::now()}}";
+		var Hora_Venta = "<?php echo e($today = Carbon::now()); ?>";
 		var url = $(this).attr("href");
 		$.ajax({
 			type:'get',
@@ -165,7 +164,7 @@
 		var id_producto_venta = $('#id_producto_venta').val();
 		$.ajax({
 			type:'get',
-			url:'{{ url('Eliminar_Venta_Producto_X_Fecha')}}',
+			url:'<?php echo e(url('Eliminar_Venta_Producto_X_Fecha')); ?>',
 			data:{
 				'id_venta_producto' 		: id_venta_producto,
 				'id_producto_venta' 		: id_producto_venta,
@@ -190,7 +189,7 @@ function refresPagina(){
 function  Cargar_Valor_Vendido_Productos_Cuadrado(){
 	$.ajax({
 		type:'get',
-		url:'{{ url('ValorVendidoUltimasVentasProductos')}}',
+		url:'<?php echo e(url('ValorVendidoUltimasVentasProductos')); ?>',
 		success: function(data){
 			$('#TotalVendido').empty().html(data);
 		}
@@ -200,7 +199,7 @@ function  Cargar_Valor_Vendido_Productos_Cuadrado(){
 function  Cargar_Cantidad_Vendido_Productos(){
 	$.ajax({
 		type:'get',
-		url:'{{ url('CantidadVendidaProductos')}}',
+		url:'<?php echo e(url('CantidadVendidaProductos')); ?>',
 		success: function(data){
 			$('#CantidadVendida').empty().html(data);
 		}
@@ -212,7 +211,7 @@ function  Cargar_Valor_Vendido_Productos_Cuadrado_X_Usuario(){
 	var producto_id_venta_consulta_usuario  = document.getElementById('producto_id_venta_consulta_usuario').value;
 	$.ajax({
 		type:'get',		
-		url:'{{ url('ValorVendidoUltimasVentasProductos_X_usuario')}}',
+		url:'<?php echo e(url('ValorVendidoUltimasVentasProductos_X_usuario')); ?>',
 		data:{
 			'producto_id_venta_consulta_usuario'     : producto_id_venta_consulta_usuario
 		},
@@ -226,7 +225,7 @@ function  Cargar_Cantidad_Vendido_Productos_X_Usuario(){
 	var producto_id_venta_consulta_usuario  = document.getElementById('producto_id_venta_consulta_usuario').value;
 	$.ajax({
 		type:'get',
-		url:'{{ url('CantidadVendidaProductos_X_usuario')}}',
+		url:'<?php echo e(url('CantidadVendidaProductos_X_usuario')); ?>',
 		data:{
 			'producto_id_venta_consulta_usuario'     : producto_id_venta_consulta_usuario
 		},
@@ -244,7 +243,7 @@ function  Cargar_Valor_Vendido_Productos_Cuadrado_Calendario(){
 	var _token		  =	$('#_token').val();
 	$.ajax({
 		type:'get',
-		url:'{{ url('Cuadrado_Venta_Productos_X_BusquedaCalendario')}}',
+		url:'<?php echo e(url('Cuadrado_Venta_Productos_X_BusquedaCalendario')); ?>',
 		data:{
 			'Fecha_Inicial' : Fecha_Inicial,
 			'Fecha_Final'   : Fecha_Final,
@@ -259,4 +258,5 @@ function  Cargar_Valor_Vendido_Productos_Cuadrado_Calendario(){
 </script>
 
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

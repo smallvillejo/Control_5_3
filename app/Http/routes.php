@@ -47,6 +47,9 @@ Route::any('RegistrarVenta', array('as'=>'RegistrarVenta','uses'=>'ControllerInd
 Route::post('cargar_nombres_productos', array('as'=>'cargar_nombres_productos','uses'=>'ControllerProductos\ProductosController@cargar_nombres_productos'))->middleware('auth');
 
 
+// Ruta para consultar Productos en ultimas ventas hechas
+
+Route::post('Consultar_Producto_x_Busqueda', array('as'=>'Consultar_Producto_x_Busqueda','uses'=>'ControllerProductos\ProductosController@Consultar_Producto_x_Busqueda'))->middleware('auth');
 // Carga el Detalle de los productos cuando se selecciona del combox
 Route::post('Cargar_detalles_Productos_Venta', array('as'=>'Cargar_detalles_Productos_Venta','uses'=>'ControllerProductos\ProductosController@Cargar_detalles_Productos_Venta'))->middleware('auth');
 
